@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo - URBANA VISION</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: system-ui, -apple-system, sans-serif; 
+            background: linear-gradient(135deg, #134e4a 0%, #7c2d12 100%); 
+            min-height: 100vh; 
+            color: white; 
+            padding: 20px;
+        }
+        .container { max-width: 1200px; margin: 0 auto; }
+        
+        .header { 
+            background: rgba(255, 255, 255, 0.1); 
+            backdrop-filter: blur(10px);
+            border-radius: 20px; 
+            padding: 30px; 
+            text-align: center; 
+            margin-bottom: 30px; 
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .brand-name { 
+            font-size: 28px; 
+            font-weight: 800; 
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #10b981, #059669);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .filters {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 12px 24px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: linear-gradient(45deg, #10b981, #059669);
+            border-color: #10b981;
+            transform: translateY(-2px);
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .product-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .product-card:hover .product-image {
+            transform: scale(1.05);
+        }
+
+        .product-name {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .product-code {
+            font-size: 12px;
+            opacity: 0.7;
+            margin-bottom: 10px;
+            font-family: monospace;
+        }
+
+        .product-price {
+            font-size: 24px;
+            font-weight: 800;
+            color: #10b981;
+            margin-bottom: 15px;
+        }
+
+        .product-category {
+            display: inline-block;
+            padding: 5px 15px;
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 5px;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-whatsapp {
+            background: linear-gradient(45deg, #25d366, #128c7e);
+            color: white;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #10b981, #059669);
+            color: white;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+        }
+
+        .search-bar {
+            max-width: 500px;
+            margin: 0 auto 30px;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 15px 50px 15px 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            color: white;
+            font-size: 16px;
+            backdrop-filter: blur(10px);
+        }
+
+        .search-input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 20px;
+            opacity: 0.7;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            opacity: 0.7;
+        }
+
+        .empty-state-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 10px;
+            right: 25px;
+            font-size: 10px;
+            font-weight: 600;
+            opacity: 0.6;
+            z-index: 999;
+            background: linear-gradient(45deg, #8B4513, #DAA520);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(16, 185, 129, 0.9);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-weight: 600;
+            z-index: 1000;
+            display: none;
+            backdrop-filter: blur(10px);
+        }
+
+        .loading-state {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #10b981;
+            animation: spin 1s ease-in-out infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 20px;
+            }
+            
+            .filters {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .filter-btn {
+                width: 100%;
+                max-width: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div style="font-size: 50px; margin-bottom: 15px;">👓</div>
+            <h1 class="brand-name">URBANA VISION</h1>
+            <p>Catálogo completo de monturas y lentes</p>
+            <p style="margin-top: 10px;">📱 809-713-5307 | 🌐 urbanavision.com</p>
+        </div>
+
+        <div class="search-bar">
+            <input type="text" class="search-input" placeholder="🔍 Buscar productos..." id="searchInput">
+            <div class="search-icon">🔍</div>
+        </div>
+
+        <div class="filters">
+            <button class="filter-btn active" onclick="filtrarPor('todos')">🌟 Todos</button>
+            <button class="filter-btn" onclick="filtrarPor('monturas')">👓 Monturas</button>
+            <button class="filter-btn" onclick="filtrarPor('lentes')">👁️ Lentes</button>
+            <button class="filter-btn" onclick="filtrarPor('accesorios')">✨ Accesorios</button>
+        </div>
+
+        <div id="loadingState" class="loading-state">
+            <div class="loading-spinner"></div>
+            <p>Cargando catálogo...</p>
+        </div>
+
+        <div id="productsContainer" class="products-grid" style="display: none;"></div>
+
+        <div id="emptyState" class="empty-state" style="display: none;">
+            <div class="empty-state-icon">🔍</div>
+            <h3>No se encontraron productos</h3>
+            <p>Intenta con otros términos de búsqueda</p>
+        </div>
+
+        <div style="text-align: center; margin: 40px 0;">
+            <button class="btn btn-primary" onclick="contactarWhatsApp()">📱 Consultar por WhatsApp</button>
+            <button class="btn btn-primary" onclick="volverInicio()">🏠 Volver al Inicio</button>
+        </div>
+    </div>
+
+    <div id="notification" class="notification"></div>
+    
+    <div class="footer">
+        by fbrugal jrubinstein consultores
+    </div>
+
+    <script>
+        let productos = [];
+        let filtroActivo = 'todos';
+        let terminoBusqueda = '';
+
+        // Cargar productos al iniciar
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+                cargarProductos();
+            }, 1000);
+        });
+
+        function cargarProductos() {
+            try {
+                // Intentar cargar desde localStorage
+                const inventario = JSON.parse(localStorage.getItem('urbanaInventario') || '[]');
+                const catalogo = JSON.parse(localStorage.getItem('urbanaCatalogo') || '[]');
+                
+                productos = inventario.length > 0 ? inventario : catalogo;
+                
+                // Si no hay productos, crear algunos de ejemplo
+                if (productos.length === 0) {
+                    productos = crearProductosEjemplo();
+                }
+                
+                mostrarProductos();
+                ocultarLoading();
+                mostrarNotificacion('✅ Catálogo cargado correctamente');
+                
+            } catch (error) {
+                console.error('Error cargando productos:', error);
+                productos = crearProductosEjemplo();
+                mostrarProductos();
+                ocultarLoading();
+                mostrarNotificacion('⚠️ Catálogo cargado en modo demo');
+            }
+        }
+
+        function crearProductosEjemplo() {
+            return [
+                {
+                    id: 1,
+                    codigo: 'UV001',
+                    nombre: 'Montura Clásica Premium',
+                    precio: 4500,
+                    categoria: 'monturas',
+                    imagen: 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=400&h=300&fit=crop'
+                },
+                {
+                    id: 2,
+                    codigo: 'UV002',
+                    nombre: 'Lentes Progresivos',
+                    precio: 12000,
+                    categoria: 'lentes',
+                    imagen: 'https://images.unsplash.com/photo-1574258495973-f010dfbb5371?w=400&h=300&fit=crop'
+                },
+                {
+                    id: 3,
+                    codigo: 'UV003',
+                    nombre: 'Montura Deportiva',
+                    precio: 6500,
+                    categoria: 'monturas',
+                    imagen: 'https://images.unsplash.com/photo-1508296695146-257a814070b4?w=400&h=300&fit=crop'
+                },
+                {
+                    id: 4,
+                    codigo: 'UV004',
+                    nombre: 'Lentes de Sol Premium',
+                    precio: 8500,
+                    categoria: 'accesorios',
+                    imagen: 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=400&h=300&fit=crop'
+                },
+                {
+                    id: 5,
+                    codigo: 'UV005',
+                    nombre: 'Montura Elegante',
+                    precio: 5500,
+                    categoria: 'monturas',
+                    imagen: 'https://images.unsplash.com/photo-1503341504253-dff4815485f1?w=400&h=300&fit=crop'
+                },
+                {
+                    id: 6,
+                    codigo: 'UV006',
+                    nombre: 'Lentes Anti-Azul',
+                    precio: 7500,
+                    categoria: 'lentes',
+                    imagen: 'https://images.unsplash.com/photo-1473496169904-658ba7c44d8a?w=400&h=300&fit=crop'
+                }
+            ];
+        }
+
+        function mostrarProductos() {
+            const container = document.getElementById('productsContainer');
+            const emptyState = document.getElementById('emptyState');
+            
+            let productosFiltrados = productos;
+            
+            // Aplicar filtro de categoría
+            if (filtroActivo !== 'todos') {
+                productosFiltrados = productosFiltrados.filter(p => p.categoria === filtroActivo);
+            }
+            
+            // Aplicar filtro de búsqueda
+            if (terminoBusqueda.trim()) {
+                const termino = terminoBusqueda.toLowerCase();
+                productosFiltrados = productosFiltrados.filter(p => 
+                    p.nombre.toLowerCase().includes(termino) ||
+                    p.codigo.toLowerCase().includes(termino) ||
+                    (p.categoria && p.categoria.toLowerCase().includes(termino))
+                );
+            }
+            
+            if (productosFiltrados.length === 0) {
+                container.style.display = 'none';
+                emptyState.style.display = 'block';
+                return;
+            }
+            
+            container.style.display = 'grid';
+            emptyState.style.display = 'none';
+            
+            container.innerHTML = productosFiltrados.map(producto => `
+                <div class="product-card">
+                    <img src="${producto.imagen || 'https://via.placeholder.com/300x200/10b981/ffffff?text=URBANA+VISION'}" 
+                         alt="${producto.nombre}" 
+                         class="product-image"
+                         onerror="this.src='https://via.placeholder.com/300x200/10b981/ffffff?text=URBANA+VISION'">
+                    
+                    <div class="product-category">${obtenerNombreCategoria(producto.categoria)}</div>
+                    <h3 class="product-name">${producto.nombre}</h3>
+                    <div class="product-code">Código: ${producto.codigo}</div>
+                    <div class="product-price">RD$ ${producto.precio ? producto.precio.toLocaleString() : 'Consultar'}</div>
+                    
+                    <button class="btn btn-whatsapp" onclick="consultarProducto('${producto.codigo}', '${producto.nombre}', ${producto.precio})">
+                        📱 Consultar
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        function obtenerNombreCategoria(categoria) {
+            const nombres = {
+                'monturas': '👓 Monturas',
+                'lentes': '👁️ Lentes',
+                'accesorios': '✨ Accesorios'
+            };
+            return nombres[categoria] || '🌟 General';
+        }
+
+        function filtrarPor(categoria) {
+            filtroActivo = categoria;
+            
+            // Actualizar botones activos
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            mostrarProductos();
+            mostrarNotificacion(`📂 Filtrado por: ${categoria === 'todos' ? 'Todos los productos' : obtenerNombreCategoria(categoria)}`);
+        }
+
+        function buscarProductos() {
+            terminoBusqueda = document.getElementById('searchInput').value;
+            mostrarProductos();
+        }
+
+        // Búsqueda en tiempo real
+        document.getElementById('searchInput').addEventListener('input', function() {
+            terminoBusqueda = this.value;
+            mostrarProductos();
+        });
+
+        function consultarProducto(codigo, nombre, precio) {
+            const mensaje = `🛍️ *CONSULTA DE PRODUCTO*\n\n` +
+                          `👓 Producto: ${nombre}\n` +
+                          `🔢 Código: ${codigo}\n` +
+                          `💰 Precio: RD$ ${precio ? precio.toLocaleString() : 'Consultar'}\n\n` +
+                          `Me interesa conocer más detalles sobre este producto.\n\n` +
+                          `¿Podrían proporcionarme más información?\n\n` +
+                          `📱 URBANA VISION\n` +
+                          `☎️ 809-713-5307\n` +
+                          `🌐 urbanavision.com`;
+            
+            const url = `https://wa.me/18097135307?text=${encodeURIComponent(mensaje)}`;
+            window.open(url, '_blank');
+            mostrarNotificacion('📱 Consulta enviada por WhatsApp');
+        }
+
+        function contactarWhatsApp() {
+            const mensaje = `🛍️ *CONSULTA GENERAL - CATÁLOGO*\n\n` +
+                          `Hola! He estado viendo su catálogo online de URBANA VISION.\n\n` +
+                          `Me interesa conocer más sobre sus productos y servicios.\n\n` +
+                          `¿Podrían ayudarme con información sobre:\n` +
+                          `• Monturas disponibles\n` +
+                          `• Tipos de lentes\n` +
+                          `• Precios y promociones\n` +
+                          `• Servicios de examen visual\n\n` +
+                          `📱 URBANA VISION\n` +
+                          `☎️ 809-713-5307\n` +
+                          `🌐 urbanavision.com`;
+            
+            const url = `https://wa.me/18097135307?text=${encodeURIComponent(mensaje)}`;
+            window.open(url, '_blank');
+            mostrarNotificacion('📱 Consulta general enviada');
+        }
+
+        function volverInicio() {
+            window.location.href = 'index.html';
+        }
+
+        function ocultarLoading() {
+            document.getElementById('loadingState').style.display = 'none';
+            document.getElementById('productsContainer').style.display = 'grid';
+        }
+
+        function mostrarNotificacion(mensaje) {
+            const notif = document.getElementById('notification');
+            notif.textContent = mensaje;
+            notif.style.display = 'block';
+            setTimeout(() => {
+                notif.style.display = 'none';
+            }, 3000);
+        }
+
+        console.log('✅ Catálogo URBANA VISION cargado correctamente');
+    </script>
+</body>
+</html>
