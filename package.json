@@ -1,0 +1,8 @@
+{
+  "name": "urbana-vision-system",
+  "version": "1.0.0",
+  "description": "Sistema completo para Urbana Vision",
+  "dependencies": {
+    "node-fetch": "^2.6.7"
+  }
+}
