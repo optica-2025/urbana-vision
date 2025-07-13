@@ -1,0 +1,261 @@
+# 👁️ URBANA VISION - Sistema Óptico Completo
+
+Sistema integral de gestión para óptica con facturación, inventario, laboratorio y marketing digital.
+
+## 🚀 Características Principales
+
+### 📱 Sistema Central
+- **Página Principal Responsive** - Landing page moderna con contacto directo
+- **Sistema NCF Fiscal** - Gestión completa de comprobantes fiscales dominicanos
+- **Facturación Proforma** - Sistema POS con examen visual integrado
+- **Test de Vista Online** - Examen preliminar para clientes
+- **InfoFlash** - Portal de noticias y promociones
+
+### 📦 Gestión de Inventario
+- **Inventario con Cámara** - Captura fotográfica de productos
+- **Catálogo Online** - Visualización de productos con filtros
+- **Sincronización Automática** - Entre inventario y catálogo
+- **Gestión de Stock** - Control de existencias y alertas
+
+### 🔬 Sistema de Laboratorio
+- **Órdenes de Laboratorio** - Gestión completa de pedidos
+- **Seguimiento de Estados** - Pendiente, En Lab, Listo, Entregado
+- **Sistema de Cotejo** - Verificación de calidad al recibir
+- **Gestión de Laboratorios** - Registro de proveedores
+- **Fotografía de Recetas** - Captura con información de orden
+
+### 👥 Gestión de Clientes
+- **Base de Datos Completa** - Información detallada de clientes
+- **Recordatorios Automáticos** - Cumpleaños y exámenes anuales
+- **Historial de Compras** - Seguimiento de transacciones
+- **Sistema de Búsqueda** - Búsqueda rápida por nombre/teléfono
+
+### 📱 Marketing Digital
+- **WhatsApp Business** - Integración completa con envío automático
+- **Promociones con Foto** - Marketing visual con captura de cámara
+- **Templates Inteligentes** - Mensajes predefinidos personalizables
+- **Campañas Programadas** - Sistema de marketing automatizado
+
+### 🇩🇴 Sistema Disruptivo RD
+- **Audio Inteligente** - Mensajes de voz para analfabetos
+- **QR Mágicos** - Códigos QR que llevan directo a WhatsApp
+- **Plantillas Visuales** - Comunicación por iconos y colores
+- **Clipboard Smart** - Mensajes listos para copiar y pegar
+
+## 📱 Información de Contacto
+
+- **Teléfono WhatsApp:** 809-713-5307
+- **Sitio Web:** urbanavision.com
+- **Ubicación:** República Dominicana
+
+## 🛠️ Instalación y Configuración
+
+### Requisitos Previos
+- Navegador web moderno (Chrome, Firefox, Safari, Edge)
+- Acceso a cámara para funciones de captura fotográfica
+- Micrófono para grabación de audio (opcional)
+
+### Configuración Inicial
+
+1. **Clonar el repositorio:**
+```bash
+git clone https://github.com/usuario/urbana-vision.git
+cd urbana-vision
+```
+
+2. **Configurar para GitHub Pages:**
+   - Ve a Settings > Pages en tu repositorio
+   - Selecciona "Deploy from a branch"
+   - Elige "main" branch y "/ (root)"
+   - Guarda la configuración
+
+3. **Configurar para Netlify:**
+   - Conecta tu repositorio GitHub con Netlify
+   - Build command: (dejar vacío)
+   - Publish directory: `/`
+   - Dominio personalizado: `urbanavision.com`
+
+### Archivos del Sistema
+
+```
+urbana-vision/
+├── index.html              # Página principal
+├── ncf.html                 # Sistema NCF fiscal
+├── pos.html                 # Sistema de facturación
+├── inventario.html          # Gestión de inventario
+├── catalogo.html            # Catálogo de productos
+├── admin.html               # Panel administrativo
+├── test-visual.html         # Test de vista
+├── info-urbana.html         # Portal de noticias
+└── README.md               # Este archivo
+```
+
+## 🔧 Configuración Técnica
+
+### Variables del Sistema
+El sistema utiliza `localStorage` para persistencia de datos:
+
+```javascript
+// Prefijos de almacenamiento
+urbanaInventario    // Productos del inventario
+urbanaClientes      // Base de datos de clientes
+urbanaVentas        // Registro de ventas
+urbanaFacturas      // Facturas generadas
+urbanaOrdenesLab    // Órdenes de laboratorio
+urbanaLaboratorios  // Proveedores registrados
+```
+
+### Integración WhatsApp
+El sistema está configurado para enviar mensajes a:
+- **Número principal:** +1-809-713-5307
+- **Formato internacional:** 18097135307
+
+### Configuración de Cámara
+```javascript
+// Configuración de cámara para móviles
+const config = {
+    video: { 
+        facingMode: 'environment'  // Cámara trasera
+    }
+};
+```
+
+## 📱 Funcionalidades por Módulo
+
+### Sistema NCF (ncf.html)
+- Configuración de rangos B01, B02, B14, B15
+- Generación automática de números correlativos
+- Alertas de stock bajo de comprobantes
+- Reportes mensuales y anuales
+
+### POS/Facturación (pos.html)
+- Datos del cliente con autocompletado
+- Gestión de productos y servicios
+- Examen visual integrado con prescripción
+- Cálculo automático de ITBIS (18%)
+- Generación de PDF y envío por WhatsApp
+
+### Inventario (inventario.html)
+- Captura fotográfica de productos
+- Códigos únicos por producto
+- Control de stock con alertas
+- Sincronización automática con catálogo
+- Compartir productos por WhatsApp
+
+### Laboratorio (admin.html - Sección Lab)
+- Crear órdenes con foto de receta
+- Estados: Pendiente → Laboratorio → Listo → Entregado
+- Sistema de cotejo para control de calidad
+- Envío automático de órdenes por WhatsApp
+- Gestión de múltiples laboratorios
+
+## 🔐 Seguridad y Privacidad
+
+### Almacenamiento Local
+- Todos los datos se almacenan localmente en el navegador
+- No hay transmisión de datos sensibles a servidores externos
+- Backup automático en localStorage
+
+### Privacidad de Imágenes
+- Las fotos se almacenan como Base64 en localStorage
+- No se envían a servidores externos
+- Compartir fotos solo vía WhatsApp Web API
+
+## 📊 Analytics y Estadísticas
+
+El sistema incluye seguimiento de:
+- Mensajes enviados por WhatsApp
+- Promociones compartidas
+- Productos más consultados
+- Clientes con cumpleaños próximos
+- Stock bajo en inventario
+
+## 🚀 Despliegue
+
+### GitHub Pages
+1. Push todos los archivos al repositorio
+2. Activar GitHub Pages en Settings
+3. El sitio estará disponible en: `https://usuario.github.io/urbana-vision`
+
+### Netlify
+1. Conectar repositorio con Netlify
+2. Configurar dominio personalizado
+3. SSL automático incluido
+4. Deploy automático en cada push
+
+### Dominio Personalizado
+```
+Configuración DNS:
+A Record: @ → IP de Netlify
+CNAME: www → sitio.netlify.app
+```
+
+## 📝 Personalización
+
+### Cambiar Información de Contacto
+Buscar y reemplazar en todos los archivos:
+- `809-713-5307` → Tu nuevo número
+- `18097135307` → Tu número en formato internacional
+- `urbanavision.com` → Tu dominio
+
+### Colores del Sistema
+Variables CSS principales:
+```css
+:root {
+    --primary-color: #10b981;
+    --secondary-color: #059669;
+    --accent-color: #134e4a;
+}
+```
+
+### Logotipo y Branding
+- Emoji principal: 👁️ (archivo index.html línea 45)
+- Nombre: URBANA VISION (todos los archivos)
+- Tagline: "Vea mejor, viva mejor"
+
+## 🆘 Soporte
+
+### Problemas Comunes
+
+**Cámara no funciona:**
+- Verificar permisos de cámara en el navegador
+- Usar HTTPS (requerido para cámara)
+- Probar en dispositivo móvil
+
+**WhatsApp no abre:**
+- Verificar formato de número telefónico
+- Probar en dispositivo móvil
+- Verificar que WhatsApp esté instalado
+
+**Datos no se guardan:**
+- Verificar que localStorage esté habilitado
+- Limpiar caché del navegador
+- Verificar espacio disponible
+
+## 🔄 Actualizaciones
+
+Para actualizar el sistema:
+1. Hacer backup de datos importantes
+2. Pull de los últimos cambios
+3. Push al repositorio
+4. Netlify se actualiza automáticamente
+
+## 👨‍💻 Créditos
+
+**Desarrollado por:** fbrugal jrubinstein consultores
+
+**Tecnologías utilizadas:**
+- HTML5, CSS3, JavaScript
+- localStorage para persistencia
+- WebRTC para cámara
+- WhatsApp Web API
+- jsPDF para generación de documentos
+
+## 📄 Licencia
+
+Este sistema está desarrollado específicamente para URBANA VISION. 
+Todos los derechos reservados.
+
+---
+
+**¿Necesitas ayuda?** Contacta a los desarrolladores para soporte técnico.
