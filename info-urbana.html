@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InfoFlash - URBANA VISION</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: system-ui, -apple-system, sans-serif; 
+            background: linear-gradient(135deg, #134e4a 0%, #7c2d12 100%); 
+            min-height: 100vh; 
+            color: white; 
+            padding: 20px;
+        }
+        .container { max-width: 800px; margin: 0 auto; }
+        
+        .header { 
+            background: rgba(255, 255, 255, 0.1); 
+            backdrop-filter: blur(10px);
+            border-radius: 20px; 
+            padding: 30px; 
+            text-align: center; 
+            margin-bottom: 30px; 
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .brand-name { 
+            font-size: 28px; 
+            font-weight: 800; 
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #10b981, #059669);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .news-section {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .news-item {
+            background: rgba(16, 185, 129, 0.1);
+            border-left: 4px solid #10b981;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .news-item:hover {
+            background: rgba(16, 185, 129, 0.15);
+            transform: translateX(5px);
+        }
+
+        .news-date {
+            color: #10b981;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .news-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .news-content {
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        .urgent-news {
+            background: rgba(239, 68, 68, 0.2);
+            border-left-color: #ef4444;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.8; }
+            100% { opacity: 1; }
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 15px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #10b981, #059669);
+            color: white;
+        }
+
+        .btn-whatsapp {
+            background: linear-gradient(45deg, #25d366, #128c7e);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .promo-banner {
+            background: linear-gradient(45deg, #f59e0b, #dc2626);
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            margin: 25px 0;
+            box-shadow: 0 5px 20px rgba(245, 158, 11, 0.3);
+        }
+
+        .promo-banner h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .health-tip {
+            background: rgba(34, 211, 238, 0.1);
+            border: 2px solid rgba(34, 211, 238, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .health-tip h4 {
+            color: #22d3ee;
+            margin-bottom: 10px;
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 10px;
+            right: 25px;
+            font-size: 10px;
+            font-weight: 600;
+            opacity: 0.6;
+            z-index: 999;
+            background: linear-gradient(45deg, #8B4513, #DAA520);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .weather-widget {
+            background: rgba(59, 130, 246, 0.1);
+            border: 2px solid rgba(59, 130, 246, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .social-share {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 25px 0;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 768px) {
+            .social-share {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div style="font-size: 50px; margin-bottom: 15px;">📰</div>
+            <h1 class="brand-name">URBANA VISION</h1>
+            <h2>InfoFlash - Noticias del Día</h2>
+            <p style="margin-top: 10px;">📱 809-713-5307 | 🌐 urbanavision.com</p>
+            <div style="margin-top: 15px; font-size: 14px; opacity: 0.8;">
+                <span id="currentDate"></span> | <span id="currentTime"></span>
+            </div>
+        </div>
+
+        <div class="promo-banner">
+            <h3>🎁 ¡PROMOCIÓN ESPECIAL DEL MES!</h3>
+            <p>30% de descuento en monturas seleccionadas + Examen visual GRATIS</p>
+            <button class="btn btn-whatsapp" onclick="consultarPromocion()" style="margin-top: 15px;">
+                📱 ¡Quiero esta promoción!
+            </button>
+        </div>
+
+        <div class="news-section">
+            <h2>📈 Noticias de Salud Visual</h2>
+            
+            <div class="news-item urgent-news">
+                <div class="news-date">🔴 URGENTE - Hoy</div>
+                <div class="news-title">Alerta: Aumento de Problemas Visuales por Pantallas</div>
+                <div class="news-content">
+                    Los oftalmólogos reportan un aumento del 40% en problemas de vista cansada y sequedad ocular debido al uso excesivo de dispositivos digitales. Se recomienda la regla 20-20-20: cada 20 minutos, mirar algo a 20 pies de distancia por 20 segundos.
+                </div>
+            </div>
+
+            <div class="news-item">
+                <div class="news-date">📅 13 de Julio, 2025</div>
+                <div class="news-title">Nueva Tecnología en Lentes Progresivos</div>
+                <div class="news-content">
+                    Los últimos avances en lentes progresivos ofrecen campos de visión más amplios y transiciones más suaves entre las diferentes graduaciones. Ideal para personas mayores de 40 años que necesitan corrección para lejos y cerca.
+                </div>
+            </div>
+
+            <div class="news-item">
+                <div class="news-date">📅 12 de Julio, 2025</div>
+                <div class="news-title">Importancia de los Exámenes Visuales Anuales</div>
+                <div class="news-content">
+                    Los especialistas recomiendan exámenes visuales anuales para detectar temprano problemas como glaucoma, cataratas y degeneración macular. La detección temprana puede prevenir la pérdida permanente de la visión.
+                </div>
+            </div>
+
+            <div class="news-item">
+                <div class="news-date">📅 11 de Julio, 2025</div>
+                <div class="news-title">Tendencias en Monturas 2025</div>
+                <div class="news-content">
+                    Las monturas oversized y los colores tierra dominan las tendencias de este año. Los materiales sostenibles y las formas geométricas también están ganando popularidad entre los usuarios más jóvenes.
+                </div>
+            </div>
+        </div>
+
+        <div class="health-tip">
+            <h4>💡 Consejo de Salud Visual del Día</h4>
+            <p><strong>Protección UV:</strong> Siempre use lentes con protección UV al salir al sol, incluso en días nublados. Los rayos UV pueden causar cataratas y otros problemas oculares a largo plazo. ¡Sus ojos se lo agradecerán!</p>
+        </div>
+
+        <div class="weather-widget">
+            <h4>🌤️ Clima y Cuidado Visual</h4>
+            <p><strong>Clima de Hoy:</strong> Soleado, 32°C</p>
+            <p>☀️ <strong>Recomendación:</strong> Día perfecto para usar lentes de sol con protección UV. El reflejo del sol en superficies puede ser intenso.</p>
+        </div>
+
+        <div class="news-section">
+            <h2>🏥 Noticias URBANA VISION</h2>
+            
+            <div class="news-item">
+                <div class="news-date">📅 Hoy</div>
+                <div class="news-title">Nuevo Equipo de Examen Digital Disponible</div>
+                <div class="news-content">
+                    Hemos incorporado tecnología de última generación para exámenes más precisos y rápidos. Nuestro nuevo autorefractómetro digital proporciona mediciones exactas en segundos.
+                </div>
+            </div>
+
+            <div class="news-item">
+                <div class="news-date">📅 Esta Semana</div>
+                <div class="news-title">Llegada de Nueva Colección de Monturas</div>
+                <div class="news-content">
+                    Recibimos más de 50 modelos nuevos de monturas de las mejores marcas internacionales. Desde diseños clásicos hasta las últimas tendencias de moda.
+                </div>
+            </div>
+
+            <div class="news-item">
+                <div class="news-date">📅 Mes de Julio</div>
+                <div class="news-title">Campaña de Exámenes Visuales Gratuitos</div>
+                <div class="news-content">
+                    Durante todo el mes de julio, ofrecemos exámenes visuales gratuitos para estudiantes y personas mayores de 60 años. Una oportunidad única de cuidar su salud visual.
+                </div>
+            </div>
+        </div>
+
+        <div class="news-section">
+            <h2>📱 Síguenos y Comparte</h2>
+            <p style="text-align: center; margin-bottom: 20px;">Mantente informado sobre salud visual y nuestras promociones</p>
+            
+            <div class="social-share">
+                <button class="btn btn-whatsapp" onclick="compartirNoticias()">
+                    📱 Compartir por WhatsApp
+                </button>
+                <button class="btn btn-primary" onclick="suscribirseNoticias()">
+                    🔔 Recibir Noticias
+                </button>
+                <button class="btn btn-secondary" onclick="agendarCita()">
+                    📅 Agendar Cita
+                </button>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin: 40px 0;">
+            <button class="btn btn-secondary" onclick="volverInicio()">
+                🏠 Volver al Inicio
+            </button>
+        </div>
+    </div>
+
+    <div class="footer">
+        by fbrugal jrubinstein consultores
+    </div>
+
+    <script>
+        // Actualizar fecha y hora
+        function actualizarFechaHora() {
+            const ahora = new Date();
+            const opciones = { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            };
+            
+            document.getElementById('currentDate').textContent = 
+                ahora.toLocaleDateString('es-ES', opciones);
+            document.getElementById('currentTime').textContent = 
+                ahora.toLocaleTimeString('es-ES');
+        }
+
+        function consultarPromocion() {
+            const mensaje = `🎁 *CONSULTA PROMOCIÓN ESPECIAL*\n\n` +
+                          `¡Hola! Vi en InfoFlash la promoción del mes y me interesa:\n\n` +
+                          `✨ 30% de descuento en monturas seleccionadas\n` +
+                          `👁️ Examen visual GRATIS\n\n` +
+                          `¿Podrían darme más detalles sobre:\n` +
+                          `• ¿Qué monturas están incluidas?\n` +
+                          `• ¿Cómo puedo agendar el examen?\n` +
+                          `• ¿Cuándo vence la promoción?\n\n` +
+                          `📱 URBANA VISION\n` +
+                          `☎️ 809-713-5307\n` +
+                          `🌐 urbanavision.com`;
+            
+            const url = `https://wa.me/18097135307?text=${encodeURIComponent(mensaje)}`;
+            window.open(url, '_blank');
+        }
+
+        function compartirNoticias() {
+            const mensaje = `📰 *INFOFLASH - URBANA VISION*\n\n` +
+                          `¡Mantente informado sobre salud visual!\n\n` +
+                          `🔴 ALERTA: Aumento de problemas visuales por pantallas\n` +
+                          `💡 Regla 20-20-20 para cuidar tus ojos\n` +
+                          `🎁 Promoción especial del mes: 30% descuento + examen gratis\n\n` +
+                          `📱 Lee más noticias en nuestro InfoFlash\n` +
+                          `☎️ 809-713-5307\n` +
+                          `🌐 urbanavision.com\n\n` +
+                          `✨ Cuidamos tu salud visual`;
+            
+            const url = `https://wa.me/?text=${encodeURIComponent(mensaje)}`;
+            window.open(url, '_blank');
+        }
+
+        function suscribirseNoticias() {
+            const mensaje = `🔔 *SUSCRIPCIÓN A NOTICIAS*\n\n` +
+                          `¡Hola! Me interesa recibir las noticias de InfoFlash sobre salud visual.\n\n` +
+                          `Por favor, suscríbanme para recibir:\n` +
+                          `📰 Noticias de salud visual\n` +
+                          `🎁 Promociones especiales\n` +
+                          `💡 Consejos de cuidado ocular\n` +
+                          `📅 Recordatorios de exámenes\n\n` +
+                          `📱 URBANA VISION\n` +
+                          `☎️ 809-713-5307\n` +
+                          `🌐 urbanavision.com`;
+            
+            const url = `https://wa.me/18097135307?text=${encodeURIComponent(mensaje)}`;
+            window.open(url, '_blank');
+        }
+
+        function agendarCita() {
+            const mensaje = `📅 *SOLICITUD DE CITA*\n\n` +
+                          `¡Hola! He leído las noticias en InfoFlash sobre la importancia de los exámenes anuales.\n\n` +
+                          `Me gustaría agendar una cita para:\n` +
+                          `👁️ Examen visual completo\n` +
+                          `🔍 Revisión de salud ocular\n` +
+                          `💬 Consulta sobre opciones de corrección\n\n` +
+                          `¿Qué disponibilidad tienen esta semana?\n\n` +
+                          `📱 URBANA VISION\n` +
+                          `☎️ 809-713-5307\n` +
+                          `🌐 urbanavision.com`;
+            
+            const url = `https://wa.me/18097135307?text=${encodeURIComponent(mensaje)}`;
+            window.open(url, '_blank');
+        }
+
+        function volverInicio() {
+            window.location.href = 'index.html';
+        }
+
+        // Inicializar
+        actualizarFechaHora();
+        setInterval(actualizarFechaHora, 60000); // Actualizar cada minuto
+
+        console.log('✅ InfoFlash URBANA VISION cargado correctamente');
+    </script>
+</body>
+</html>
