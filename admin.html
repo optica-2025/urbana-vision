@@ -1,0 +1,1742 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Admin - URBANA VISION</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: Arial, sans-serif; 
+            background: linear-gradient(135deg, #134e4a 0%, #7c2d12 100%); 
+            color: white; 
+            padding: 20px;
+        }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .header { 
+            background: rgba(255, 255, 255, 0.1); 
+            padding: 20px; 
+            border-radius: 10px; 
+            text-align: center; 
+            margin-bottom: 20px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 20px;
+            margin: 5px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: none;
+            color: white;
+        }
+        .btn-primary { background: #10b981; }
+        .btn-danger { background: #ef4444; }
+        .btn-secondary { background: #666; }
+        .btn-whatsapp { background: #25d366; }
+        .btn-warning { background: #f59e0b; }
+        .btn-success { background: #059669; }
+        .section {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            display: none;
+        }
+        .section.active { display: block; }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .input, .select, .textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #444;
+            background: #333;
+            color: white;
+            border-radius: 5px;
+        }
+        .textarea { min-height: 100px; }
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        .table th, .table td {
+            padding: 10px;
+            border-bottom: 1px solid #444;
+            text-align: left;
+        }
+        .table th {
+            background: rgba(0, 0, 0, 0.3);
+        }
+        .alert {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #10b981;
+            padding: 15px;
+            border-radius: 10px;
+            display: none;
+            z-index: 1000;
+            max-width: 300px;
+        }
+        .camera-box {
+            width: 100%;
+            height: 200px;
+            background: #000;
+            border: 2px dashed #666;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 10px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        .product-img {
+            width: 100px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+        .stat-box {
+            background: rgba(16, 185, 129, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .stat-number {
+            font-size: 36px;
+            font-weight: bold;
+            color: #10b981;
+        }
+        
+        /* ESTILOS DEL LABORATORIO */
+        .orden-card {
+            background: rgba(16, 185, 129, 0.1);
+            border: 2px solid #10b981;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 15px 0;
+        }
+        .numero-orden {
+            background: linear-gradient(45deg, #10b981, #059669);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .estado-orden {
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            text-align: center;
+            margin: 5px 0;
+        }
+        .estado-pendiente { background: #f59e0b; color: white; }
+        .estado-laboratorio { background: #3b82f6; color: white; }
+        .estado-listo { background: #10b981; color: white; }
+        .estado-entregado { background: #6b7280; color: white; }
+        .prescripcion-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 15px 0;
+        }
+        .ojo-section {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 10px;
+        }
+        .medidas-section {
+            background: rgba(37, 211, 102, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #25d366;
+        }
+        .detalle-orden {
+            background: rgba(0, 0, 0, 0.5);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+        .detalle-content {
+            background: linear-gradient(135deg, #134e4a 0%, #7c2d12 100%);
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 80%;
+            max-height: 80%;
+            overflow-y: auto;
+            color: white;
+        }
+        .cotejo-section {
+            background: rgba(236, 72, 153, 0.2);
+            border: 2px solid #ec4899;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+        
+        /* ESTILOS MARKETING Y RD */
+        .reminder-item {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 10px 0;
+            border-left: 4px solid #10b981;
+        }
+        .reminder-urgent {
+            border-left-color: #ef4444;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+        .cliente-item {
+            background: rgba(0,0,0,0.2);
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            border-left: 3px solid #10b981;
+        }
+        .marketing-card {
+            background: rgba(37, 211, 102, 0.1);
+            border: 1px solid #25d366;
+        }
+        .upload-area {
+            border: 2px dashed #25d366;
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px;
+            cursor: pointer;
+            margin: 10px 0;
+        }
+        .template-item {
+            background: rgba(0,0,0,0.3);
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 10px;
+            border-left: 4px solid #25d366;
+        }
+        
+        /* ESTILOS DISRUPTIVOS RD */
+        .mega-btn-rd {
+            display: block;
+            width: 100%;
+            padding: 20px;
+            margin: 15px 0;
+            border: none;
+            border-radius: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        .mega-btn-rd:hover { 
+            transform: translateY(-3px); 
+            box-shadow: 0 12px 25px rgba(0,0,0,0.4); 
+        }
+        .btn-audio-rd { background: linear-gradient(45deg, #059669, #10b981); }
+        .btn-qr-rd { background: linear-gradient(45deg, #7c3aed, #a855f7); }
+        .btn-visual-rd { background: linear-gradient(45deg, #dc2626, #ef4444); }
+        .btn-smart-rd { background: linear-gradient(45deg, #ea580c, #f97316); }
+        
+        .card-rd {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 15px;
+            border: 2px solid rgba(255,255,255,0.1);
+            margin: 15px 0;
+            transition: all 0.3s ease;
+        }
+        
+        .card-rd:hover {
+            border-color: #10b981;
+            transform: translateY(-5px);
+            background: rgba(16, 185, 129, 0.1);
+        }
+        
+        .visual-template-rd {
+            background: linear-gradient(45deg, #1e40af, #3b82f6);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 15px 0;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .visual-template-rd:hover {
+            transform: scale(1.05);
+            background: linear-gradient(45deg, #2563eb, #60a5fa);
+        }
+        
+        .smart-clipboard-rd {
+            background: rgba(0,0,0,0.4);
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 5px solid #10b981;
+            margin: 10px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .smart-clipboard-rd:hover {
+            background: rgba(16, 185, 129, 0.2);
+            transform: translateX(10px);
+        }
+        
+        .record-btn-rd {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: none;
+            background: linear-gradient(45deg, #dc2626, #ef4444);
+            color: white;
+            font-size: 30px;
+            margin: 20px auto;
+            display: block;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+        
+        .record-btn-rd:hover { transform: scale(1.1); }
+        .record-btn-rd.recording { 
+            background: linear-gradient(45deg, #059669, #10b981);
+            animation: pulse 1s infinite;
+        }
+        
+        .qr-display-rd {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            color: #333;
+            margin: 15px 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .footer {
+            position: fixed;
+            bottom: 10px;
+            right: 25px;
+            font-size: 10px;
+            font-weight: 600;
+            opacity: 0.7;
+            background: linear-gradient(45deg, #8B4513, #DAA520);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>⚙️ PANEL ADMINISTRATIVO URBANA VISION</h1>
+            <p>Sistema completo de gestión con laboratorio integrado</p>
+        </div>
+
+        <!-- MENÚ PRINCIPAL -->
+        <div id="menu" class="section active">
+            <div class="grid">
+                <div class="card">
+                    <h3>📊 Dashboard</h3>
+                    <div class="stat-box">
+                        <div class="stat-number" id="totalProductos">0</div>
+                        <div>Productos</div>
+                    </div>
+                    <div class="stat-box" style="margin-top: 10px;">
+                        <div class="stat-number" id="totalClientes">0</div>
+                        <div>Clientes</div>
+                    </div>
+                    <div class="stat-box" style="margin-top: 10px;">
+                        <div class="stat-number">RD$ <span id="ventasHoy">0</span></div>
+                        <div>Ventas Hoy</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>📦 Inventario</h3>
+                    <button class="btn btn-primary" onclick="mostrar('inventario')">📦 Ver Inventario</button>
+                    <button class="btn btn-primary" onclick="mostrar('camara')">📷 Cámara Rápida</button>
+                    <button class="btn btn-secondary" onclick="abrirCatalogo()">🛍️ Ver Catálogo</button>
+                </div>
+
+                <div class="card">
+                    <h3>👥 Gestión</h3>
+                    <button class="btn btn-primary" onclick="mostrar('gestionClientes')">👥 Clientes</button>
+                    <button class="btn btn-primary" onclick="mostrar('recordatorios')">🔔 Recordatorios</button>
+                    <button class="btn btn-secondary" onclick="mostrar('ventas')">💰 Ventas</button>
+                </div>
+
+                <div class="card">
+                    <h3>📱 Marketing</h3>
+                    <button class="btn btn-primary" onclick="mostrar('marketing')">📱 Marketing WhatsApp</button>
+                    <button class="btn btn-warning" onclick="mostrar('contactar')">💬 Contactar Clientes</button>
+                    <button class="btn btn-secondary" onclick="mostrar('campanas')">📣 Campañas</button>
+                </div>
+
+                <div class="card" style="background: linear-gradient(45deg, #134e4a, #7c2d12); border: 2px solid #10b981;">
+                    <h3>🔬 Sistema de Laboratorio</h3>
+                    <button class="btn btn-primary" onclick="mostrar('dashboardLaboratorio')">📊 Dashboard Lab</button>
+                    <button class="btn btn-primary" onclick="mostrar('nuevaOrdenLab')">➕ Nueva Orden</button>
+                    <button class="btn btn-primary" onclick="mostrar('listaOrdenesLab')">📋 Ver Órdenes</button>
+                    <button class="btn btn-warning" onclick="mostrar('cotejoLab')">✅ Cotejo</button>
+                </div>
+
+                <div class="card" style="background: linear-gradient(45deg, #1e3a8a, #7c2d12); border: 2px solid #f59e0b;">
+                    <div style="position: absolute; top: 10px; right: 10px; background: linear-gradient(45deg, #dc2626, #f59e0b); padding: 5px 10px; border-radius: 15px; font-size: 10px; font-weight: bold; animation: pulse 2s infinite;">🚀 DISRUPTIVO</div>
+                    <h3>🇩🇴 Sistema RD</h3>
+                    <button class="btn btn-primary" onclick="mostrar('audioRD')" style="background: linear-gradient(45deg, #059669, #10b981);">🎵 Audio Inteligente</button>
+                    <button class="btn btn-primary" onclick="mostrar('qrRD')" style="background: linear-gradient(45deg, #7c3aed, #a855f7);">📱 QR Mágicos</button>
+                    <button class="btn btn-primary" onclick="mostrar('visualRD')" style="background: linear-gradient(45deg, #dc2626, #ef4444);">🖼️ Visual Analfabetos</button>
+                    <button class="btn btn-primary" onclick="mostrar('clipboardRD')" style="background: linear-gradient(45deg, #ea580c, #f97316);">🧠 Clipboard Smart</button>
+                </div>
+
+                <div class="card">
+                    <h3>📄 Documentos</h3>
+                    <button class="btn btn-primary" onclick="abrirFactura()">📄 Factura Proforma</button>
+                    <button class="btn btn-primary" onclick="abrirNCF()">🧾 Sistema NCF</button>
+                    <button class="btn btn-secondary" onclick="mostrar('reportes')">📊 Reportes</button>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 20px;">
+                <button class="btn btn-danger" onclick="volverInicio()">🏠 Volver al Inicio</button>
+            </div>
+        </div>
+
+        <!-- DASHBOARD LABORATORIO -->
+        <div id="dashboardLaboratorio" class="section">
+            <h2>🔬 Dashboard de Laboratorio</h2>
+            <button class="btn btn-secondary" onclick="mostrar('menu')">⬅️ Volver</button>
+            
+            <div class="grid">
+                <div class="card">
+                    <h3>📊 Estado General</h3>
+                    <div class="orden-card">
+                        <div class="numero-orden" id="proximoNumeroLab">LAB-001</div>
+                        <div>Próximo número de orden</div>
+                    </div>
+                    <div style="text-align: center; margin: 15px 0;">
+                        <div><strong>En Laboratorio:</strong> <span id="enLaboratorioCount">0</span></div>
+                        <div><strong>Para Cotejo:</strong> <span id="paraCotejoCount">0</span></div>
+                        <div><strong>Por Cobrar:</strong> <span id="porCobrarCount">0</span></div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>⚡ Acciones Rápidas</h3>
+                    <button class="btn btn-primary" onclick="mostrar('nuevaOrdenLab')">🔬 Nueva Orden</button>
+                    <button class="btn btn-warning" onclick="mostrar('cotejoLab')">✅ Cotejo Urgente</button>
+                    <button class="btn btn-success" onclick="mostrar('laboratoriosGestion')">🏭 Laboratorios</button>
+                </div>
+
+                <div class="card">
+                    <h3>🏭 Laboratorios Registrados</h3>
+                    <button class="btn btn-primary" onclick="mostrar('laboratoriosGestion')">🏭 Ver Laboratorios</button>
+                    <button class="btn btn-secondary" onclick="mostrar('historialLab')">📞 Historial</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- NUEVA ORDEN DE LABORATORIO -->
+        <div id="nuevaOrdenLab" class="section">
+            <h2>🔬 Nueva Orden de Laboratorio</h2>
+            <button class="btn btn-secondary" onclick="mostrar('dashboardLaboratorio')">⬅️ Volver</button>
+            
+            <div class="grid">
+                <div class="card">
+                    <h3>👤 Datos del Cliente</h3>
+                    <select id="clienteOrdenLab" class="select" onchange="cargarDatosClienteLab()">
+                        <option value="">Seleccionar cliente</option>
+                    </select>
+                    <input type="text" id="nombreClienteLab" class="input" placeholder="Nombre completo" readonly>
+                    <input type="tel" id="telefonoClienteLab" class="input" placeholder="Teléfono" readonly>
+                    
+                    <h4 style="margin-top: 20px;">🔢 Número de Orden</h4>
+                    <div class="numero-orden" id="numeroOrdenActualLab">LAB-001</div>
+                    <button class="btn btn-warning" onclick="generarNuevoNumeroLab()">🔄 Generar Nuevo</button>
+                </div>
+
+                <div class="card">
+                    <h3>👓 Tipo de Monturas y Lentes</h3>
+                    <select id="tipoMonturaLab" class="select">
+                        <option value="">Tipo de montura</option>
+                        <option value="completa">Montura Completa</option>
+                        <option value="media">Media Montura</option>
+                        <option value="sin-montura">Sin Montura (Al Aire)</option>
+                        <option value="deportiva">Deportiva</option>
+                        <option value="sol">Lentes de Sol</option>
+                    </select>
+                    
+                    <select id="tipoLenteLab" class="select">
+                        <option value="">Tipo de lente</option>
+                        <option value="monofocal">Monofocal</option>
+                        <option value="bifocal">Bifocal</option>
+                        <option value="progresivo">Progresivo</option>
+                        <option value="ocupacional">Ocupacional</option>
+                    </select>
+                    
+                    <select id="materialLenteLab" class="select">
+                        <option value="">Material</option>
+                        <option value="organico">Orgánico</option>
+                        <option value="policarbonato">Policarbonato</option>
+                        <option value="high-index">High Index</option>
+                        <option value="cristal">Cristal</option>
+                    </select>
+
+                    <select id="tratamientosLab" class="select">
+                        <option value="">Tratamientos</option>
+                        <option value="antireflejo">Antireflejo</option>
+                        <option value="transition">Transition</option>
+                        <option value="uv">Protección UV</option>
+                        <option value="blue-light">Anti Luz Azul</option>
+                        <option value="polarizado">Polarizado</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>👁️ Prescripción / Receta</h3>
+                <div class="prescripcion-grid">
+                    <div class="ojo-section">
+                        <h4>👁️ OJO DERECHO (OD)</h4>
+                        <input type="text" id="od_esferaLab" class="input" placeholder="Esfera (ej: -2.50)">
+                        <input type="text" id="od_cilindroLab" class="input" placeholder="Cilindro (ej: -1.25)">
+                        <input type="text" id="od_ejeLab" class="input" placeholder="Eje (ej: 180°)">
+                        <input type="text" id="od_adicionLab" class="input" placeholder="Adición (ej: +2.00)">
+                    </div>
+                    
+                    <div class="ojo-section">
+                        <h4>👁️ OJO IZQUIERDO (OI)</h4>
+                        <input type="text" id="oi_esferaLab" class="input" placeholder="Esfera (ej: -3.00)">
+                        <input type="text" id="oi_cilindroLab" class="input" placeholder="Cilindro (ej: -0.75)">
+                        <input type="text" id="oi_ejeLab" class="input" placeholder="Eje (ej: 90°)">
+                        <input type="text" id="oi_adicionLab" class="input" placeholder="Adición (ej: +2.00)">
+                    </div>
+                </div>
+
+                <div class="medidas-section">
+                    <h4>📏 Medidas Específicas</h4>
+                    <div class="grid">
+                        <input type="text" id="distancia_pupilarLab" class="input" placeholder="Distancia Pupilar (ej: 62mm)">
+                        <input type="text" id="altura_pupilarLab" class="input" placeholder="Altura Pupilar (ej: 24mm)">
+                        <input type="text" id="distancia_nasopupilar_odLab" class="input" placeholder="DNP OD (ej: 31mm)">
+                        <input type="text" id="distancia_nasopupilar_oiLab" class="input" placeholder="DNP OI (ej: 31mm)">
+                    </div>
+                </div>
+
+                <textarea id="comentariosLab" class="textarea" placeholder="Comentarios especiales, instrucciones adicionales..."></textarea>
+            </div>
+
+            <div class="card">
+                <h3>📷 Foto de la Receta</h3>
+                <div class="camera-box" id="cameraBoxRecetaLab">
+                    <div id="placeholderRecetaLab">
+                        <div style="font-size: 50px;">📷</div>
+                        <div>Tomar foto de la receta con medidas</div>
+                    </div>
+                    <video id="videoRecetaLab" style="display: none; width: 100%; height: 100%;" autoplay></video>
+                </div>
+                <button class="btn btn-primary" onclick="toggleCameraRecetaLab()" id="cameraBtnRecetaLab">📷 Activar Cámara</button>
+                <img id="previewRecetaLab" style="display: none; width: 100%; margin: 10px 0; border-radius: 5px;">
+                
+                <div style="margin-top: 15px;">
+                    <button class="btn btn-whatsapp" onclick="generarYEnviarOrdenLab()">📱 Generar y Enviar Orden</button>
+                    <button class="btn btn-primary" onclick="guardarOrdenSinEnviarLab()">💾 Guardar Sin Enviar</button>
+                    <button class="btn btn-secondary" onclick="limpiarFormularioLab()">🔄 Limpiar Formulario</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- MARKETING -->
+        <div id="marketing" class="section">
+            <h2>📱 Marketing WhatsApp</h2>
+            <button class="btn btn-secondary" onclick="mostrar('menu')">⬅️ Volver</button>
+            
+            <div class="grid">
+                <div class="card marketing-card">
+                    <h3>📸 Crear Promoción con Foto</h3>
+                    <div class="camera-box" id="cameraBoxMarketing">
+                        <div id="placeholderMarketing">
+                            <div style="font-size: 50px;">📷</div>
+                            <div>Tomar foto de producto</div>
+                        </div>
+                        <video id="videoMarketing" style="display: none; width: 100%; height: 100%;" autoplay></video>
+                    </div>
+                    <button class="btn btn-primary" onclick="toggleCameraMarketing()" id="cameraBtnMarketing">📷 Activar Cámara</button>
+                    <img id="previewMarketing" style="display: none; width: 100%; margin: 10px 0; border-radius: 5px;">
+                    
+                    <textarea id="mensajeMarketing" class="textarea" placeholder="Mensaje promocional...">🛍️ *PROMOCIÓN ESPECIAL*
+
+¡Hola! Te mostramos este hermoso producto que tenemos disponible.
+
+✨ ¿Te interesa verlo en la tienda?
+💰 Excelente calidad y precio
+🚚 Disponible inmediatamente
+
+📱 809-713-5307
+🌐 urbanavision.com</textarea>
+                    
+                    <button class="btn btn-whatsapp" onclick="enviarPromocionMarketing()">📱 Enviar por WhatsApp</button>
+                </div>
+
+                <div class="card marketing-card">
+                    <h3>📊 Estadísticas</h3>
+                    <div class="stat-box">
+                        <div class="stat-number" id="mensajesEnviados">0</div>
+                        <div>Mensajes Enviados Hoy</div>
+                    </div>
+                    <div class="stat-box" style="margin-top: 10px;">
+                        <div class="stat-number" id="promocionesActivas">0</div>
+                        <div>Promociones Activas</div>
+                    </div>
+                    <button class="btn btn-secondary" onclick="verEstadisticas()">📈 Ver Detalles</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- GESTIÓN DE CLIENTES -->
+        <div id="gestionClientes" class="section">
+            <h2>👥 Gestión Completa de Clientes</h2>
+            <button class="btn btn-secondary" onclick="mostrar('menu')">⬅️ Volver</button>
+            
+            <div class="grid">
+                <div class="card">
+                    <h3>➕ Agregar Cliente Nuevo</h3>
+                    <input type="text" id="nombreCliente" class="input" placeholder="Nombre completo">
+                    <input type="tel" id="telefonoCliente" class="input" placeholder="Teléfono (809-555-0000)">
+                    <input type="email" id="emailCliente" class="input" placeholder="Email (opcional)">
+                    <input type="date" id="cumpleanosCliente" class="input" placeholder="Fecha de nacimiento">
+                    <input type="number" id="edadCliente" class="input" placeholder="Edad">
+                    <input type="date" id="ultimoExamenCliente" class="input" placeholder="Último examen">
+                    <textarea id="notasCliente" class="textarea" placeholder="Notas especiales del cliente..."></textarea>
+                    
+                    <button class="btn btn-primary" onclick="agregarCliente()">👥 Agregar Cliente</button>
+                </div>
+                
+                <div class="card">
+                    <h3>🔍 Buscar Cliente</h3>
+                    <input type="text" id="buscarCliente" class="input" placeholder="Buscar por nombre o teléfono..." onkeyup="buscarClienteReal(this.value)">
+                    <div id="resultadosBusqueda" style="max-height: 200px; overflow-y: auto; margin-top: 10px;"></div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>📋 Lista Completa de Clientes</h3>
+                <div id="listaCompletaClientes"></div>
+            </div>
+        </div>
+
+        <!-- SISTEMA RD - AUDIO INTELIGENTE -->
+        <div id="audioRD" class="section">
+            <div class="card-rd" style="background: linear-gradient(45deg, #059669, #10b981, #059669); color: white;">
+                <h2>🎵 Audio Inteligente para RD</h2>
+                <p><strong>🇩🇴 SOLUCIÓN PARA ANALFABETISMO:</strong></p>
+                <ul style="margin: 15px 0; padding-left: 20px;">
+                    <li>🔊 Text-to-speech dominicano</li>
+                    <li>🎤 Graba tu voz personalizada</li>
+                    <li>📱 Envía audios por WhatsApp</li>
+                    <li>🌍 Funciona sin internet después</li>
+                </ul>
+            </div>
+            
+            <div class="card-rd">
+                <h3>🎤 Grabar Mensaje Personalizado</h3>
+                <button class="record-btn-rd" id="recordBtnRD" onclick="toggleRecordingRD()">🎤</button>
+                <div id="recordStatusRD" style="text-align: center; margin: 10px 0;">Presiona para grabar</div>
+                
+                <audio id="audioPlayerRD" controls style="width: 100%; margin: 15px 0; display: none;"></audio>
+                
+                <input type="text" id="audioTitleRD" class="input" placeholder="Título del audio (ej: Oferta del día)" style="margin: 10px 0;">
+                
+                <button class="mega-btn-rd btn-audio-rd" onclick="enviarAudioRD()">
+                    📱 ENVIAR AUDIO POR WHATSAPP
+                </button>
+            </div>
+            
+            <button class="btn btn-secondary" onclick="mostrar('menu')">⬅️ Volver al Menú</button>
+        </div>
+
+        <!-- QR MÁGICOS RD -->
+        <div id="qrRD" class="section">
+            <div class="card-rd" style="background: linear-gradient(45deg, #7c3aed, #a855f7, #7c3aed); color: white;">
+                <h2>📱 Códigos QR Mágicos</h2>
+                <p><strong>🇩🇴 SOLUCIÓN GENIAL:</strong> El cliente escanea = WhatsApp directo a 809-713-5307</p>
+            </div>
+            
+            <div class="grid">
+                <div class="qr-display-rd">
+                    <h3>📱 QR: Contactar Tienda</h3>
+                    <div style="font-size: 120px;">📱</div>
+                    <p><strong>Escanea y te lleva directo a WhatsApp</strong></p>
+                    <button class="mega-btn-rd btn-qr-rd" onclick="generarQRRD('contacto')">
+                        🔄 GENERAR QR CONTACTO
+                    </button>
+                </div>
+                
+                <div class="qr-display-rd">
+                    <h3>🛍️ QR: Ver Catálogo</h3>
+                    <div style="font-size: 120px;">🛍️</div>
+                    <p><strong>Escanea y ve todos los productos</strong></p>
+                    <button class="mega-btn-rd btn-qr-rd" onclick="generarQRRD('catalogo')">
+                        🔄 GENERAR QR CATÁLOGO
+                    </button>
+                </div>
+            </div>
+            
+            <button class="btn btn-secondary" onclick="mostrar('menu')">⬅️ Volver al Menú</button>
+        </div>
+
+        <!-- MODAL DETALLE DE ORDEN DE LABORATORIO -->
+        <div id="detalleOrdenModalLab" class="detalle-orden" onclick="cerrarDetalleLab()">
+            <div class="detalle-content" onclick="event.stopPropagation()">
+                <div style="text-align: right; margin-bottom: 20px;">
+                    <button class="btn btn-danger" onclick="cerrarDetalleLab()">❌ Cerrar</button>
+                </div>
+                <div id="contenidoDetalleLab"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="alert" id="alert"></div>
+    <canvas id="canvas" style="display: none;"></canvas>
+    <canvas id="canvas2" style="display: none;"></canvas>
+    <canvas id="canvasMarketing" style="display: none;"></canvas>
+    <canvas id="canvasRecetaLab" style="display: none;"></canvas>
+    <div class="footer">
+        by fbrugal jrubinstein consultores
+    </div>
+
+    <script>
+        // ========================================
+        // 🔧 VARIABLES GLOBALES UNIFICADAS
+        // ========================================
+        
+        // Variables del sistema principal
+        let productos = [];
+        let clientes = [];
+        let ventas = [];
+        let facturas = [];
+        let examenes = [];
+        let templates = [];
+        let estadisticas = { mensajesHoy: 0, promociones: 0 };
+        
+        // Variables del sistema de laboratorio
+        let ordenesLaboratorio = [];
+        let laboratorios = [];
+        let contadorOrdenes = 1;
+        let ordenesFiltradas = [];
+        
+        // Variables de cámaras
+        let stream = null;
+        let stream2 = null;
+        let streamMarketing = null;
+        let streamRecetaLab = null;
+        let fotoActual = null;
+        let fotoPromo = null;
+        let fotoMarketing = null;
+        let fotoRecetaLab = null;
+        let archivoSubido = null;
+
+        // Variables del sistema disruptivo RD
+        let mediaRecorderRD = null;
+        let audioChunksRD = [];
+        let isRecordingRD = false;
+        let plantillaSeleccionadaRD = null;
+        let audioPersonalizadoSubido = null;
+        let plantillaPersonalizadaSubida = null;
+        let estadisticasRD = {
+            audiosEnviados: 0,
+            enlacesEnviados: 0,
+            audiosPersonalizados: 0
+        };
+
+        // ========================================
+        // 🚀 INICIALIZACIÓN COMPLETA DEL SISTEMA
+        // ========================================
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            try {
+                console.log('🔄 Iniciando sistema completo URBANA VISION...');
+                
+                cargarDatosCompletos();
+                crearDatosEjemplo();
+                cargarTemplatesDefault();
+                
+                actualizarDashboard();
+                
+                console.log('✅ Sistema completo inicializado correctamente');
+                showAlert('✅ Sistema URBANA VISION cargado completamente');
+            } catch (error) {
+                console.error('❌ Error al inicializar:', error);
+                showAlert('⚠️ Sistema iniciado en modo seguro');
+                crearDatosEjemplo();
+            }
+        });
+
+        function cargarDatosCompletos() {
+            try {
+                // Cargar datos del sistema principal
+                productos = JSON.parse(localStorage.getItem('urbanaInventario') || '[]');
+                clientes = JSON.parse(localStorage.getItem('urbanaClientes') || '[]');
+                ventas = JSON.parse(localStorage.getItem('urbanaVentas') || '[]');
+                facturas = JSON.parse(localStorage.getItem('urbanaFacturas') || '[]');
+                examenes = JSON.parse(localStorage.getItem('urbanaExamenes') || '[]');
+                templates = JSON.parse(localStorage.getItem('urbanaTemplates') || '[]');
+                estadisticas = JSON.parse(localStorage.getItem('urbanaEstadisticas') || '{"mensajesHoy": 0, "promociones": 0}');
+                
+                // Cargar datos del laboratorio
+                ordenesLaboratorio = JSON.parse(localStorage.getItem('urbanaOrdenesLab') || '[]');
+                laboratorios = JSON.parse(localStorage.getItem('urbanaLaboratorios') || '[]');
+                contadorOrdenes = parseInt(localStorage.getItem('urbanaContadorOrdenes') || '1');
+                
+                // Cargar datos RD
+                estadisticasRD = JSON.parse(localStorage.getItem('urbanaEstadisticasRD') || '{"audiosEnviados": 0, "enlacesEnviados": 0, "audiosPersonalizados": 0}');
+                
+                console.log('✅ Todos los datos cargados correctamente');
+            } catch (error) {
+                console.error('❌ Error cargando datos:', error);
+                crearDatosEjemplo();
+            }
+        }
+
+        function crearDatosEjemplo() {
+            // Crear clientes de ejemplo si no existen
+            if (clientes.length === 0) {
+                clientes = [
+                    { 
+                        id: 1, 
+                        nombre: 'María González', 
+                        telefono: '809-555-0001', 
+                        email: 'maria@email.com', 
+                        cumpleanos: '1985-03-15',
+                        edad: 39,
+                        ultimoExamen: '2023-06-15'
+                    },
+                    { 
+                        id: 2, 
+                        nombre: 'Juan Pérez', 
+                        telefono: '809-555-0002', 
+                        email: 'juan@email.com', 
+                        cumpleanos: '1990-07-22',
+                        edad: 34,
+                        ultimoExamen: '2023-01-20'
+                    }
+                ];
+            }
+            
+            // Crear laboratorios de ejemplo si no existen
+            if (laboratorios.length === 0) {
+                laboratorios = [
+                    {
+                        id: 1,
+                        nombre: 'Laboratorio Central',
+                        telefono: '809-555-1000',
+                        contacto: 'Juan Pérez',
+                        notas: 'Especialista en progresivos'
+                    },
+                    {
+                        id: 2,
+                        nombre: 'Lab Express',
+                        telefono: '809-555-2000',
+                        contacto: 'María González',
+                        notas: 'Entrega rápida, 24-48 horas'
+                    }
+                ];
+            }
+            
+            guardarDatosCompletos();
+        }
+
+        function cargarTemplatesDefault() {
+            if (templates.length === 0) {
+                templates = [
+                    {
+                        id: 'ubicacion',
+                        titulo: 'Ubicación',
+                        contenido: '📍 *NUESTRA UBICACIÓN*\n\n🏢 URBANA VISION\n📍 [Dirección completa]\n🚗 Fácil estacionamiento\n🚌 Cerca del transporte público\n\n📱 809-713-5307\n🌐 urbanavision.com'
+                    },
+                    {
+                        id: 'horarios',
+                        titulo: 'Horarios',
+                        contenido: '⏰ *HORARIOS DE ATENCIÓN*\n\n📅 Lunes a Viernes: 8:00 AM - 6:00 PM\n📅 Sábados: 8:00 AM - 4:00 PM\n📅 Domingos: Cerrado\n\n📱 809-713-5307\n🌐 urbanavision.com'
+                    }
+                ];
+                localStorage.setItem('urbanaTemplates', JSON.stringify(templates));
+            }
+        }
+
+        function guardarDatosCompletos() {
+            try {
+                // Guardar datos del sistema principal
+                localStorage.setItem('urbanaInventario', JSON.stringify(productos));
+                localStorage.setItem('urbanaClientes', JSON.stringify(clientes));
+                localStorage.setItem('urbanaVentas', JSON.stringify(ventas));
+                localStorage.setItem('urbanaFacturas', JSON.stringify(facturas));
+                localStorage.setItem('urbanaTemplates', JSON.stringify(templates));
+                localStorage.setItem('urbanaEstadisticas', JSON.stringify(estadisticas));
+                
+                // Guardar datos del laboratorio
+                localStorage.setItem('urbanaOrdenesLab', JSON.stringify(ordenesLaboratorio));
+                localStorage.setItem('urbanaLaboratorios', JSON.stringify(laboratorios));
+                localStorage.setItem('urbanaContadorOrdenes', contadorOrdenes.toString());
+                
+                // Guardar datos RD
+                localStorage.setItem('urbanaEstadisticasRD', JSON.stringify(estadisticasRD));
+                
+                console.log('✅ Todos los datos guardados correctamente');
+            } catch (error) {
+                console.error('❌ Error al guardar datos:', error);
+                showAlert('⚠️ Error al guardar datos');
+            }
+        }
+
+        // ========================================
+        // 🔄 FUNCIONES DE NAVEGACIÓN CENTRAL
+        // ========================================
+        
+        function mostrar(seccion) {
+            try {
+                document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+                const elemento = document.getElementById(seccion);
+                if (elemento) {
+                    elemento.classList.add('active');
+                } else {
+                    console.error(`Sección '${seccion}' no encontrada`);
+                    showAlert(`Error: Sección '${seccion}' no encontrada`);
+                    return;
+                }
+                
+                // Cargar datos específicos de cada sección
+                switch(seccion) {
+                    case 'menu': 
+                        actualizarDashboard(); 
+                        break;
+                    case 'dashboardLaboratorio':
+                        actualizarDashboardLaboratorio();
+                        break;
+                    case 'nuevaOrdenLab':
+                        cargarClientesSelectLab();
+                        actualizarProximoNumeroLab();
+                        break;
+                    case 'marketing': 
+                        cargarMarketing(); 
+                        break;
+                    case 'gestionClientes': 
+                        cargarGestionClientes(); 
+                        break;
+                    case 'audioRD': 
+                        cargarAudioRD(); 
+                        break;
+                    case 'qrRD': 
+                        cargarQRRD(); 
+                        break;
+                }
+            } catch (error) {
+                console.error('❌ Error mostrando sección:', error);
+                showAlert('❌ Error al cargar sección');
+            }
+        }
+
+        function showAlert(msg) {
+            try {
+                const alert = document.getElementById('alert');
+                if (alert) {
+                    alert.textContent = msg;
+                    alert.style.display = 'block';
+                    setTimeout(() => alert.style.display = 'none', 4000);
+                }
+                console.log('🔔 Alert:', msg);
+            } catch (error) {
+                console.error('❌ Error mostrando alerta:', error);
+            }
+        }
+
+        // ========================================
+        // 📊 FUNCIONES DE DASHBOARD PRINCIPAL
+        // ========================================
+        
+        function actualizarDashboard() {
+            try {
+                document.getElementById('totalProductos').textContent = productos.length;
+                document.getElementById('totalClientes').textContent = clientes.length;
+                
+                const hoy = new Date().toDateString();
+                const ventasHoy = ventas.filter(v => new Date(v.fecha).toDateString() === hoy);
+                const totalHoy = ventasHoy.reduce((sum, v) => sum + v.total, 0);
+                document.getElementById('ventasHoy').textContent = totalHoy.toFixed(2);
+            } catch (error) {
+                console.error('❌ Error actualizando dashboard:', error);
+            }
+        }
+
+        // ========================================
+        // 🔬 FUNCIONES DE LABORATORIO
+        // ========================================
+        
+        function actualizarDashboardLaboratorio() {
+            try {
+                const enLab = ordenesLaboratorio.filter(o => o.estado === 'laboratorio').length;
+                const paraCotejo = ordenesLaboratorio.filter(o => o.estado === 'listo').length;
+                const porCobrar = ordenesLaboratorio.filter(o => o.estado === 'entregado' && !o.pagado).length;
+                
+                document.getElementById('enLaboratorioCount').textContent = enLab;
+                document.getElementById('paraCotejoCount').textContent = paraCotejo;
+                document.getElementById('porCobrarCount').textContent = porCobrar;
+                
+                actualizarProximoNumeroLab();
+            } catch (error) {
+                console.error('❌ Error actualizando dashboard laboratorio:', error);
+            }
+        }
+
+        function cargarClientesSelectLab() {
+            try {
+                const select = document.getElementById('clienteOrdenLab');
+                if (!select) return;
+                
+                select.innerHTML = '<option value="">Seleccionar cliente</option>';
+                clientes.forEach(c => {
+                    select.innerHTML += `<option value="${c.id}">${c.nombre} - ${c.telefono}</option>`;
+                });
+            } catch (error) {
+                console.error('❌ Error cargando clientes laboratorio:', error);
+            }
+        }
+
+        function cargarDatosClienteLab() {
+            try {
+                const clienteId = parseInt(document.getElementById('clienteOrdenLab').value);
+                if (!clienteId) return;
+                
+                const cliente = clientes.find(c => c.id === clienteId);
+                if (!cliente) return;
+                
+                document.getElementById('nombreClienteLab').value = cliente.nombre;
+                document.getElementById('telefonoClienteLab').value = cliente.telefono;
+            } catch (error) {
+                console.error('❌ Error cargando datos cliente laboratorio:', error);
+            }
+        }
+
+        function actualizarProximoNumeroLab() {
+            try {
+                const numero = generarNumeroOrdenLab();
+                document.getElementById('proximoNumeroLab').textContent = numero;
+                document.getElementById('numeroOrdenActualLab').textContent = numero;
+            } catch (error) {
+                console.error('❌ Error actualizando número laboratorio:', error);
+            }
+        }
+
+        function generarNumeroOrdenLab() {
+            try {
+                const fecha = new Date();
+                const año = fecha.getFullYear().toString().slice(-2);
+                const mes = (fecha.getMonth() + 1).toString().padStart(2, '0');
+                const numero = contadorOrdenes.toString().padStart(3, '0');
+                return `LAB-${año}${mes}-${numero}`;
+            } catch (error) {
+                console.error('❌ Error generando número:', error);
+                return `LAB-${Date.now()}`;
+            }
+        }
+
+        function generarNuevoNumeroLab() {
+            try {
+                contadorOrdenes++;
+                guardarDatosCompletos();
+                actualizarProximoNumeroLab();
+                showAlert('🔢 Nuevo número de orden generado');
+            } catch (error) {
+                console.error('❌ Error generando nuevo número:', error);
+                showAlert('❌ Error al generar número');
+            }
+        }
+
+        async function toggleCameraRecetaLab() {
+            const video = document.getElementById('videoRecetaLab');
+            const btn = document.getElementById('cameraBtnRecetaLab');
+            const placeholder = document.getElementById('placeholderRecetaLab');
+            
+            if (!streamRecetaLab) {
+                try {
+                    streamRecetaLab = await navigator.mediaDevices.getUserMedia({ 
+                        video: { facingMode: 'environment' } 
+                    });
+                    video.srcObject = streamRecetaLab;
+                    video.style.display = 'block';
+                    placeholder.style.display = 'none';
+                    btn.textContent = '📸 Tomar Foto';
+                    btn.onclick = tomarFotoRecetaLab;
+                } catch (err) {
+                    showAlert('❌ Error al acceder a la cámara');
+                }
+            } else {
+                tomarFotoRecetaLab();
+            }
+        }
+
+        function tomarFotoRecetaLab() {
+            const video = document.getElementById('videoRecetaLab');
+            const canvas = document.getElementById('canvasRecetaLab');
+            const preview = document.getElementById('previewRecetaLab');
+            
+            try {
+                canvas.width = video.videoWidth || 640;
+                canvas.height = video.videoHeight || 480;
+                
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(video, 0, 0);
+                
+                fotoRecetaLab = canvas.toDataURL('image/jpeg', 0.8);
+                preview.src = fotoRecetaLab;
+                preview.style.display = 'block';
+                
+                detenerCamara(streamRecetaLab);
+                streamRecetaLab = null;
+                
+                video.style.display = 'none';
+                document.getElementById('placeholderRecetaLab').style.display = 'block';
+                document.getElementById('cameraBtnRecetaLab').textContent = '📷 Activar Cámara';
+                document.getElementById('cameraBtnRecetaLab').onclick = toggleCameraRecetaLab;
+                
+                showAlert('📷 Foto de receta capturada');
+            } catch (error) {
+                console.error('❌ Error al tomar foto:', error);
+                showAlert('❌ Error al tomar foto');
+            }
+        }
+
+        function generarYEnviarOrdenLab() {
+            try {
+                const orden = recopilarDatosOrdenLab();
+                if (!validarOrdenLab(orden)) return;
+                
+                orden.id = Date.now();
+                orden.fechaCreacion = new Date().toISOString();
+                orden.estado = 'laboratorio';
+                orden.pagado = false;
+                
+                ordenesLaboratorio.push(orden);
+                contadorOrdenes++;
+                guardarDatosCompletos();
+                
+                enviarOrdenWhatsAppLab(orden);
+                
+                showAlert('✅ Orden creada y enviada al laboratorio');
+                limpiarFormularioLab();
+                actualizarDashboardLaboratorio();
+            } catch (error) {
+                console.error('❌ Error generando orden:', error);
+                showAlert('❌ Error al generar orden');
+            }
+        }
+
+        function recopilarDatosOrdenLab() {
+            try {
+                return {
+                    numero: document.getElementById('numeroOrdenActualLab').textContent || generarNumeroOrdenLab(),
+                    clienteId: parseInt(document.getElementById('clienteOrdenLab').value) || 0,
+                    cliente: document.getElementById('nombreClienteLab').value,
+                    telefono: document.getElementById('telefonoClienteLab').value,
+                    tipoMontura: document.getElementById('tipoMonturaLab').value,
+                    tipoLente: document.getElementById('tipoLenteLab').value,
+                    materialLente: document.getElementById('materialLenteLab').value,
+                    tratamientos: document.getElementById('tratamientosLab').value,
+                    prescripcion: {
+                        od: {
+                            esfera: document.getElementById('od_esferaLab').value,
+                            cilindro: document.getElementById('od_cilindroLab').value,
+                            eje: document.getElementById('od_ejeLab').value,
+                            adicion: document.getElementById('od_adicionLab').value
+                        },
+                        oi: {
+                            esfera: document.getElementById('oi_esferaLab').value,
+                            cilindro: document.getElementById('oi_cilindroLab').value,
+                            eje: document.getElementById('oi_ejeLab').value,
+                            adicion: document.getElementById('oi_adicionLab').value
+                        }
+                    },
+                    medidas: {
+                        distanciaPupilar: document.getElementById('distancia_pupilarLab').value,
+                        alturaPupilar: document.getElementById('altura_pupilarLab').value,
+                        dnpOD: document.getElementById('distancia_nasopupilar_odLab').value,
+                        dnpOI: document.getElementById('distancia_nasopupilar_oiLab').value
+                    },
+                    comentarios: document.getElementById('comentariosLab').value,
+                    fotoReceta: fotoRecetaLab
+                };
+            } catch (error) {
+                console.error('❌ Error recopilando datos:', error);
+                return {};
+            }
+        }
+
+        function validarOrdenLab(orden) {
+            if (!orden.clienteId) {
+                showAlert('❌ Seleccione un cliente');
+                return false;
+            }
+            
+            if (!orden.tipoLente) {
+                showAlert('❌ Seleccione el tipo de lente');
+                return false;
+            }
+            
+            if (!fotoRecetaLab) {
+                showAlert('❌ Tome una foto de la receta');
+                return false;
+            }
+            
+            return true;
+        }
+
+        function enviarOrdenWhatsAppLab(orden) {
+            try {
+                const mensaje = `🔬 *NUEVA ORDEN DE LABORATORIO*
+
+📋 *NÚMERO:* ${orden.numero}
+📅 *FECHA:* ${new Date().toLocaleDateString()}
+
+👤 *CLIENTE:* ${orden.cliente}
+📱 *TELÉFONO:* ${orden.telefono}
+
+👓 *ESPECIFICACIONES:*
+• Montura: ${orden.tipoMontura || 'No especificado'}
+• Tipo Lente: ${orden.tipoLente || 'No especificado'}
+• Material: ${orden.materialLente || 'No especificado'}
+• Tratamiento: ${orden.tratamientos || 'Ninguno'}
+
+👁️ *PRESCRIPCIÓN:*
+
+*OJO DERECHO (OD):*
+• Esfera: ${orden.prescripcion.od.esfera || 'PLANO'}
+• Cilindro: ${orden.prescripcion.od.cilindro || 'PLANO'}
+• Eje: ${orden.prescripcion.od.eje || 'N/A'}
+• Adición: ${orden.prescripcion.od.adicion || 'N/A'}
+
+*OJO IZQUIERDO (OI):*
+• Esfera: ${orden.prescripcion.oi.esfera || 'PLANO'}
+• Cilindro: ${orden.prescripcion.oi.cilindro || 'PLANO'}
+• Eje: ${orden.prescripcion.oi.eje || 'N/A'}
+• Adición: ${orden.prescripcion.oi.adicion || 'N/A'}
+
+📏 *MEDIDAS:*
+• Distancia Pupilar: ${orden.medidas.distanciaPupilar || 'Tomar medida'}
+• Altura Pupilar: ${orden.medidas.alturaPupilar || 'Tomar medida'}
+• DNP OD: ${orden.medidas.dnpOD || 'Calcular'}
+• DNP OI: ${orden.medidas.dnpOI || 'Calcular'}
+
+💬 *COMENTARIOS:*
+${orden.comentarios || 'Ningún comentario especial'}
+
+📸 *FOTO DE RECETA ADJUNTA*
+
+⚠️ *IMPORTANTE:*
+- Confirmar recepción de orden
+- Enviar foto cuando esté lista
+- Tiempo estimado de entrega
+
+📱 URBANA VISION
+🌐 urbanavision.com`;
+                
+                window.open(`https://wa.me/?text=${encodeURIComponent(mensaje)}`, '_blank');
+            } catch (error) {
+                console.error('❌ Error al enviar orden:', error);
+            }
+        }
+
+        function guardarOrdenSinEnviarLab() {
+            try {
+                const orden = recopilarDatosOrdenLab();
+                if (!validarOrdenLab(orden)) return;
+                
+                orden.id = Date.now();
+                orden.fechaCreacion = new Date().toISOString();
+                orden.estado = 'pendiente';
+                orden.pagado = false;
+                
+                ordenesLaboratorio.push(orden);
+                contadorOrdenes++;
+                guardarDatosCompletos();
+                
+                showAlert('💾 Orden guardada sin enviar');
+                limpiarFormularioLab();
+                actualizarDashboardLaboratorio();
+            } catch (error) {
+                console.error('❌ Error guardando orden:', error);
+                showAlert('❌ Error al guardar orden');
+            }
+        }
+
+        function limpiarFormularioLab() {
+            try {
+                const campos = [
+                    'clienteOrdenLab', 'tipoMonturaLab', 'tipoLenteLab', 'materialLenteLab', 'tratamientosLab',
+                    'nombreClienteLab', 'telefonoClienteLab',
+                    'od_esferaLab', 'od_cilindroLab', 'od_ejeLab', 'od_adicionLab',
+                    'oi_esferaLab', 'oi_cilindroLab', 'oi_ejeLab', 'oi_adicionLab',
+                    'distancia_pupilarLab', 'altura_pupilarLab',
+                    'distancia_nasopupilar_odLab', 'distancia_nasopupilar_oiLab',
+                    'comentariosLab'
+                ];
+                
+                campos.forEach(campo => {
+                    const elemento = document.getElementById(campo);
+                    if (elemento) elemento.value = '';
+                });
+                
+                const preview = document.getElementById('previewRecetaLab');
+                if (preview) preview.style.display = 'none';
+                fotoRecetaLab = null;
+            } catch (error) {
+                console.error('❌ Error limpiando formulario:', error);
+            }
+        }
+
+        function detenerCamara(stream) {
+            try {
+                if (stream) {
+                    stream.getTracks().forEach(track => track.stop());
+                }
+            } catch (error) {
+                console.error('❌ Error deteniendo cámara:', error);
+            }
+        }
+
+        // ========================================
+        // 📱 FUNCIONES DE MARKETING
+        // ========================================
+        
+        function cargarMarketing() {
+            try {
+                document.getElementById('mensajesEnviados').textContent = estadisticas.mensajesHoy || 0;
+                document.getElementById('promocionesActivas').textContent = estadisticas.promociones || 0;
+            } catch (error) {
+                console.error('❌ Error cargando marketing:', error);
+            }
+        }
+
+        async function toggleCameraMarketing() {
+            const video = document.getElementById('videoMarketing');
+            const btn = document.getElementById('cameraBtnMarketing');
+            const placeholder = document.getElementById('placeholderMarketing');
+            
+            if (!streamMarketing) {
+                try {
+                    streamMarketing = await navigator.mediaDevices.getUserMedia({ 
+                        video: { facingMode: 'environment' } 
+                    });
+                    video.srcObject = streamMarketing;
+                    video.style.display = 'block';
+                    placeholder.style.display = 'none';
+                    btn.textContent = '📸 Tomar Foto';
+                    btn.onclick = tomarFotoMarketing;
+                } catch (err) {
+                    showAlert('❌ Error al acceder a la cámara');
+                }
+            } else {
+                tomarFotoMarketing();
+            }
+        }
+
+        function tomarFotoMarketing() {
+            const video = document.getElementById('videoMarketing');
+            const canvas = document.getElementById('canvasMarketing');
+            const preview = document.getElementById('previewMarketing');
+            
+            try {
+                canvas.width = video.videoWidth || 640;
+                canvas.height = video.videoHeight || 480;
+                canvas.getContext('2d').drawImage(video, 0, 0);
+                
+                fotoMarketing = canvas.toDataURL('image/jpeg', 0.8);
+                preview.src = fotoMarketing;
+                preview.style.display = 'block';
+                
+                detenerCamara(streamMarketing);
+                streamMarketing = null;
+                
+                video.style.display = 'none';
+                placeholder.style.display = 'block';
+                document.getElementById('cameraBtnMarketing').textContent = '📷 Activar Cámara';
+                document.getElementById('cameraBtnMarketing').onclick = toggleCameraMarketing;
+                
+                showAlert('📷 Foto de marketing capturada');
+            } catch (error) {
+                console.error('❌ Error al tomar foto:', error);
+                showAlert('❌ Error al tomar foto');
+            }
+        }
+
+        function enviarPromocionMarketing() {
+            const mensaje = document.getElementById('mensajeMarketing').value;
+            if (!mensaje.trim()) {
+                showAlert('❌ Escriba un mensaje promocional');
+                return;
+            }
+            
+            try {
+                window.open(`https://wa.me/?text=${encodeURIComponent(mensaje)}`, '_blank');
+                actualizarEstadisticas('promocion');
+                showAlert('📱 Promoción enviada por WhatsApp');
+            } catch (error) {
+                console.error('❌ Error al enviar promoción:', error);
+                showAlert('❌ Error al enviar promoción');
+            }
+        }
+
+        function verEstadisticas() {
+            const stats = `📊 *ESTADÍSTICAS DE HOY*\n\n` +
+                         `📱 Mensajes enviados: ${estadisticas.mensajesHoy}\n` +
+                         `🎁 Promociones: ${estadisticas.promociones}\n` +
+                         `📦 Productos: ${productos.length}\n` +
+                         `👥 Clientes: ${clientes.length}\n\n` +
+                         `📅 ${new Date().toLocaleDateString()}`;
+            
+            window.open(`https://wa.me/?text=${encodeURIComponent(stats)}`, '_blank');
+        }
+
+        function actualizarEstadisticas(tipo) {
+            const hoy = new Date().toDateString();
+            const ultimaActualizacion = localStorage.getItem('urbanaUltimaStats');
+            
+            if (ultimaActualizacion !== hoy) {
+                estadisticas.mensajesHoy = 0;
+                estadisticas.promociones = 0;
+                localStorage.setItem('urbanaUltimaStats', hoy);
+            }
+            
+            if (tipo === 'mensaje') {
+                estadisticas.mensajesHoy++;
+            } else if (tipo === 'promocion') {
+                estadisticas.promociones++;
+                estadisticas.mensajesHoy++;
+            }
+            
+            guardarDatosCompletos();
+            if (document.getElementById('mensajesEnviados')) {
+                document.getElementById('mensajesEnviados').textContent = estadisticas.mensajesHoy;
+                document.getElementById('promocionesActivas').textContent = estadisticas.promociones;
+            }
+        }
+
+        // ========================================
+        // 👥 FUNCIONES DE GESTIÓN DE CLIENTES
+        // ========================================
+        
+        function cargarGestionClientes() {
+            cargarListaCompletaClientes();
+        }
+
+        function agregarCliente() {
+            const nombre = document.getElementById('nombreCliente').value.trim();
+            const telefono = document.getElementById('telefonoCliente').value.trim();
+            
+            if (!nombre || !telefono) {
+                showAlert('❌ Complete nombre y teléfono');
+                return;
+            }
+            
+            if (clientes.some(c => c.telefono === telefono)) {
+                showAlert('❌ Ya existe un cliente con ese teléfono');
+                return;
+            }
+            
+            const nuevoCliente = {
+                id: Date.now(),
+                nombre: nombre,
+                telefono: telefono,
+                email: document.getElementById('emailCliente').value.trim(),
+                cumpleanos: document.getElementById('cumpleanosCliente').value,
+                edad: parseInt(document.getElementById('edadCliente').value) || null,
+                ultimoExamen: document.getElementById('ultimoExamenCliente').value,
+                notas: document.getElementById('notasCliente').value.trim(),
+                fechaRegistro: new Date().toISOString()
+            };
+            
+            try {
+                clientes.push(nuevoCliente);
+                guardarDatosCompletos();
+                
+                ['nombreCliente', 'telefonoCliente', 'emailCliente', 'cumpleanosCliente', 'edadCliente', 'ultimoExamenCliente', 'notasCliente'].forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.value = '';
+                });
+                
+                cargarListaCompletaClientes();
+                showAlert(`✅ Cliente ${nombre} agregado correctamente`);
+            } catch (error) {
+                console.error('❌ Error al agregar cliente:', error);
+                showAlert('❌ Error al agregar cliente');
+            }
+        }
+
+        function buscarClienteReal(termino) {
+            const resultados = document.getElementById('resultadosBusqueda');
+            if (!resultados) return;
+            
+            if (!termino.trim()) {
+                resultados.innerHTML = '';
+                return;
+            }
+            
+            const clientesEncontrados = clientes.filter(c => 
+                c.nombre.toLowerCase().includes(termino.toLowerCase()) ||
+                c.telefono.includes(termino)
+            );
+            
+            if (clientesEncontrados.length === 0) {
+                resultados.innerHTML = '<p style="text-align: center; opacity: 0.7;">No se encontraron clientes</p>';
+                return;
+            }
+            
+            resultados.innerHTML = clientesEncontrados.map(c => `
+                <div class="cliente-item" style="margin: 5px 0;">
+                    <strong>${c.nombre}</strong><br>
+                    📱 ${c.telefono}<br>
+                    ${c.cumpleanos ? `🎂 ${new Date(c.cumpleanos).toLocaleDateString()}` : ''}<br>
+                    <button class="btn btn-whatsapp" onclick="contactarClienteDirecto('${c.telefono}', '${c.nombre}')">💬 Contactar</button>
+                </div>
+            `).join('');
+        }
+
+        function contactarClienteDirecto(telefono, nombre) {
+            const mensaje = `¡Hola ${nombre}! ✨\n\nEspero que estés muy bien. Te contacto desde URBANA VISION.\n\n¿Cómo has estado? ¿Todo bien con tus lentes?\n\nTenemos nuevas ofertas que podrían interesarte.\n\n📱 809-713-5307\n🌐 urbanavision.com`;
+            const telefonoLimpio = telefono.replace(/[^0-9]/g, '');
+            window.open(`https://wa.me/${telefonoLimpio}?text=${encodeURIComponent(mensaje)}`, '_blank');
+            actualizarEstadisticas('mensaje');
+        }
+
+        function cargarListaCompletaClientes() {
+            const lista = document.getElementById('listaCompletaClientes');
+            if (!lista) return;
+            
+            if (clientes.length === 0) {
+                lista.innerHTML = '<p style="text-align: center;">No hay clientes registrados. Agregue el primer cliente arriba.</p>';
+                return;
+            }
+            
+            let html = '<table class="table"><thead><tr><th>Nombre</th><th>Teléfono</th><th>Cumpleaños</th><th>Último Examen</th><th>Acciones</th></tr></thead><tbody>';
+            
+            clientes.forEach(c => {
+                const diasHastaCumple = c.cumpleanos ? Math.ceil((new Date(c.cumpleanos) - new Date()) / (1000 * 60 * 60 * 24)) : null;
+                const cumpleProximo = diasHastaCumple !== null && diasHastaCumple >= 0 && diasHastaCumple <= 30;
+                
+                html += `
+                    <tr ${cumpleProximo ? 'style="background: rgba(16, 185, 129, 0.1);"' : ''}>
+                        <td><strong>${c.nombre}</strong>${c.notas ? '<br><small style="opacity: 0.7;">' + c.notas.substring(0, 50) + (c.notas.length > 50 ? '...' : '') + '</small>' : ''}</td>
+                        <td>${c.telefono}</td>
+                        <td>${c.cumpleanos ? new Date(c.cumpleanos).toLocaleDateString() + (cumpleProximo ? ' 🎂' : '') : 'No registrado'}</td>
+                        <td>${c.ultimoExamen ? new Date(c.ultimoExamen).toLocaleDateString() : 'No registrado'}</td>
+                        <td>
+                            <button class="btn btn-whatsapp" onclick="contactarClienteDirecto('${c.telefono}', '${c.nombre}')">💬</button>
+                        </td>
+                    </tr>
+                `;
+            });
+            
+            html += '</tbody></table>';
+            lista.innerHTML = html;
+        }
+
+        // ========================================
+        // 🚀 FUNCIONES DISRUPTIVAS PARA RD
+        // ========================================
+        
+        function cargarAudioRD() {
+            const elementos = ['audiosEnviados', 'enlacesEnviados', 'audiosPersonalizados'];
+            elementos.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) {
+                    el.textContent = estadisticasRD[id] || 0;
+                }
+            });
+        }
+
+        function toggleRecordingRD() {
+            const recordBtn = document.getElementById('recordBtnRD');
+            const recordStatus = document.getElementById('recordStatusRD');
+            
+            if (!isRecordingRD) {
+                if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                    showAlert('❌ Tu navegador no soporta grabación de audio');
+                    return;
+                }
+                
+                navigator.mediaDevices.getUserMedia({ audio: true })
+                    .then(stream => {
+                        try {
+                            mediaRecorderRD = new MediaRecorder(stream);
+                            audioChunksRD = [];
+                            
+                            mediaRecorderRD.ondataavailable = event => {
+                                audioChunksRD.push(event.data);
+                            };
+                            
+                            mediaRecorderRD.onstop = () => {
+                                const audioBlob = new Blob(audioChunksRD, { type: 'audio/wav' });
+                                const audioUrl = URL.createObjectURL(audioBlob);
+                                const audioPlayer = document.getElementById('audioPlayerRD');
+                                if (audioPlayer) {
+                                    audioPlayer.src = audioUrl;
+                                    audioPlayer.style.display = 'block';
+                                }
+                                
+                                stream.getTracks().forEach(track => track.stop());
+                            };
+                            
+                            mediaRecorderRD.start();
+                            isRecordingRD = true;
+                            recordBtn.classList.add('recording');
+                            recordBtn.textContent = '⏹️';
+                            recordStatus.textContent = '🔴 Grabando... (click para parar)';
+                        } catch (error) {
+                            console.error('❌ Error al iniciar grabación:', error);
+                            showAlert('❌ Error al iniciar grabación');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('❌ Error al acceder al micrófono:', error);
+                        showAlert('❌ Error al acceder al micrófono');
+                    });
+            } else {
+                try {
+                    if (mediaRecorderRD && mediaRecorderRD.state === 'recording') {
+                        mediaRecorderRD.stop();
+                    }
+                    isRecordingRD = false;
+                    recordBtn.classList.remove('recording');
+                    recordBtn.textContent = '🎤';
+                    recordStatus.textContent = '✅ Grabación completada';
+                } catch (error) {
+                    console.error('❌ Error al detener grabación:', error);
+                    showAlert('❌ Error al detener grabación');
+                }
+            }
+        }
+
+        function enviarAudioRD() {
+            const titulo = document.getElementById('audioTitleRD').value || 'Audio de URBANA VISION';
+            const mensaje = `🎵 ${titulo}\n\n📱 809-713-5307\n🌐 urbanavision.com`;
+            
+            window.open(`https://wa.me/?text=${encodeURIComponent(mensaje)}`, '_blank');
+            actualizarEstadisticas('mensaje');
+            showAlert('📱 Audio preparado para WhatsApp');
+        }
+
+        function cargarQRRD() {
+            console.log('📱 Sección QR RD cargada');
+        }
+
+        function generarQRRD(tipo) {
+            const urls = {
+                contacto: 'https://wa.me/18097135307?text=Hola,%20vengo%20del%20QR%20de%20URBANA%20VISION',
+                catalogo: 'https://wa.me/18097135307?text=Hola,%20quiero%20ver%20el%20catálogo%20de%20productos',
+                ubicacion: 'https://maps.google.com/?q=URBANA+VISION+República+Dominicana'
+            };
+            
+            const url = urls[tipo];
+            if (!url) {
+                showAlert('❌ Tipo de QR no válido');
+                return;
+            }
+            
+            try {
+                const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(url)}`;
+                
+                showAlert(`✅ QR generado para ${tipo}.\n\nEste QR llevará directamente a: ${url}`);
+                
+                window.open(qrUrl, '_blank');
+                actualizarEstadisticas('promocion');
+            } catch (error) {
+                console.error('❌ Error al generar QR:', error);
+                showAlert('❌ Error al generar QR');
+            }
+        }
+
+        // ========================================
+        // 🔗 FUNCIONES DE ENLACE EXTERNO
+        // ========================================
+        
+        function abrirCatalogo() {
+            showAlert('📖 Abriendo catálogo de productos...');
+            window.open('catalogo.html', '_blank');
+        }
+
+        function abrirFactura() {
+            showAlert('📄 Abriendo sistema de facturación...');
+            window.open('pos.html', '_blank');
+        }
+
+        function abrirNCF() {
+            showAlert('🧾 Abriendo sistema NCF...');
+            window.open('ncf.html', '_blank');
+        }
+
+        function volverInicio() {
+            if (confirm('¿Volver al inicio?')) {
+                showAlert('🏠 Regresando al inicio...');
+                window.location.href = 'index.html';
+            }
+        }
+
+        // ========================================
+        // 🧹 LIMPIEZA DE RECURSOS
+        // ========================================
+        
+        window.addEventListener('beforeunload', function() {
+            try {
+                detenerCamara(stream);
+                detenerCamara(stream2);
+                detenerCamara(streamMarketing);
+                detenerCamara(streamRecetaLab);
+                
+                if (mediaRecorderRD && mediaRecorderRD.state === 'recording') {
+                    mediaRecorderRD.stop();
+                }
+                
+                guardarDatosCompletos();
+            } catch (error) {
+                console.error('❌ Error en beforeunload:', error);
+            }
+        });
+
+        console.log('✅ Sistema Admin URBANA VISION COMPLETO cargado correctamente');
+    </script>
+</body>
+</html>
