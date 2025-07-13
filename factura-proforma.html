@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Factura Proforma - Urbana Vision</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: Arial, sans-serif; 
+            background: linear-gradient(135deg, #134e4a 0%, #7c2d12 100%); 
+            min-height: 100vh; 
+            color: white; 
+            padding: 20px;
+        }
+        .container { max-width: 600px; margin: 0 auto; }
+        
+        .header { 
+            background: rgba(255, 255, 255, 0.1);
+            padding: 25px; 
+            border-radius: 15px; 
+            text-align: center; 
+            margin-bottom: 20px;
+        }
+
+        .form-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+
+        .input, .select {
+            width: 100%;
+            padding: 12px;
+            margin: 5px 0;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 15px 0;
+            cursor: pointer;
+        }
+
+        .exam-section {
+            background: rgba(16, 185, 129, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            display: none;
+        }
+
+        .exam-section.active {
+            display: block;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        .btn-primary { background: #10b981; color: white; }
+        .btn-whatsapp { background: #25d366; color: white; }
+        .btn-danger { background: #ef4444; color: white; }
+
+        .total-section {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .total-line {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+            font-size: 16px;
+        }
+
+        .total-line.final {
+            font-size: 20px;
+            font-weight: bold;
+            color: #10b981;
+            border-top: 1px solid rgba(255, 255, 255, 0.3);
+            padding-top: 10px;
+        }
+
+        .alert {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #10b981;
+            padding: 15px;
+            border-radius: 10px;
+            display: none;
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 10px;
+            right: 25px;
+            font-size: 10px;
+            font-weight: 600;
+            opacity: 0.7;
+            background: linear-gradient(45deg, #8B4513, #DAA520);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📄 FACTURA PROFORMA</h1>
+            <p>Urbana Vision - Cotización rápida</p>
+            <p>📱 809-713-5307</p>
+        </div>
+
+        <div class="form-card">
+            <h3>Tipo de Documento</h3>
+            <select id="tipoFactura" class="select">
+                <option value="proforma">Factura Proforma</option>
+                <option value="conduce">Conduce</option>
+            </select>
+        </div>
+
+        <div class="form-card">
+            <h3>Datos del Cliente</h3>
+            <input type="text" id="clienteNombre" class="input" placeholder="Nombre del cliente">
+            <input type="tel" id="clienteTelefono" class="input" placeholder="Teléfono">
+        </div>
+
+        <div class="form-card">
+            <h3>Descripción y Precio</h3>
+            <input type="text" id="descripcion" class="input" placeholder="Descripción del producto o servicio">
+            <input type="number" id="precio" class="input" placeholder="Precio (sin ITBIS)" onchange="calcularTotal()">
+            
+            <label class="checkbox-label">
+                <input type="checkbox" id="incluirExamen" onchange="toggleExamen()">
+                <span>Incluir examen visual GRATIS</span>
+            </label>
+        </div>
+
+        <div class="exam-section" id="examenSection">
+            <h4>Datos del Examen Visual</h4>
+            <div class="grid-2">
+                <div>
+                    <h5>Ojo Derecho (OD)</h5>
+                    <input type="text" id="odEsfera" class="input" placeholder="Esfera">
+                    <input type="text" id="odCilindro" class="input" placeholder="Cilindro">
+                    <input type="text" id="odEje" class="input" placeholder="Eje">
+                </div>
+                <div>
+                    <h5>Ojo Izquierdo (OI)</h5>
+                    <input type="text" id="oiEsfera" class="input" placeholder="Esfera">
+                    <input type="text" id="oiCilindro" class="input" placeholder="Cilindro">
+                    <input type="text" id="oiEje" class="input" placeholder="Eje">
+                </div>
+            </div>
+            <input type="text" id="dp" class="input" placeholder="Distancia Pupilar (DP)" style="margin-top: 10px;">
+        </div>
+
+        <div class="total-section">
+            <div class="total-line">
+                <span>Subtotal:</span>
+                <span>RD$ <span id="subtotal">0.00</span></span>
+            </div>
+            <div class="total-line">
+                <span>ITBIS (18%):</span>
+                <span>RD$ <span id="itbis">0.00</span></span>
+            </div>
+            <div class="total-line final">
+                <span>TOTAL:</span>
+                <span>RD$ <span id="total">0.00</span></span>
+            </div>
+        </div>
+
+        <div style="text-align: center;">
+            <button class="btn btn-danger" onclick="generarPDF()">📄 Generar PDF</button>
+            <button class="btn btn-whatsapp" onclick="enviarWhatsApp()">📱 Enviar WhatsApp</button>
+            <button class="btn btn-primary" onclick="location.href='index.html'">🏠 Volver</button>
+        </div>
+    </div>
+
+    <div class="alert" id="alert"></div>
+    
+    <div class="footer">
+        by fbrugal jrubinstein consultores
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    
+    <script>
+        function showAlert(msg) {
+            const alert = document.getElementById('alert');
+            alert.textContent = msg;
+            alert.style.display = 'block';
+            setTimeout(() => alert.style.display = 'none', 3000);
+        }
+
+        function toggleExamen() {
+            const checkbox = document.getElementById('incluirExamen');
+            const section = document.getElementById('examenSection');
+            section.classList.toggle('active', checkbox.checked);
+        }
+
+        function calcularTotal() {
+            const precio = parseFloat(document.getElementById('precio').value) || 0;
+            const subtotal = precio;
+            const itbis = subtotal * 0.18;
+            const total = subtotal + itbis;
+            
+            document.getElementById('subtotal').textContent = subtotal.toFixed(2);
+            document.getElementById('itbis').textContent = itbis.toFixed(2);
+            document.getElementById('total').textContent = total.toFixed(2);
+        }
+
+        function generarPDF() {
+            const tipo = document.getElementById('tipoFactura').value;
+            const cliente = document.getElementById('clienteNombre').value;
+            const telefono = document.getElementById('clienteTelefono').value;
+            const descripcion = document.getElementById('descripcion').value;
+            const precio = parseFloat(document.getElementById('precio').value) || 0;
+            
+            if (!cliente || !descripcion || !precio) {
+                showAlert('Complete todos los campos');
+                return;
+            }
+            
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            
+            // Header
+            doc.setFillColor(16, 185, 129);
+            doc.rect(0, 0, 210, 40, 'F');
+            
+            doc.setTextColor(255, 255, 255);
+            doc.setFontSize(24);
+            doc.text('URBANA VISION', 105, 20, { align: 'center' });
+            doc.setFontSize(14);
+            doc.text(tipo === 'conduce' ? 'CONDUCE' : 'FACTURA PROFORMA', 105, 30, { align: 'center' });
+            
+            // Datos
+            doc.setTextColor(0, 0, 0);
+            doc.setFontSize(12);
+            doc.text(`Fecha: ${new Date().toLocaleDateString()}`, 20, 50);
+            doc.text(`Cliente: ${cliente}`, 20, 60);
+            if (telefono) doc.text(`Teléfono: ${telefono}`, 20, 70);
+            
+            // Producto
+            doc.text('Descripción:', 20, 90);
+            doc.text(descripcion, 20, 100);
+            
+            // Totales
+            const subtotal = precio;
+            const itbis = subtotal * 0.18;
+            const total = subtotal + itbis;
+            
+            doc.text(`Subtotal: RD$ ${subtotal.toFixed(2)}`, 120, 130);
+            doc.text(`ITBIS (18%): RD$ ${itbis.toFixed(2)}`, 120, 140);
+            doc.setFontSize(14);
+            doc.setTextColor(16, 185, 129);
+            doc.text(`TOTAL: RD$ ${total.toFixed(2)}`, 120, 150);
+            
+            // Examen si está incluido
+            if (document.getElementById('incluirExamen').checked) {
+                doc.setTextColor(0, 0, 0);
+                doc.setFontSize(12);
+                doc.text('EXAMEN VISUAL INCLUIDO (GRATIS)', 20, 170);
+                
+                const od = {
+                    esfera: document.getElementById('odEsfera').value || 'N/A',
+                    cilindro: document.getElementById('odCilindro').value || 'N/A',
+                    eje: document.getElementById('odEje').value || 'N/A'
+                };
+                
+                const oi = {
+                    esfera: document.getElementById('oiEsfera').value || 'N/A',
+                    cilindro: document.getElementById('oiCilindro').value || 'N/A',
+                    eje: document.getElementById('oiEje').value || 'N/A'
+                };
+                
+                doc.setFontSize(10);
+                doc.text(`OD: Esf ${od.esfera} | Cil ${od.cilindro} | Eje ${od.eje}`, 20, 180);
+                doc.text(`OI: Esf ${oi.esfera} | Cil ${oi.cilindro} | Eje ${oi.eje}`, 20, 190);
+                
+                const dp = document.getElementById('dp').value;
+                if (dp) doc.text(`DP: ${dp}`, 20, 200);
+            }
+            
+            // Footer
+            doc.setFontSize(10);
+            doc.setTextColor(100, 100, 100);
+            doc.text('809-713-5307 | urbanavision.com', 105, 270, { align: 'center' });
+            doc.text('by fbrugal jrubinstein consultores', 105, 280, { align: 'center' });
+            
+            doc.save(`${tipo}_${Date.now()}.pdf`);
+            
+            // Guardar backup
+            guardarFactura();
+            showAlert('PDF generado');
+        }
+
+        function enviarWhatsApp() {
+            const tipo = document.getElementById('tipoFactura').value;
+            const cliente = document.getElementById('clienteNombre').value;
+            const telefono = document.getElementById('clienteTelefono').value;
+            const descripcion = document.getElementById('descripcion').value;
+            const precio = parseFloat(document.getElementById('precio').value) || 0;
+            
+            if (!cliente || !descripcion || !precio) {
+                showAlert('Complete todos los campos');
+                return;
+            }
+            
+            const subtotal = precio;
+            const itbis = subtotal * 0.18;
+            const total = subtotal + itbis;
+            
+            let mensaje = `📄 *${tipo === 'conduce' ? 'CONDUCE' : 'FACTURA PROFORMA'}*\n\n`;
+            mensaje += `*Cliente:* ${cliente}\n`;
+            mensaje += `*Fecha:* ${new Date().toLocaleDateString()}\n\n`;
+            mensaje += `*Descripción:*\n${descripcion}\n\n`;
+            mensaje += `Subtotal: RD$ ${subtotal.toFixed(2)}\n`;
+            mensaje += `ITBIS (18%): RD$ ${itbis.toFixed(2)}\n`;
+            mensaje += `*TOTAL: RD$ ${total.toFixed(2)}*\n`;
+            
+            if (document.getElementById('incluirExamen').checked) {
+                mensaje += `\n👁️ *EXAMEN VISUAL INCLUIDO (GRATIS)*\n`;
+                
+                const od = {
+                    esfera: document.getElementById('odEsfera').value || 'N/A',
+                    cilindro: document.getElementById('odCilindro').value || 'N/A',
+                    eje: document.getElementById('odEje').value || 'N/A'
+                };
+                
+                const oi = {
+                    esfera: document.getElementById('oiEsfera').value || 'N/A',
+                    cilindro: document.getElementById('oiCilindro').value || 'N/A',
+                    eje: document.getElementById('oiEje').value || 'N/A'
+                };
+                
+                mensaje += `OD: ${od.esfera}/${od.cilindro}/${od.eje}\n`;
+                mensaje += `OI: ${oi.esfera}/${oi.cilindro}/${oi.eje}\n`;
+                
+                const dp = document.getElementById('dp').value;
+                if (dp) mensaje += `DP: ${dp}\n`;
+            }
+            
+            mensaje += `\n📱 Urbana Vision\n`;
+            mensaje += `☎️ 809-713-5307\n`;
+            mensaje += `✨ Vea mejor, viva mejor`;
+            
+            const url = telefono ? 
+                `https://wa.me/${telefono.replace(/\D/g, '')}?text=${encodeURIComponent(mensaje)}` :
+                `https://wa.me/?text=${encodeURIComponent(mensaje)}`;
+            
+            window.open(url, '_blank');
+            guardarFactura();
+            showAlert('Enviado por WhatsApp');
+        }
+
+        function guardarFactura() {
+            const factura = {
+                id: Date.now(),
+                tipo: document.getElementById('tipoFactura').value,
+                cliente: document.getElementById('clienteNombre').value,
+                telefono: document.getElementById('clienteTelefono').value,
+                descripcion: document.getElementById('descripcion').value,
+                precio: parseFloat(document.getElementById('precio').value) || 0,
+                fecha: new Date().toISOString(),
+                examen: null
+            };
+            
+            if (document.getElementById('incluirExamen').checked) {
+                factura.examen = {
+                    od: {
+                        esfera: document.getElementById('odEsfera').value,
+                        cilindro: document.getElementById('odCilindro').value,
+                        eje: document.getElementById('odEje').value
+                    },
+                    oi: {
+                        esfera: document.getElementById('oiEsfera').value,
+                        cilindro: document.getElementById('oiCilindro').value,
+                        eje: document.getElementById('oiEje').value
+                    },
+                    dp: document.getElementById('dp').value
+                };
+            }
+            
+            let facturas = JSON.parse(localStorage.getItem('urbanaFacturas') || '[]');
+            facturas.push(factura);
+            localStorage.setItem('urbanaFacturas', JSON.stringify(facturas));
+        }
+    </script>
+</body>
+</html>
