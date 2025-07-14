@@ -1352,25 +1352,39 @@ Me interesa conocer si te gusta este modelo.
             try {
                 const select = document.getElementById('clienteOrdenLab');
                 if (!select) {
-                    console.log('❌ Select clienteOrdenLab no encontrado');
+                    console.error('❌ Select clienteOrdenLab no encontrado');
                     return;
                 }
                 
-                select.innerHTML = '<option value="">Seleccionar cliente</option>';
+                // Limpiar el select completamente
+                select.innerHTML = '<option value="">-- Seleccionar cliente --</option>';
                 
                 if (clientes.length === 0) {
-                    select.innerHTML += '<option value="" disabled>No hay clientes registrados</option>';
-                    console.log('⚠️ No hay clientes para cargar');
+                    select.innerHTML += '<option value="" disabled>⚠️ No hay clientes registrados</option>';
+                    showAlert('⚠️ No hay clientes registrados. Agregue clientes primero en Gestión → Clientes.');
+                    console.log('⚠️ No hay clientes para cargar en el laboratorio');
                     return;
                 }
                 
-                clientes.forEach(c => {
-                    select.innerHTML += `<option value="${c.id}">${c.nombre} - ${c.telefono}</option>`;
+                // Agregar cada cliente como opción
+                clientes.forEach(cliente => {
+                    try {
+                        const option = document.createElement('option');
+                        option.value = cliente.id.toString(); // Asegurar que sea string
+                        option.textContent = `${cliente.nombre} - ${cliente.telefono}`;
+                        select.appendChild(option);
+                        console.log(`➕ Cliente agregado: ID ${cliente.id} - ${cliente.nombre}`);
+                    } catch (error) {
+                        console.error('❌ Error agregando cliente al select:', cliente, error);
+                    }
                 });
                 
-                console.log(`✅ ${clientes.length} clientes cargados en select laboratorio`);
+                console.log(`✅ ${clientes.length} clientes cargados exitosamente en select laboratorio`);
+                console.log('📋 Lista de clientes disponibles:', clientes.map(c => ({id: c.id, nombre: c.nombre, telefono: c.telefono})));
+                
             } catch (error) {
-                console.error('❌ Error cargando clientes laboratorio:', error);
+                console.error('❌ Error cargando clientes en select laboratorio:', error);
+                showAlert('❌ Error al cargar lista de clientes para laboratorio');
             }
         }
 
@@ -1384,17 +1398,25 @@ Me interesa conocer si te gusta este modelo.
                     return;
                 }
                 
-                const clienteId = parseInt(select.value);
-                console.log('🔍 ID de cliente seleccionado:', clienteId);
-                
-                if (!clienteId || isNaN(clienteId)) {
-                    // Limpiar campos
+                // Limpiar campos si no hay selección
+                if (!select.value) {
                     const nombreEl = document.getElementById('nombreClienteLab');
                     const telefonoEl = document.getElementById('telefonoClienteLab');
                     if (nombreEl) nombreEl.value = '';
                     if (telefonoEl) telefonoEl.value = '';
                     if (validacion) {
-                        validacion.innerHTML = '<span style="color: #f59e0b;">⚠️ Selecciona un cliente</span>';
+                        validacion.innerHTML = '<span style="color: #f59e0b;">⚠️ Selecciona un cliente de la lista</span>';
+                    }
+                    return;
+                }
+                
+                const clienteId = parseInt(select.value);
+                console.log('🔍 ID de cliente seleccionado:', clienteId, 'Tipo:', typeof clienteId);
+                
+                if (isNaN(clienteId) || clienteId <= 0) {
+                    console.error('❌ ID de cliente no válido:', clienteId);
+                    if (validacion) {
+                        validacion.innerHTML = '<span style="color: #ef4444;">❌ ID de cliente no válido</span>';
                     }
                     return;
                 }
@@ -1403,35 +1425,43 @@ Me interesa conocer si te gusta este modelo.
                 console.log('👤 Cliente encontrado:', cliente);
                 
                 if (!cliente) {
+                    console.error('❌ Cliente no encontrado en base de datos para ID:', clienteId);
+                    console.log('📋 Clientes disponibles:', clientes.map(c => ({id: c.id, nombre: c.nombre})));
                     if (validacion) {
-                        validacion.innerHTML = '<span style="color: #ef4444;">❌ Cliente no encontrado</span>';
+                        validacion.innerHTML = '<span style="color: #ef4444;">❌ Cliente no encontrado en la base de datos</span>';
                     }
                     return;
                 }
                 
+                // Cargar datos del cliente
                 const nombreEl = document.getElementById('nombreClienteLab');
                 const telefonoEl = document.getElementById('telefonoClienteLab');
                 
                 if (nombreEl) {
                     nombreEl.value = cliente.nombre;
+                    nombreEl.classList.remove('error');
                     nombreEl.classList.add('success');
                 }
                 if (telefonoEl) {
                     telefonoEl.value = cliente.telefono;
+                    telefonoEl.classList.remove('error');
                     telefonoEl.classList.add('success');
                 }
                 
                 if (validacion) {
-                    validacion.innerHTML = `<span style="color: #10b981;">✅ Cliente: ${cliente.nombre}</span>`;
+                    validacion.innerHTML = `<span style="color: #10b981;">✅ Cliente cargado: ${cliente.nombre}</span>`;
                 }
                 
-                console.log('✅ Datos del cliente cargados correctamente');
+                console.log('✅ Datos del cliente cargados correctamente para laboratorio');
+                showAlert(`✅ Cliente seleccionado: ${cliente.nombre}`);
+                
             } catch (error) {
                 console.error('❌ Error cargando datos cliente laboratorio:', error);
                 const validacion = document.getElementById('validacionCliente');
                 if (validacion) {
-                    validacion.innerHTML = '<span style="color: #ef4444;">❌ Error al cargar cliente</span>';
+                    validacion.innerHTML = '<span style="color: #ef4444;">❌ Error al cargar datos del cliente</span>';
                 }
+                showAlert('❌ Error al cargar datos del cliente');
             }
         }
 
@@ -1792,11 +1822,22 @@ Me interesa conocer si te gusta este modelo.
             try {
                 console.log('🔍 Validando orden:', orden);
                 
-                if (!orden.clienteId || orden.clienteId === 0 || isNaN(orden.clienteId)) {
-                    showAlert('❌ Debe seleccionar un cliente válido');
-                    console.log('❌ Cliente no válido:', orden.clienteId);
+                // VALIDACIÓN CRÍTICA: Cliente ID debe ser válido
+                if (!orden.clienteId || isNaN(orden.clienteId) || orden.clienteId <= 0) {
+                    console.error('❌ Cliente ID no válido:', orden.clienteId, 'Tipo:', typeof orden.clienteId);
+                    showAlert('❌ Debe seleccionar un cliente válido de la lista');
                     return false;
                 }
+                
+                // Verificar que el cliente existe en la base de datos
+                const clienteExiste = clientes.find(c => c.id === orden.clienteId);
+                if (!clienteExiste) {
+                    console.error('❌ Cliente no encontrado en base de datos. ID:', orden.clienteId);
+                    showAlert('❌ Cliente no encontrado. Verifique la lista de clientes.');
+                    return false;
+                }
+                
+                console.log('✅ Cliente validado correctamente:', clienteExiste);
                 
                 if (!orden.tipoLente) {
                     showAlert('❌ Seleccione el tipo de lente');
@@ -1818,10 +1859,11 @@ Me interesa conocer si te gusta este modelo.
                     return false;
                 }
                 
-                console.log('✅ Validación exitosa');
+                console.log('✅ Validación exitosa para orden:', orden.numero);
                 return true;
             } catch (error) {
                 console.error('❌ Error validando orden:', error);
+                showAlert('❌ Error en validación: ' + error.message);
                 return false;
             }
         }
