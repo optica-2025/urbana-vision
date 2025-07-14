@@ -275,27 +275,14 @@
             border: 2px solid #10b981;
             background: rgba(16, 185, 129, 0.1);
         }
-
-        /* Enlaces de redes sociales */
-        .social-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-            margin: 15px 0;
+        
+        /* Nuevos estilos para otros */
+        .otros-input {
+            display: none;
+            margin-top: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid #10b981;
         }
-        .social-btn {
-            padding: 12px;
-            border: none;
-            border-radius: 8px;
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-            font-size: 14px;
-        }
-        .btn-youtube { background: #ff0000; }
-        .btn-tiktok { background: #000000; }
-        .btn-instagram { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
-        .btn-facebook { background: #1877f2; }
         
         .footer {
             position: fixed;
@@ -339,39 +326,39 @@
 
                 <div class="card">
                     <h3>📦 Inventario</h3>
-                    <button class="btn btn-primary" onclick="mostrarSeccion('inventario')">📦 Ver Inventario</button>
-                    <button class="btn btn-primary" onclick="mostrarSeccion('camara')">📷 Cámara Rápida</button>
+                    <button class="btn btn-primary" onclick="mostrar('inventario')">📦 Ver Inventario</button>
+                    <button class="btn btn-primary" onclick="mostrar('camara')">📷 Cámara Rápida</button>
                     <button class="btn btn-secondary" onclick="abrirCatalogo()">🛍️ Ver Catálogo</button>
                 </div>
 
                 <div class="card">
                     <h3>👥 Gestión</h3>
-                    <button class="btn btn-primary" onclick="mostrarSeccion('gestionClientes')">👥 Clientes</button>
-                    <button class="btn btn-primary" onclick="mostrarSeccion('recordatorios')">🔔 Recordatorios</button>
-                    <button class="btn btn-secondary" onclick="mostrarSeccion('ventas')">💰 Ventas</button>
+                    <button class="btn btn-primary" onclick="mostrar('gestionClientes')">👥 Clientes</button>
+                    <button class="btn btn-primary" onclick="mostrar('recordatorios')">🔔 Recordatorios</button>
+                    <button class="btn btn-secondary" onclick="mostrar('ventas')">💰 Ventas</button>
                 </div>
 
                 <div class="card">
                     <h3>📱 Marketing</h3>
-                    <button class="btn btn-primary" onclick="mostrarSeccion('marketing')">📱 Marketing WhatsApp</button>
-                    <button class="btn btn-warning" onclick="mostrarSeccion('contactar')">💬 Contactar Clientes</button>
-                    <button class="btn btn-secondary" onclick="mostrarSeccion('campanas')">📣 Campañas</button>
+                    <button class="btn btn-primary" onclick="mostrar('marketing')">📱 Marketing WhatsApp</button>
+                    <button class="btn btn-warning" onclick="mostrar('contactar')">💬 Contactar Clientes</button>
+                    <button class="btn btn-secondary" onclick="mostrar('campanas')">📣 Campañas</button>
                 </div>
 
                 <div class="card" style="background: linear-gradient(45deg, #134e4a, #7c2d12); border: 2px solid #10b981;">
                     <h3>🔬 Sistema de Laboratorio</h3>
-                    <button class="btn btn-primary" onclick="mostrarSeccion('dashboardLaboratorio')">📊 Dashboard Lab</button>
-                    <button class="btn btn-primary" onclick="mostrarSeccion('nuevaOrdenLab')">➕ Nueva Orden</button>
-                    <button class="btn btn-primary" onclick="mostrarSeccion('listaOrdenesLab')">📋 Ver Órdenes</button>
-                    <button class="btn btn-warning" onclick="mostrarSeccion('cotejoLab')">✅ Cotejo</button>
-                    <button class="btn btn-success" onclick="mostrarSeccion('cuentasPorCobrar')">💰 Cuentas x Cobrar</button>
+                    <button class="btn btn-primary" onclick="mostrar('dashboardLaboratorio')">📊 Dashboard Lab</button>
+                    <button class="btn btn-primary" onclick="mostrar('nuevaOrdenLab')">➕ Nueva Orden</button>
+                    <button class="btn btn-primary" onclick="mostrar('listaOrdenesLab')">📋 Ver Órdenes</button>
+                    <button class="btn btn-warning" onclick="mostrar('cotejoLab')">✅ Cotejo</button>
+                    <button class="btn btn-success" onclick="mostrar('cuentasPorCobrar')">💰 Cuentas x Cobrar</button>
                 </div>
 
                 <div class="card">
                     <h3>📄 Documentos</h3>
                     <button class="btn btn-primary" onclick="abrirFactura()">📄 Factura Proforma</button>
                     <button class="btn btn-primary" onclick="abrirNCF()">🧾 Sistema NCF</button>
-                    <button class="btn btn-secondary" onclick="mostrarSeccion('reportes')">📊 Reportes</button>
+                    <button class="btn btn-secondary" onclick="mostrar('reportes')">📊 Reportes</button>
                 </div>
             </div>
             
@@ -383,7 +370,7 @@
         <!-- DASHBOARD LABORATORIO -->
         <div id="dashboardLaboratorio" class="section">
             <h2>🔬 Dashboard de Laboratorio</h2>
-            <button class="btn btn-secondary" onclick="mostrarSeccion('menu')">⬅️ Volver</button>
+            <button class="btn btn-secondary" onclick="mostrar('menu')">⬅️ Volver</button>
             
             <div class="grid">
                 <div class="card">
@@ -402,17 +389,17 @@
 
                 <div class="card">
                     <h3>⚡ Acciones Rápidas</h3>
-                    <button class="btn btn-primary" onclick="mostrarSeccion('nuevaOrdenLab')">🔬 Nueva Orden</button>
-                    <button class="btn btn-warning" onclick="mostrarSeccion('cotejoLab')">✅ Cotejo Urgente</button>
-                    <button class="btn btn-success" onclick="mostrarSeccion('laboratoriosGestion')">🏭 Laboratorios</button>
-                    <button class="btn btn-success" onclick="mostrarSeccion('cuentasPorCobrar')">💰 Cuentas x Cobrar</button>
+                    <button class="btn btn-primary" onclick="mostrar('nuevaOrdenLab')">🔬 Nueva Orden</button>
+                    <button class="btn btn-warning" onclick="mostrar('cotejoLab')">✅ Cotejo Urgente</button>
+                    <button class="btn btn-success" onclick="mostrar('laboratoriosGestion')">🏭 Laboratorios</button>
+                    <button class="btn btn-success" onclick="mostrar('cuentasPorCobrar')">💰 Cuentas x Cobrar</button>
                 </div>
 
                 <div class="card">
                     <h3>🏭 Laboratorios Registrados</h3>
                     <div id="resumenLaboratorios" style="text-align: left; margin: 10px 0;"></div>
-                    <button class="btn btn-primary" onclick="mostrarSeccion('laboratoriosGestion')">🏭 Ver Laboratorios</button>
-                    <button class="btn btn-secondary" onclick="mostrarSeccion('historialLab')">📞 Historial</button>
+                    <button class="btn btn-primary" onclick="mostrar('laboratoriosGestion')">🏭 Ver Laboratorios</button>
+                    <button class="btn btn-secondary" onclick="mostrar('historialLab')">📞 Historial</button>
                 </div>
             </div>
         </div>
@@ -420,7 +407,7 @@
         <!-- NUEVA ORDEN DE LABORATORIO -->
         <div id="nuevaOrdenLab" class="section">
             <h2>🔬 Nueva Orden de Laboratorio</h2>
-            <button class="btn btn-secondary" onclick="mostrarSeccion('dashboardLaboratorio')">⬅️ Volver</button>
+            <button class="btn btn-secondary" onclick="mostrar('dashboardLaboratorio')">⬅️ Volver</button>
             
             <div class="grid">
                 <div class="card">
@@ -439,7 +426,6 @@
 
                 <div class="card">
                     <h3>👓 Especificaciones de Monturas y Lentes</h3>
-                    <input type="text" id="nombreMonturaLab" class="input" placeholder="Nombre de la montura">
                     <select id="tipoMonturaLab" class="select">
                         <option value="">Tipo de montura</option>
                         <option value="completa">Montura Completa</option>
@@ -450,7 +436,7 @@
                         <option value="otros">Otros</option>
                     </select>
                     
-                    <select id="tipoLenteLab" class="select">
+                    <select id="tipoLenteLab" class="select" onchange="manejarTipoLente()">
                         <option value="">Tipo de lente</option>
                         <option value="monofocal">Monofocal</option>
                         <option value="bifocal">Bifocal</option>
@@ -458,6 +444,7 @@
                         <option value="ocupacional">Ocupacional</option>
                         <option value="otros">Otros</option>
                     </select>
+                    <input type="text" id="tipoLenteOtros" class="input otros-input" placeholder="Especificar tipo de lente...">
                     
                     <select id="materialLenteLab" class="select">
                         <option value="">Material</option>
@@ -465,6 +452,7 @@
                         <option value="policarbonato">Policarbonato</option>
                         <option value="high-index">High Index</option>
                         <option value="cristal">Cristal</option>
+                        <option value="otros">Otros</option>
                     </select>
 
                     <select id="tratamientosLab" class="select">
@@ -474,14 +462,14 @@
                         <option value="uv">Protección UV</option>
                         <option value="blue-light">Anti Luz Azul</option>
                         <option value="polarizado">Polarizado</option>
+                        <option value="sin-tratamiento">Sin Tratamiento</option>
                     </select>
 
                     <h4 style="margin-top: 15px;">💰 Información Financiera</h4>
-                    <input type="number" id="costoLaboratorio" class="input" placeholder="Costo del laboratorio RD$" step="0.01" oninput="calcularPendiente()">
-                    <input type="number" id="precioVenta" class="input" placeholder="Precio total de venta RD$" step="0.01" oninput="calcularPendiente()">
-                    <input type="number" id="abono" class="input" placeholder="Abono recibido RD$" step="0.01" oninput="calcularPendiente()">
+                    <input type="number" id="costoLaboratorio" class="input" placeholder="Costo del laboratorio RD$" step="0.01">
+                    <input type="number" id="precioVenta" class="input" placeholder="Precio total de venta RD$" step="0.01" onchange="calcularPendiente()">
+                    <input type="number" id="abono" class="input" placeholder="Abono recibido RD$" step="0.01" onchange="calcularPendiente()">
                     <div id="pendientePago" style="margin: 10px 0; font-weight: bold; color: #f59e0b;"></div>
-                    <div id="beneficioEsperado" style="margin: 10px 0; font-weight: bold; color: #10b981;"></div>
                 </div>
             </div>
 
@@ -515,22 +503,11 @@
                     </div>
                 </div>
 
-                <textarea id="comentariosLab" class="textarea" placeholder="Comentarios especiales, instrucciones adicionales..."></textarea>
+                <textarea id="comentariosLab" class="textarea" placeholder="Comentarios especiales, instrucciones adicionales, mezclas especiales..."></textarea>
             </div>
 
             <div class="card">
-                <h3>📷 Foto de la Montura</h3>
-                <div class="camera-box" id="cameraBoxMonturaLab">
-                    <div id="placeholderMonturaLab">
-                        <div style="font-size: 50px;">📷</div>
-                        <div>Tomar foto de la montura</div>
-                    </div>
-                    <video id="videoMonturaLab" style="display: none; width: 100%; height: 100%;" autoplay></video>
-                </div>
-                <button class="btn btn-primary" onclick="toggleCameraMonturaLab()" id="cameraBtnMonturaLab">📷 Activar Cámara</button>
-                <img id="previewMonturaLab" style="display: none; width: 100%; margin: 10px 0; border-radius: 5px;">
-                
-                <h3 style="margin-top: 20px;">📷 Foto de la Receta</h3>
+                <h3>📷 Fotos de Constancia</h3>
                 <div class="camera-box" id="cameraBoxRecetaLab">
                     <div id="placeholderRecetaLab">
                         <div style="font-size: 50px;">📷</div>
@@ -540,6 +517,16 @@
                 </div>
                 <button class="btn btn-primary" onclick="toggleCameraRecetaLab()" id="cameraBtnRecetaLab">📷 Activar Cámara</button>
                 <img id="previewRecetaLab" style="display: none; width: 100%; margin: 10px 0; border-radius: 5px;">
+                
+                <div class="camera-box" id="cameraBoxMonturaLab" style="margin-top: 15px;">
+                    <div id="placeholderMonturaLab">
+                        <div style="font-size: 50px;">👓</div>
+                        <div>Tomar foto de la montura</div>
+                    </div>
+                    <video id="videoMonturaLab" style="display: none; width: 100%; height: 100%;" autoplay></video>
+                </div>
+                <button class="btn btn-primary" onclick="toggleCameraMonturaLab()" id="cameraBtnMonturaLab">👓 Foto Montura</button>
+                <img id="previewMonturaLab" style="display: none; width: 100%; margin: 10px 0; border-radius: 5px;">
                 
                 <div style="margin-top: 15px;">
                     <button class="btn btn-whatsapp" onclick="generarYEnviarOrdenLab()">📱 Generar y Enviar Orden</button>
@@ -552,7 +539,7 @@
         <!-- LISTA DE ÓRDENES DE LABORATORIO -->
         <div id="listaOrdenesLab" class="section">
             <h2>📋 Órdenes de Laboratorio</h2>
-            <button class="btn btn-secondary" onclick="mostrarSeccion('dashboardLaboratorio')">⬅️ Volver</button>
+            <button class="btn btn-secondary" onclick="mostrar('dashboardLaboratorio')">⬅️ Volver</button>
             
             <div style="margin: 20px 0;">
                 <input type="text" id="busquedaOrdenLab" class="input" placeholder="🔍 Buscar por número, cliente..." onkeyup="buscarOrdenesLab(this.value)">
@@ -574,7 +561,7 @@
         <!-- COTEJO DE ÓRDENES -->
         <div id="cotejoLab" class="section">
             <h2>✅ Cotejo de Órdenes Recibidas</h2>
-            <button class="btn btn-secondary" onclick="mostrarSeccion('dashboardLaboratorio')">⬅️ Volver</button>
+            <button class="btn btn-secondary" onclick="mostrar('dashboardLaboratorio')">⬅️ Volver</button>
             
             <div class="cotejo-section">
                 <h3>📦 Órdenes Listas para Cotejo</h3>
@@ -587,7 +574,7 @@
         <!-- CUENTAS POR COBRAR -->
         <div id="cuentasPorCobrar" class="section">
             <h2>💰 Cuentas por Cobrar</h2>
-            <button class="btn btn-secondary" onclick="mostrarSeccion('dashboardLaboratorio')">⬅️ Volver</button>
+            <button class="btn btn-secondary" onclick="mostrar('dashboardLaboratorio')">⬅️ Volver</button>
             
             <div class="cotejo-section">
                 <h3>💳 Órdenes Pendientes de Pago</h3>
@@ -603,7 +590,7 @@
         <!-- GESTIÓN DE LABORATORIOS -->
         <div id="laboratoriosGestion" class="section">
             <h2>🏭 Laboratorios Registrados</h2>
-            <button class="btn btn-secondary" onclick="mostrarSeccion('dashboardLaboratorio')">⬅️ Volver</button>
+            <button class="btn btn-secondary" onclick="mostrar('dashboardLaboratorio')">⬅️ Volver</button>
             
             <div class="card">
                 <h3>➕ Agregar Laboratorio</h3>
@@ -620,7 +607,7 @@
         <!-- HISTORIAL DE LABORATORIO -->
         <div id="historialLab" class="section">
             <h2>📞 Historial de Laboratorio</h2>
-            <button class="btn btn-secondary" onclick="mostrarSeccion('dashboardLaboratorio')">⬅️ Volver</button>
+            <button class="btn btn-secondary" onclick="mostrar('dashboardLaboratorio')">⬅️ Volver</button>
             
             <div id="listaHistorialLab"></div>
         </div>
@@ -628,7 +615,7 @@
         <!-- SISTEMA DE MARKETING COMPLETO -->
         <div id="marketing" class="section">
             <h2>📱 Marketing WhatsApp</h2>
-            <button class="btn btn-secondary" onclick="mostrarSeccion('menu')">⬅️ Volver</button>
+            <button class="btn btn-secondary" onclick="mostrar('menu')">⬅️ Volver</button>
             
             <div class="grid">
                 <div class="card marketing-card">
@@ -694,11 +681,11 @@
                     
                     <h4 style="margin-top: 20px;">📱 Enlaces de Redes Sociales</h4>
                     <input type="url" id="enlaceRedes" class="input" placeholder="Enlace de YouTube, TikTok, Instagram, Facebook..." style="margin: 5px 0;">
-                    <div class="social-grid">
-                        <button class="social-btn btn-youtube" onclick="enviarEnlaceRedes('youtube')">📺 YouTube</button>
-                        <button class="social-btn btn-tiktok" onclick="enviarEnlaceRedes('tiktok')">🎵 TikTok</button>
-                        <button class="social-btn btn-instagram" onclick="enviarEnlaceRedes('instagram')">📸 Instagram</button>
-                        <button class="social-btn btn-facebook" onclick="enviarEnlaceRedes('facebook')">👥 Facebook</button>
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 5px; margin-top: 10px;">
+                        <button class="btn btn-whatsapp" onclick="enviarEnlaceRedes('youtube')" style="background: #ff0000;">📺 YouTube</button>
+                        <button class="btn btn-whatsapp" onclick="enviarEnlaceRedes('tiktok')" style="background: #000000;">🎵 TikTok</button>
+                        <button class="btn btn-whatsapp" onclick="enviarEnlaceRedes('instagram')" style="background: #e1306c;">📸 Instagram</button>
+                        <button class="btn btn-whatsapp" onclick="enviarEnlaceRedes('facebook')" style="background: #1877f2;">👥 Facebook</button>
                     </div>
                     
                     <h4 style="margin-top: 20px;">📝 Template Personalizado</h4>
@@ -725,7 +712,7 @@
         <!-- INVENTARIO -->
         <div id="inventario" class="section">
             <h2>📦 Inventario de Productos</h2>
-            <button class="btn btn-secondary" onclick="mostrarSeccion('menu')">⬅️ Volver</button>
+            <button class="btn btn-secondary" onclick="mostrar('menu')">⬅️ Volver</button>
             
             <div style="margin: 20px 0;">
                 <input type="text" class="input" placeholder="🔍 Buscar producto..." onkeyup="buscarProducto(this.value)">
@@ -737,7 +724,7 @@
         <!-- CÁMARA RÁPIDA -->
         <div id="camara" class="section">
             <h2>📷 Agregar Producto con Cámara</h2>
-            <button class="btn btn-secondary" onclick="mostrarSeccion('menu')">⬅️ Volver</button>
+            <button class="btn btn-secondary" onclick="mostrar('menu')">⬅️ Volver</button>
             
             <div class="camera-box" id="cameraBox">
                 <div id="placeholder">
@@ -748,6 +735,7 @@
             </div>
             
             <button class="btn btn-primary" onclick="toggleCamera()" id="cameraBtn">📷 Activar Cámara</button>
+            <canvas id="canvas" style="display: none;"></canvas>
             <img id="preview" style="display: none; width: 100%; max-width: 400px; margin: 10px auto; border-radius: 5px;">
             
             <div style="margin-top: 20px;">
@@ -771,7 +759,7 @@
         <!-- CONTACTAR CLIENTES -->
         <div id="contactar" class="section">
             <h2>💬 Contactar Clientes</h2>
-            <button class="btn btn-secondary" onclick="mostrarSeccion('menu')">⬅️ Volver</button>
+            <button class="btn btn-secondary" onclick="mostrar('menu')">⬅️ Volver</button>
             
             <div class="grid">
                 <div class="card">
@@ -812,7 +800,7 @@ Me interesa conocer si te gusta este modelo.
         <!-- RECORDATORIOS -->
         <div id="recordatorios" class="section">
             <h2>🔔 Sistema de Recordatorios</h2>
-            <button class="btn btn-secondary" onclick="mostrarSeccion('menu')">⬅️ Volver</button>
+            <button class="btn btn-secondary" onclick="mostrar('menu')">⬅️ Volver</button>
             
             <div class="grid">
                 <div class="card">
@@ -840,7 +828,7 @@ Me interesa conocer si te gusta este modelo.
         <!-- VENTAS -->
         <div id="ventas" class="section">
             <h2>💰 Registro de Ventas</h2>
-            <button class="btn btn-secondary" onclick="mostrarSeccion('menu')">⬅️ Volver</button>
+            <button class="btn btn-secondary" onclick="mostrar('menu')">⬅️ Volver</button>
             
             <div style="margin: 20px 0;">
                 <select id="clienteVenta" class="select">
@@ -850,7 +838,7 @@ Me interesa conocer si te gusta este modelo.
                     <option value="">Seleccionar producto</option>
                 </select>
                 <input type="number" id="cantidadVenta" class="input" placeholder="Cantidad" value="1">
-                <input type="number" id="precioVentaProducto" class="input" placeholder="Precio total">
+                <input type="number" id="precioVenta" class="input" placeholder="Precio total">
                 
                 <button class="btn btn-primary" onclick="registrarVenta()">💰 Registrar Venta</button>
             </div>
@@ -858,10 +846,10 @@ Me interesa conocer si te gusta este modelo.
             <div id="listaVentas"></div>
         </div>
 
-        <!-- REPORTES MEJORADOS -->
+        <!-- REPORTES COMPLETOS -->
         <div id="reportes" class="section">
             <h2>📊 Reportes y Análisis Completo</h2>
-            <button class="btn btn-secondary" onclick="mostrarSeccion('menu')">⬅️ Volver</button>
+            <button class="btn btn-secondary" onclick="mostrar('menu')">⬅️ Volver</button>
             
             <div class="grid">
                 <div class="reporte-section">
@@ -901,7 +889,7 @@ Me interesa conocer si te gusta este modelo.
         <!-- CAMPAÑAS -->
         <div id="campanas" class="section">
             <h2>📣 Campañas de Marketing</h2>
-            <button class="btn btn-secondary" onclick="mostrarSeccion('menu')">⬅️ Volver</button>
+            <button class="btn btn-secondary" onclick="mostrar('menu')">⬅️ Volver</button>
             
             <div class="grid">
                 <div class="card">
@@ -926,7 +914,7 @@ Me interesa conocer si te gusta este modelo.
         <!-- GESTIÓN DE CLIENTES REAL -->
         <div id="gestionClientes" class="section">
             <h2>👥 Gestión Completa de Clientes</h2>
-            <button class="btn btn-secondary" onclick="mostrarSeccion('menu')">⬅️ Volver</button>
+            <button class="btn btn-secondary" onclick="mostrar('menu')">⬅️ Volver</button>
             
             <div class="grid">
                 <div class="card">
@@ -1023,6 +1011,7 @@ Me interesa conocer si te gusta este modelo.
                 cargarTemplatesDefault();
                 
                 actualizarDashboard();
+                configurarValidacionesPrecio();
                 
                 console.log('✅ Sistema completo inicializado correctamente');
                 showAlert('✅ Sistema Urbana Vision cargado completamente');
@@ -1032,95 +1021,6 @@ Me interesa conocer si te gusta este modelo.
                 crearDatosEjemplo();
             }
         });
-
-        // ========================================
-        // 🔄 FUNCIÓN PRINCIPAL DE NAVEGACIÓN (CORREGIDA)
-        // ========================================
-        
-        function mostrarSeccion(seccion) {
-            try {
-                console.log(`🔄 Navegando a sección: ${seccion}`);
-                
-                // Ocultar todas las secciones
-                document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-                
-                // Mostrar la sección solicitada
-                const elemento = document.getElementById(seccion);
-                if (elemento) {
-                    elemento.classList.add('active');
-                } else {
-                    console.error(`❌ Sección '${seccion}' no encontrada`);
-                    showAlert(`❌ Error: Sección '${seccion}' no encontrada`);
-                    return;
-                }
-                
-                // Cargar datos específicos de cada sección
-                switch(seccion) {
-                    case 'menu': 
-                        actualizarDashboard(); 
-                        break;
-                    case 'dashboardLaboratorio':
-                        actualizarDashboardLaboratorio();
-                        break;
-                    case 'nuevaOrdenLab':
-                        cargarClientesSelectLab();
-                        actualizarProximoNumeroLab();
-                        break;
-                    case 'listaOrdenesLab':
-                        cargarListaOrdenesLab();
-                        break;
-                    case 'cotejoLab':
-                        cargarOrdenesPorCotejarLab();
-                        break;
-                    case 'cuentasPorCobrar':
-                        cargarCuentasPorCobrar();
-                        break;
-                    case 'laboratoriosGestion':
-                        cargarListaLaboratoriosGestion();
-                        break;
-                    case 'historialLab':
-                        cargarHistorialLab();
-                        break;
-                    case 'inventario': 
-                        cargarInventario(); 
-                        break;
-                    case 'camara': 
-                        console.log('📷 Sección cámara cargada'); 
-                        break;
-                    case 'marketing': 
-                        cargarMarketing(); 
-                        break;
-                    case 'contactar': 
-                        cargarClientesRapida(); 
-                        break;
-                    case 'recordatorios': 
-                        generarRecordatorios(); 
-                        break;
-                    case 'ventas': 
-                        cargarVentas(); 
-                        break;
-                    case 'reportes': 
-                        cargarReportes(); 
-                        break;
-                    case 'campanas': 
-                        cargarCampanas(); 
-                        break;
-                    case 'gestionClientes': 
-                        cargarGestionClientes(); 
-                        break;
-                }
-                
-                console.log(`✅ Sección '${seccion}' cargada correctamente`);
-            } catch (error) {
-                console.error(`❌ Error mostrando sección '${seccion}':`, error);
-                showAlert(`❌ Error al cargar sección: ${error.message}`);
-            }
-        }
-
-        // Función de compatibilidad para llamadas antiguas
-        function mostrar(seccion) {
-            mostrarSeccion(seccion);
-        }
 
         function cargarDatosCompletos() {
             try {
@@ -1254,6 +1154,83 @@ Me interesa conocer si te gusta este modelo.
             }
         }
 
+        // ========================================
+        // 🔄 FUNCIONES DE NAVEGACIÓN CENTRAL
+        // ========================================
+        
+        function mostrar(seccion) {
+            try {
+                document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+                const elemento = document.getElementById(seccion);
+                if (elemento) {
+                    elemento.classList.add('active');
+                } else {
+                    console.error(`Sección '${seccion}' no encontrada`);
+                    showAlert(`Error: Sección '${seccion}' no encontrada`);
+                    return;
+                }
+                
+                // Cargar datos específicos de cada sección
+                switch(seccion) {
+                    case 'menu': 
+                        actualizarDashboard(); 
+                        break;
+                    case 'dashboardLaboratorio':
+                        actualizarDashboardLaboratorio();
+                        break;
+                    case 'nuevaOrdenLab':
+                        cargarClientesSelectLab();
+                        actualizarProximoNumeroLab();
+                        break;
+                    case 'listaOrdenesLab':
+                        cargarListaOrdenesLab();
+                        break;
+                    case 'cotejoLab':
+                        cargarOrdenesPorCotejarLab();
+                        break;
+                    case 'cuentasPorCobrar':
+                        cargarCuentasPorCobrar();
+                        break;
+                    case 'laboratoriosGestion':
+                        cargarListaLaboratoriosGestion();
+                        break;
+                    case 'historialLab':
+                        cargarHistorialLab();
+                        break;
+                    case 'inventario': 
+                        cargarInventario(); 
+                        break;
+                    case 'camara': 
+                        console.log('📷 Sección cámara cargada'); 
+                        break;
+                    case 'marketing': 
+                        cargarMarketing(); 
+                        break;
+                    case 'contactar': 
+                        cargarClientesRapida(); 
+                        break;
+                    case 'recordatorios': 
+                        generarRecordatorios(); 
+                        break;
+                    case 'ventas': 
+                        cargarVentas(); 
+                        break;
+                    case 'reportes': 
+                        cargarReportes(); 
+                        break;
+                    case 'campanas': 
+                        cargarCampanas(); 
+                        break;
+                    case 'gestionClientes': 
+                        cargarGestionClientes(); 
+                        break;
+                }
+            } catch (error) {
+                console.error('❌ Error mostrando sección:', error);
+                showAlert('❌ Error al cargar sección');
+            }
+        }
+
         function showAlert(msg) {
             try {
                 const alert = document.getElementById('alert');
@@ -1268,21 +1245,19 @@ Me interesa conocer si te gusta este modelo.
             }
         }
 
+        // ========================================
+        // 📊 FUNCIONES DE DASHBOARD PRINCIPAL
+        // ========================================
+        
         function actualizarDashboard() {
             try {
-                const totalProductosEl = document.getElementById('totalProductos');
-                const totalClientesEl = document.getElementById('totalClientes');
-                const ventasHoyEl = document.getElementById('ventasHoy');
+                document.getElementById('totalProductos').textContent = productos.length;
+                document.getElementById('totalClientes').textContent = clientes.length;
                 
-                if (totalProductosEl) totalProductosEl.textContent = productos.length;
-                if (totalClientesEl) totalClientesEl.textContent = clientes.length;
-                
-                if (ventasHoyEl) {
-                    const hoy = new Date().toDateString();
-                    const ventasHoy = ventas.filter(v => new Date(v.fecha).toDateString() === hoy);
-                    const totalHoy = ventasHoy.reduce((sum, v) => sum + v.total, 0);
-                    ventasHoyEl.textContent = totalHoy.toFixed(2);
-                }
+                const hoy = new Date().toDateString();
+                const ventasHoy = ventas.filter(v => new Date(v.fecha).toDateString() === hoy);
+                const totalHoy = ventasHoy.reduce((sum, v) => sum + v.total, 0);
+                document.getElementById('ventasHoy').textContent = totalHoy.toFixed(2);
             } catch (error) {
                 console.error('❌ Error actualizando dashboard:', error);
             }
@@ -1416,14 +1391,8 @@ Me interesa conocer si te gusta este modelo.
                     // Limpiar campos
                     const nombreEl = document.getElementById('nombreClienteLab');
                     const telefonoEl = document.getElementById('telefonoClienteLab');
-                    if (nombreEl) {
-                        nombreEl.value = '';
-                        nombreEl.classList.remove('success', 'error');
-                    }
-                    if (telefonoEl) {
-                        telefonoEl.value = '';
-                        telefonoEl.classList.remove('success', 'error');
-                    }
+                    if (nombreEl) nombreEl.value = '';
+                    if (telefonoEl) telefonoEl.value = '';
                     if (validacion) {
                         validacion.innerHTML = '<span style="color: #f59e0b;">⚠️ Selecciona un cliente</span>';
                     }
@@ -1445,12 +1414,10 @@ Me interesa conocer si te gusta este modelo.
                 
                 if (nombreEl) {
                     nombreEl.value = cliente.nombre;
-                    nombreEl.classList.remove('error');
                     nombreEl.classList.add('success');
                 }
                 if (telefonoEl) {
                     telefonoEl.value = cliente.telefono;
-                    telefonoEl.classList.remove('error');
                     telefonoEl.classList.add('success');
                 }
                 
@@ -1468,25 +1435,37 @@ Me interesa conocer si te gusta este modelo.
             }
         }
 
-        // FUNCIÓN CORREGIDA PARA CALCULAR PENDIENTE Y BENEFICIO
+        // Función para manejar tipo de lente "Otros"
+        function manejarTipoLente() {
+            const select = document.getElementById('tipoLenteLab');
+            const otrosInput = document.getElementById('tipoLenteOtros');
+            
+            if (select && otrosInput) {
+                if (select.value === 'otros') {
+                    otrosInput.style.display = 'block';
+                    otrosInput.required = true;
+                } else {
+                    otrosInput.style.display = 'none';
+                    otrosInput.required = false;
+                    otrosInput.value = '';
+                }
+            }
+        }
+
+        // Función para calcular pendiente de pago en tiempo real
         function calcularPendiente() {
             try {
                 const precioVentaEl = document.getElementById('precioVenta');
                 const abonoEl = document.getElementById('abono');
-                const costoLabEl = document.getElementById('costoLaboratorio');
                 const pendienteEl = document.getElementById('pendientePago');
-                const beneficioEl = document.getElementById('beneficioEsperado');
                 
-                if (!precioVentaEl || !abonoEl || !costoLabEl) return;
+                if (!precioVentaEl || !abonoEl || !pendienteEl) return;
                 
                 const precio = parseFloat(precioVentaEl.value) || 0;
                 const abono = parseFloat(abonoEl.value) || 0;
-                const costoLab = parseFloat(costoLabEl.value) || 0;
-                
                 const pendiente = precio - abono;
-                const beneficio = precio - costoLab;
                 
-                if (pendienteEl && precio > 0) {
+                if (precio > 0) {
                     pendienteEl.innerHTML = `<strong>Pendiente por cobrar: RD$ ${pendiente.toFixed(2)}</strong>`;
                     
                     if (pendiente < 0) {
@@ -1498,23 +1477,117 @@ Me interesa conocer si te gusta este modelo.
                     } else {
                         pendienteEl.style.color = '#f59e0b';
                     }
-                }
-                
-                if (beneficioEl && precio > 0 && costoLab > 0) {
-                    beneficioEl.innerHTML = `<strong>Beneficio esperado: RD$ ${beneficio.toFixed(2)}</strong>`;
-                    if (beneficio > 0) {
-                        beneficioEl.style.color = '#10b981';
-                    } else {
-                        beneficioEl.style.color = '#ef4444';
-                        beneficioEl.innerHTML += '<br><small>⚠️ Precio menor al costo</small>';
-                    }
+                } else {
+                    pendienteEl.innerHTML = '';
                 }
             } catch (error) {
                 console.error('❌ Error calculando pendiente:', error);
             }
         }
 
-        // FUNCIONES DE CÁMARA PARA MONTURA
+        // Configurar validaciones de precio
+        function configurarValidacionesPrecio() {
+            try {
+                const precioVenta = document.getElementById('precioVenta');
+                const abono = document.getElementById('abono');
+                
+                if (precioVenta) precioVenta.addEventListener('input', calcularPendiente);
+                if (abono) abono.addEventListener('input', calcularPendiente);
+            } catch (error) {
+                console.error('❌ Error configurando validaciones:', error);
+            }
+        }
+
+        async function toggleCameraRecetaLab() {
+            const video = document.getElementById('videoRecetaLab');
+            const btn = document.getElementById('cameraBtnRecetaLab');
+            const placeholder = document.getElementById('placeholderRecetaLab');
+            
+            if (!video || !btn || !placeholder) {
+                showAlert('❌ Error: elementos de cámara no encontrados');
+                return;
+            }
+            
+            if (!streamRecetaLab) {
+                try {
+                    streamRecetaLab = await navigator.mediaDevices.getUserMedia({ 
+                        video: { facingMode: 'environment' } 
+                    });
+                    video.srcObject = streamRecetaLab;
+                    video.style.display = 'block';
+                    placeholder.style.display = 'none';
+                    btn.textContent = '📸 Tomar Foto';
+                    btn.onclick = tomarFotoRecetaLab;
+                } catch (err) {
+                    console.error('❌ Error al acceder a la cámara:', err);
+                    showAlert('❌ Error al acceder a la cámara');
+                }
+            } else {
+                tomarFotoRecetaLab();
+            }
+        }
+
+        function tomarFotoRecetaLab() {
+            const video = document.getElementById('videoRecetaLab');
+            const canvas = document.getElementById('canvasRecetaLab');
+            const preview = document.getElementById('previewRecetaLab');
+            const btn = document.getElementById('cameraBtnRecetaLab');
+            const placeholder = document.getElementById('placeholderRecetaLab');
+            
+            if (!video || !preview) {
+                showAlert('❌ Error: elementos no encontrados');
+                return;
+            }
+            
+            try {
+                // Crear canvas si no existe
+                let canvasElement = canvas;
+                if (!canvasElement) {
+                    canvasElement = document.createElement('canvas');
+                    canvasElement.id = 'canvasRecetaLab';
+                    canvasElement.style.display = 'none';
+                    document.body.appendChild(canvasElement);
+                }
+                
+                canvasElement.width = video.videoWidth || 640;
+                canvasElement.height = video.videoHeight || 480;
+                
+                const ctx = canvasElement.getContext('2d');
+                ctx.drawImage(video, 0, 0);
+                
+                // Agregar overlay con información de la orden
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
+                ctx.fillRect(0, 0, canvasElement.width, 50);
+                
+                ctx.fillStyle = 'white';
+                ctx.font = 'bold 20px Arial';
+                const numeroEl = document.getElementById('numeroOrdenActualLab');
+                const numero = numeroEl ? numeroEl.textContent : 'LAB-001';
+                ctx.fillText(`RECETA - ${numero}`, 10, 30);
+                
+                const fecha = new Date().toLocaleDateString();
+                ctx.font = '16px Arial';
+                ctx.fillText(`Fecha: ${fecha}`, 10, canvasElement.height - 10);
+                
+                fotoRecetaLab = canvasElement.toDataURL('image/jpeg', 0.8);
+                preview.src = fotoRecetaLab;
+                preview.style.display = 'block';
+                
+                detenerCamara(streamRecetaLab);
+                streamRecetaLab = null;
+                
+                video.style.display = 'none';
+                placeholder.style.display = 'block';
+                btn.textContent = '📷 Activar Cámara';
+                btn.onclick = toggleCameraRecetaLab;
+                
+                showAlert('📷 Foto de receta capturada con información de orden');
+            } catch (error) {
+                console.error('❌ Error al tomar foto:', error);
+                showAlert('❌ Error al tomar foto');
+            }
+        }
+
         async function toggleCameraMonturaLab() {
             const video = document.getElementById('videoMonturaLab');
             const btn = document.getElementById('cameraBtnMonturaLab');
@@ -1557,31 +1630,35 @@ Me interesa conocer si te gusta este modelo.
             
             try {
                 // Crear canvas si no existe
-                let canvasElement = document.getElementById('canvasMonturaLab');
-                if (!canvasElement) {
-                    canvasElement = document.createElement('canvas');
-                    canvasElement.id = 'canvasMonturaLab';
-                    canvasElement.style.display = 'none';
-                    document.body.appendChild(canvasElement);
+                let canvas = document.getElementById('canvasMonturaLab');
+                if (!canvas) {
+                    canvas = document.createElement('canvas');
+                    canvas.id = 'canvasMonturaLab';
+                    canvas.style.display = 'none';
+                    document.body.appendChild(canvas);
                 }
                 
-                canvasElement.width = video.videoWidth || 640;
-                canvasElement.height = video.videoHeight || 480;
+                canvas.width = video.videoWidth || 640;
+                canvas.height = video.videoHeight || 480;
                 
-                const ctx = canvasElement.getContext('2d');
+                const ctx = canvas.getContext('2d');
                 ctx.drawImage(video, 0, 0);
                 
-                // Agregar overlay con información de la orden
+                // Agregar overlay con información
                 ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
-                ctx.fillRect(0, 0, canvasElement.width, 50);
+                ctx.fillRect(0, 0, canvas.width, 50);
                 
                 ctx.fillStyle = 'white';
                 ctx.font = 'bold 20px Arial';
                 const numeroEl = document.getElementById('numeroOrdenActualLab');
                 const numero = numeroEl ? numeroEl.textContent : 'LAB-001';
-                ctx.fillText(`${numero} - MONTURA`, 10, 30);
+                ctx.fillText(`MONTURA - ${numero}`, 10, 30);
                 
-                fotoMonturaLab = canvasElement.toDataURL('image/jpeg', 0.8);
+                const fecha = new Date().toLocaleDateString();
+                ctx.font = '16px Arial';
+                ctx.fillText(`Fecha: ${fecha}`, 10, canvas.height - 10);
+                
+                fotoMonturaLab = canvas.toDataURL('image/jpeg', 0.8);
                 preview.src = fotoMonturaLab;
                 preview.style.display = 'block';
                 
@@ -1590,99 +1667,10 @@ Me interesa conocer si te gusta este modelo.
                 
                 video.style.display = 'none';
                 placeholder.style.display = 'block';
-                btn.textContent = '📷 Activar Cámara';
+                btn.textContent = '👓 Foto Montura';
                 btn.onclick = toggleCameraMonturaLab;
                 
-                showAlert('📷 Foto de montura capturada');
-            } catch (error) {
-                console.error('❌ Error al tomar foto:', error);
-                showAlert('❌ Error al tomar foto');
-            }
-        }
-
-        async function toggleCameraRecetaLab() {
-            const video = document.getElementById('videoRecetaLab');
-            const btn = document.getElementById('cameraBtnRecetaLab');
-            const placeholder = document.getElementById('placeholderRecetaLab');
-            
-            if (!video || !btn || !placeholder) {
-                showAlert('❌ Error: elementos de cámara no encontrados');
-                return;
-            }
-            
-            if (!streamRecetaLab) {
-                try {
-                    streamRecetaLab = await navigator.mediaDevices.getUserMedia({ 
-                        video: { facingMode: 'environment' } 
-                    });
-                    video.srcObject = streamRecetaLab;
-                    video.style.display = 'block';
-                    placeholder.style.display = 'none';
-                    btn.textContent = '📸 Tomar Foto';
-                    btn.onclick = tomarFotoRecetaLab;
-                } catch (err) {
-                    console.error('❌ Error al acceder a la cámara:', err);
-                    showAlert('❌ Error al acceder a la cámara');
-                }
-            } else {
-                tomarFotoRecetaLab();
-            }
-        }
-
-        function tomarFotoRecetaLab() {
-            const video = document.getElementById('videoRecetaLab');
-            const preview = document.getElementById('previewRecetaLab');
-            const btn = document.getElementById('cameraBtnRecetaLab');
-            const placeholder = document.getElementById('placeholderRecetaLab');
-            
-            if (!video || !preview) {
-                showAlert('❌ Error: elementos no encontrados');
-                return;
-            }
-            
-            try {
-                // Crear canvas si no existe
-                let canvasElement = document.getElementById('canvasRecetaLab');
-                if (!canvasElement) {
-                    canvasElement = document.createElement('canvas');
-                    canvasElement.id = 'canvasRecetaLab';
-                    canvasElement.style.display = 'none';
-                    document.body.appendChild(canvasElement);
-                }
-                
-                canvasElement.width = video.videoWidth || 640;
-                canvasElement.height = video.videoHeight || 480;
-                
-                const ctx = canvasElement.getContext('2d');
-                ctx.drawImage(video, 0, 0);
-                
-                // Agregar overlay con información de la orden
-                ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
-                ctx.fillRect(0, 0, canvasElement.width, 50);
-                
-                ctx.fillStyle = 'white';
-                ctx.font = 'bold 20px Arial';
-                const numeroEl = document.getElementById('numeroOrdenActualLab');
-                const numero = numeroEl ? numeroEl.textContent : 'LAB-001';
-                ctx.fillText(`${numero} - RECETA`, 10, 30);
-                
-                const fecha = new Date().toLocaleDateString();
-                ctx.font = '16px Arial';
-                ctx.fillText(`Fecha: ${fecha}`, 10, canvasElement.height - 10);
-                
-                fotoRecetaLab = canvasElement.toDataURL('image/jpeg', 0.8);
-                preview.src = fotoRecetaLab;
-                preview.style.display = 'block';
-                
-                detenerCamara(streamRecetaLab);
-                streamRecetaLab = null;
-                
-                video.style.display = 'none';
-                placeholder.style.display = 'block';
-                btn.textContent = '📷 Activar Cámara';
-                btn.onclick = toggleCameraRecetaLab;
-                
-                showAlert('📷 Foto de receta capturada con información de orden');
+                showAlert('👓 Foto de montura capturada');
             } catch (error) {
                 console.error('❌ Error al tomar foto:', error);
                 showAlert('❌ Error al tomar foto');
@@ -1751,14 +1739,20 @@ Me interesa conocer si te gusta este modelo.
                 const cliente = clienteId ? clientes.find(c => c.id === clienteId) : null;
                 console.log('👤 Datos del cliente encontrado:', cliente);
 
+                // Manejar tipo de lente "Otros"
+                let tipoLente = obtenerValor('tipoLenteLab');
+                if (tipoLente === 'otros') {
+                    const tipoOtros = obtenerValor('tipoLenteOtros');
+                    tipoLente = tipoOtros || 'Otros (no especificado)';
+                }
+
                 return {
                     numero: obtenerValor('numeroOrdenActualLab') || generarNumeroOrdenLab(),
                     clienteId: clienteId,
                     cliente: cliente ? cliente.nombre : obtenerValor('nombreClienteLab'),
                     telefono: cliente ? cliente.telefono : obtenerValor('telefonoClienteLab'),
-                    nombreMontura: obtenerValor('nombreMonturaLab'),
                     tipoMontura: obtenerValor('tipoMonturaLab'),
-                    tipoLente: obtenerValor('tipoLenteLab'),
+                    tipoLente: tipoLente,
                     materialLente: obtenerValor('materialLenteLab'),
                     tratamientos: obtenerValor('tratamientosLab'),
                     costoLaboratorio: parseFloat(obtenerValor('costoLaboratorio')) || 0,
@@ -1767,6 +1761,12 @@ Me interesa conocer si te gusta este modelo.
                     prescripcion: {
                         od: {
                             esfera: obtenerValor('od_esferaLab'),
+                            cilindro: obtenerValor('od_cilindroLab'),
+                            eje: obtenerValor('od_ejeLab'),
+                            adicion: obtenerValor('od_adicionLab')
+                        },
+                        oi: {
+                            esfera: obtenerValor('oi_esferaLab'),
                             cilindro: obtenerValor('oi_cilindroLab'),
                             eje: obtenerValor('oi_ejeLab'),
                             adicion: obtenerValor('oi_adicionLab')
@@ -1834,7 +1834,7 @@ Me interesa conocer si te gusta este modelo.
                     fetch(fotoRecetaLab)
                         .then(res => res.blob())
                         .then(blob => {
-                            const file = new File([blob], `${orden.numero}_receta.jpg`, { type: 'image/jpeg' });
+                            const file = new File([blob], `${orden.numero}.jpg`, { type: 'image/jpeg' });
                             return navigator.share({
                                 title: `Orden ${orden.numero}`,
                                 text: mensaje,
@@ -1866,8 +1866,7 @@ Me interesa conocer si te gusta este modelo.
 📱 *TELÉFONO:* ${orden.telefono}
 
 👓 *ESPECIFICACIONES:*
-• Montura: ${orden.nombreMontura || 'No especificado'}
-• Tipo Montura: ${orden.tipoMontura || 'No especificado'}
+• Montura: ${orden.tipoMontura || 'No especificado'}
 • Tipo Lente: ${orden.tipoLente || 'No especificado'}
 • Material: ${orden.materialLente || 'No especificado'}
 • Tratamiento: ${orden.tratamientos || 'Ninguno'}
@@ -1892,25 +1891,19 @@ Me interesa conocer si te gusta este modelo.
 • DNP OD: ${orden.medidas.dnpOD || 'Calcular'}
 • DNP OI: ${orden.medidas.dnpOI || 'Calcular'}
 
-💰 *COSTOS:*
-• Costo Laboratorio: RD$ ${orden.costoLaboratorio.toFixed(2)}
-• Precio Venta: RD$ ${orden.precioVenta.toFixed(2)}
-• Abono Recibido: RD$ ${orden.abono.toFixed(2)}
-• Pendiente: RD$ ${(orden.precioVenta - orden.abono).toFixed(2)}
-
 💬 *COMENTARIOS:*
 ${orden.comentarios || 'Ningún comentario especial'}
 
-📸 *FOTOS ADJUNTAS:*
+📸 *FOTOS DE CONSTANCIA ADJUNTAS*
 ✅ Receta con medidas
-${orden.fotoMontura ? '✅ Montura seleccionada' : '❌ Sin foto de montura'}
+${orden.fotoMontura ? '✅ Montura' : '⚠️ Sin foto de montura'}
 
 ⚠️ *IMPORTANTE:*
 - Confirmar recepción de orden
 - Enviar foto cuando esté lista
 - Tiempo estimado de entrega
 
-📱 Urbana Vision - 809-713-5307
+📱 Urbana Vision
 🌐 urbanavision.com`;
             } catch (error) {
                 console.error('❌ Error generando mensaje:', error);
@@ -1953,8 +1946,8 @@ ${orden.fotoMontura ? '✅ Montura seleccionada' : '❌ Sin foto de montura'}
                     }
                 });
                 
-                // Limpiar campos de cliente y montura
-                const camposCliente = ['nombreClienteLab', 'telefonoClienteLab', 'nombreMonturaLab'];
+                // Limpiar campos de cliente
+                const camposCliente = ['nombreClienteLab', 'telefonoClienteLab'];
                 camposCliente.forEach(id => {
                     const elemento = document.getElementById(id);
                     if (elemento) {
@@ -1969,7 +1962,7 @@ ${orden.fotoMontura ? '✅ Montura seleccionada' : '❌ Sin foto de montura'}
                     'oi_esferaLab', 'oi_cilindroLab', 'oi_ejeLab', 'oi_adicionLab',
                     'distancia_pupilarLab', 'altura_pupilarLab',
                     'distancia_nasopupilar_odLab', 'distancia_nasopupilar_oiLab',
-                    'comentariosLab', 'costoLaboratorio', 'precioVenta', 'abono'
+                    'comentariosLab', 'costoLaboratorio', 'precioVenta', 'abono', 'tipoLenteOtros'
                 ];
                 
                 campos.forEach(campo => {
@@ -1979,6 +1972,12 @@ ${orden.fotoMontura ? '✅ Montura seleccionada' : '❌ Sin foto de montura'}
                         elemento.classList.remove('error', 'success');
                     }
                 });
+                
+                // Ocultar campo "otros"
+                const otrosInput = document.getElementById('tipoLenteOtros');
+                if (otrosInput) {
+                    otrosInput.style.display = 'none';
+                }
                 
                 // Limpiar validaciones
                 const validacionCliente = document.getElementById('validacionCliente');
@@ -1990,21 +1989,12 @@ ${orden.fotoMontura ? '✅ Montura seleccionada' : '❌ Sin foto de montura'}
                 if (pendientePago) {
                     pendientePago.innerHTML = '';
                 }
-
-                const beneficioEsperado = document.getElementById('beneficioEsperado');
-                if (beneficioEsperado) {
-                    beneficioEsperado.innerHTML = '';
-                }
                 
                 // Limpiar fotos
                 const previewReceta = document.getElementById('previewRecetaLab');
-                if (previewReceta) {
-                    previewReceta.style.display = 'none';
-                }
                 const previewMontura = document.getElementById('previewMonturaLab');
-                if (previewMontura) {
-                    previewMontura.style.display = 'none';
-                }
+                if (previewReceta) previewReceta.style.display = 'none';
+                if (previewMontura) previewMontura.style.display = 'none';
                 
                 fotoRecetaLab = null;
                 fotoMonturaLab = null;
@@ -2155,8 +2145,7 @@ ${orden.fotoMontura ? '✅ Montura seleccionada' : '❌ Sin foto de montura'}
                     
                     <div class="card">
                         <h3>👓 Especificaciones</h3>
-                        <p><strong>Montura:</strong> ${orden.nombreMontura || 'No especificado'}</p>
-                        <p><strong>Tipo Montura:</strong> ${orden.tipoMontura || 'No especificado'}</p>
+                        <p><strong>Montura:</strong> ${orden.tipoMontura || 'No especificado'}</p>
                         <p><strong>Tipo Lente:</strong> ${orden.tipoLente || 'No especificado'}</p>
                         <p><strong>Material:</strong> ${orden.materialLente || 'No especificado'}</p>
                         <p><strong>Tratamiento:</strong> ${orden.tratamientos || 'Ninguno'}</p>
@@ -2198,17 +2187,17 @@ ${orden.fotoMontura ? '✅ Montura seleccionada' : '❌ Sin foto de montura'}
                         </div>
                     </div>
                     
-                    ${orden.fotoMontura ? `
-                        <div class="card">
-                            <h3>📷 Foto de Montura</h3>
-                            <img src="${orden.fotoMontura}" style="width: 100%; border-radius: 10px;">
-                        </div>
-                    ` : ''}
-                    
                     ${orden.fotoReceta ? `
                         <div class="card">
                             <h3>📷 Foto de Receta</h3>
                             <img src="${orden.fotoReceta}" style="width: 100%; border-radius: 10px;">
+                        </div>
+                    ` : ''}
+                    
+                    ${orden.fotoMontura ? `
+                        <div class="card">
+                            <h3>👓 Foto de Montura</h3>
+                            <img src="${orden.fotoMontura}" style="width: 100%; border-radius: 10px;">
                         </div>
                     ` : ''}
                     
@@ -2220,6 +2209,13 @@ ${orden.fotoMontura ? '✅ Montura seleccionada' : '❌ Sin foto de montura'}
                         ${orden.fechaPago ? `<p><strong>Fecha Pago:</strong> ${new Date(orden.fechaPago).toLocaleString()}</p>` : ''}
                         ${orden.fechaCotejo ? `<p><strong>Fecha Cotejo:</strong> ${new Date(orden.fechaCotejo).toLocaleString()}</p>` : ''}
                     </div>
+                    
+                    ${orden.comentarios ? `
+                        <div class="card">
+                            <h3>💬 Comentarios</h3>
+                            <p>${orden.comentarios}</p>
+                        </div>
+                    ` : ''}
                 `;
                 
                 modal.style.display = 'flex';
@@ -2309,7 +2305,6 @@ ${orden.fotoMontura ? '✅ Montura seleccionada' : '❌ Sin foto de montura'}
                             <h3>📦 Orden ${orden.numero}</h3>
                             <p><strong>Cliente:</strong> ${orden.cliente}</p>
                             <p><strong>Teléfono:</strong> ${orden.telefono}</p>
-                            <p><strong>Montura:</strong> ${orden.nombreMontura || 'No especificado'}</p>
                             <p><strong>Tipo:</strong> ${orden.tipoLente}</p>
                             <p><strong>Material:</strong> ${orden.materialLente || 'N/A'}</p>
                             <p><strong>Fecha Envío:</strong> ${new Date(orden.fechaCreacion).toLocaleDateString()}</p>
@@ -2344,7 +2339,6 @@ ${orden.fotoMontura ? '✅ Montura seleccionada' : '❌ Sin foto de montura'}
                 const confirmacion = confirm(`🔍 COTEJO DE ORDEN ${orden.numero}
 
 Cliente: ${orden.cliente}
-Montura: ${orden.nombreMontura || 'No especificado'}
 Tipo: ${orden.tipoLente}
 Pendiente por cobrar: RD$ ${pendiente.toFixed(2)}
 
@@ -2371,8 +2365,7 @@ Pendiente por cobrar: RD$ ${pendiente.toFixed(2)}
                         total: orden.precioVenta,
                         fecha: new Date().toISOString(),
                         tipo: 'laboratorio',
-                        numeroOrden: orden.numero,
-                        nombreMontura: orden.nombreMontura
+                        numeroOrden: orden.numero
                     };
                     
                     ventas.push(nuevaVenta);
@@ -2429,7 +2422,6 @@ Pendiente por cobrar: RD$ ${pendiente.toFixed(2)}
                             <h3>💰 Orden ${orden.numero}</h3>
                             <p><strong>Cliente:</strong> ${orden.cliente}</p>
                             <p><strong>Teléfono:</strong> ${orden.telefono}</p>
-                            <p><strong>Montura:</strong> ${orden.nombreMontura || 'No especificado'}</p>
                             <p><strong>Tipo:</strong> ${orden.tipoLente}</p>
                             <p><strong>Días Pendiente:</strong> ${diasPendiente} días</p>
                             
@@ -2515,8 +2507,7 @@ Hola ${orden.cliente}!
 Sus lentes están listos para retirar.
 
 📋 Orden: ${orden.numero}
-👓 Montura: ${orden.nombreMontura || 'Personalizada'}
-🔍 Tipo: ${orden.tipoLente}
+👓 Tipo: ${orden.tipoLente}
 💰 Total: RD$ ${(orden.precioVenta || 0).toFixed(2)}
 ✅ Abonado: RD$ ${(orden.abono || 0).toFixed(2)}
 ⏳ Pendiente: RD$ ${pendiente.toFixed(2)}
@@ -2525,7 +2516,7 @@ Puede pasar a completar el pago y retirar sus lentes cuando guste.
 
 🕒 Horario: Lunes a Sábado 8:00 AM - 6:00 PM
 
-📱 Urbana Vision - 809-713-5307
+📱 809-713-5307
 🌐 urbanavision.com`;
                 
                 const telefonoLimpio = orden.telefono.replace(/[^0-9]/g, '');
@@ -2547,14 +2538,13 @@ Sus lentes están listos para retirar.
 
 📋 Orden: ${orden.numero}
 👁️ Tipo: ${orden.tipoLente}
-👓 Montura: ${orden.nombreMontura || 'Personalizada'}
 📅 Fecha: ${new Date().toLocaleDateString()}
 
 Puede pasar a retirarlos cuando guste.
 
 🕒 Horario: Lunes a Sábado 8:00 AM - 6:00 PM
 
-📱 Urbana Vision - 809-713-5307
+📱 809-713-5307
 🌐 urbanavision.com`;
                 
                 const telefonoLimpio = orden.telefono.replace(/[^0-9]/g, '');
@@ -2644,7 +2634,7 @@ Puede pasar a retirarlos cuando guste.
 
         function contactarLaboratorioGestion(telefono, nombre) {
             try {
-                const mensaje = `🔬 Hola ${nombre}!\n\nSoy de Urbana Vision.\n\n¿Cómo están? ¿Tienen disponibilidad para nuevas órdenes?\n\nGracias!\n\n📱 Urbana Vision - 809-713-5307\n🌐 urbanavision.com`;
+                const mensaje = `🔬 Hola ${nombre}!\n\nSoy de Urbana Vision.\n\n¿Cómo están? ¿Tienen disponibilidad para nuevas órdenes?\n\nGracias!\n\n📱 809-713-5307\n🌐 urbanavision.com`;
                 
                 const telefonoLimpio = telefono.replace(/[^0-9]/g, '');
                 window.open(`https://wa.me/${telefonoLimpio}?text=${encodeURIComponent(mensaje)}`, '_blank');
@@ -2687,7 +2677,6 @@ Puede pasar a retirarlos cuando guste.
                         <div class="card">
                             <h4>📤 ${orden.numero}</h4>
                             <p><strong>Cliente:</strong> ${orden.cliente}</p>
-                            <p><strong>Montura:</strong> ${orden.nombreMontura || 'No especificado'}</p>
                             <p><strong>Tipo:</strong> ${orden.tipoLente}</p>
                             <p><strong>Fecha Envío:</strong> ${new Date(orden.fechaCreacion).toLocaleString()}</p>
                             <p><strong>Estado:</strong> ${getEstadoHTMLLab(orden.estado)}</p>
@@ -2703,16 +2692,13 @@ Puede pasar a retirarlos cuando guste.
         }
 
         // ========================================
-        // 📱 FUNCIONES DE MARKETING CORREGIDAS (COMPLETAS)
+        // 📱 FUNCIONES DE MARKETING CORREGIDAS
         // ========================================
         
         function cargarMarketing() {
             try {
-                const mensajesEl = document.getElementById('mensajesEnviados');
-                const promocionesEl = document.getElementById('promocionesActivas');
-                
-                if (mensajesEl) mensajesEl.textContent = estadisticas.mensajesHoy || 0;
-                if (promocionesEl) promocionesEl.textContent = estadisticas.promociones || 0;
+                document.getElementById('mensajesEnviados').textContent = estadisticas.mensajesHoy || 0;
+                document.getElementById('promocionesActivas').textContent = estadisticas.promociones || 0;
             } catch (error) {
                 console.error('❌ Error cargando marketing:', error);
             }
@@ -2906,7 +2892,7 @@ Puede pasar a retirarlos cuando guste.
             showAlert(`📱 ${template.titulo} enviado por WhatsApp`);
         }
 
-        // FUNCIÓN CORREGIDA PARA ENLACES DE REDES SOCIALES (ACTUALIZADA)
+        // FUNCIÓN CORREGIDA PARA ENLACES DE REDES SOCIALES
         function enviarEnlaceRedes(plataforma) {
             const enlaceEl = document.getElementById('enlaceRedes');
             if (!enlaceEl) {
@@ -2924,22 +2910,22 @@ Puede pasar a retirarlos cuando guste.
                 youtube: {
                     emoji: '📺',
                     nombre: 'YouTube',
-                    mensaje: '🔥 ¡CONTENIDO IMPERDIBLE!\n\nTe compartimos este video que te puede interesar:'
+                    mensaje: 'Te compartimos este video que te puede interesar:'
                 },
                 tiktok: {
                     emoji: '🎵',
                     nombre: 'TikTok',
-                    mensaje: '🔥 ¡VIRAL CONTENT!\n\nMira este contenido trending que está arrasando:'
+                    mensaje: 'Mira este contenido divertido e interesante:'
                 },
                 instagram: {
                     emoji: '📸',
                     nombre: 'Instagram',
-                    mensaje: '✨ ¡CONTENIDO VISUAL INCREÍBLE!\n\nTe compartimos este post que te va a encantar:'
+                    mensaje: 'Te compartimos este contenido visual:'
                 },
                 facebook: {
                     emoji: '👥',
                     nombre: 'Facebook',
-                    mensaje: '💬 ¡CONTENIDO INTERESANTE!\n\nCompartimos contigo esta publicación:'
+                    mensaje: 'Contenido interesante para compartir:'
                 }
             };
             
@@ -2949,17 +2935,7 @@ Puede pasar a retirarlos cuando guste.
                 return;
             }
             
-            const mensajeCompleto = `${config.emoji} *${config.nombre.toUpperCase()}*
-
-${config.mensaje}
-
-🔗 ${enlace}
-
-👀 ¡No te lo pierdas!
-💬 Cuéntanos qué opinas
-
-📱 Urbana Vision - 809-713-5307
-🌐 urbanavision.com`;
+            const mensajeCompleto = `${config.emoji} *${config.nombre.toUpperCase()}*\n\n${config.mensaje}\n\n🔗 ${enlace}\n\n📱 809-713-5307\n🌐 urbanavision.com`;
             
             try {
                 window.open(`https://wa.me/?text=${encodeURIComponent(mensajeCompleto)}`, '_blank');
@@ -3124,7 +3100,7 @@ ${config.mensaje}
                           `💰 Precio: RD$ ${producto.precio.toFixed(2)}\n\n` +
                           `Me interesa conocer si te gusta este modelo.\n\n` +
                           `✨ ¿Te interesa verlo en la tienda?\n\n` +
-                          `📱 Urbana Vision - 809-713-5307\n` +
+                          `📱 809-713-5307\n` +
                           `🌐 urbanavision.com`;
             
             try {
@@ -3164,7 +3140,7 @@ ${config.mensaje}
         }
 
         // ========================================
-        // 📷 FUNCIONES DE CÁMARA PRINCIPALES
+        // 📷 FUNCIONES DE CÁMARA PRINCIPAL
         // ========================================
 
         async function toggleCamera() {
@@ -3374,7 +3350,7 @@ ${config.mensaje}
                           `💰 Precio: RD$ ${producto.precio.toFixed(2)}\n\n` +
                           `Me interesa conocer si te gusta este modelo.\n\n` +
                           `✨ ¿Te interesa verlo en la tienda?\n\n` +
-                          `📱 Urbana Vision - 809-713-5307\n` +
+                          `📱 809-713-5307\n` +
                           `🌐 urbanavision.com`;
             
             try {
@@ -3578,7 +3554,7 @@ ${config.mensaje}
         }
 
         function contactarClienteDirecto(telefono, nombre) {
-            const mensaje = `¡Hola ${nombre}! ✨\n\nEspero que estés muy bien. Te contacto desde Urbana Vision.\n\n¿Cómo has estado? ¿Todo bien con tus lentes?\n\nTenemos nuevas ofertas que podrían interesarte.\n\n📱 Urbana Vision - 809-713-5307\n🌐 urbanavision.com`;
+            const mensaje = `¡Hola ${nombre}! ✨\n\nEspero que estés muy bien. Te contacto desde Urbana Vision.\n\n¿Cómo has estado? ¿Todo bien con tus lentes?\n\nTenemos nuevas ofertas que podrían interesarte.\n\n📱 809-713-5307\n🌐 urbanavision.com`;
             const telefonoLimpio = telefono.replace(/[^0-9]/g, '');
             window.open(`https://wa.me/${telefonoLimpio}?text=${encodeURIComponent(mensaje)}`, '_blank');
             actualizarEstadisticas('mensaje');
@@ -3648,7 +3624,7 @@ ${config.mensaje}
         }
 
         function contactarCliente(telefono, nombre) {
-            const mensaje = `¡Hola ${nombre}! ✨\n\nEspero que estés muy bien. Te contacto desde Urbana Vision.\n\nTenemos ofertas especiales y nuevos productos que podrían interesarte.\n\n¿Te gustaría ver nuestras promociones actuales?\n\n📱 Urbana Vision - 809-713-5307\n🌐 urbanavision.com`;
+            const mensaje = `¡Hola ${nombre}! ✨\n\nEspero que estés muy bien. Te contacto desde Urbana Vision.\n\nTenemos ofertas especiales y nuevos productos que podrían interesarte.\n\n¿Te gustaría ver nuestras promociones actuales?\n\n📱 809-713-5307\n🌐 urbanavision.com`;
             const telefonoLimpio = telefono.replace(/[^0-9]/g, '');
             window.open(`https://wa.me/${telefonoLimpio}?text=${encodeURIComponent(mensaje)}`, '_blank');
             actualizarEstadisticas('mensaje');
@@ -3809,13 +3785,13 @@ ${config.mensaje}
             
             switch (tipo) {
                 case 'evento':
-                    mensaje = `🎂 ¡Feliz cumpleaños ${nombre}! 🎉\n\n¡${edad} años de vida! En Urbana Vision queremos celebrar contigo.\n\n🎁 Tenemos una sorpresa especial para ti en tu día.\n\n📱 Urbana Vision - 809-713-5307\n🌐 urbanavision.com`;
+                    mensaje = `🎂 ¡Feliz cumpleaños ${nombre}! 🎉\n\n¡${edad} años de vida! En Urbana Vision queremos celebrar contigo.\n\n🎁 Tenemos una sorpresa especial para ti en tu día.\n\n📱 809-713-5307\n🌐 urbanavision.com`;
                     break;
                 case 'examen':
-                    mensaje = `👁️ Hola ${nombre}!\n\nEs momento de tu examen anual de la vista.\n\nRecomendamos revisar tu salud visual cada año.\n\n📅 Agenda tu cita\n📱 Urbana Vision - 809-713-5307\n🌐 urbanavision.com`;
+                    mensaje = `👁️ Hola ${nombre}!\n\nEs momento de tu examen anual de la vista.\n\nRecomendamos revisar tu salud visual cada año.\n\n📅 Agenda tu cita\n📱 809-713-5307\n🌐 urbanavision.com`;
                     break;
                 case 'laboratorio':
-                    mensaje = `🔬 Hola ${nombre}!\n\nTu orden de laboratorio está siendo procesada.\n\nTe contactaremos pronto con novedades.\n\n📱 Urbana Vision - 809-713-5307\n🌐 urbanavision.com`;
+                    mensaje = `🔬 Hola ${nombre}!\n\nTu orden de laboratorio está siendo procesada.\n\nTe contactaremos pronto con novedades.\n\n📱 809-713-5307\n🌐 urbanavision.com`;
                     break;
             }
             
@@ -3834,18 +3810,18 @@ ${config.mensaje}
                     const nombreEvento = document.getElementById('nombreEvento')?.value || 'Evento especial';
                     const fechaEvento = document.getElementById('fechaEvento')?.value;
                     if (fechaEvento) {
-                        mensaje = `🎉 ¡${nombreEvento}! 🎊\n\nEn Urbana Vision queremos celebrar contigo.\n\n🎁 Tenemos algo especial para ti.\n\n📱 Urbana Vision - 809-713-5307\n🌐 urbanavision.com`;
+                        mensaje = `🎉 ¡${nombreEvento}! 🎊\n\nEn Urbana Vision queremos celebrar contigo.\n\n🎁 Tenemos algo especial para ti.\n\n📱 809-713-5307\n🌐 urbanavision.com`;
                     } else {
-                        mensaje = `🎂 ¡Felicitaciones! 🎉\n\nEn Urbana Vision queremos celebrar contigo.\n\n🎁 Tenemos una sorpresa especial.\n\n📱 Urbana Vision - 809-713-5307\n🌐 urbanavision.com`;
+                        mensaje = `🎂 ¡Felicitaciones! 🎉\n\nEn Urbana Vision queremos celebrar contigo.\n\n🎁 Tenemos una sorpresa especial.\n\n📱 809-713-5307\n🌐 urbanavision.com`;
                     }
                     break;
                 case 'cita':
                     const fecha = document.getElementById('fechaCita')?.value;
                     const hora = document.getElementById('horaCita')?.value;
-                    mensaje = `📅 Recordatorio de cita\n\nFecha: ${fecha || 'Por confirmar'}\nHora: ${hora || 'Por confirmar'}\n\nTe esperamos en Urbana Vision\n\n📱 Urbana Vision - 809-713-5307\n🌐 urbanavision.com`;
+                    mensaje = `📅 Recordatorio de cita\n\nFecha: ${fecha || 'Por confirmar'}\nHora: ${hora || 'Por confirmar'}\n\nTe esperamos en Urbana Vision\n\n📱 809-713-5307\n🌐 urbanavision.com`;
                     break;
                 case 'examen':
-                    mensaje = `👁️ Es hora de tu examen anual\n\nRecomendamos revisar tu vista cada año para mantener una salud visual óptima.\n\n📅 Agenda tu cita\n📱 Urbana Vision - 809-713-5307\n🌐 urbanavision.com`;
+                    mensaje = `👁️ Es hora de tu examen anual\n\nRecomendamos revisar tu vista cada año para mantener una salud visual óptima.\n\n📅 Agenda tu cita\n📱 809-713-5307\n🌐 urbanavision.com`;
                     break;
             }
             
@@ -3918,7 +3894,7 @@ ${config.mensaje}
                 const clienteId = parseInt(document.getElementById('clienteVenta').value);
                 const productoId = parseInt(document.getElementById('productoVenta').value);
                 const cantidad = parseInt(document.getElementById('cantidadVenta').value) || 1;
-                const precio = parseFloat(document.getElementById('precioVentaProducto').value) || 0;
+                const precio = parseFloat(document.getElementById('precioVentaVal').value) || 0;
                 
                 if (!clienteId || !productoId || precio <= 0) {
                     showAlert('❌ Complete todos los campos');
@@ -3949,7 +3925,7 @@ ${config.mensaje}
                 document.getElementById('clienteVenta').value = '';
                 document.getElementById('productoVenta').value = '';
                 document.getElementById('cantidadVenta').value = '1';
-                document.getElementById('precioVentaProducto').value = '';
+                document.getElementById('precioVentaVal').value = '';
             } catch (error) {
                 console.error('❌ Error registrando venta:', error);
                 showAlert('❌ Error al registrar venta');
@@ -3957,7 +3933,7 @@ ${config.mensaje}
         }
 
         // ========================================
-        // 📊 FUNCIONES DE REPORTES MEJORADOS (CORREGIDAS)
+        // 📊 FUNCIONES DE REPORTES COMPLETOS
         // ========================================
         
         function cargarReportes() {
@@ -3966,42 +3942,38 @@ ${config.mensaje}
                 const enLab = ordenesLaboratorio.filter(o => o.estado === 'laboratorio').length;
                 const pendCotejo = ordenesLaboratorio.filter(o => o.estado === 'listo').length;
                 const cuentasCobrar = ordenesLaboratorio.filter(o => o.estado === 'entregado' && !o.pagado).length;
-                
-                // Calcular totales financieros
-                const totalPorCobrar = ordenesLaboratorio
+                const totalCobrar = ordenesLaboratorio
                     .filter(o => o.estado === 'entregado' && !o.pagado)
                     .reduce((sum, o) => sum + ((o.precioVenta || 0) - (o.abono || 0)), 0);
-                    
                 const beneficioEsperado = ordenesLaboratorio
                     .filter(o => o.estado === 'entregado' && !o.pagado)
                     .reduce((sum, o) => sum + ((o.precioVenta || 0) - (o.costoLaboratorio || 0)), 0);
-                    
                 const inversionLab = ordenesLaboratorio
                     .filter(o => o.estado !== 'pendiente')
                     .reduce((sum, o) => sum + (o.costoLaboratorio || 0), 0);
 
-                // Actualizar elementos de reporte de laboratorio
-                const elementos = [
+                // Actualizar elementos de reportes de laboratorio
+                const elementosLab = [
                     { id: 'reporteEnLab', valor: enLab },
                     { id: 'reportePendCotejo', valor: pendCotejo },
                     { id: 'reporteCuentasCobrar', valor: cuentasCobrar },
-                    { id: 'reporteTotalCobrar', valor: totalPorCobrar.toFixed(2) },
+                    { id: 'reporteTotalCobrar', valor: totalCobrar.toFixed(2) },
                     { id: 'reporteBeneficio', valor: beneficioEsperado.toFixed(2) },
                     { id: 'reporteInversionLab', valor: inversionLab.toFixed(2) }
                 ];
 
-                elementos.forEach(elemento => {
-                    const el = document.getElementById(elemento.id);
-                    if (el) {
-                        el.textContent = elemento.valor;
-                    }
+                elementosLab.forEach(elem => {
+                    const el = document.getElementById(elem.id);
+                    if (el) el.textContent = elem.valor;
                 });
 
-                // Resumen general
-                const totalVentasMes = ventas.reduce((sum, v) => sum + v.total, 0);
+                // Reportes generales
+                const totalVentasMes = ventas
+                    .filter(v => new Date(v.fecha).getMonth() === new Date().getMonth())
+                    .reduce((sum, v) => sum + v.total, 0);
                 const promedioVenta = ventas.length > 0 ? totalVentasMes / ventas.length : 0;
                 const stockBajo = productos.filter(p => p.stock < 5).length;
-                const monturasEnLab = ordenesLaboratorio.filter(o => o.estado === 'laboratorio').length;
+                const monturasEnLab = ordenesLaboratorio.filter(o => o.estado !== 'entregado').length;
 
                 const elementosGenerales = [
                     { id: 'totalProductosReporte', valor: productos.length },
@@ -4012,14 +3984,12 @@ ${config.mensaje}
                     { id: 'monturasEnLab', valor: monturasEnLab }
                 ];
 
-                elementosGenerales.forEach(elemento => {
-                    const el = document.getElementById(elemento.id);
-                    if (el) {
-                        el.textContent = elemento.valor;
-                    }
+                elementosGenerales.forEach(elem => {
+                    const el = document.getElementById(elem.id);
+                    if (el) el.textContent = elem.valor;
                 });
 
-                // Reporte de monturas en laboratorio
+                // Cargar monturas en laboratorio
                 cargarReporteMonturasLab();
                 cargarUltimasTransacciones();
 
@@ -4033,39 +4003,22 @@ ${config.mensaje}
                 const contenedor = document.getElementById('reporteMonturasLab');
                 if (!contenedor) return;
 
-                const monturasEnLab = ordenesLaboratorio.filter(o => o.estado === 'laboratorio');
+                const monturasEnLab = ordenesLaboratorio.filter(o => o.estado !== 'entregado');
 
                 if (monturasEnLab.length === 0) {
-                    contenedor.innerHTML = '<p style="text-align: center;">No hay monturas en laboratorio actualmente</p>';
+                    contenedor.innerHTML = '<p style="text-align: center;">✅ No hay monturas en laboratorio</p>';
                     return;
                 }
 
-                let html = '';
-                monturasEnLab.forEach(orden => {
+                contenedor.innerHTML = monturasEnLab.map(orden => {
                     const diasEnLab = Math.floor((new Date() - new Date(orden.fechaCreacion)) / (1000 * 60 * 60 * 24));
-                    const pendiente = (orden.precioVenta || 0) - (orden.abono || 0);
-
-                    html += `
-                        <div class="cliente-item" style="margin: 10px 0; padding: 10px; background: rgba(0,0,0,0.2); border-radius: 5px;">
-                            <div style="display: flex; justify-content: space-between; align-items: center;">
-                                <div>
-                                    <h4>${orden.numero}</h4>
-                                    <p><strong>Cliente:</strong> ${orden.cliente}</p>
-                                    <p><strong>Montura:</strong> ${orden.nombreMontura || 'No especificado'}</p>
-                                    <p><strong>Tipo:</strong> ${orden.tipoLente}</p>
-                                    <p><strong>Días en Lab:</strong> ${diasEnLab} días</p>
-                                </div>
-                                <div style="text-align: right;">
-                                    <p><strong>Total:</strong> RD$ ${(orden.precioVenta || 0).toFixed(2)}</p>
-                                    <p><strong>Pendiente:</strong> <span style="color: #f59e0b;">RD$ ${pendiente.toFixed(2)}</span></p>
-                                    ${orden.fotoMontura ? '<div style="margin: 5px 0;">📷 Con foto</div>' : '<div style="margin: 5px 0; opacity: 0.6;">Sin foto</div>'}
-                                </div>
-                            </div>
+                    return `
+                        <div style="background: rgba(0,0,0,0.2); padding: 10px; margin: 5px 0; border-radius: 5px;">
+                            <strong>${orden.numero}</strong> - ${orden.cliente}<br>
+                            <small>Tipo: ${orden.tipoLente} | ${diasEnLab} días en lab | Estado: ${orden.estado}</small>
                         </div>
                     `;
-                });
-
-                contenedor.innerHTML = html;
+                }).join('');
             } catch (error) {
                 console.error('❌ Error cargando reporte monturas:', error);
             }
@@ -4076,81 +4029,76 @@ ${config.mensaje}
                 const contenedor = document.getElementById('ultimasTransacciones');
                 if (!contenedor) return;
 
-                const ultimasVentas = ventas.slice(-5).reverse();
-                const ultimasOrdenes = ordenesLaboratorio.slice(-3).reverse();
+                const transacciones = [
+                    ...ventas.map(v => ({
+                        ...v,
+                        tipo: v.tipo || 'venta',
+                        descripcion: `Venta - ${clientes.find(c => c.id === v.clienteId)?.nombre || 'Cliente'}`
+                    })),
+                    ...ordenesLaboratorio.map(o => ({
+                        id: o.id,
+                        fecha: o.fechaCreacion,
+                        total: o.abono || 0,
+                        tipo: 'abono',
+                        descripcion: `Abono - ${o.cliente} (${o.numero})`
+                    }))
+                ].sort((a, b) => new Date(b.fecha) - new Date(a.fecha)).slice(0, 10);
 
-                let html = '<div class="grid">';
-
-                // Últimas ventas
-                html += '<div class="card"><h4>💰 Últimas Ventas</h4>';
-                if (ultimasVentas.length === 0) {
-                    html += '<p>No hay ventas registradas</p>';
-                } else {
-                    ultimasVentas.forEach(venta => {
-                        const cliente = clientes.find(c => c.id === venta.clienteId) || { nombre: 'Cliente eliminado' };
-                        html += `
-                            <div style="padding: 8px; margin: 5px 0; background: rgba(0,0,0,0.2); border-radius: 5px;">
-                                <p><strong>${cliente.nombre}</strong></p>
-                                <p>RD$ ${venta.total.toFixed(2)} - ${new Date(venta.fecha).toLocaleDateString()}</p>
-                                <p style="font-size: 12px; opacity: 0.8;">${venta.tipo === 'laboratorio' ? '🔬 Laboratorio' : '📦 Producto'}</p>
-                            </div>
-                        `;
-                    });
+                if (transacciones.length === 0) {
+                    contenedor.innerHTML = '<p>No hay transacciones recientes</p>';
+                    return;
                 }
-                html += '</div>';
 
-                // Últimas órdenes
-                html += '<div class="card"><h4>🔬 Últimas Órdenes Lab</h4>';
-                if (ultimasOrdenes.length === 0) {
-                    html += '<p>No hay órdenes de laboratorio</p>';
-                } else {
-                    ultimasOrdenes.forEach(orden => {
-                        html += `
-                            <div style="padding: 8px; margin: 5px 0; background: rgba(0,0,0,0.2); border-radius: 5px;">
-                                <p><strong>${orden.numero}</strong></p>
-                                <p>${orden.cliente} - ${getEstadoHTMLLab(orden.estado)}</p>
-                                <p style="font-size: 12px; opacity: 0.8;">RD$ ${(orden.precioVenta || 0).toFixed(2)}</p>
-                            </div>
-                        `;
-                    });
-                }
-                html += '</div>';
+                let html = '<table class="table"><thead><tr><th>Fecha</th><th>Descripción</th><th>Tipo</th><th>Monto</th></tr></thead><tbody>';
 
-                html += '</div>';
+                transacciones.forEach(t => {
+                    html += `
+                        <tr>
+                            <td>${new Date(t.fecha).toLocaleDateString()}</td>
+                            <td>${t.descripcion}</td>
+                            <td>${t.tipo === 'laboratorio' ? '🔬 Lab' : t.tipo === 'abono' ? '💰 Abono' : '📦 Venta'}</td>
+                            <td>RD$ ${t.total.toFixed(2)}</td>
+                        </tr>
+                    `;
+                });
+
+                html += '</tbody></table>';
                 contenedor.innerHTML = html;
             } catch (error) {
-                console.error('❌ Error cargando últimas transacciones:', error);
+                console.error('❌ Error cargando transacciones:', error);
             }
         }
 
         function enviarReporteWhatsApp() {
             try {
-                const fecha = new Date().toLocaleDateString();
                 const enLab = ordenesLaboratorio.filter(o => o.estado === 'laboratorio').length;
-                const porCobrar = ordenesLaboratorio.filter(o => o.estado === 'entregado' && !o.pagado).length;
+                const cuentasCobrar = ordenesLaboratorio.filter(o => o.estado === 'entregado' && !o.pagado).length;
                 const totalCobrar = ordenesLaboratorio
                     .filter(o => o.estado === 'entregado' && !o.pagado)
                     .reduce((sum, o) => sum + ((o.precioVenta || 0) - (o.abono || 0)), 0);
-                const totalVentas = ventas.reduce((sum, v) => sum + v.total, 0);
 
-                const reporte = `📊 *REPORTE DIARIO URBANA VISION*
-📅 Fecha: ${fecha}
+                const mensaje = `📊 *REPORTE DIARIO URBANA VISION*
+📅 ${new Date().toLocaleDateString()}
 
 🔬 *LABORATORIO:*
 • En laboratorio: ${enLab} órdenes
-• Cuentas por cobrar: ${porCobrar} órdenes
+• Cuentas por cobrar: ${cuentasCobrar} órdenes
 • Total por cobrar: RD$ ${totalCobrar.toFixed(2)}
 
-💰 *VENTAS GENERALES:*
+📦 *INVENTARIO:*
 • Total productos: ${productos.length}
-• Total clientes: ${clientes.length}
-• Ventas registradas: RD$ ${totalVentas.toFixed(2)}
-• Stock bajo: ${productos.filter(p => p.stock < 5).length} productos
+• Stock bajo: ${productos.filter(p => p.stock < 5).length}
 
-📱 Urbana Vision - 809-713-5307
+👥 *CLIENTES:*
+• Total clientes: ${clientes.length}
+
+💰 *VENTAS:*
+• Ventas del mes: RD$ ${ventas.filter(v => new Date(v.fecha).getMonth() === new Date().getMonth()).reduce((sum, v) => sum + v.total, 0).toFixed(2)}
+
+📱 809-713-5307
 🌐 urbanavision.com`;
 
-                window.open(`https://wa.me/?text=${encodeURIComponent(reporte)}`, '_blank');
+                window.open(`https://wa.me/?text=${encodeURIComponent(mensaje)}`, '_blank');
                 actualizarEstadisticas('mensaje');
                 showAlert('📱 Reporte enviado por WhatsApp');
             } catch (error) {
@@ -4164,73 +4112,120 @@ ${config.mensaje}
         // ========================================
         
         function cargarCampanas() {
-            console.log('📣 Campañas cargadas');
+            try {
+                console.log('📣 Campañas cargadas');
+            } catch (error) {
+                console.error('❌ Error cargando campañas:', error);
+            }
         }
 
         function enviarCampanaDia() {
-            const mensaje = `🎯 *CAMPAÑA DEL DÍA*\n\n¡Hola! Te contactamos desde Urbana Vision con una oferta especial.\n\n✨ Aprovecha nuestras promociones actuales\n💰 Precios especiales disponibles\n👁️ Examen visual GRATIS\n\n📱 Urbana Vision - 809-713-5307\n🌐 urbanavision.com`;
-            
+            const mensaje = `🎯 *CAMPAÑA DEL DÍA*\n\n¡Ofertas especiales en Urbana Vision!\n\n✨ Descuentos exclusivos\n👓 Nueva colección\n👁️ Examen gratuito\n\n📱 809-713-5307\n🌐 urbanavision.com`;
             window.open(`https://wa.me/?text=${encodeURIComponent(mensaje)}`, '_blank');
             actualizarEstadisticas('mensaje');
             showAlert('📱 Campaña del día enviada');
         }
 
         function programarCampana() {
-            showAlert('🔄 Función de programación en desarrollo');
+            showAlert('⏰ Función de programación en desarrollo');
         }
 
         function crearCampana() {
             const nombre = document.getElementById('nombreCampana')?.value;
             const mensaje = document.getElementById('mensajeCampana')?.value;
-            
+            const fecha = document.getElementById('fechaProgramada')?.value;
+
             if (!nombre || !mensaje) {
                 showAlert('❌ Complete nombre y mensaje de la campaña');
                 return;
             }
-            
-            showAlert('✅ Campaña creada (función completa en desarrollo)');
+
+            showAlert('✅ Campaña creada (función de guardado en desarrollo)');
         }
 
         // ========================================
-        // 🔗 FUNCIONES AUXILIARES
+        // 🔗 FUNCIONES DE ENLACES EXTERNOS
         // ========================================
         
-        function volverInicio() {
-            window.location.href = 'index.html';
-        }
-
         function abrirCatalogo() {
-            window.open('catalogo.html', '_blank');
+            try {
+                window.open('https://urbana-vision-catalogo.netlify.app/', '_blank');
+            } catch (error) {
+                console.error('❌ Error abriendo catálogo:', error);
+                showAlert('❌ Error al abrir catálogo');
+            }
         }
 
         function abrirFactura() {
-            window.open('factura.html', '_blank');
+            try {
+                window.open('https://urbana-vision-factura.netlify.app/', '_blank');
+            } catch (error) {
+                console.error('❌ Error abriendo factura:', error);
+                showAlert('❌ Error al abrir factura proforma');
+            }
         }
 
         function abrirNCF() {
-            showAlert('🔄 Sistema NCF en desarrollo');
+            try {
+                window.open('https://urbana-vision-ncf.netlify.app/', '_blank');
+            } catch (error) {
+                console.error('❌ Error abriendo NCF:', error);
+                showAlert('❌ Error al abrir sistema NCF');
+            }
+        }
+
+        function volverInicio() {
+            try {
+                window.open('https://urbana-vision.netlify.app/', '_blank');
+            } catch (error) {
+                console.error('❌ Error volviendo al inicio:', error);
+                showAlert('❌ Error al volver al inicio');
+            }
         }
 
         // ========================================
-        // 🎯 MENSAJES DE CONSOLE PARA DEBUG
+        // 🔧 FUNCIONES DE UTILIDAD Y CLEANUP
         // ========================================
         
-        console.log('✅ Sistema Urbana Vision completamente cargado');
-        console.log('🔧 Todas las funciones principales están operativas:');
-        console.log('  - 👥 Gestión de clientes');
-        console.log('  - 🔬 Sistema de laboratorio completo');
-        console.log('  - 📱 Marketing con redes sociales');
-        console.log('  - 📦 Inventario y productos');
-        console.log('  - 💰 Ventas y reportes');
-        console.log('  - 🔔 Recordatorios automáticos');
-        console.log('  - 📊 Dashboard y estadísticas');
+        // Limpiar recursos al cerrar la página
+        window.addEventListener('beforeunload', function() {
+            try {
+                if (stream) detenerCamara(stream);
+                if (stream2) detenerCamara(stream2);
+                if (streamMarketing) detenerCamara(streamMarketing);
+                if (streamRecetaLab) detenerCamara(streamRecetaLab);
+                if (streamMonturaLab) detenerCamara(streamMonturaLab);
+            } catch (error) {
+                console.error('❌ Error al limpiar recursos:', error);
+            }
+        });
+
+        // Función de depuración para desarrolladores
+        window.debugUrbana = function() {
+            console.log('🔧 DEBUG URBANA VISION');
+            console.log('📊 Productos:', productos.length);
+            console.log('👥 Clientes:', clientes.length);
+            console.log('🔬 Órdenes Lab:', ordenesLaboratorio.length);
+            console.log('💰 Ventas:', ventas.length);
+            console.log('🏭 Laboratorios:', laboratorios.length);
+            return {
+                productos,
+                clientes,
+                ordenesLaboratorio,
+                ventas,
+                laboratorios,
+                estadisticas
+            };
+        };
+
+        // ========================================
+        // ✅ INICIALIZACIÓN FINAL
+        // ========================================
+        
+        console.log('✅ Sistema Urbana Vision Admin Panel - Versión Corregida v2.0');
+        console.log('🔧 Funciones disponibles: mostrar(), debugUrbana()');
+        console.log('📱 Marketing, 🔬 Laboratorio, 📦 Inventario, 👥 Clientes - TODOS OPERATIVOS');
+
     </script>
 </body>
 </html>
-                    od_cilindroLab'),
-                            eje: obtenerValor('od_ejeLab'),
-                            adicion: obtenerValor('od_adicionLab')
-                        },
-                        oi: {
-                            esfera: obtenerValor('oi_esferaLab'),
-                            cilindro: obtenerValor('
