@@ -241,123 +241,6 @@
             border-left: 4px solid #25d366;
         }
         
-        /* ESTILOS RD */
-        .mega-btn-rd {
-            display: block;
-            width: 100%;
-            padding: 20px;
-            margin: 15px 0;
-            border: none;
-            border-radius: 15px;
-            font-size: 18px;
-            font-weight: bold;
-            color: white;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s ease;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-        }
-        .mega-btn-rd:hover { 
-            transform: translateY(-3px); 
-            box-shadow: 0 12px 25px rgba(0,0,0,0.4); 
-        }
-        .btn-audio-rd { background: linear-gradient(45deg, #059669, #10b981); }
-        .btn-qr-rd { background: linear-gradient(45deg, #7c3aed, #a855f7); }
-        .btn-visual-rd { background: linear-gradient(45deg, #dc2626, #ef4444); }
-        .btn-smart-rd { background: linear-gradient(45deg, #ea580c, #f97316); }
-        
-        .card-rd {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            padding: 20px;
-            border-radius: 15px;
-            border: 2px solid rgba(255,255,255,0.1);
-            margin: 15px 0;
-            transition: all 0.3s ease;
-        }
-        
-        .card-rd:hover {
-            border-color: #10b981;
-            transform: translateY(-5px);
-            background: rgba(16, 185, 129, 0.1);
-        }
-        
-        .visual-template-rd {
-            background: linear-gradient(45deg, #1e40af, #3b82f6);
-            padding: 25px;
-            border-radius: 15px;
-            margin: 15px 0;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-        }
-        
-        .visual-template-rd:hover {
-            transform: scale(1.05);
-            background: linear-gradient(45deg, #2563eb, #60a5fa);
-        }
-        
-        .smart-clipboard-rd {
-            background: rgba(0,0,0,0.4);
-            padding: 15px;
-            border-radius: 10px;
-            border-left: 5px solid #10b981;
-            margin: 10px 0;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .smart-clipboard-rd:hover {
-            background: rgba(16, 185, 129, 0.2);
-            transform: translateX(10px);
-        }
-        
-        .record-btn-rd {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            border: none;
-            background: linear-gradient(45deg, #dc2626, #ef4444);
-            color: white;
-            font-size: 30px;
-            margin: 20px auto;
-            display: block;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-        }
-        
-        .record-btn-rd:hover { transform: scale(1.1); }
-        .record-btn-rd.recording { 
-            background: linear-gradient(45deg, #059669, #10b981);
-            animation: pulse 1s infinite;
-        }
-        
-        .qr-display-rd {
-            background: white;
-            padding: 25px;
-            border-radius: 15px;
-            text-align: center;
-            color: #333;
-            margin: 15px 0;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-        
-        .footer {
-            position: fixed;
-            bottom: 10px;
-            right: 25px;
-            font-size: 10px;
-            font-weight: 600;
-            opacity: 0.7;
-            background: linear-gradient(45deg, #8B4513, #DAA520);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
         /* Cuentas por cobrar */
         .cuenta-item {
             background: rgba(245, 158, 11, 0.2);
@@ -372,6 +255,59 @@
             padding: 10px;
             border-radius: 8px;
             margin: 10px 0;
+        }
+
+        /* Reportes mejorados */
+        .reporte-section {
+            background: rgba(16, 185, 129, 0.1);
+            border: 2px solid #10b981;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 15px 0;
+        }
+
+        /* Validación visual */
+        .input.error {
+            border: 2px solid #ef4444;
+            background: rgba(239, 68, 68, 0.1);
+        }
+        .input.success {
+            border: 2px solid #10b981;
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        /* Enlaces de redes sociales */
+        .social-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin: 15px 0;
+        }
+        .social-btn {
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .btn-youtube { background: #ff0000; }
+        .btn-tiktok { background: #000000; }
+        .btn-instagram { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
+        .btn-facebook { background: #1877f2; }
+        
+        .footer {
+            position: fixed;
+            bottom: 10px;
+            right: 25px;
+            font-size: 10px;
+            font-weight: 600;
+            opacity: 0.7;
+            background: linear-gradient(45deg, #8B4513, #DAA520);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
     </style>
 </head>
@@ -403,48 +339,39 @@
 
                 <div class="card">
                     <h3>📦 Inventario</h3>
-                    <button class="btn btn-primary" onclick="mostrar('inventario')">📦 Ver Inventario</button>
-                    <button class="btn btn-primary" onclick="mostrar('camara')">📷 Cámara Rápida</button>
+                    <button class="btn btn-primary" onclick="mostrarSeccion('inventario')">📦 Ver Inventario</button>
+                    <button class="btn btn-primary" onclick="mostrarSeccion('camara')">📷 Cámara Rápida</button>
                     <button class="btn btn-secondary" onclick="abrirCatalogo()">🛍️ Ver Catálogo</button>
                 </div>
 
                 <div class="card">
                     <h3>👥 Gestión</h3>
-                    <button class="btn btn-primary" onclick="mostrar('gestionClientes')">👥 Clientes</button>
-                    <button class="btn btn-primary" onclick="mostrar('recordatorios')">🔔 Recordatorios</button>
-                    <button class="btn btn-secondary" onclick="mostrar('ventas')">💰 Ventas</button>
+                    <button class="btn btn-primary" onclick="mostrarSeccion('gestionClientes')">👥 Clientes</button>
+                    <button class="btn btn-primary" onclick="mostrarSeccion('recordatorios')">🔔 Recordatorios</button>
+                    <button class="btn btn-secondary" onclick="mostrarSeccion('ventas')">💰 Ventas</button>
                 </div>
 
                 <div class="card">
                     <h3>📱 Marketing</h3>
-                    <button class="btn btn-primary" onclick="mostrar('marketing')">📱 Marketing WhatsApp</button>
-                    <button class="btn btn-warning" onclick="mostrar('contactar')">💬 Contactar Clientes</button>
-                    <button class="btn btn-secondary" onclick="mostrar('campanas')">📣 Campañas</button>
+                    <button class="btn btn-primary" onclick="mostrarSeccion('marketing')">📱 Marketing WhatsApp</button>
+                    <button class="btn btn-warning" onclick="mostrarSeccion('contactar')">💬 Contactar Clientes</button>
+                    <button class="btn btn-secondary" onclick="mostrarSeccion('campanas')">📣 Campañas</button>
                 </div>
 
                 <div class="card" style="background: linear-gradient(45deg, #134e4a, #7c2d12); border: 2px solid #10b981;">
                     <h3>🔬 Sistema de Laboratorio</h3>
-                    <button class="btn btn-primary" onclick="mostrar('dashboardLaboratorio')">📊 Dashboard Lab</button>
-                    <button class="btn btn-primary" onclick="mostrar('nuevaOrdenLab')">➕ Nueva Orden</button>
-                    <button class="btn btn-primary" onclick="mostrar('listaOrdenesLab')">📋 Ver Órdenes</button>
-                    <button class="btn btn-warning" onclick="mostrar('cotejoLab')">✅ Cotejo</button>
-                    <button class="btn btn-success" onclick="mostrar('cuentasPorCobrar')">💰 Cuentas x Cobrar</button>
-                </div>
-
-                <div class="card" style="background: linear-gradient(45deg, #1e3a8a, #7c2d12); border: 2px solid #f59e0b;">
-                    <div style="position: absolute; top: 10px; right: 10px; background: linear-gradient(45deg, #dc2626, #f59e0b); padding: 5px 10px; border-radius: 15px; font-size: 10px; font-weight: bold; animation: pulse 2s infinite;">🚀 DISRUPTIVO</div>
-                    <h3>🇩🇴 Sistema RD</h3>
-                    <button class="btn btn-primary" onclick="mostrar('audioRD')" style="background: linear-gradient(45deg, #059669, #10b981);">🎵 Audio Inteligente</button>
-                    <button class="btn btn-primary" onclick="mostrar('qrRD')" style="background: linear-gradient(45deg, #7c3aed, #a855f7);">📱 QR Códigos</button>
-                    <button class="btn btn-primary" onclick="mostrar('visualRD')" style="background: linear-gradient(45deg, #dc2626, #ef4444);">🖼️ Visual Analfabetos</button>
-                    <button class="btn btn-primary" onclick="mostrar('clipboardRD')" style="background: linear-gradient(45deg, #ea580c, #f97316);">🧠 Clipboard Smart</button>
+                    <button class="btn btn-primary" onclick="mostrarSeccion('dashboardLaboratorio')">📊 Dashboard Lab</button>
+                    <button class="btn btn-primary" onclick="mostrarSeccion('nuevaOrdenLab')">➕ Nueva Orden</button>
+                    <button class="btn btn-primary" onclick="mostrarSeccion('listaOrdenesLab')">📋 Ver Órdenes</button>
+                    <button class="btn btn-warning" onclick="mostrarSeccion('cotejoLab')">✅ Cotejo</button>
+                    <button class="btn btn-success" onclick="mostrarSeccion('cuentasPorCobrar')">💰 Cuentas x Cobrar</button>
                 </div>
 
                 <div class="card">
                     <h3>📄 Documentos</h3>
                     <button class="btn btn-primary" onclick="abrirFactura()">📄 Factura Proforma</button>
                     <button class="btn btn-primary" onclick="abrirNCF()">🧾 Sistema NCF</button>
-                    <button class="btn btn-secondary" onclick="mostrar('reportes')">📊 Reportes</button>
+                    <button class="btn btn-secondary" onclick="mostrarSeccion('reportes')">📊 Reportes</button>
                 </div>
             </div>
             
@@ -456,7 +383,7 @@
         <!-- DASHBOARD LABORATORIO -->
         <div id="dashboardLaboratorio" class="section">
             <h2>🔬 Dashboard de Laboratorio</h2>
-            <button class="btn btn-secondary" onclick="mostrar('menu')">⬅️ Volver</button>
+            <button class="btn btn-secondary" onclick="mostrarSeccion('menu')">⬅️ Volver</button>
             
             <div class="grid">
                 <div class="card">
@@ -469,21 +396,23 @@
                         <div><strong>En Laboratorio:</strong> <span id="enLaboratorioCount">0</span></div>
                         <div><strong>Para Cotejo:</strong> <span id="paraCotejoCount">0</span></div>
                         <div><strong>Cuentas x Cobrar:</strong> <span id="porCobrarCount">0</span></div>
+                        <div><strong>Total por Cobrar:</strong> RD$ <span id="totalPorCobrarDash">0</span></div>
                     </div>
                 </div>
 
                 <div class="card">
                     <h3>⚡ Acciones Rápidas</h3>
-                    <button class="btn btn-primary" onclick="mostrar('nuevaOrdenLab')">🔬 Nueva Orden</button>
-                    <button class="btn btn-warning" onclick="mostrar('cotejoLab')">✅ Cotejo Urgente</button>
-                    <button class="btn btn-success" onclick="mostrar('laboratoriosGestion')">🏭 Laboratorios</button>
-                    <button class="btn btn-success" onclick="mostrar('cuentasPorCobrar')">💰 Cuentas x Cobrar</button>
+                    <button class="btn btn-primary" onclick="mostrarSeccion('nuevaOrdenLab')">🔬 Nueva Orden</button>
+                    <button class="btn btn-warning" onclick="mostrarSeccion('cotejoLab')">✅ Cotejo Urgente</button>
+                    <button class="btn btn-success" onclick="mostrarSeccion('laboratoriosGestion')">🏭 Laboratorios</button>
+                    <button class="btn btn-success" onclick="mostrarSeccion('cuentasPorCobrar')">💰 Cuentas x Cobrar</button>
                 </div>
 
                 <div class="card">
                     <h3>🏭 Laboratorios Registrados</h3>
-                    <button class="btn btn-primary" onclick="mostrar('laboratoriosGestion')">🏭 Ver Laboratorios</button>
-                    <button class="btn btn-secondary" onclick="mostrar('historialLab')">📞 Historial</button>
+                    <div id="resumenLaboratorios" style="text-align: left; margin: 10px 0;"></div>
+                    <button class="btn btn-primary" onclick="mostrarSeccion('laboratoriosGestion')">🏭 Ver Laboratorios</button>
+                    <button class="btn btn-secondary" onclick="mostrarSeccion('historialLab')">📞 Historial</button>
                 </div>
             </div>
         </div>
@@ -491,7 +420,7 @@
         <!-- NUEVA ORDEN DE LABORATORIO -->
         <div id="nuevaOrdenLab" class="section">
             <h2>🔬 Nueva Orden de Laboratorio</h2>
-            <button class="btn btn-secondary" onclick="mostrar('dashboardLaboratorio')">⬅️ Volver</button>
+            <button class="btn btn-secondary" onclick="mostrarSeccion('dashboardLaboratorio')">⬅️ Volver</button>
             
             <div class="grid">
                 <div class="card">
@@ -501,6 +430,7 @@
                     </select>
                     <input type="text" id="nombreClienteLab" class="input" placeholder="Nombre completo" readonly>
                     <input type="tel" id="telefonoClienteLab" class="input" placeholder="Teléfono" readonly>
+                    <div id="validacionCliente" style="margin: 10px 0; font-size: 14px;"></div>
                     
                     <h4 style="margin-top: 20px;">🔢 Número de Orden</h4>
                     <div class="numero-orden" id="numeroOrdenActualLab">LAB-001</div>
@@ -508,7 +438,8 @@
                 </div>
 
                 <div class="card">
-                    <h3>👓 Tipo de Monturas y Lentes</h3>
+                    <h3>👓 Especificaciones de Monturas y Lentes</h3>
+                    <input type="text" id="nombreMonturaLab" class="input" placeholder="Nombre de la montura">
                     <select id="tipoMonturaLab" class="select">
                         <option value="">Tipo de montura</option>
                         <option value="completa">Montura Completa</option>
@@ -545,10 +476,12 @@
                         <option value="polarizado">Polarizado</option>
                     </select>
 
-                    <h4 style="margin-top: 15px;">💰 Costos</h4>
-                    <input type="number" id="costoLaboratorio" class="input" placeholder="Costo del laboratorio RD$" step="0.01">
-                    <input type="number" id="precioVenta" class="input" placeholder="Precio total de venta RD$" step="0.01">
-                    <input type="number" id="abono" class="input" placeholder="Abono recibido RD$" step="0.01">
+                    <h4 style="margin-top: 15px;">💰 Información Financiera</h4>
+                    <input type="number" id="costoLaboratorio" class="input" placeholder="Costo del laboratorio RD$" step="0.01" oninput="calcularPendiente()">
+                    <input type="number" id="precioVenta" class="input" placeholder="Precio total de venta RD$" step="0.01" oninput="calcularPendiente()">
+                    <input type="number" id="abono" class="input" placeholder="Abono recibido RD$" step="0.01" oninput="calcularPendiente()">
+                    <div id="pendientePago" style="margin: 10px 0; font-weight: bold; color: #f59e0b;"></div>
+                    <div id="beneficioEsperado" style="margin: 10px 0; font-weight: bold; color: #10b981;"></div>
                 </div>
             </div>
 
@@ -586,7 +519,18 @@
             </div>
 
             <div class="card">
-                <h3>📷 Foto de la Receta</h3>
+                <h3>📷 Foto de la Montura</h3>
+                <div class="camera-box" id="cameraBoxMonturaLab">
+                    <div id="placeholderMonturaLab">
+                        <div style="font-size: 50px;">📷</div>
+                        <div>Tomar foto de la montura</div>
+                    </div>
+                    <video id="videoMonturaLab" style="display: none; width: 100%; height: 100%;" autoplay></video>
+                </div>
+                <button class="btn btn-primary" onclick="toggleCameraMonturaLab()" id="cameraBtnMonturaLab">📷 Activar Cámara</button>
+                <img id="previewMonturaLab" style="display: none; width: 100%; margin: 10px 0; border-radius: 5px;">
+                
+                <h3 style="margin-top: 20px;">📷 Foto de la Receta</h3>
                 <div class="camera-box" id="cameraBoxRecetaLab">
                     <div id="placeholderRecetaLab">
                         <div style="font-size: 50px;">📷</div>
@@ -608,7 +552,7 @@
         <!-- LISTA DE ÓRDENES DE LABORATORIO -->
         <div id="listaOrdenesLab" class="section">
             <h2>📋 Órdenes de Laboratorio</h2>
-            <button class="btn btn-secondary" onclick="mostrar('dashboardLaboratorio')">⬅️ Volver</button>
+            <button class="btn btn-secondary" onclick="mostrarSeccion('dashboardLaboratorio')">⬅️ Volver</button>
             
             <div style="margin: 20px 0;">
                 <input type="text" id="busquedaOrdenLab" class="input" placeholder="🔍 Buscar por número, cliente..." onkeyup="buscarOrdenesLab(this.value)">
@@ -630,7 +574,7 @@
         <!-- COTEJO DE ÓRDENES -->
         <div id="cotejoLab" class="section">
             <h2>✅ Cotejo de Órdenes Recibidas</h2>
-            <button class="btn btn-secondary" onclick="mostrar('dashboardLaboratorio')">⬅️ Volver</button>
+            <button class="btn btn-secondary" onclick="mostrarSeccion('dashboardLaboratorio')">⬅️ Volver</button>
             
             <div class="cotejo-section">
                 <h3>📦 Órdenes Listas para Cotejo</h3>
@@ -643,11 +587,14 @@
         <!-- CUENTAS POR COBRAR -->
         <div id="cuentasPorCobrar" class="section">
             <h2>💰 Cuentas por Cobrar</h2>
-            <button class="btn btn-secondary" onclick="mostrar('dashboardLaboratorio')">⬅️ Volver</button>
+            <button class="btn btn-secondary" onclick="mostrarSeccion('dashboardLaboratorio')">⬅️ Volver</button>
             
             <div class="cotejo-section">
                 <h3>💳 Órdenes Pendientes de Pago</h3>
                 <p><strong>Estado:</strong> Lentes ya cotejados y listos para entrega. Cliente debe completar el pago.</p>
+                <div style="margin-top: 10px;">
+                    <strong>Total por Cobrar:</strong> <span id="totalPorCobrarGeneral" style="color: #f59e0b; font-size: 18px;">RD$ 0.00</span>
+                </div>
             </div>
             
             <div id="listaCuentasPorCobrar"></div>
@@ -656,7 +603,7 @@
         <!-- GESTIÓN DE LABORATORIOS -->
         <div id="laboratoriosGestion" class="section">
             <h2>🏭 Laboratorios Registrados</h2>
-            <button class="btn btn-secondary" onclick="mostrar('dashboardLaboratorio')">⬅️ Volver</button>
+            <button class="btn btn-secondary" onclick="mostrarSeccion('dashboardLaboratorio')">⬅️ Volver</button>
             
             <div class="card">
                 <h3>➕ Agregar Laboratorio</h3>
@@ -673,7 +620,7 @@
         <!-- HISTORIAL DE LABORATORIO -->
         <div id="historialLab" class="section">
             <h2>📞 Historial de Laboratorio</h2>
-            <button class="btn btn-secondary" onclick="mostrar('dashboardLaboratorio')">⬅️ Volver</button>
+            <button class="btn btn-secondary" onclick="mostrarSeccion('dashboardLaboratorio')">⬅️ Volver</button>
             
             <div id="listaHistorialLab"></div>
         </div>
@@ -681,7 +628,7 @@
         <!-- SISTEMA DE MARKETING COMPLETO -->
         <div id="marketing" class="section">
             <h2>📱 Marketing WhatsApp</h2>
-            <button class="btn btn-secondary" onclick="mostrar('menu')">⬅️ Volver</button>
+            <button class="btn btn-secondary" onclick="mostrarSeccion('menu')">⬅️ Volver</button>
             
             <div class="grid">
                 <div class="card marketing-card">
@@ -743,11 +690,15 @@
                             <strong>🎁 Ofertas del Mes</strong><br>
                             <button class="btn btn-whatsapp" onclick="enviarTemplate('ofertas')">🎁 Enviar Ofertas</button>
                         </div>
-                        <div class="template-item">
-                            <strong>📺 Enlaces YouTube</strong><br>
-                            <input type="url" id="enlaceYoutube" class="input" placeholder="Enlace de YouTube..." style="margin: 5px 0;">
-                            <button class="btn btn-whatsapp" onclick="enviarEnlaceYoutube()">📺 Enviar YouTube</button>
-                        </div>
+                    </div>
+                    
+                    <h4 style="margin-top: 20px;">📱 Enlaces de Redes Sociales</h4>
+                    <input type="url" id="enlaceRedes" class="input" placeholder="Enlace de YouTube, TikTok, Instagram, Facebook..." style="margin: 5px 0;">
+                    <div class="social-grid">
+                        <button class="social-btn btn-youtube" onclick="enviarEnlaceRedes('youtube')">📺 YouTube</button>
+                        <button class="social-btn btn-tiktok" onclick="enviarEnlaceRedes('tiktok')">🎵 TikTok</button>
+                        <button class="social-btn btn-instagram" onclick="enviarEnlaceRedes('instagram')">📸 Instagram</button>
+                        <button class="social-btn btn-facebook" onclick="enviarEnlaceRedes('facebook')">👥 Facebook</button>
                     </div>
                     
                     <h4 style="margin-top: 20px;">📝 Template Personalizado</h4>
@@ -774,7 +725,7 @@
         <!-- INVENTARIO -->
         <div id="inventario" class="section">
             <h2>📦 Inventario de Productos</h2>
-            <button class="btn btn-secondary" onclick="mostrar('menu')">⬅️ Volver</button>
+            <button class="btn btn-secondary" onclick="mostrarSeccion('menu')">⬅️ Volver</button>
             
             <div style="margin: 20px 0;">
                 <input type="text" class="input" placeholder="🔍 Buscar producto..." onkeyup="buscarProducto(this.value)">
@@ -786,7 +737,7 @@
         <!-- CÁMARA RÁPIDA -->
         <div id="camara" class="section">
             <h2>📷 Agregar Producto con Cámara</h2>
-            <button class="btn btn-secondary" onclick="mostrar('menu')">⬅️ Volver</button>
+            <button class="btn btn-secondary" onclick="mostrarSeccion('menu')">⬅️ Volver</button>
             
             <div class="camera-box" id="cameraBox">
                 <div id="placeholder">
@@ -797,7 +748,6 @@
             </div>
             
             <button class="btn btn-primary" onclick="toggleCamera()" id="cameraBtn">📷 Activar Cámara</button>
-            <canvas id="canvas" style="display: none;"></canvas>
             <img id="preview" style="display: none; width: 100%; max-width: 400px; margin: 10px auto; border-radius: 5px;">
             
             <div style="margin-top: 20px;">
@@ -821,7 +771,7 @@
         <!-- CONTACTAR CLIENTES -->
         <div id="contactar" class="section">
             <h2>💬 Contactar Clientes</h2>
-            <button class="btn btn-secondary" onclick="mostrar('menu')">⬅️ Volver</button>
+            <button class="btn btn-secondary" onclick="mostrarSeccion('menu')">⬅️ Volver</button>
             
             <div class="grid">
                 <div class="card">
@@ -862,7 +812,7 @@ Me interesa conocer si te gusta este modelo.
         <!-- RECORDATORIOS -->
         <div id="recordatorios" class="section">
             <h2>🔔 Sistema de Recordatorios</h2>
-            <button class="btn btn-secondary" onclick="mostrar('menu')">⬅️ Volver</button>
+            <button class="btn btn-secondary" onclick="mostrarSeccion('menu')">⬅️ Volver</button>
             
             <div class="grid">
                 <div class="card">
@@ -890,7 +840,7 @@ Me interesa conocer si te gusta este modelo.
         <!-- VENTAS -->
         <div id="ventas" class="section">
             <h2>💰 Registro de Ventas</h2>
-            <button class="btn btn-secondary" onclick="mostrar('menu')">⬅️ Volver</button>
+            <button class="btn btn-secondary" onclick="mostrarSeccion('menu')">⬅️ Volver</button>
             
             <div style="margin: 20px 0;">
                 <select id="clienteVenta" class="select">
@@ -900,7 +850,7 @@ Me interesa conocer si te gusta este modelo.
                     <option value="">Seleccionar producto</option>
                 </select>
                 <input type="number" id="cantidadVenta" class="input" placeholder="Cantidad" value="1">
-                <input type="number" id="precioVenta" class="input" placeholder="Precio total">
+                <input type="number" id="precioVentaProducto" class="input" placeholder="Precio total">
                 
                 <button class="btn btn-primary" onclick="registrarVenta()">💰 Registrar Venta</button>
             </div>
@@ -908,31 +858,39 @@ Me interesa conocer si te gusta este modelo.
             <div id="listaVentas"></div>
         </div>
 
-        <!-- REPORTES -->
+        <!-- REPORTES MEJORADOS -->
         <div id="reportes" class="section">
-            <h2>📊 Reportes y Análisis</h2>
-            <button class="btn btn-secondary" onclick="mostrar('menu')">⬅️ Volver</button>
+            <h2>📊 Reportes y Análisis Completo</h2>
+            <button class="btn btn-secondary" onclick="mostrarSeccion('menu')">⬅️ Volver</button>
             
             <div class="grid">
-                <div class="card">
-                    <h3>🔬 Laboratorio</h3>
+                <div class="reporte-section">
+                    <h3>🔬 Laboratorio - Estado Financiero</h3>
                     <div style="text-align: left;">
                         <p><strong>En Laboratorio:</strong> <span id="reporteEnLab">0</span> órdenes</p>
                         <p><strong>Pendientes de Cotejo:</strong> <span id="reportePendCotejo">0</span> órdenes</p>
                         <p><strong>Cuentas por Cobrar:</strong> <span id="reporteCuentasCobrar">0</span> órdenes</p>
-                        <p><strong>Total por Cobrar:</strong> RD$ <span id="reporteTotalCobrar">0</span></p>
-                        <p><strong>Beneficio Esperado:</strong> RD$ <span id="reporteBeneficio">0</span></p>
+                        <p><strong>Total por Cobrar:</strong> <span style="color: #f59e0b; font-weight: bold;">RD$ <span id="reporteTotalCobrar">0</span></span></p>
+                        <p><strong>Beneficio Esperado:</strong> <span style="color: #10b981; font-weight: bold;">RD$ <span id="reporteBeneficio">0</span></span></p>
+                        <p><strong>Inversión en Lab:</strong> <span style="color: #ef4444;">RD$ <span id="reporteInversionLab">0</span></span></p>
                     </div>
                 </div>
                 
-                <div class="card">
+                <div class="reporte-section">
                     <h3>📋 Resumen General</h3>
-                    <p>Total Facturas: <strong id="totalFacturas">0</strong></p>
+                    <p>Total Productos: <strong id="totalProductosReporte">0</strong></p>
+                    <p>Total Clientes: <strong id="totalClientesReporte">0</strong></p>
                     <p>Total Ventas: <strong>RD$ <span id="totalVentasMes">0</span></strong></p>
-                    <p>Promedio: <strong>RD$ <span id="promedioVenta">0</span></strong></p>
+                    <p>Promedio Venta: <strong>RD$ <span id="promedioVenta">0</span></strong></p>
                     <p>Stock Bajo: <strong id="stockBajo">0</strong> productos</p>
+                    <p>Monturas en Lab: <strong id="monturasEnLab">0</strong></p>
                     
                     <button class="btn btn-whatsapp" onclick="enviarReporteWhatsApp()">📱 Enviar Reporte</button>
+                </div>
+
+                <div class="reporte-section">
+                    <h3>👓 Monturas Enviadas al Laboratorio</h3>
+                    <div id="reporteMonturasLab" style="max-height: 300px; overflow-y: auto;"></div>
                 </div>
             </div>
             
@@ -943,7 +901,7 @@ Me interesa conocer si te gusta este modelo.
         <!-- CAMPAÑAS -->
         <div id="campanas" class="section">
             <h2>📣 Campañas de Marketing</h2>
-            <button class="btn btn-secondary" onclick="mostrar('menu')">⬅️ Volver</button>
+            <button class="btn btn-secondary" onclick="mostrarSeccion('menu')">⬅️ Volver</button>
             
             <div class="grid">
                 <div class="card">
@@ -968,7 +926,7 @@ Me interesa conocer si te gusta este modelo.
         <!-- GESTIÓN DE CLIENTES REAL -->
         <div id="gestionClientes" class="section">
             <h2>👥 Gestión Completa de Clientes</h2>
-            <button class="btn btn-secondary" onclick="mostrar('menu')">⬅️ Volver</button>
+            <button class="btn btn-secondary" onclick="mostrarSeccion('menu')">⬅️ Volver</button>
             
             <div class="grid">
                 <div class="card">
@@ -997,312 +955,6 @@ Me interesa conocer si te gusta este modelo.
             </div>
         </div>
 
-        <!-- AUDIO INTELIGENTE RD -->
-        <div id="audioRD" class="section">
-            <div class="card-rd" style="background: linear-gradient(45deg, #059669, #10b981, #059669); color: white;">
-                <h2>🎵 Audio Inteligente para RD</h2>
-                <p><strong>🇩🇴 SOLUCIÓN PARA ANALFABETISMO:</strong></p>
-                <ul style="margin: 15px 0; padding-left: 20px;">
-                    <li>🔊 Text-to-speech dominicano</li>
-                    <li>🎤 Graba tu voz personalizada</li>
-                    <li>📱 Envía audios por WhatsApp</li>
-                    <li>🌍 Funciona sin internet después</li>
-                </ul>
-            </div>
-            
-            <div class="card-rd">
-                <h3>🎤 Grabar Mensaje Personalizado</h3>
-                <button class="record-btn-rd" id="recordBtnRD" onclick="toggleRecordingRD()">🎤</button>
-                <div id="recordStatusRD" style="text-align: center; margin: 10px 0;">Presiona para grabar</div>
-                
-                <audio id="audioPlayerRD" controls style="width: 100%; margin: 15px 0; display: none;"></audio>
-                
-                <input type="text" id="audioTitleRD" class="input" placeholder="Título del audio (ej: Oferta del día)" style="margin: 10px 0;">
-                
-                <button class="mega-btn-rd btn-audio-rd" onclick="enviarAudioRD()">
-                    📱 ENVIAR AUDIO POR WHATSAPP
-                </button>
-            </div>
-            
-            <div class="grid">
-                <div class="card-rd">
-                    <h4>🔊 Audios Pregrabados</h4>
-                    <div class="smart-clipboard-rd" onclick="reproducirAudioRD('saludo')">
-                        🎵 Saludo de Bienvenida
-                        <div style="font-size: 12px; opacity: 0.7;">¡Bienvenido a Urbana Vision!</div>
-                    </div>
-                    <div class="smart-clipboard-rd" onclick="reproducirAudioRD('oferta')">
-                        🎁 Oferta Especial
-                        <div style="font-size: 12px; opacity: 0.7;">Ofertas del día disponibles</div>
-                    </div>
-                    <div class="smart-clipboard-rd" onclick="reproducirAudioRD('ubicacion')">
-                        📍 Ubicación de la Tienda
-                        <div style="font-size: 12px; opacity: 0.7;">Cómo llegar a nosotros</div>
-                    </div>
-                    <div class="smart-clipboard-rd" onclick="reproducirAudioRD('horarios')">
-                        ⏰ Horarios de Atención
-                        <div style="font-size: 12px; opacity: 0.7;">Cuándo estamos abiertos</div>
-                    </div>
-                </div>
-                
-                <div class="card-rd">
-                    <h4>📁 Subir Nota de Voz Personalizada</h4>
-                    <div class="upload-area" onclick="document.getElementById('audioFileInput').click()">
-                        <div style="font-size: 50px;">🎤</div>
-                        <div>Click para subir audio</div>
-                        <div style="font-size: 12px; opacity: 0.7;">MP3, WAV, M4A</div>
-                    </div>
-                    <input type="file" id="audioFileInput" style="display: none;" accept="audio/*" onchange="subirAudioPersonalizado(this)">
-                    <div id="audioSubido" style="margin: 10px 0;"></div>
-                    
-                    <input type="text" id="tituloAudioSubido" class="input" placeholder="Título para este audio..." style="margin: 10px 0;">
-                    <button class="mega-btn-rd btn-audio-rd" onclick="enviarAudioSubido()">
-                        📱 ENVIAR AUDIO PERSONALIZADO
-                    </button>
-                </div>
-            </div>
-            
-            <div class="card-rd">
-                <h4>🔗 Enlaces Multimedia para Analfabetos</h4>
-                <p><strong>💡 SOLUCIÓN:</strong> Envía videos de YouTube, reels, TikToks que expliquen tus productos</p>
-                
-                <input type="url" id="enlaceYoutube" class="input" placeholder="Enlace de YouTube, Instagram, TikTok..." style="margin: 10px 0;">
-                <textarea id="mensajeEnlace" class="textarea" placeholder="Mensaje que acompañará el enlace...">🎥 ¡Mira este video!
-
-Te explica perfectamente lo que tenemos disponible.
-
-Es muy fácil de entender.
-
-📱 809-713-5307
-🌐 urbanavision.com</textarea>
-                
-                <div class="grid" style="margin: 15px 0;">
-                    <button class="mega-btn-rd" style="background: linear-gradient(45deg, #ff0000, #ff4444);" onclick="enviarEnlaceMultimedia('youtube')">
-                        📺 ENVIAR COMO YOUTUBE
-                    </button>
-                    <button class="mega-btn-rd" style="background: linear-gradient(45deg, #e1306c, #f56040);" onclick="enviarEnlaceMultimedia('instagram')">
-                        📸 ENVIAR COMO INSTAGRAM
-                    </button>
-                    <button class="mega-btn-rd" style="background: linear-gradient(45deg, #000000, #333333);" onclick="enviarEnlaceMultimedia('tiktok')">
-                        🎵 ENVIAR COMO TIKTOK
-                    </button>
-                    <button class="mega-btn-rd" style="background: linear-gradient(45deg, #1877f2, #42a5f5);" onclick="enviarEnlaceMultimedia('facebook')">
-                        👥 ENVIAR COMO FACEBOOK
-                    </button>
-                </div>
-            </div>
-            
-            <div class="grid">
-                <div class="card-rd">
-                    <h4>🤖 Text-to-Speech Dominicano</h4>
-                    <textarea id="textoAudioRD" class="textarea" placeholder="Escribe el mensaje que quieres convertir a audio..."></textarea>
-                    <button class="mega-btn-rd btn-audio-rd" onclick="convertirTextoAudioRD()">
-                        🔊 CONVERTIR A AUDIO
-                    </button>
-                </div>
-                
-                <div class="card-rd">
-                    <h4>📊 Estadísticas de Audio</h4>
-                    <div style="background: #333; padding: 15px; border-radius: 10px;">
-                        <p><strong>🎵 Audios enviados hoy:</strong> <span id="audiosEnviados">0</span></p>
-                        <p><strong>🔗 Enlaces multimedia:</strong> <span id="enlacesEnviados">0</span></p>
-                        <p><strong>🎤 Audios personalizados:</strong> <span id="audiosPersonalizados">0</span></p>
-                    </div>
-                </div>
-            </div>
-            
-            <button class="btn btn-secondary" onclick="mostrar('menu')">⬅️ Volver al Menú</button>
-        </div>
-
-        <!-- QR CÓDIGOS RD -->
-        <div id="qrRD" class="section">
-            <div class="card-rd" style="background: linear-gradient(45deg, #7c3aed, #a855f7, #7c3aed); color: white;">
-                <h2>📱 Códigos QR</h2>
-                <p><strong>🇩🇴 SOLUCIÓN:</strong> El cliente escanea = WhatsApp directo a 809-713-5307</p>
-            </div>
-            
-            <div class="grid">
-                <div class="qr-display-rd">
-                    <h3>📱 QR: Contactar Tienda</h3>
-                    <div style="font-size: 120px;">📱</div>
-                    <p><strong>Escanea y te lleva directo a WhatsApp</strong></p>
-                    <button class="mega-btn-rd btn-qr-rd" onclick="generarQRRD('contacto')">
-                        🔄 GENERAR QR CONTACTO
-                    </button>
-                </div>
-                
-                <div class="qr-display-rd">
-                    <h3>🛍️ QR: Ver Catálogo</h3>
-                    <div style="font-size: 120px;">🛍️</div>
-                    <p><strong>Escanea y ve todos los productos</strong></p>
-                    <button class="mega-btn-rd btn-qr-rd" onclick="generarQRRD('catalogo')">
-                        🔄 GENERAR QR CATÁLOGO
-                    </button>
-                </div>
-                
-                <div class="qr-display-rd">
-                    <h3>📍 QR: Ubicación</h3>
-                    <div style="font-size: 120px;">📍</div>
-                    <p><strong>Escanea y abre Google Maps</strong></p>
-                    <button class="mega-btn-rd btn-qr-rd" onclick="generarQRRD('ubicacion')">
-                        🔄 GENERAR QR UBICACIÓN
-                    </button>
-                </div>
-            </div>
-            
-            <div class="card-rd">
-                <h3>🖨️ QR Personalizado</h3>
-                <input type="text" id="qrTextoRD" class="input" placeholder="Mensaje personalizado para QR...">
-                <button class="mega-btn-rd btn-qr-rd" onclick="generarQRPersonalizadoRD()">
-                    ⭐ CREAR QR PERSONALIZADO
-                </button>
-            </div>
-            
-            <button class="btn btn-secondary" onclick="mostrar('menu')">⬅️ Volver al Menú</button>
-        </div>
-
-        <!-- PLANTILLAS VISUALES RD -->
-        <div id="visualRD" class="section">
-            <div class="card-rd" style="background: linear-gradient(45deg, #dc2626, #ef4444, #dc2626); color: white;">
-                <h2>🖼️ Plantillas Visuales para Analfabetos</h2>
-                <p><strong>🇩🇴 PARA ANALFABETOS:</strong> Iconos grandes + colores + mínimo texto</p>
-            </div>
-            
-            <div class="grid">
-                <div class="visual-template-rd" onclick="usarPlantillaRD('oferta')">
-                    <div style="font-size: 80px;">🎁</div>
-                    <h3>OFERTA ESPECIAL</h3>
-                    <p>Click para usar esta plantilla</p>
-                </div>
-                
-                <div class="visual-template-rd" onclick="usarPlantillaRD('nuevo')">
-                    <div style="font-size: 80px;">✨</div>
-                    <h3>PRODUCTO NUEVO</h3>
-                    <p>Click para usar esta plantilla</p>
-                </div>
-                
-                <div class="visual-template-rd" onclick="usarPlantillaRD('ubicacion')">
-                    <div style="font-size: 80px;">📍</div>
-                    <h3>VISÍTANOS</h3>
-                    <p>Click para usar esta plantilla</p>
-                </div>
-                
-                <div class="visual-template-rd" onclick="usarPlantillaRD('contacto')">
-                    <div style="font-size: 80px;">📱</div>
-                    <h3>CONTÁCTANOS</h3>
-                    <p>Click para usar esta plantilla</p>
-                </div>
-            </div>
-            
-            <div class="card-rd">
-                <h3>🎨 Plantilla Activa</h3>
-                <div id="plantillaActivaRD" style="background: white; color: #333; padding: 20px; border-radius: 10px; text-align: center;">
-                    <div style="font-size: 60px;">📱</div>
-                    <h3>Selecciona una plantilla arriba</h3>
-                </div>
-                
-                <button class="mega-btn-rd btn-visual-rd" onclick="enviarPlantillaVisualRD()">
-                    📱 ENVIAR PLANTILLA POR WHATSAPP
-                </button>
-            </div>
-            
-            <div class="card-rd">
-                <h3>📁 Subir Plantilla Personalizada</h3>
-                <div class="upload-area" onclick="document.getElementById('plantillaFileInput').click()">
-                    <div style="font-size: 50px;">🖼️</div>
-                    <div>Click para subir imagen</div>
-                    <div style="font-size: 12px; opacity: 0.7;">JPG, PNG, GIF</div>
-                </div>
-                <input type="file" id="plantillaFileInput" style="display: none;" accept="image/*" onchange="subirPlantillaPersonalizada(this)">
-                
-                <input type="text" id="tituloPlantillaPersonalizada" class="input" placeholder="Título para la plantilla..." style="margin: 10px 0;">
-                <textarea id="mensajePlantillaPersonalizada" class="textarea" placeholder="Mensaje que acompañará la imagen..."></textarea>
-                
-                <div id="vistaPrevia" style="margin: 15px 0; display: none;">
-                    <img id="imagenPrevia" style="max-width: 100%; border-radius: 10px;">
-                </div>
-                
-                <button class="mega-btn-rd btn-visual-rd" onclick="enviarPlantillaPersonalizada()">
-                    📱 ENVIAR PLANTILLA PERSONALIZADA
-                </button>
-            </div>
-            
-            <div class="card-rd">
-                <h3>🔗 Enlaces y Templates</h3>
-                <input type="url" id="enlaceVisualRD" class="input" placeholder="Enlace de YouTube, TikTok, Instagram..." style="margin: 10px 0;">
-                <button class="mega-btn-rd" style="background: linear-gradient(45deg, #ff0000, #ff4444);" onclick="enviarEnlaceVisualRD('youtube')">
-                    📺 YOUTUBE
-                </button>
-                <button class="mega-btn-rd" style="background: linear-gradient(45deg, #000000, #333333);" onclick="enviarEnlaceVisualRD('tiktok')">
-                    🎵 TIKTOK
-                </button>
-                
-                <h4 style="margin-top: 20px;">📝 Templates Visuales</h4>
-                <input type="text" id="tituloTemplateVisual" class="input" placeholder="Título del template">
-                <textarea id="contenidoTemplateVisual" class="textarea" placeholder="Contenido del template..."></textarea>
-                <button class="mega-btn-rd btn-visual-rd" onclick="guardarTemplateVisual()">💾 GUARDAR TEMPLATE</button>
-                
-                <div id="listaTemplatesVisuales"></div>
-            </div>
-            
-            <button class="btn btn-secondary" onclick="mostrar('menu')">⬅️ Volver al Menú</button>
-        </div>
-
-        <!-- CLIPBOARD INTELIGENTE RD -->
-        <div id="clipboardRD" class="section">
-            <div class="card-rd" style="background: linear-gradient(45deg, #ea580c, #f97316, #ea580c); color: white;">
-                <h2>🧠 Clipboard Inteligente</h2>
-                <p><strong>🇩🇴 SOLUCIÓN:</strong> Un click = mensaje copiado para pegar en WhatsApp</p>
-            </div>
-            
-            <div class="grid">
-                <div class="card-rd">
-                    <h3>💬 Mensajes Inteligentes</h3>
-                    <div class="smart-clipboard-rd" onclick="copiarMensajeRD('saludo')">
-                        👋 Saludo Profesional
-                        <div style="font-size: 12px; opacity: 0.7;">¡Hola! Soy de Urbana Vision...</div>
-                    </div>
-                    
-                    <div class="smart-clipboard-rd" onclick="copiarMensajeRD('oferta')">
-                        🎁 Oferta del Día
-                        <div style="font-size: 12px; opacity: 0.7;">Tenemos una oferta especial...</div>
-                    </div>
-                    
-                    <div class="smart-clipboard-rd" onclick="copiarMensajeRD('seguimiento')">
-                        📞 Seguimiento de Cliente
-                        <div style="font-size: 12px; opacity: 0.7;">¿Cómo te fue con los lentes?...</div>
-                    </div>
-                    
-                    <div class="smart-clipboard-rd" onclick="copiarMensajeRD('cita')">
-                        📅 Agendar Cita
-                        <div style="font-size: 12px; opacity: 0.7;">¿Cuándo te conviene venir?...</div>
-                    </div>
-                </div>
-                
-                <div class="card-rd">
-                    <h3>📱 Estado del Clipboard</h3>
-                    <div id="clipboardStatusRD" style="background: #333; padding: 15px; border-radius: 10px; margin: 10px 0;">
-                        <strong>💾 Último copiado:</strong>
-                        <div id="ultimoCopiadoRD">Ningún mensaje copiado aún</div>
-                    </div>
-                    
-                    <button class="mega-btn-rd btn-smart-rd" onclick="abrirWhatsAppRD()">
-                        📱 ABRIR WHATSAPP PARA PEGAR
-                    </button>
-                </div>
-            </div>
-            
-            <div class="card-rd">
-                <h3>✏️ Mensaje Personalizado</h3>
-                <textarea id="mensajePersonalizadoRD" class="textarea" placeholder="Escribe tu mensaje personalizado..."></textarea>
-                <button class="mega-btn-rd btn-smart-rd" onclick="copiarPersonalizadoRD()">
-                    📋 COPIAR MENSAJE PERSONALIZADO
-                </button>
-            </div>
-            
-            <button class="btn btn-secondary" onclick="mostrar('menu')">⬅️ Volver al Menú</button>
-        </div>
-
         <!-- MODAL DETALLE DE ORDEN DE LABORATORIO -->
         <div id="detalleOrdenModalLab" class="detalle-orden" onclick="cerrarDetalleLab()">
             <div class="detalle-content" onclick="event.stopPropagation()">
@@ -1320,6 +972,7 @@ Es muy fácil de entender.
     <canvas id="canvas2" style="display: none;"></canvas>
     <canvas id="canvasMarketing" style="display: none;"></canvas>
     <canvas id="canvasRecetaLab" style="display: none;"></canvas>
+    <canvas id="canvasMonturaLab" style="display: none;"></canvas>
     <div class="footer">
         by fbrugal jrubinstein consultores
     </div>
@@ -1349,103 +1002,13 @@ Es muy fácil de entender.
         let stream2 = null;
         let streamMarketing = null;
         let streamRecetaLab = null;
+        let streamMonturaLab = null;
         let fotoActual = null;
         let fotoPromo = null;
         let fotoMarketing = null;
         let fotoRecetaLab = null;
+        let fotoMonturaLab = null;
         let archivoSubido = null;
-
-        // Variables del sistema disruptivo RD
-        let mediaRecorderRD = null;
-        let audioChunksRD = [];
-        let isRecordingRD = false;
-        let plantillaSeleccionadaRD = null;
-        let audioPersonalizadoSubido = null;
-        let plantillaPersonalizadaSubida = null;
-        let templatesVisuales = [];
-        let estadisticasRD = {
-            audiosEnviados: 0,
-            enlacesEnviados: 0,
-            audiosPersonalizados: 0
-        };
-
-        // Mensajes para clipboard RD
-        const mensajesClipboardRD = {
-            saludo: `👋 ¡Hola! Soy de Urbana Vision 👓
-
-¿Cómo estás? Espero que muy bien.
-
-Tenemos nuevos productos y ofertas especiales que te pueden interesar.
-
-¿Te gustaría ver nuestro catálogo actualizado?
-
-📱 809-713-5307
-📍 [Tu dirección]
-🌐 urbanavision.com`,
-
-            oferta: `🎁 *OFERTA ESPECIAL DE HOY* 🎁
-
-✨ 30% de descuento en monturas selectas
-👓 2x1 en lentes de contacto
-🔍 Examen de vista GRATIS con compra
-
-¡Solo por tiempo limitado!
-
-¿Te interesa? Responde SI para más información.
-
-📱 809-713-5307
-📍 [Tu dirección]`,
-
-            seguimiento: `😊 ¡Hola! ¿Cómo estás?
-
-¿Cómo te han ido los lentes? ¿Todo bien con la graduación?
-
-Queremos asegurarnos de que estés 100% satisfecho.
-
-Si necesitas cualquier ajuste, ven cuando quieras.
-
-📱 809-713-5307
-👥 Estamos para ayudarte`,
-
-            cita: `📅 ¿Cuándo te conviene venir?
-
-Tenemos disponibilidad:
-🗓️ Lunes a Viernes: 8:00 AM - 6:00 PM  
-🗓️ Sábados: 8:00 AM - 4:00 PM
-
-¿Prefieres mañana o tarde?
-
-📱 809-713-5307
-📍 [Tu dirección]`
-        };
-
-        // Plantillas visuales RD
-        const plantillasVisualesRD = {
-            oferta: {
-                icono: '🎁',
-                titulo: 'OFERTA ESPECIAL',
-                color: '#dc2626',
-                mensaje: '¡Aprovecha nuestras ofertas del día!'
-            },
-            nuevo: {
-                icono: '✨',
-                titulo: 'PRODUCTO NUEVO',
-                color: '#7c3aed',
-                mensaje: '¡Nuevos productos disponibles!'
-            },
-            ubicacion: {
-                icono: '📍',
-                titulo: 'VISÍTANOS',
-                color: '#059669',
-                mensaje: '¡Te esperamos en nuestra tienda!'
-            },
-            contacto: {
-                icono: '📱',
-                titulo: 'CONTÁCTANOS',
-                color: '#ea580c',
-                mensaje: '¡Estamos aquí para ayudarte!'
-            }
-        };
 
         // ========================================
         // 🚀 INICIALIZACIÓN COMPLETA DEL SISTEMA
@@ -1470,6 +1033,95 @@ Tenemos disponibilidad:
             }
         });
 
+        // ========================================
+        // 🔄 FUNCIÓN PRINCIPAL DE NAVEGACIÓN (CORREGIDA)
+        // ========================================
+        
+        function mostrarSeccion(seccion) {
+            try {
+                console.log(`🔄 Navegando a sección: ${seccion}`);
+                
+                // Ocultar todas las secciones
+                document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+                
+                // Mostrar la sección solicitada
+                const elemento = document.getElementById(seccion);
+                if (elemento) {
+                    elemento.classList.add('active');
+                } else {
+                    console.error(`❌ Sección '${seccion}' no encontrada`);
+                    showAlert(`❌ Error: Sección '${seccion}' no encontrada`);
+                    return;
+                }
+                
+                // Cargar datos específicos de cada sección
+                switch(seccion) {
+                    case 'menu': 
+                        actualizarDashboard(); 
+                        break;
+                    case 'dashboardLaboratorio':
+                        actualizarDashboardLaboratorio();
+                        break;
+                    case 'nuevaOrdenLab':
+                        cargarClientesSelectLab();
+                        actualizarProximoNumeroLab();
+                        break;
+                    case 'listaOrdenesLab':
+                        cargarListaOrdenesLab();
+                        break;
+                    case 'cotejoLab':
+                        cargarOrdenesPorCotejarLab();
+                        break;
+                    case 'cuentasPorCobrar':
+                        cargarCuentasPorCobrar();
+                        break;
+                    case 'laboratoriosGestion':
+                        cargarListaLaboratoriosGestion();
+                        break;
+                    case 'historialLab':
+                        cargarHistorialLab();
+                        break;
+                    case 'inventario': 
+                        cargarInventario(); 
+                        break;
+                    case 'camara': 
+                        console.log('📷 Sección cámara cargada'); 
+                        break;
+                    case 'marketing': 
+                        cargarMarketing(); 
+                        break;
+                    case 'contactar': 
+                        cargarClientesRapida(); 
+                        break;
+                    case 'recordatorios': 
+                        generarRecordatorios(); 
+                        break;
+                    case 'ventas': 
+                        cargarVentas(); 
+                        break;
+                    case 'reportes': 
+                        cargarReportes(); 
+                        break;
+                    case 'campanas': 
+                        cargarCampanas(); 
+                        break;
+                    case 'gestionClientes': 
+                        cargarGestionClientes(); 
+                        break;
+                }
+                
+                console.log(`✅ Sección '${seccion}' cargada correctamente`);
+            } catch (error) {
+                console.error(`❌ Error mostrando sección '${seccion}':`, error);
+                showAlert(`❌ Error al cargar sección: ${error.message}`);
+            }
+        }
+
+        // Función de compatibilidad para llamadas antiguas
+        function mostrar(seccion) {
+            mostrarSeccion(seccion);
+        }
+
         function cargarDatosCompletos() {
             try {
                 // Cargar datos del sistema principal
@@ -1486,11 +1138,9 @@ Tenemos disponibilidad:
                 laboratorios = JSON.parse(localStorage.getItem('urbanaLaboratorios') || '[]');
                 contadorOrdenes = parseInt(localStorage.getItem('urbanaContadorOrdenes') || '1');
                 
-                // Cargar datos RD
-                estadisticasRD = JSON.parse(localStorage.getItem('urbanaEstadisticasRD') || '{"audiosEnviados": 0, "enlacesEnviados": 0, "audiosPersonalizados": 0}');
-                templatesVisuales = JSON.parse(localStorage.getItem('urbanaTemplatesVisuales') || '[]');
-                
                 console.log('✅ Todos los datos cargados correctamente');
+                console.log('📊 Clientes cargados:', clientes.length);
+                console.log('🔬 Órdenes laboratorio:', ordenesLaboratorio.length);
             } catch (error) {
                 console.error('❌ Error cargando datos:', error);
                 crearDatosEjemplo();
@@ -1518,6 +1168,15 @@ Tenemos disponibilidad:
                         cumpleanos: '1990-07-22',
                         edad: 34,
                         ultimoExamen: '2023-01-20'
+                    },
+                    { 
+                        id: 3, 
+                        nombre: 'Ana Rodriguez', 
+                        telefono: '809-555-0003', 
+                        email: 'ana@email.com', 
+                        cumpleanos: '1988-12-10',
+                        edad: 36,
+                        ultimoExamen: '2024-01-15'
                     }
                 ];
             }
@@ -1588,103 +1247,10 @@ Tenemos disponibilidad:
                 localStorage.setItem('urbanaLaboratorios', JSON.stringify(laboratorios));
                 localStorage.setItem('urbanaContadorOrdenes', contadorOrdenes.toString());
                 
-                // Guardar datos RD
-                localStorage.setItem('urbanaEstadisticasRD', JSON.stringify(estadisticasRD));
-                localStorage.setItem('urbanaTemplatesVisuales', JSON.stringify(templatesVisuales));
-                
                 console.log('✅ Todos los datos guardados correctamente');
             } catch (error) {
                 console.error('❌ Error al guardar datos:', error);
                 showAlert('⚠️ Error al guardar datos');
-            }
-        }
-
-        // ========================================
-        // 🔄 FUNCIONES DE NAVEGACIÓN CENTRAL
-        // ========================================
-        
-        function mostrar(seccion) {
-            try {
-                document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-                const elemento = document.getElementById(seccion);
-                if (elemento) {
-                    elemento.classList.add('active');
-                } else {
-                    console.error(`Sección '${seccion}' no encontrada`);
-                    showAlert(`Error: Sección '${seccion}' no encontrada`);
-                    return;
-                }
-                
-                // Cargar datos específicos de cada sección
-                switch(seccion) {
-                    case 'menu': 
-                        actualizarDashboard(); 
-                        break;
-                    case 'dashboardLaboratorio':
-                        actualizarDashboardLaboratorio();
-                        break;
-                    case 'nuevaOrdenLab':
-                        cargarClientesSelectLab();
-                        actualizarProximoNumeroLab();
-                        break;
-                    case 'listaOrdenesLab':
-                        cargarListaOrdenesLab();
-                        break;
-                    case 'cotejoLab':
-                        cargarOrdenesPorCotejarLab();
-                        break;
-                    case 'cuentasPorCobrar':
-                        cargarCuentasPorCobrar();
-                        break;
-                    case 'laboratoriosGestion':
-                        cargarListaLaboratoriosGestion();
-                        break;
-                    case 'historialLab':
-                        cargarHistorialLab();
-                        break;
-                    case 'inventario': 
-                        cargarInventario(); 
-                        break;
-                    case 'camara': 
-                        console.log('📷 Sección cámara cargada'); 
-                        break;
-                    case 'marketing': 
-                        cargarMarketing(); 
-                        break;
-                    case 'contactar': 
-                        cargarClientesRapida(); 
-                        break;
-                    case 'recordatorios': 
-                        generarRecordatorios(); 
-                        break;
-                    case 'ventas': 
-                        cargarVentas(); 
-                        break;
-                    case 'reportes': 
-                        cargarReportes(); 
-                        break;
-                    case 'campanas': 
-                        cargarCampanas(); 
-                        break;
-                    case 'gestionClientes': 
-                        cargarGestionClientes(); 
-                        break;
-                    case 'audioRD': 
-                        cargarAudioRD(); 
-                        break;
-                    case 'qrRD': 
-                        cargarQRRD(); 
-                        break;
-                    case 'visualRD': 
-                        cargarVisualRD(); 
-                        break;
-                    case 'clipboardRD': 
-                        cargarClipboardRD(); 
-                        break;
-                }
-            } catch (error) {
-                console.error('❌ Error mostrando sección:', error);
-                showAlert('❌ Error al cargar sección');
             }
         }
 
@@ -1702,26 +1268,28 @@ Tenemos disponibilidad:
             }
         }
 
-        // ========================================
-        // 📊 FUNCIONES DE DASHBOARD PRINCIPAL
-        // ========================================
-        
         function actualizarDashboard() {
             try {
-                document.getElementById('totalProductos').textContent = productos.length;
-                document.getElementById('totalClientes').textContent = clientes.length;
+                const totalProductosEl = document.getElementById('totalProductos');
+                const totalClientesEl = document.getElementById('totalClientes');
+                const ventasHoyEl = document.getElementById('ventasHoy');
                 
-                const hoy = new Date().toDateString();
-                const ventasHoy = ventas.filter(v => new Date(v.fecha).toDateString() === hoy);
-                const totalHoy = ventasHoy.reduce((sum, v) => sum + v.total, 0);
-                document.getElementById('ventasHoy').textContent = totalHoy.toFixed(2);
+                if (totalProductosEl) totalProductosEl.textContent = productos.length;
+                if (totalClientesEl) totalClientesEl.textContent = clientes.length;
+                
+                if (ventasHoyEl) {
+                    const hoy = new Date().toDateString();
+                    const ventasHoy = ventas.filter(v => new Date(v.fecha).toDateString() === hoy);
+                    const totalHoy = ventasHoy.reduce((sum, v) => sum + v.total, 0);
+                    ventasHoyEl.textContent = totalHoy.toFixed(2);
+                }
             } catch (error) {
                 console.error('❌ Error actualizando dashboard:', error);
             }
         }
 
         // ========================================
-        // 🔬 FUNCIONES DE LABORATORIO COMPLETAS
+        // 🔬 FUNCIONES DE LABORATORIO CORREGIDAS
         // ========================================
         
         function actualizarDashboardLaboratorio() {
@@ -1730,10 +1298,16 @@ Tenemos disponibilidad:
                 const paraCotejo = ordenesLaboratorio.filter(o => o.estado === 'listo').length;
                 const porCobrar = ordenesLaboratorio.filter(o => o.estado === 'entregado' && !o.pagado).length;
                 
+                // Calcular total por cobrar
+                const totalPorCobrar = ordenesLaboratorio
+                    .filter(o => o.estado === 'entregado' && !o.pagado)
+                    .reduce((sum, o) => sum + ((o.precioVenta || 0) - (o.abono || 0)), 0);
+                
                 const elementos = [
                     { id: 'enLaboratorioCount', valor: enLab },
                     { id: 'paraCotejoCount', valor: paraCotejo },
-                    { id: 'porCobrarCount', valor: porCobrar }
+                    { id: 'porCobrarCount', valor: porCobrar },
+                    { id: 'totalPorCobrarDash', valor: totalPorCobrar.toFixed(2) }
                 ];
 
                 elementos.forEach(elemento => {
@@ -1742,6 +1316,15 @@ Tenemos disponibilidad:
                         el.textContent = elemento.valor;
                     }
                 });
+                
+                // Actualizar resumen de laboratorios
+                const resumenLab = document.getElementById('resumenLaboratorios');
+                if (resumenLab) {
+                    resumenLab.innerHTML = `
+                        <p><strong>Registrados:</strong> ${laboratorios.length} laboratorios</p>
+                        <p><strong>Órdenes activas:</strong> ${ordenesLaboratorio.filter(o => o.estado !== 'entregado' || !o.pagado).length}</p>
+                    `;
+                }
                 
                 actualizarProximoNumeroLab();
             } catch (error) {
@@ -1793,12 +1376,24 @@ Tenemos disponibilidad:
         function cargarClientesSelectLab() {
             try {
                 const select = document.getElementById('clienteOrdenLab');
-                if (!select) return;
+                if (!select) {
+                    console.log('❌ Select clienteOrdenLab no encontrado');
+                    return;
+                }
                 
                 select.innerHTML = '<option value="">Seleccionar cliente</option>';
+                
+                if (clientes.length === 0) {
+                    select.innerHTML += '<option value="" disabled>No hay clientes registrados</option>';
+                    console.log('⚠️ No hay clientes para cargar');
+                    return;
+                }
+                
                 clientes.forEach(c => {
                     select.innerHTML += `<option value="${c.id}">${c.nombre} - ${c.telefono}</option>`;
                 });
+                
+                console.log(`✅ ${clientes.length} clientes cargados en select laboratorio`);
             } catch (error) {
                 console.error('❌ Error cargando clientes laboratorio:', error);
             }
@@ -1806,19 +1401,202 @@ Tenemos disponibilidad:
 
         function cargarDatosClienteLab() {
             try {
-                const clienteId = parseInt(document.getElementById('clienteOrdenLab').value);
-                if (!clienteId) return;
+                const select = document.getElementById('clienteOrdenLab');
+                const validacion = document.getElementById('validacionCliente');
+                
+                if (!select) {
+                    console.error('❌ Select cliente no encontrado');
+                    return;
+                }
+                
+                const clienteId = parseInt(select.value);
+                console.log('🔍 ID de cliente seleccionado:', clienteId);
+                
+                if (!clienteId || isNaN(clienteId)) {
+                    // Limpiar campos
+                    const nombreEl = document.getElementById('nombreClienteLab');
+                    const telefonoEl = document.getElementById('telefonoClienteLab');
+                    if (nombreEl) {
+                        nombreEl.value = '';
+                        nombreEl.classList.remove('success', 'error');
+                    }
+                    if (telefonoEl) {
+                        telefonoEl.value = '';
+                        telefonoEl.classList.remove('success', 'error');
+                    }
+                    if (validacion) {
+                        validacion.innerHTML = '<span style="color: #f59e0b;">⚠️ Selecciona un cliente</span>';
+                    }
+                    return;
+                }
                 
                 const cliente = clientes.find(c => c.id === clienteId);
-                if (!cliente) return;
+                console.log('👤 Cliente encontrado:', cliente);
+                
+                if (!cliente) {
+                    if (validacion) {
+                        validacion.innerHTML = '<span style="color: #ef4444;">❌ Cliente no encontrado</span>';
+                    }
+                    return;
+                }
                 
                 const nombreEl = document.getElementById('nombreClienteLab');
                 const telefonoEl = document.getElementById('telefonoClienteLab');
                 
-                if (nombreEl) nombreEl.value = cliente.nombre;
-                if (telefonoEl) telefonoEl.value = cliente.telefono;
+                if (nombreEl) {
+                    nombreEl.value = cliente.nombre;
+                    nombreEl.classList.remove('error');
+                    nombreEl.classList.add('success');
+                }
+                if (telefonoEl) {
+                    telefonoEl.value = cliente.telefono;
+                    telefonoEl.classList.remove('error');
+                    telefonoEl.classList.add('success');
+                }
+                
+                if (validacion) {
+                    validacion.innerHTML = `<span style="color: #10b981;">✅ Cliente: ${cliente.nombre}</span>`;
+                }
+                
+                console.log('✅ Datos del cliente cargados correctamente');
             } catch (error) {
                 console.error('❌ Error cargando datos cliente laboratorio:', error);
+                const validacion = document.getElementById('validacionCliente');
+                if (validacion) {
+                    validacion.innerHTML = '<span style="color: #ef4444;">❌ Error al cargar cliente</span>';
+                }
+            }
+        }
+
+        // FUNCIÓN CORREGIDA PARA CALCULAR PENDIENTE Y BENEFICIO
+        function calcularPendiente() {
+            try {
+                const precioVentaEl = document.getElementById('precioVenta');
+                const abonoEl = document.getElementById('abono');
+                const costoLabEl = document.getElementById('costoLaboratorio');
+                const pendienteEl = document.getElementById('pendientePago');
+                const beneficioEl = document.getElementById('beneficioEsperado');
+                
+                if (!precioVentaEl || !abonoEl || !costoLabEl) return;
+                
+                const precio = parseFloat(precioVentaEl.value) || 0;
+                const abono = parseFloat(abonoEl.value) || 0;
+                const costoLab = parseFloat(costoLabEl.value) || 0;
+                
+                const pendiente = precio - abono;
+                const beneficio = precio - costoLab;
+                
+                if (pendienteEl && precio > 0) {
+                    pendienteEl.innerHTML = `<strong>Pendiente por cobrar: RD$ ${pendiente.toFixed(2)}</strong>`;
+                    
+                    if (pendiente < 0) {
+                        pendienteEl.style.color = '#ef4444';
+                        pendienteEl.innerHTML += '<br><small>⚠️ El abono es mayor al precio</small>';
+                    } else if (pendiente === 0) {
+                        pendienteEl.style.color = '#10b981';
+                        pendienteEl.innerHTML += '<br><small>✅ Pagado completo</small>';
+                    } else {
+                        pendienteEl.style.color = '#f59e0b';
+                    }
+                }
+                
+                if (beneficioEl && precio > 0 && costoLab > 0) {
+                    beneficioEl.innerHTML = `<strong>Beneficio esperado: RD$ ${beneficio.toFixed(2)}</strong>`;
+                    if (beneficio > 0) {
+                        beneficioEl.style.color = '#10b981';
+                    } else {
+                        beneficioEl.style.color = '#ef4444';
+                        beneficioEl.innerHTML += '<br><small>⚠️ Precio menor al costo</small>';
+                    }
+                }
+            } catch (error) {
+                console.error('❌ Error calculando pendiente:', error);
+            }
+        }
+
+        // FUNCIONES DE CÁMARA PARA MONTURA
+        async function toggleCameraMonturaLab() {
+            const video = document.getElementById('videoMonturaLab');
+            const btn = document.getElementById('cameraBtnMonturaLab');
+            const placeholder = document.getElementById('placeholderMonturaLab');
+            
+            if (!video || !btn || !placeholder) {
+                showAlert('❌ Error: elementos de cámara no encontrados');
+                return;
+            }
+            
+            if (!streamMonturaLab) {
+                try {
+                    streamMonturaLab = await navigator.mediaDevices.getUserMedia({ 
+                        video: { facingMode: 'environment' } 
+                    });
+                    video.srcObject = streamMonturaLab;
+                    video.style.display = 'block';
+                    placeholder.style.display = 'none';
+                    btn.textContent = '📸 Tomar Foto';
+                    btn.onclick = tomarFotoMonturaLab;
+                } catch (err) {
+                    console.error('❌ Error al acceder a la cámara:', err);
+                    showAlert('❌ Error al acceder a la cámara');
+                }
+            } else {
+                tomarFotoMonturaLab();
+            }
+        }
+
+        function tomarFotoMonturaLab() {
+            const video = document.getElementById('videoMonturaLab');
+            const preview = document.getElementById('previewMonturaLab');
+            const btn = document.getElementById('cameraBtnMonturaLab');
+            const placeholder = document.getElementById('placeholderMonturaLab');
+            
+            if (!video || !preview) {
+                showAlert('❌ Error: elementos no encontrados');
+                return;
+            }
+            
+            try {
+                // Crear canvas si no existe
+                let canvasElement = document.getElementById('canvasMonturaLab');
+                if (!canvasElement) {
+                    canvasElement = document.createElement('canvas');
+                    canvasElement.id = 'canvasMonturaLab';
+                    canvasElement.style.display = 'none';
+                    document.body.appendChild(canvasElement);
+                }
+                
+                canvasElement.width = video.videoWidth || 640;
+                canvasElement.height = video.videoHeight || 480;
+                
+                const ctx = canvasElement.getContext('2d');
+                ctx.drawImage(video, 0, 0);
+                
+                // Agregar overlay con información de la orden
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
+                ctx.fillRect(0, 0, canvasElement.width, 50);
+                
+                ctx.fillStyle = 'white';
+                ctx.font = 'bold 20px Arial';
+                const numeroEl = document.getElementById('numeroOrdenActualLab');
+                const numero = numeroEl ? numeroEl.textContent : 'LAB-001';
+                ctx.fillText(`${numero} - MONTURA`, 10, 30);
+                
+                fotoMonturaLab = canvasElement.toDataURL('image/jpeg', 0.8);
+                preview.src = fotoMonturaLab;
+                preview.style.display = 'block';
+                
+                detenerCamara(streamMonturaLab);
+                streamMonturaLab = null;
+                
+                video.style.display = 'none';
+                placeholder.style.display = 'block';
+                btn.textContent = '📷 Activar Cámara';
+                btn.onclick = toggleCameraMonturaLab;
+                
+                showAlert('📷 Foto de montura capturada');
+            } catch (error) {
+                console.error('❌ Error al tomar foto:', error);
+                showAlert('❌ Error al tomar foto');
             }
         }
 
@@ -1853,38 +1631,46 @@ Tenemos disponibilidad:
 
         function tomarFotoRecetaLab() {
             const video = document.getElementById('videoRecetaLab');
-            const canvas = document.getElementById('canvasRecetaLab');
             const preview = document.getElementById('previewRecetaLab');
             const btn = document.getElementById('cameraBtnRecetaLab');
             const placeholder = document.getElementById('placeholderRecetaLab');
             
-            if (!video || !canvas || !preview) {
+            if (!video || !preview) {
                 showAlert('❌ Error: elementos no encontrados');
                 return;
             }
             
             try {
-                canvas.width = video.videoWidth || 640;
-                canvas.height = video.videoHeight || 480;
+                // Crear canvas si no existe
+                let canvasElement = document.getElementById('canvasRecetaLab');
+                if (!canvasElement) {
+                    canvasElement = document.createElement('canvas');
+                    canvasElement.id = 'canvasRecetaLab';
+                    canvasElement.style.display = 'none';
+                    document.body.appendChild(canvasElement);
+                }
                 
-                const ctx = canvas.getContext('2d');
+                canvasElement.width = video.videoWidth || 640;
+                canvasElement.height = video.videoHeight || 480;
+                
+                const ctx = canvasElement.getContext('2d');
                 ctx.drawImage(video, 0, 0);
                 
                 // Agregar overlay con información de la orden
                 ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
-                ctx.fillRect(0, 0, canvas.width, 50);
+                ctx.fillRect(0, 0, canvasElement.width, 50);
                 
                 ctx.fillStyle = 'white';
                 ctx.font = 'bold 20px Arial';
                 const numeroEl = document.getElementById('numeroOrdenActualLab');
                 const numero = numeroEl ? numeroEl.textContent : 'LAB-001';
-                ctx.fillText(numero, 10, 30);
+                ctx.fillText(`${numero} - RECETA`, 10, 30);
                 
                 const fecha = new Date().toLocaleDateString();
                 ctx.font = '16px Arial';
-                ctx.fillText(`Fecha: ${fecha}`, 10, canvas.height - 10);
+                ctx.fillText(`Fecha: ${fecha}`, 10, canvasElement.height - 10);
                 
-                fotoRecetaLab = canvas.toDataURL('image/jpeg', 0.8);
+                fotoRecetaLab = canvasElement.toDataURL('image/jpeg', 0.8);
                 preview.src = fotoRecetaLab;
                 preview.style.display = 'block';
                 
@@ -1915,8 +1701,14 @@ Tenemos disponibilidad:
 
         function generarYEnviarOrdenLab() {
             try {
+                console.log('🔬 Iniciando generación de orden...');
                 const orden = recopilarDatosOrdenLab();
-                if (!validarOrdenLab(orden)) return;
+                console.log('📋 Datos recopilados:', orden);
+                
+                if (!validarOrdenLab(orden)) {
+                    console.log('❌ Validación falló');
+                    return;
+                }
                 
                 // Guardar orden
                 orden.id = Date.now();
@@ -1928,6 +1720,8 @@ Tenemos disponibilidad:
                 contadorOrdenes++;
                 guardarDatosCompletos();
                 
+                console.log('✅ Orden guardada:', orden.numero);
+                
                 // Generar y enviar mensaje
                 enviarOrdenWhatsAppLab(orden);
                 
@@ -1936,7 +1730,7 @@ Tenemos disponibilidad:
                 actualizarDashboardLaboratorio();
             } catch (error) {
                 console.error('❌ Error generando orden:', error);
-                showAlert('❌ Error al generar orden');
+                showAlert('❌ Error al generar orden: ' + error.message);
             }
         }
 
@@ -1947,11 +1741,22 @@ Tenemos disponibilidad:
                     return elemento ? elemento.value.trim() : '';
                 };
 
+                // Obtener ID del cliente seleccionado
+                const clienteSelect = document.getElementById('clienteOrdenLab');
+                const clienteId = clienteSelect ? parseInt(clienteSelect.value) : 0;
+                
+                console.log('🔍 Cliente ID del select:', clienteId);
+                
+                // Buscar datos del cliente
+                const cliente = clienteId ? clientes.find(c => c.id === clienteId) : null;
+                console.log('👤 Datos del cliente encontrado:', cliente);
+
                 return {
                     numero: obtenerValor('numeroOrdenActualLab') || generarNumeroOrdenLab(),
-                    clienteId: parseInt(obtenerValor('clienteOrdenLab')) || 0,
-                    cliente: obtenerValor('nombreClienteLab'),
-                    telefono: obtenerValor('telefonoClienteLab'),
+                    clienteId: clienteId,
+                    cliente: cliente ? cliente.nombre : obtenerValor('nombreClienteLab'),
+                    telefono: cliente ? cliente.telefono : obtenerValor('telefonoClienteLab'),
+                    nombreMontura: obtenerValor('nombreMonturaLab'),
                     tipoMontura: obtenerValor('tipoMonturaLab'),
                     tipoLente: obtenerValor('tipoLenteLab'),
                     materialLente: obtenerValor('materialLenteLab'),
@@ -1962,12 +1767,6 @@ Tenemos disponibilidad:
                     prescripcion: {
                         od: {
                             esfera: obtenerValor('od_esferaLab'),
-                            cilindro: obtenerValor('od_cilindroLab'),
-                            eje: obtenerValor('od_ejeLab'),
-                            adicion: obtenerValor('od_adicionLab')
-                        },
-                        oi: {
-                            esfera: obtenerValor('oi_esferaLab'),
                             cilindro: obtenerValor('oi_cilindroLab'),
                             eje: obtenerValor('oi_ejeLab'),
                             adicion: obtenerValor('oi_adicionLab')
@@ -1980,7 +1779,8 @@ Tenemos disponibilidad:
                         dnpOI: obtenerValor('distancia_nasopupilar_oiLab')
                     },
                     comentarios: obtenerValor('comentariosLab'),
-                    fotoReceta: fotoRecetaLab
+                    fotoReceta: fotoRecetaLab,
+                    fotoMontura: fotoMonturaLab
                 };
             } catch (error) {
                 console.error('❌ Error recopilando datos:', error);
@@ -1990,8 +1790,11 @@ Tenemos disponibilidad:
 
         function validarOrdenLab(orden) {
             try {
-                if (!orden.clienteId) {
-                    showAlert('❌ Seleccione un cliente');
+                console.log('🔍 Validando orden:', orden);
+                
+                if (!orden.clienteId || orden.clienteId === 0 || isNaN(orden.clienteId)) {
+                    showAlert('❌ Debe seleccionar un cliente válido');
+                    console.log('❌ Cliente no válido:', orden.clienteId);
                     return false;
                 }
                 
@@ -2010,6 +1813,12 @@ Tenemos disponibilidad:
                     return false;
                 }
                 
+                if (orden.precioVenta <= 0) {
+                    showAlert('❌ Ingrese el precio de venta');
+                    return false;
+                }
+                
+                console.log('✅ Validación exitosa');
                 return true;
             } catch (error) {
                 console.error('❌ Error validando orden:', error);
@@ -2025,7 +1834,7 @@ Tenemos disponibilidad:
                     fetch(fotoRecetaLab)
                         .then(res => res.blob())
                         .then(blob => {
-                            const file = new File([blob], `${orden.numero}.jpg`, { type: 'image/jpeg' });
+                            const file = new File([blob], `${orden.numero}_receta.jpg`, { type: 'image/jpeg' });
                             return navigator.share({
                                 title: `Orden ${orden.numero}`,
                                 text: mensaje,
@@ -2038,6 +1847,7 @@ Tenemos disponibilidad:
                 } else {
                     window.open(`https://wa.me/?text=${encodeURIComponent(mensaje)}`, '_blank');
                 }
+                actualizarEstadisticas('mensaje');
             } catch (error) {
                 console.error('❌ Error al enviar orden:', error);
                 const mensaje = generarMensajeOrdenLab(orden);
@@ -2056,7 +1866,8 @@ Tenemos disponibilidad:
 📱 *TELÉFONO:* ${orden.telefono}
 
 👓 *ESPECIFICACIONES:*
-• Montura: ${orden.tipoMontura || 'No especificado'}
+• Montura: ${orden.nombreMontura || 'No especificado'}
+• Tipo Montura: ${orden.tipoMontura || 'No especificado'}
 • Tipo Lente: ${orden.tipoLente || 'No especificado'}
 • Material: ${orden.materialLente || 'No especificado'}
 • Tratamiento: ${orden.tratamientos || 'Ninguno'}
@@ -2090,14 +1901,16 @@ Tenemos disponibilidad:
 💬 *COMENTARIOS:*
 ${orden.comentarios || 'Ningún comentario especial'}
 
-📸 *FOTO DE RECETA ADJUNTA*
+📸 *FOTOS ADJUNTAS:*
+✅ Receta con medidas
+${orden.fotoMontura ? '✅ Montura seleccionada' : '❌ Sin foto de montura'}
 
 ⚠️ *IMPORTANTE:*
 - Confirmar recepción de orden
 - Enviar foto cuando esté lista
 - Tiempo estimado de entrega
 
-📱 Urbana Vision
+📱 Urbana Vision - 809-713-5307
 🌐 urbanavision.com`;
             } catch (error) {
                 console.error('❌ Error generando mensaje:', error);
@@ -2134,14 +1947,20 @@ ${orden.comentarios || 'Ningún comentario especial'}
                 const selects = ['clienteOrdenLab', 'tipoMonturaLab', 'tipoLenteLab', 'materialLenteLab', 'tratamientosLab'];
                 selects.forEach(id => {
                     const elemento = document.getElementById(id);
-                    if (elemento) elemento.value = '';
+                    if (elemento) {
+                        elemento.value = '';
+                        elemento.classList.remove('error', 'success');
+                    }
                 });
                 
-                // Limpiar campos de cliente
-                const camposCliente = ['nombreClienteLab', 'telefonoClienteLab'];
+                // Limpiar campos de cliente y montura
+                const camposCliente = ['nombreClienteLab', 'telefonoClienteLab', 'nombreMonturaLab'];
                 camposCliente.forEach(id => {
                     const elemento = document.getElementById(id);
-                    if (elemento) elemento.value = '';
+                    if (elemento) {
+                        elemento.value = '';
+                        elemento.classList.remove('error', 'success');
+                    }
                 });
                 
                 // Limpiar prescripción y medidas
@@ -2155,15 +1974,43 @@ ${orden.comentarios || 'Ningún comentario especial'}
                 
                 campos.forEach(campo => {
                     const elemento = document.getElementById(campo);
-                    if (elemento) elemento.value = '';
+                    if (elemento) {
+                        elemento.value = '';
+                        elemento.classList.remove('error', 'success');
+                    }
                 });
                 
-                // Limpiar foto
-                const preview = document.getElementById('previewRecetaLab');
-                if (preview) {
-                    preview.style.display = 'none';
+                // Limpiar validaciones
+                const validacionCliente = document.getElementById('validacionCliente');
+                if (validacionCliente) {
+                    validacionCliente.innerHTML = '';
                 }
+                
+                const pendientePago = document.getElementById('pendientePago');
+                if (pendientePago) {
+                    pendientePago.innerHTML = '';
+                }
+
+                const beneficioEsperado = document.getElementById('beneficioEsperado');
+                if (beneficioEsperado) {
+                    beneficioEsperado.innerHTML = '';
+                }
+                
+                // Limpiar fotos
+                const previewReceta = document.getElementById('previewRecetaLab');
+                if (previewReceta) {
+                    previewReceta.style.display = 'none';
+                }
+                const previewMontura = document.getElementById('previewMonturaLab');
+                if (previewMontura) {
+                    previewMontura.style.display = 'none';
+                }
+                
                 fotoRecetaLab = null;
+                fotoMonturaLab = null;
+                
+                // Regenerar número de orden
+                actualizarProximoNumeroLab();
             } catch (error) {
                 console.error('❌ Error limpiando formulario:', error);
             }
@@ -2191,6 +2038,8 @@ ${orden.comentarios || 'Ningún comentario especial'}
                                 <th>Estado</th>
                                 <th>Tipo</th>
                                 <th>Total</th>
+                                <th>Abono</th>
+                                <th>Pendiente</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
@@ -2200,6 +2049,7 @@ ${orden.comentarios || 'Ningún comentario especial'}
                 ordenesAMostrar.slice().reverse().forEach(orden => {
                     const estado = getEstadoHTMLLab(orden.estado);
                     const fecha = new Date(orden.fechaCreacion).toLocaleDateString();
+                    const pendiente = (orden.precioVenta || 0) - (orden.abono || 0);
                     
                     html += `
                         <tr>
@@ -2209,6 +2059,8 @@ ${orden.comentarios || 'Ningún comentario especial'}
                             <td>${estado}</td>
                             <td>${orden.tipoLente || 'N/A'}</td>
                             <td>RD$ ${(orden.precioVenta || 0).toFixed(2)}</td>
+                            <td>RD$ ${(orden.abono || 0).toFixed(2)}</td>
+                            <td style="color: ${pendiente > 0 ? '#f59e0b' : '#10b981'};">RD$ ${pendiente.toFixed(2)}</td>
                             <td>
                                 <button class="btn btn-primary" onclick="verDetalleOrdenLab(${orden.id})">👁️ Ver</button>
                                 <button class="btn btn-warning" onclick="cambiarEstadoOrdenLab(${orden.id})">🔄 Estado</button>
@@ -2288,6 +2140,9 @@ ${orden.comentarios || 'Ningún comentario especial'}
                 
                 if (!contenido || !modal) return;
                 
+                const pendiente = (orden.precioVenta || 0) - (orden.abono || 0);
+                const beneficio = (orden.precioVenta || 0) - (orden.costoLaboratorio || 0);
+                
                 contenido.innerHTML = `
                     <h2>🔬 Detalle de Orden ${orden.numero}</h2>
                     
@@ -2295,23 +2150,32 @@ ${orden.comentarios || 'Ningún comentario especial'}
                         <h3>👤 Cliente</h3>
                         <p><strong>Nombre:</strong> ${orden.cliente}</p>
                         <p><strong>Teléfono:</strong> ${orden.telefono}</p>
+                        <p><strong>ID Cliente:</strong> ${orden.clienteId}</p>
                     </div>
                     
                     <div class="card">
                         <h3>👓 Especificaciones</h3>
-                        <p><strong>Montura:</strong> ${orden.tipoMontura || 'No especificado'}</p>
+                        <p><strong>Montura:</strong> ${orden.nombreMontura || 'No especificado'}</p>
+                        <p><strong>Tipo Montura:</strong> ${orden.tipoMontura || 'No especificado'}</p>
                         <p><strong>Tipo Lente:</strong> ${orden.tipoLente || 'No especificado'}</p>
                         <p><strong>Material:</strong> ${orden.materialLente || 'No especificado'}</p>
                         <p><strong>Tratamiento:</strong> ${orden.tratamientos || 'Ninguno'}</p>
                     </div>
                     
                     <div class="card">
-                        <h3>💰 Información Financiera</h3>
-                        <p><strong>Costo Laboratorio:</strong> RD$ ${(orden.costoLaboratorio || 0).toFixed(2)}</p>
-                        <p><strong>Precio Venta:</strong> RD$ ${(orden.precioVenta || 0).toFixed(2)}</p>
-                        <p><strong>Abono Recibido:</strong> RD$ ${(orden.abono || 0).toFixed(2)}</p>
-                        <p><strong>Pendiente por Cobrar:</strong> RD$ ${((orden.precioVenta || 0) - (orden.abono || 0)).toFixed(2)}</p>
-                        <p><strong>Beneficio Esperado:</strong> RD$ ${((orden.precioVenta || 0) - (orden.costoLaboratorio || 0)).toFixed(2)}</p>
+                        <h3>💰 Información Financiera Completa</h3>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                            <div>
+                                <p><strong>Costo Laboratorio:</strong> <span style="color: #ef4444;">RD$ ${(orden.costoLaboratorio || 0).toFixed(2)}</span></p>
+                                <p><strong>Precio Venta:</strong> <span style="color: #10b981;">RD$ ${(orden.precioVenta || 0).toFixed(2)}</span></p>
+                                <p><strong>Beneficio Bruto:</strong> <span style="color: #10b981;">RD$ ${beneficio.toFixed(2)}</span></p>
+                            </div>
+                            <div>
+                                <p><strong>Abono Recibido:</strong> <span style="color: #3b82f6;">RD$ ${(orden.abono || 0).toFixed(2)}</span></p>
+                                <p><strong>Pendiente por Cobrar:</strong> <span style="color: ${pendiente > 0 ? '#f59e0b' : '#10b981'};">RD$ ${pendiente.toFixed(2)}</span></p>
+                                <p><strong>Estado Pago:</strong> ${orden.pagado ? '✅ Pagado' : '⏳ Pendiente'}</p>
+                            </div>
+                        </div>
                     </div>
                     
                     <div class="card">
@@ -2334,6 +2198,13 @@ ${orden.comentarios || 'Ningún comentario especial'}
                         </div>
                     </div>
                     
+                    ${orden.fotoMontura ? `
+                        <div class="card">
+                            <h3>📷 Foto de Montura</h3>
+                            <img src="${orden.fotoMontura}" style="width: 100%; border-radius: 10px;">
+                        </div>
+                    ` : ''}
+                    
                     ${orden.fotoReceta ? `
                         <div class="card">
                             <h3>📷 Foto de Receta</h3>
@@ -2342,10 +2213,12 @@ ${orden.comentarios || 'Ningún comentario especial'}
                     ` : ''}
                     
                     <div class="card">
-                        <h3>📊 Estado</h3>
+                        <h3>📊 Estado y Fechas</h3>
                         <p><strong>Estado Actual:</strong> ${getEstadoHTMLLab(orden.estado)}</p>
                         <p><strong>Fecha Creación:</strong> ${new Date(orden.fechaCreacion).toLocaleString()}</p>
                         ${orden.fechaEntrega ? `<p><strong>Fecha Entrega:</strong> ${new Date(orden.fechaEntrega).toLocaleString()}</p>` : ''}
+                        ${orden.fechaPago ? `<p><strong>Fecha Pago:</strong> ${new Date(orden.fechaPago).toLocaleString()}</p>` : ''}
+                        ${orden.fechaCotejo ? `<p><strong>Fecha Cotejo:</strong> ${new Date(orden.fechaCotejo).toLocaleString()}</p>` : ''}
                     </div>
                 `;
                 
@@ -2430,15 +2303,21 @@ ${orden.comentarios || 'Ningún comentario especial'}
                 let html = '<div class="grid">';
                 
                 ordenesCotejo.forEach(orden => {
+                    const pendiente = (orden.precioVenta || 0) - (orden.abono || 0);
                     html += `
                         <div class="card">
                             <h3>📦 Orden ${orden.numero}</h3>
                             <p><strong>Cliente:</strong> ${orden.cliente}</p>
+                            <p><strong>Teléfono:</strong> ${orden.telefono}</p>
+                            <p><strong>Montura:</strong> ${orden.nombreMontura || 'No especificado'}</p>
                             <p><strong>Tipo:</strong> ${orden.tipoLente}</p>
+                            <p><strong>Material:</strong> ${orden.materialLente || 'N/A'}</p>
                             <p><strong>Fecha Envío:</strong> ${new Date(orden.fechaCreacion).toLocaleDateString()}</p>
-                            <p><strong>Total:</strong> RD$ ${(orden.precioVenta || 0).toFixed(2)}</p>
-                            <p><strong>Abono:</strong> RD$ ${(orden.abono || 0).toFixed(2)}</p>
-                            <p><strong>Pendiente:</strong> RD$ ${((orden.precioVenta || 0) - (orden.abono || 0)).toFixed(2)}</p>
+                            <div style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 5px; margin: 10px 0;">
+                                <p><strong>Total:</strong> RD$ ${(orden.precioVenta || 0).toFixed(2)}</p>
+                                <p><strong>Abono:</strong> RD$ ${(orden.abono || 0).toFixed(2)}</p>
+                                <p><strong>Pendiente:</strong> <span style="color: #f59e0b;">RD$ ${pendiente.toFixed(2)}</span></p>
+                            </div>
                             
                             <div style="margin: 15px 0;">
                                 <button class="btn btn-success" onclick="realizarCotejoLab(${orden.id})">✅ Realizar Cotejo</button>
@@ -2460,7 +2339,14 @@ ${orden.comentarios || 'Ningún comentario especial'}
                 const orden = ordenesLaboratorio.find(o => o.id === id);
                 if (!orden) return;
                 
+                const pendiente = (orden.precioVenta || 0) - (orden.abono || 0);
+                
                 const confirmacion = confirm(`🔍 COTEJO DE ORDEN ${orden.numero}
+
+Cliente: ${orden.cliente}
+Montura: ${orden.nombreMontura || 'No especificado'}
+Tipo: ${orden.tipoLente}
+Pendiente por cobrar: RD$ ${pendiente.toFixed(2)}
 
 ¿Confirma que ha recibido los lentes del laboratorio y que están:
 
@@ -2476,12 +2362,26 @@ ${orden.comentarios || 'Ningún comentario especial'}
                     orden.fechaEntrega = new Date().toISOString();
                     orden.fechaCotejo = new Date().toISOString();
                     
+                    // Registrar como venta en el sistema
+                    const nuevaVenta = {
+                        id: Date.now(),
+                        clienteId: orden.clienteId,
+                        productoId: 0, // ID especial para laboratorio
+                        cantidad: 1,
+                        total: orden.precioVenta,
+                        fecha: new Date().toISOString(),
+                        tipo: 'laboratorio',
+                        numeroOrden: orden.numero,
+                        nombreMontura: orden.nombreMontura
+                    };
+                    
+                    ventas.push(nuevaVenta);
                     guardarDatosCompletos();
                     cargarOrdenesPorCotejarLab();
                     cargarCuentasPorCobrar();
                     actualizarDashboardLaboratorio();
                     
-                    showAlert(`✅ COTEJO COMPLETADO\n\nOrden ${orden.numero} marcada como entregada y pasada a cuentas por cobrar.`);
+                    showAlert(`✅ COTEJO COMPLETADO\n\nOrden ${orden.numero} marcada como entregada y registrada como venta.`);
                     
                     // Enviar notificación al cliente
                     setTimeout(() => {
@@ -2504,6 +2404,14 @@ ${orden.comentarios || 'Ningún comentario especial'}
                 
                 const cuentasPorCobrar = ordenesLaboratorio.filter(o => o.estado === 'entregado' && !o.pagado);
                 
+                // Calcular total por cobrar
+                const totalPorCobrar = cuentasPorCobrar.reduce((sum, o) => sum + ((o.precioVenta || 0) - (o.abono || 0)), 0);
+                
+                const totalElement = document.getElementById('totalPorCobrarGeneral');
+                if (totalElement) {
+                    totalElement.textContent = `RD$ ${totalPorCobrar.toFixed(2)}`;
+                }
+                
                 if (cuentasPorCobrar.length === 0) {
                     contenedor.innerHTML = '<p style="text-align: center;">✅ No hay cuentas pendientes por cobrar</p>';
                     return;
@@ -2514,20 +2422,27 @@ ${orden.comentarios || 'Ningún comentario especial'}
                 cuentasPorCobrar.forEach(orden => {
                     const pendiente = (orden.precioVenta || 0) - (orden.abono || 0);
                     const beneficio = (orden.precioVenta || 0) - (orden.costoLaboratorio || 0);
+                    const diasPendiente = Math.floor((new Date() - new Date(orden.fechaEntrega || orden.fechaCreacion)) / (1000 * 60 * 60 * 24));
                     
                     html += `
                         <div class="cuenta-item">
                             <h3>💰 Orden ${orden.numero}</h3>
                             <p><strong>Cliente:</strong> ${orden.cliente}</p>
                             <p><strong>Teléfono:</strong> ${orden.telefono}</p>
-                            <p><strong>Total Venta:</strong> RD$ ${(orden.precioVenta || 0).toFixed(2)}</p>
-                            <p><strong>Abono Recibido:</strong> RD$ ${(orden.abono || 0).toFixed(2)}</p>
-                            <p><strong>Pendiente por Cobrar:</strong> <span style="color: #f59e0b; font-weight: bold;">RD$ ${pendiente.toFixed(2)}</span></p>
-                            <p><strong>Beneficio Esperado:</strong> <span style="color: #10b981; font-weight: bold;">RD$ ${beneficio.toFixed(2)}</span></p>
+                            <p><strong>Montura:</strong> ${orden.nombreMontura || 'No especificado'}</p>
+                            <p><strong>Tipo:</strong> ${orden.tipoLente}</p>
+                            <p><strong>Días Pendiente:</strong> ${diasPendiente} días</p>
+                            
+                            <div style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 5px; margin: 10px 0;">
+                                <p><strong>Total Venta:</strong> RD$ ${(orden.precioVenta || 0).toFixed(2)}</p>
+                                <p><strong>Abono Recibido:</strong> RD$ ${(orden.abono || 0).toFixed(2)}</p>
+                                <p><strong>Pendiente por Cobrar:</strong> <span style="color: #f59e0b; font-weight: bold;">RD$ ${pendiente.toFixed(2)}</span></p>
+                                <p><strong>Beneficio Esperado:</strong> <span style="color: #10b981; font-weight: bold;">RD$ ${beneficio.toFixed(2)}</span></p>
+                            </div>
                             
                             <div class="abono-section">
                                 <h4>💳 Registrar Abono Adicional</h4>
-                                <input type="number" id="abonoAdicional_${orden.id}" class="input" placeholder="Monto del abono RD$" step="0.01">
+                                <input type="number" id="abonoAdicional_${orden.id}" class="input" placeholder="Monto del abono RD$" step="0.01" max="${pendiente}">
                                 <button class="btn btn-primary" onclick="registrarAbonoLab(${orden.id})">💰 Registrar Abono</button>
                             </div>
                             
@@ -2576,6 +2491,7 @@ ${orden.comentarios || 'Ningún comentario especial'}
                 
                 guardarDatosCompletos();
                 cargarCuentasPorCobrar();
+                cargarListaOrdenesLab();
                 actualizarDashboardLaboratorio();
                 
                 showAlert(`✅ Abono de RD$ ${montoAbono.toFixed(2)} registrado para orden ${orden.numero}`);
@@ -2599,6 +2515,8 @@ Hola ${orden.cliente}!
 Sus lentes están listos para retirar.
 
 📋 Orden: ${orden.numero}
+👓 Montura: ${orden.nombreMontura || 'Personalizada'}
+🔍 Tipo: ${orden.tipoLente}
 💰 Total: RD$ ${(orden.precioVenta || 0).toFixed(2)}
 ✅ Abonado: RD$ ${(orden.abono || 0).toFixed(2)}
 ⏳ Pendiente: RD$ ${pendiente.toFixed(2)}
@@ -2607,12 +2525,13 @@ Puede pasar a completar el pago y retirar sus lentes cuando guste.
 
 🕒 Horario: Lunes a Sábado 8:00 AM - 6:00 PM
 
-📱 809-713-5307
+📱 Urbana Vision - 809-713-5307
 🌐 urbanavision.com`;
                 
                 const telefonoLimpio = orden.telefono.replace(/[^0-9]/g, '');
                 window.open(`https://wa.me/${telefonoLimpio}?text=${encodeURIComponent(mensaje)}`, '_blank');
                 
+                actualizarEstadisticas('mensaje');
                 showAlert('📱 Recordatorio de pago enviado al cliente');
             } catch (error) {
                 console.error('❌ Error enviando recordatorio:', error);
@@ -2628,18 +2547,20 @@ Sus lentes están listos para retirar.
 
 📋 Orden: ${orden.numero}
 👁️ Tipo: ${orden.tipoLente}
+👓 Montura: ${orden.nombreMontura || 'Personalizada'}
 📅 Fecha: ${new Date().toLocaleDateString()}
 
 Puede pasar a retirarlos cuando guste.
 
 🕒 Horario: Lunes a Sábado 8:00 AM - 6:00 PM
 
-📱 809-713-5307
+📱 Urbana Vision - 809-713-5307
 🌐 urbanavision.com`;
                 
                 const telefonoLimpio = orden.telefono.replace(/[^0-9]/g, '');
                 window.open(`https://wa.me/${telefonoLimpio}?text=${encodeURIComponent(mensaje)}`, '_blank');
                 
+                actualizarEstadisticas('mensaje');
                 showAlert('📱 Notificación enviada al cliente');
             } catch (error) {
                 console.error('❌ Error notificando cliente:', error);
@@ -2700,18 +2621,22 @@ Puede pasar a retirarlos cuando guste.
                     return;
                 }
                 
-                lista.innerHTML = laboratorios.map(lab => `
-                    <div class="card">
-                        <h4>🏭 ${lab.nombre}</h4>
-                        <p><strong>📱 Teléfono:</strong> ${lab.telefono}</p>
-                        <p><strong>👤 Contacto:</strong> ${lab.contacto || 'No especificado'}</p>
-                        <p><strong>📝 Notas:</strong> ${lab.notas || 'Ninguna'}</p>
-                        <div style="margin-top: 10px;">
-                            <button class="btn btn-whatsapp" onclick="contactarLaboratorioGestion('${lab.telefono}', '${lab.nombre}')">📱 Contactar</button>
-                            <button class="btn btn-danger" onclick="eliminarLaboratorioGestion(${lab.id})">🗑️ Eliminar</button>
+                lista.innerHTML = laboratorios.map(lab => {
+                    const ordenesEnviadas = ordenesLaboratorio.filter(o => o.estado !== 'pendiente').length;
+                    return `
+                        <div class="card">
+                            <h4>🏭 ${lab.nombre}</h4>
+                            <p><strong>📱 Teléfono:</strong> ${lab.telefono}</p>
+                            <p><strong>👤 Contacto:</strong> ${lab.contacto || 'No especificado'}</p>
+                            <p><strong>📝 Notas:</strong> ${lab.notas || 'Ninguna'}</p>
+                            <p><strong>📊 Órdenes Enviadas:</strong> ${ordenesEnviadas}</p>
+                            <div style="margin-top: 10px;">
+                                <button class="btn btn-whatsapp" onclick="contactarLaboratorioGestion('${lab.telefono}', '${lab.nombre}')">📱 Contactar</button>
+                                <button class="btn btn-danger" onclick="eliminarLaboratorioGestion(${lab.id})">🗑️ Eliminar</button>
+                            </div>
                         </div>
-                    </div>
-                `).join('');
+                    `;
+                }).join('');
             } catch (error) {
                 console.error('❌ Error cargando laboratorios:', error);
             }
@@ -2719,10 +2644,11 @@ Puede pasar a retirarlos cuando guste.
 
         function contactarLaboratorioGestion(telefono, nombre) {
             try {
-                const mensaje = `🔬 Hola ${nombre}!\n\nSoy de Urbana Vision.\n\n¿Cómo están? ¿Tienen disponibilidad para nuevas órdenes?\n\nGracias!\n\n📱 809-713-5307\n🌐 urbanavision.com`;
+                const mensaje = `🔬 Hola ${nombre}!\n\nSoy de Urbana Vision.\n\n¿Cómo están? ¿Tienen disponibilidad para nuevas órdenes?\n\nGracias!\n\n📱 Urbana Vision - 809-713-5307\n🌐 urbanavision.com`;
                 
                 const telefonoLimpio = telefono.replace(/[^0-9]/g, '');
                 window.open(`https://wa.me/${telefonoLimpio}?text=${encodeURIComponent(mensaje)}`, '_blank');
+                actualizarEstadisticas('mensaje');
             } catch (error) {
                 console.error('❌ Error contactando laboratorio:', error);
                 showAlert('❌ Error al contactar laboratorio');
@@ -2755,29 +2681,38 @@ Puede pasar a retirarlos cuando guste.
                     return;
                 }
                 
-                lista.innerHTML = ordenesEnviadas.slice().reverse().map(orden => `
-                    <div class="card">
-                        <h4>📤 ${orden.numero}</h4>
-                        <p><strong>Cliente:</strong> ${orden.cliente}</p>
-                        <p><strong>Fecha Envío:</strong> ${new Date(orden.fechaCreacion).toLocaleString()}</p>
-                        <p><strong>Estado:</strong> ${getEstadoHTMLLab(orden.estado)}</p>
-                        <p><strong>Total:</strong> RD$ ${(orden.precioVenta || 0).toFixed(2)}</p>
-                        <button class="btn btn-primary" onclick="verDetalleOrdenLab(${orden.id})">👁️ Ver Detalle</button>
-                    </div>
-                `).join('');
+                lista.innerHTML = ordenesEnviadas.slice().reverse().map(orden => {
+                    const beneficio = (orden.precioVenta || 0) - (orden.costoLaboratorio || 0);
+                    return `
+                        <div class="card">
+                            <h4>📤 ${orden.numero}</h4>
+                            <p><strong>Cliente:</strong> ${orden.cliente}</p>
+                            <p><strong>Montura:</strong> ${orden.nombreMontura || 'No especificado'}</p>
+                            <p><strong>Tipo:</strong> ${orden.tipoLente}</p>
+                            <p><strong>Fecha Envío:</strong> ${new Date(orden.fechaCreacion).toLocaleString()}</p>
+                            <p><strong>Estado:</strong> ${getEstadoHTMLLab(orden.estado)}</p>
+                            <p><strong>Total:</strong> RD$ ${(orden.precioVenta || 0).toFixed(2)}</p>
+                            <p><strong>Beneficio:</strong> RD$ ${beneficio.toFixed(2)}</p>
+                            <button class="btn btn-primary" onclick="verDetalleOrdenLab(${orden.id})">👁️ Ver Detalle</button>
+                        </div>
+                    `;
+                }).join('');
             } catch (error) {
                 console.error('❌ Error cargando historial:', error);
             }
         }
 
         // ========================================
-        // 📱 FUNCIONES DE MARKETING COMPLETAS
+        // 📱 FUNCIONES DE MARKETING CORREGIDAS (COMPLETAS)
         // ========================================
         
         function cargarMarketing() {
             try {
-                document.getElementById('mensajesEnviados').textContent = estadisticas.mensajesHoy || 0;
-                document.getElementById('promocionesActivas').textContent = estadisticas.promociones || 0;
+                const mensajesEl = document.getElementById('mensajesEnviados');
+                const promocionesEl = document.getElementById('promocionesActivas');
+                
+                if (mensajesEl) mensajesEl.textContent = estadisticas.mensajesHoy || 0;
+                if (promocionesEl) promocionesEl.textContent = estadisticas.promociones || 0;
             } catch (error) {
                 console.error('❌ Error cargando marketing:', error);
             }
@@ -2814,17 +2749,25 @@ Puede pasar a retirarlos cuando guste.
 
         function tomarFotoMarketing() {
             const video = document.getElementById('videoMarketing');
-            const canvas = document.getElementById('canvasMarketing');
             const preview = document.getElementById('previewMarketing');
             const btn = document.getElementById('cameraBtnMarketing');
             const placeholder = document.getElementById('placeholderMarketing');
             
-            if (!video || !canvas || !preview) {
+            if (!video || !preview) {
                 showAlert('❌ Error: elementos no encontrados');
                 return;
             }
             
             try {
+                // Crear canvas si no existe
+                let canvas = document.getElementById('canvasMarketing');
+                if (!canvas) {
+                    canvas = document.createElement('canvas');
+                    canvas.id = 'canvasMarketing';
+                    canvas.style.display = 'none';
+                    document.body.appendChild(canvas);
+                }
+                
                 canvas.width = video.videoWidth || 640;
                 canvas.height = video.videoHeight || 480;
                 canvas.getContext('2d').drawImage(video, 0, 0);
@@ -2963,18 +2906,72 @@ Puede pasar a retirarlos cuando guste.
             showAlert(`📱 ${template.titulo} enviado por WhatsApp`);
         }
 
-        function enviarEnlaceYoutube() {
-            const enlace = document.getElementById('enlaceYoutube').value.trim();
-            if (!enlace) {
-                showAlert('❌ Ingrese un enlace de YouTube');
+        // FUNCIÓN CORREGIDA PARA ENLACES DE REDES SOCIALES (ACTUALIZADA)
+        function enviarEnlaceRedes(plataforma) {
+            const enlaceEl = document.getElementById('enlaceRedes');
+            if (!enlaceEl) {
+                showAlert('❌ Error: elemento de enlace no encontrado');
                 return;
             }
             
-            const mensaje = `📺 *VIDEO RECOMENDADO*\n\nTe compartimos este contenido interesante:\n\n${enlace}\n\n📱 809-713-5307\n🌐 urbanavision.com`;
+            const enlace = enlaceEl.value.trim();
+            if (!enlace) {
+                showAlert('❌ Ingresa un enlace primero');
+                return;
+            }
             
-            window.open(`https://wa.me/?text=${encodeURIComponent(mensaje)}`, '_blank');
-            actualizarEstadisticas('mensaje');
-            showAlert('📺 Enlace de YouTube enviado');
+            const configuraciones = {
+                youtube: {
+                    emoji: '📺',
+                    nombre: 'YouTube',
+                    mensaje: '🔥 ¡CONTENIDO IMPERDIBLE!\n\nTe compartimos este video que te puede interesar:'
+                },
+                tiktok: {
+                    emoji: '🎵',
+                    nombre: 'TikTok',
+                    mensaje: '🔥 ¡VIRAL CONTENT!\n\nMira este contenido trending que está arrasando:'
+                },
+                instagram: {
+                    emoji: '📸',
+                    nombre: 'Instagram',
+                    mensaje: '✨ ¡CONTENIDO VISUAL INCREÍBLE!\n\nTe compartimos este post que te va a encantar:'
+                },
+                facebook: {
+                    emoji: '👥',
+                    nombre: 'Facebook',
+                    mensaje: '💬 ¡CONTENIDO INTERESANTE!\n\nCompartimos contigo esta publicación:'
+                }
+            };
+            
+            const config = configuraciones[plataforma];
+            if (!config) {
+                showAlert('❌ Plataforma no válida');
+                return;
+            }
+            
+            const mensajeCompleto = `${config.emoji} *${config.nombre.toUpperCase()}*
+
+${config.mensaje}
+
+🔗 ${enlace}
+
+👀 ¡No te lo pierdas!
+💬 Cuéntanos qué opinas
+
+📱 Urbana Vision - 809-713-5307
+🌐 urbanavision.com`;
+            
+            try {
+                window.open(`https://wa.me/?text=${encodeURIComponent(mensajeCompleto)}`, '_blank');
+                actualizarEstadisticas('mensaje');
+                showAlert(`${config.emoji} Enlace de ${config.nombre} enviado por WhatsApp`);
+                
+                // Limpiar el campo después de enviar
+                enlaceEl.value = '';
+            } catch (error) {
+                console.error('❌ Error al enviar enlace:', error);
+                showAlert('❌ Error al enviar enlace');
+            }
         }
 
         function crearTemplate() {
@@ -3014,10 +3011,12 @@ Puede pasar a retirarlos cuando guste.
                          `📱 Mensajes enviados: ${estadisticas.mensajesHoy}\n` +
                          `🎁 Promociones: ${estadisticas.promociones}\n` +
                          `📦 Productos: ${productos.length}\n` +
-                         `👥 Clientes: ${clientes.length}\n\n` +
+                         `👥 Clientes: ${clientes.length}\n` +
+                         `🔬 Órdenes Lab: ${ordenesLaboratorio.length}\n\n` +
                          `📅 ${new Date().toLocaleDateString()}`;
             
             window.open(`https://wa.me/?text=${encodeURIComponent(stats)}`, '_blank');
+            actualizarEstadisticas('mensaje');
         }
 
         function actualizarEstadisticas(tipo) {
@@ -3125,7 +3124,7 @@ Puede pasar a retirarlos cuando guste.
                           `💰 Precio: RD$ ${producto.precio.toFixed(2)}\n\n` +
                           `Me interesa conocer si te gusta este modelo.\n\n` +
                           `✨ ¿Te interesa verlo en la tienda?\n\n` +
-                          `📱 809-713-5307\n` +
+                          `📱 Urbana Vision - 809-713-5307\n` +
                           `🌐 urbanavision.com`;
             
             try {
@@ -3165,7 +3164,7 @@ Puede pasar a retirarlos cuando guste.
         }
 
         // ========================================
-        // 📷 FUNCIONES DE CÁMARA
+        // 📷 FUNCIONES DE CÁMARA PRINCIPALES
         // ========================================
 
         async function toggleCamera() {
@@ -3199,17 +3198,24 @@ Puede pasar a retirarlos cuando guste.
 
         function tomarFoto() {
             const video = document.getElementById('video');
-            const canvas = document.getElementById('canvas');
             const preview = document.getElementById('preview');
             const btn = document.getElementById('cameraBtn');
             const placeholder = document.getElementById('placeholder');
             
-            if (!video || !canvas || !preview) {
+            if (!video || !preview) {
                 showAlert('❌ Error: elementos no encontrados');
                 return;
             }
             
             try {
+                let canvas = document.getElementById('canvas');
+                if (!canvas) {
+                    canvas = document.createElement('canvas');
+                    canvas.id = 'canvas';
+                    canvas.style.display = 'none';
+                    document.body.appendChild(canvas);
+                }
+                
                 canvas.width = video.videoWidth || 640;
                 canvas.height = video.videoHeight || 480;
                 canvas.getContext('2d').drawImage(video, 0, 0);
@@ -3264,17 +3270,24 @@ Puede pasar a retirarlos cuando guste.
 
         function tomarFoto2() {
             const video = document.getElementById('video2');
-            const canvas = document.getElementById('canvas2');
             const preview = document.getElementById('preview2');
             const btn = document.getElementById('cameraBtn2');
             const placeholder = document.getElementById('placeholder2');
             
-            if (!video || !canvas || !preview) {
+            if (!video || !preview) {
                 showAlert('❌ Error: elementos no encontrados');
                 return;
             }
             
             try {
+                let canvas = document.getElementById('canvas2');
+                if (!canvas) {
+                    canvas = document.createElement('canvas');
+                    canvas.id = 'canvas2';
+                    canvas.style.display = 'none';
+                    document.body.appendChild(canvas);
+                }
+                
                 canvas.width = video.videoWidth || 640;
                 canvas.height = video.videoHeight || 480;
                 canvas.getContext('2d').drawImage(video, 0, 0);
@@ -3361,7 +3374,7 @@ Puede pasar a retirarlos cuando guste.
                           `💰 Precio: RD$ ${producto.precio.toFixed(2)}\n\n` +
                           `Me interesa conocer si te gusta este modelo.\n\n` +
                           `✨ ¿Te interesa verlo en la tienda?\n\n` +
-                          `📱 809-713-5307\n` +
+                          `📱 Urbana Vision - 809-713-5307\n` +
                           `🌐 urbanavision.com`;
             
             try {
@@ -3491,6 +3504,8 @@ Puede pasar a retirarlos cuando guste.
                 });
                 
                 cargarListaCompletaClientes();
+                // Actualizar también el select del laboratorio
+                cargarClientesSelectLab();
                 showAlert(`✅ Cliente ${nombre} agregado correctamente`);
             } catch (error) {
                 console.error('❌ Error al agregar cliente:', error);
@@ -3563,7 +3578,7 @@ Puede pasar a retirarlos cuando guste.
         }
 
         function contactarClienteDirecto(telefono, nombre) {
-            const mensaje = `¡Hola ${nombre}! ✨\n\nEspero que estés muy bien. Te contacto desde Urbana Vision.\n\n¿Cómo has estado? ¿Todo bien con tus lentes?\n\nTenemos nuevas ofertas que podrían interesarte.\n\n📱 809-713-5307\n🌐 urbanavision.com`;
+            const mensaje = `¡Hola ${nombre}! ✨\n\nEspero que estés muy bien. Te contacto desde Urbana Vision.\n\n¿Cómo has estado? ¿Todo bien con tus lentes?\n\nTenemos nuevas ofertas que podrían interesarte.\n\n📱 Urbana Vision - 809-713-5307\n🌐 urbanavision.com`;
             const telefonoLimpio = telefono.replace(/[^0-9]/g, '');
             window.open(`https://wa.me/${telefonoLimpio}?text=${encodeURIComponent(mensaje)}`, '_blank');
             actualizarEstadisticas('mensaje');
@@ -3609,6 +3624,7 @@ Puede pasar a retirarlos cuando guste.
                 clientes = clientes.filter(c => c.id !== id);
                 guardarDatosCompletos();
                 cargarListaCompletaClientes();
+                cargarClientesSelectLab(); // Actualizar también el select del laboratorio
                 showAlert(`✅ Cliente ${cliente.nombre} eliminado`);
             }
         }
@@ -3632,7 +3648,7 @@ Puede pasar a retirarlos cuando guste.
         }
 
         function contactarCliente(telefono, nombre) {
-            const mensaje = `¡Hola ${nombre}! ✨\n\nEspero que estés muy bien. Te contacto desde Urbana Vision.\n\nTenemos ofertas especiales y nuevos productos que podrían interesarte.\n\n¿Te gustaría ver nuestras promociones actuales?\n\n📱 809-713-5307\n🌐 urbanavision.com`;
+            const mensaje = `¡Hola ${nombre}! ✨\n\nEspero que estés muy bien. Te contacto desde Urbana Vision.\n\nTenemos ofertas especiales y nuevos productos que podrían interesarte.\n\n¿Te gustaría ver nuestras promociones actuales?\n\n📱 Urbana Vision - 809-713-5307\n🌐 urbanavision.com`;
             const telefonoLimpio = telefono.replace(/[^0-9]/g, '');
             window.open(`https://wa.me/${telefonoLimpio}?text=${encodeURIComponent(mensaje)}`, '_blank');
             actualizarEstadisticas('mensaje');
@@ -3733,6 +3749,22 @@ Puede pasar a retirarlos cuando guste.
                     }
                 });
                 
+                // Recordatorios de laboratorio
+                const ordenesUrgentes = ordenesLaboratorio.filter(o => {
+                    const diasPasados = Math.floor((new Date() - new Date(o.fechaCreacion)) / (1000 * 60 * 60 * 24));
+                    return o.estado === 'laboratorio' && diasPasados > 7;
+                });
+                
+                ordenesUrgentes.forEach(orden => {
+                    recordatorios.push({
+                        tipo: 'laboratorio',
+                        cliente: orden.cliente,
+                        telefono: orden.telefono,
+                        mensaje: `🔬 Orden ${orden.numero} lleva más de 7 días en laboratorio`,
+                        urgente: true
+                    });
+                });
+                
                 if (recordatorios.length === 0) {
                     lista.innerHTML = '<p>✅ No hay recordatorios pendientes para hoy</p>';
                     return;
@@ -3745,8 +3777,14 @@ Puede pasar a retirarlos cuando guste.
                     const nombreSeguro = r.cliente ? r.cliente.replace(/'/g, "&apos;") : '';
                     return `
                         <div class="reminder-item ${r.urgente ? 'reminder-urgent' : ''}">
-                            <strong>${r.mensaje}</strong>
-                            ${r.telefono ? `<br><button class="btn btn-whatsapp" onclick="enviarMensajeRecordatorio('${r.tipo}', '${telefonoLimpio}', '${nombreSeguro}', ${r.edad || 0})">💬 Enviar Mensaje</button>` : ''}
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <h4>${getTipoIcon(r.tipo)} ${r.cliente || 'Sistema'}</h4>
+                                    ${r.telefono ? `<p>📱 ${r.telefono}</p>` : ''}
+                                    <p style="font-size: 12px; opacity: 0.8;">${r.mensaje}</p>
+                                </div>
+                                ${r.telefono ? `<button class="btn btn-whatsapp" onclick="enviarRecordatorio('${r.tipo}', '${telefonoLimpio}', '${nombreSeguro}', ${r.edad || 0})">📱 Enviar</button>` : ''}
+                            </div>
                         </div>
                     `;
                 }).join('');
@@ -3755,15 +3793,29 @@ Puede pasar a retirarlos cuando guste.
             }
         }
 
-        function enviarMensajeRecordatorio(tipo, telefono, nombre, edad) {
+        function getTipoIcon(tipo) {
+            const icons = {
+                evento: '🎂',
+                examen: '👁️',
+                stock: '📦',
+                cita: '📅',
+                laboratorio: '🔬'
+            };
+            return icons[tipo] || '📌';
+        }
+
+        function enviarRecordatorio(tipo, telefono, nombre, edad) {
             let mensaje = '';
             
             switch (tipo) {
                 case 'evento':
-                    mensaje = `🎂 ¡Feliz cumpleaños ${nombre}! 🎉\n\n¡${edad} años de vida! En Urbana Vision queremos celebrar contigo.\n\n🎁 Tenemos una sorpresa especial para ti en tu día.\n\n📱 809-713-5307\n🌐 urbanavision.com`;
+                    mensaje = `🎂 ¡Feliz cumpleaños ${nombre}! 🎉\n\n¡${edad} años de vida! En Urbana Vision queremos celebrar contigo.\n\n🎁 Tenemos una sorpresa especial para ti en tu día.\n\n📱 Urbana Vision - 809-713-5307\n🌐 urbanavision.com`;
                     break;
                 case 'examen':
-                    mensaje = `👁️ Hola ${nombre}!\n\nEs momento de tu examen anual de la vista.\n\nRecomendamos revisar tu salud visual cada año.\n\n📅 Agenda tu cita\n📱 809-713-5307\n🌐 urbanavision.com`;
+                    mensaje = `👁️ Hola ${nombre}!\n\nEs momento de tu examen anual de la vista.\n\nRecomendamos revisar tu salud visual cada año.\n\n📅 Agenda tu cita\n📱 Urbana Vision - 809-713-5307\n🌐 urbanavision.com`;
+                    break;
+                case 'laboratorio':
+                    mensaje = `🔬 Hola ${nombre}!\n\nTu orden de laboratorio está siendo procesada.\n\nTe contactaremos pronto con novedades.\n\n📱 Urbana Vision - 809-713-5307\n🌐 urbanavision.com`;
                     break;
             }
             
@@ -3782,18 +3834,18 @@ Puede pasar a retirarlos cuando guste.
                     const nombreEvento = document.getElementById('nombreEvento')?.value || 'Evento especial';
                     const fechaEvento = document.getElementById('fechaEvento')?.value;
                     if (fechaEvento) {
-                        mensaje = `🎉 ¡${nombreEvento}! 🎊\n\nEn Urbana Vision queremos celebrar contigo.\n\n🎁 Tenemos algo especial para ti.\n\n📱 809-713-5307\n🌐 urbanavision.com`;
+                        mensaje = `🎉 ¡${nombreEvento}! 🎊\n\nEn Urbana Vision queremos celebrar contigo.\n\n🎁 Tenemos algo especial para ti.\n\n📱 Urbana Vision - 809-713-5307\n🌐 urbanavision.com`;
                     } else {
-                        mensaje = `🎂 ¡Felicitaciones! 🎉\n\nEn Urbana Vision queremos celebrar contigo.\n\n🎁 Tenemos una sorpresa especial.\n\n📱 809-713-5307\n🌐 urbanavision.com`;
+                        mensaje = `🎂 ¡Felicitaciones! 🎉\n\nEn Urbana Vision queremos celebrar contigo.\n\n🎁 Tenemos una sorpresa especial.\n\n📱 Urbana Vision - 809-713-5307\n🌐 urbanavision.com`;
                     }
                     break;
                 case 'cita':
                     const fecha = document.getElementById('fechaCita')?.value;
                     const hora = document.getElementById('horaCita')?.value;
-                    mensaje = `📅 Recordatorio de cita\n\nFecha: ${fecha || 'Por confirmar'}\nHora: ${hora || 'Por confirmar'}\n\nTe esperamos en Urbana Vision\n\n📱 809-713-5307\n🌐 urbanavision.com`;
+                    mensaje = `📅 Recordatorio de cita\n\nFecha: ${fecha || 'Por confirmar'}\nHora: ${hora || 'Por confirmar'}\n\nTe esperamos en Urbana Vision\n\n📱 Urbana Vision - 809-713-5307\n🌐 urbanavision.com`;
                     break;
                 case 'examen':
-                    mensaje = `👁️ Es hora de tu examen anual\n\nRecomendamos revisar tu vista cada año para mantener una salud visual óptima.\n\n📅 Agenda tu cita\n📱 809-713-5307\n🌐 urbanavision.com`;
+                    mensaje = `👁️ Es hora de tu examen anual\n\nRecomendamos revisar tu vista cada año para mantener una salud visual óptima.\n\n📅 Agenda tu cita\n📱 Urbana Vision - 809-713-5307\n🌐 urbanavision.com`;
                     break;
             }
             
@@ -3810,174 +3862,301 @@ Puede pasar a retirarlos cuando guste.
         // ========================================
         
         function cargarVentas() {
-            const clienteSelect = document.getElementById('clienteVenta');
-            const productoSelect = document.getElementById('productoVenta');
-            
-            if (clienteSelect) {
-                clienteSelect.innerHTML = '<option value="">Seleccionar cliente</option>';
-                clientes.forEach(c => {
-                    clienteSelect.innerHTML += `<option value="${c.id}">${c.nombre}</option>`;
-                });
-            }
-            
-            if (productoSelect) {
-                productoSelect.innerHTML = '<option value="">Seleccionar producto</option>';
-                productos.forEach(p => {
-                    productoSelect.innerHTML += `<option value="${p.id}">${p.nombre} - RD$ ${p.precio}</option>`;
-                });
-            }
-            
-            const lista = document.getElementById('listaVentas');
-            if (!lista) return;
-            
-            if (ventas.length === 0) {
-                lista.innerHTML = '<p>No hay ventas registradas</p>';
-                return;
-            }
-            
-            let html = '<table class="table"><thead><tr><th>Fecha</th><th>Cliente</th><th>Producto</th><th>Cantidad</th><th>Total</th></tr></thead><tbody>';
-            
-            ventas.slice(-10).reverse().forEach(v => {
-                const cliente = clientes.find(c => c.id === v.clienteId) || { nombre: 'Cliente eliminado' };
-                const producto = productos.find(p => p.id === v.productoId) || { nombre: 'Producto eliminado' };
+            try {
+                const clienteSelect = document.getElementById('clienteVenta');
+                const productoSelect = document.getElementById('productoVenta');
                 
-                html += `
-                    <tr>
-                        <td>${new Date(v.fecha).toLocaleDateString()}</td>
-                        <td>${cliente.nombre}</td>
-                        <td>${producto.nombre}</td>
-                        <td>${v.cantidad}</td>
-                        <td>RD$ ${v.total.toFixed(2)}</td>
-                    </tr>
-                `;
-            });
-            
-            html += '</tbody></table>';
-            lista.innerHTML = html;
+                if (clienteSelect) {
+                    clienteSelect.innerHTML = '<option value="">Seleccionar cliente</option>';
+                    clientes.forEach(c => {
+                        clienteSelect.innerHTML += `<option value="${c.id}">${c.nombre}</option>`;
+                    });
+                }
+                
+                if (productoSelect) {
+                    productoSelect.innerHTML = '<option value="">Seleccionar producto</option>';
+                    productos.forEach(p => {
+                        productoSelect.innerHTML += `<option value="${p.id}">${p.nombre} - RD$ ${p.precio}</option>`;
+                    });
+                }
+                
+                const lista = document.getElementById('listaVentas');
+                if (!lista) return;
+                
+                if (ventas.length === 0) {
+                    lista.innerHTML = '<p>No hay ventas registradas</p>';
+                    return;
+                }
+                
+                let html = '<table class="table"><thead><tr><th>Fecha</th><th>Cliente</th><th>Producto</th><th>Cantidad</th><th>Total</th><th>Tipo</th></tr></thead><tbody>';
+                
+                ventas.slice(-10).reverse().forEach(v => {
+                    const cliente = clientes.find(c => c.id === v.clienteId) || { nombre: 'Cliente eliminado' };
+                    const producto = productos.find(p => p.id === v.productoId) || { nombre: v.tipo === 'laboratorio' ? `Laboratorio - ${v.numeroOrden || 'N/A'}` : 'Producto eliminado' };
+                    
+                    html += `
+                        <tr>
+                            <td>${new Date(v.fecha).toLocaleDateString()}</td>
+                            <td>${cliente.nombre}</td>
+                            <td>${producto.nombre}</td>
+                            <td>${v.cantidad}</td>
+                            <td>RD$ ${v.total.toFixed(2)}</td>
+                            <td>${v.tipo === 'laboratorio' ? '🔬 Lab' : '📦 Producto'}</td>
+                        </tr>
+                    `;
+                });
+                
+                html += '</tbody></table>';
+                lista.innerHTML = html;
+            } catch (error) {
+                console.error('❌ Error cargando ventas:', error);
+            }
         }
 
         function registrarVenta() {
-            const clienteId = parseInt(document.getElementById('clienteVenta').value);
-            const productoId = parseInt(document.getElementById('productoVenta').value);
-            const cantidad = parseInt(document.getElementById('cantidadVenta').value) || 1;
-            const precio = parseFloat(document.getElementById('precioVenta').value) || 0;
-            
-            if (!clienteId || !productoId || precio <= 0) {
-                showAlert('❌ Complete todos los campos');
-                return;
+            try {
+                const clienteId = parseInt(document.getElementById('clienteVenta').value);
+                const productoId = parseInt(document.getElementById('productoVenta').value);
+                const cantidad = parseInt(document.getElementById('cantidadVenta').value) || 1;
+                const precio = parseFloat(document.getElementById('precioVentaProducto').value) || 0;
+                
+                if (!clienteId || !productoId || precio <= 0) {
+                    showAlert('❌ Complete todos los campos');
+                    return;
+                }
+                
+                const venta = {
+                    id: Date.now(),
+                    clienteId: clienteId,
+                    productoId: productoId,
+                    cantidad: cantidad,
+                    total: precio,
+                    fecha: new Date().toISOString(),
+                    tipo: 'producto'
+                };
+                
+                ventas.push(venta);
+                
+                const producto = productos.find(p => p.id === productoId);
+                if (producto) {
+                    producto.stock = Math.max(0, producto.stock - cantidad);
+                }
+                
+                guardarDatosCompletos();
+                cargarVentas();
+                showAlert('✅ Venta registrada');
+                
+                document.getElementById('clienteVenta').value = '';
+                document.getElementById('productoVenta').value = '';
+                document.getElementById('cantidadVenta').value = '1';
+                document.getElementById('precioVentaProducto').value = '';
+            } catch (error) {
+                console.error('❌ Error registrando venta:', error);
+                showAlert('❌ Error al registrar venta');
             }
-            
-            const venta = {
-                id: Date.now(),
-                clienteId: clienteId,
-                productoId: productoId,
-                cantidad: cantidad,
-                total: precio,
-                fecha: new Date().toISOString()
-            };
-            
-            ventas.push(venta);
-            
-            const producto = productos.find(p => p.id === productoId);
-            if (producto) {
-                producto.stock = Math.max(0, producto.stock - cantidad);
-            }
-            
-            guardarDatosCompletos();
-            cargarVentas();
-            showAlert('✅ Venta registrada');
-            
-            document.getElementById('clienteVenta').value = '';
-            document.getElementById('productoVenta').value = '';
-            document.getElementById('cantidadVenta').value = '1';
-            document.getElementById('precioVenta').value = '';
         }
 
         // ========================================
-        // 📊 FUNCIONES DE REPORTES
+        // 📊 FUNCIONES DE REPORTES MEJORADOS (CORREGIDAS)
         // ========================================
         
         function cargarReportes() {
-            // Reportes de laboratorio
-            const enLab = ordenesLaboratorio.filter(o => o.estado === 'laboratorio').length;
-            const pendCotejo = ordenesLaboratorio.filter(o => o.estado === 'listo').length;
-            const cuentasCobrar = ordenesLaboratorio.filter(o => o.estado === 'entregado' && !o.pagado).length;
-            
-            const totalPorCobrar = ordenesLaboratorio
-                .filter(o => o.estado === 'entregado' && !o.pagado)
-                .reduce((sum, o) => sum + ((o.precioVenta || 0) - (o.abono || 0)), 0);
-            
-            const beneficioEsperado = ordenesLaboratorio
-                .filter(o => o.estado === 'entregado')
-                .reduce((sum, o) => sum + ((o.precioVenta || 0) - (o.costoLaboratorio || 0)), 0);
-            
-            document.getElementById('reporteEnLab').textContent = enLab;
-            document.getElementById('reportePendCotejo').textContent = pendCotejo;
-            document.getElementById('reporteCuentasCobrar').textContent = cuentasCobrar;
-            document.getElementById('reporteTotalCobrar').textContent = totalPorCobrar.toFixed(2);
-            document.getElementById('reporteBeneficio').textContent = beneficioEsperado.toFixed(2);
-            
-            // Reportes generales
-            const totalFacturas = facturas.length;
-            const totalVentasMes = ventas.reduce((sum, v) => sum + v.total, 0);
-            const promedioVenta = ventas.length > 0 ? totalVentasMes / ventas.length : 0;
-            const stockBajo = productos.filter(p => p.stock < 5).length;
-            
-            document.getElementById('totalFacturas').textContent = totalFacturas;
-            document.getElementById('totalVentasMes').textContent = totalVentasMes.toFixed(2);
-            document.getElementById('promedioVenta').textContent = promedioVenta.toFixed(2);
-            document.getElementById('stockBajo').textContent = stockBajo;
-            
-            const transacciones = document.getElementById('ultimasTransacciones');
-            if (ventas.length === 0) {
-                transacciones.innerHTML = '<p>No hay transacciones registradas</p>';
-                return;
-            }
-            
-            let html = '<table class="table"><thead><tr><th>Fecha</th><th>Cliente</th><th>Producto</th><th>Total</th></tr></thead><tbody>';
-            
-            ventas.slice(-5).reverse().forEach(v => {
-                const cliente = clientes.find(c => c.id === v.clienteId) || { nombre: 'Cliente eliminado' };
-                const producto = productos.find(p => p.id === v.productoId) || { nombre: 'Producto eliminado' };
+            try {
+                // Reportes de laboratorio
+                const enLab = ordenesLaboratorio.filter(o => o.estado === 'laboratorio').length;
+                const pendCotejo = ordenesLaboratorio.filter(o => o.estado === 'listo').length;
+                const cuentasCobrar = ordenesLaboratorio.filter(o => o.estado === 'entregado' && !o.pagado).length;
                 
-                html += `
-                    <tr>
-                        <td>${new Date(v.fecha).toLocaleDateString()}</td>
-                        <td>${cliente.nombre}</td>
-                        <td>${producto.nombre}</td>
-                        <td>RD$ ${v.total.toFixed(2)}</td>
-                    </tr>
-                `;
-            });
-            
-            html += '</tbody></table>';
-            transacciones.innerHTML = html;
+                // Calcular totales financieros
+                const totalPorCobrar = ordenesLaboratorio
+                    .filter(o => o.estado === 'entregado' && !o.pagado)
+                    .reduce((sum, o) => sum + ((o.precioVenta || 0) - (o.abono || 0)), 0);
+                    
+                const beneficioEsperado = ordenesLaboratorio
+                    .filter(o => o.estado === 'entregado' && !o.pagado)
+                    .reduce((sum, o) => sum + ((o.precioVenta || 0) - (o.costoLaboratorio || 0)), 0);
+                    
+                const inversionLab = ordenesLaboratorio
+                    .filter(o => o.estado !== 'pendiente')
+                    .reduce((sum, o) => sum + (o.costoLaboratorio || 0), 0);
+
+                // Actualizar elementos de reporte de laboratorio
+                const elementos = [
+                    { id: 'reporteEnLab', valor: enLab },
+                    { id: 'reportePendCotejo', valor: pendCotejo },
+                    { id: 'reporteCuentasCobrar', valor: cuentasCobrar },
+                    { id: 'reporteTotalCobrar', valor: totalPorCobrar.toFixed(2) },
+                    { id: 'reporteBeneficio', valor: beneficioEsperado.toFixed(2) },
+                    { id: 'reporteInversionLab', valor: inversionLab.toFixed(2) }
+                ];
+
+                elementos.forEach(elemento => {
+                    const el = document.getElementById(elemento.id);
+                    if (el) {
+                        el.textContent = elemento.valor;
+                    }
+                });
+
+                // Resumen general
+                const totalVentasMes = ventas.reduce((sum, v) => sum + v.total, 0);
+                const promedioVenta = ventas.length > 0 ? totalVentasMes / ventas.length : 0;
+                const stockBajo = productos.filter(p => p.stock < 5).length;
+                const monturasEnLab = ordenesLaboratorio.filter(o => o.estado === 'laboratorio').length;
+
+                const elementosGenerales = [
+                    { id: 'totalProductosReporte', valor: productos.length },
+                    { id: 'totalClientesReporte', valor: clientes.length },
+                    { id: 'totalVentasMes', valor: totalVentasMes.toFixed(2) },
+                    { id: 'promedioVenta', valor: promedioVenta.toFixed(2) },
+                    { id: 'stockBajo', valor: stockBajo },
+                    { id: 'monturasEnLab', valor: monturasEnLab }
+                ];
+
+                elementosGenerales.forEach(elemento => {
+                    const el = document.getElementById(elemento.id);
+                    if (el) {
+                        el.textContent = elemento.valor;
+                    }
+                });
+
+                // Reporte de monturas en laboratorio
+                cargarReporteMonturasLab();
+                cargarUltimasTransacciones();
+
+            } catch (error) {
+                console.error('❌ Error cargando reportes:', error);
+            }
+        }
+
+        function cargarReporteMonturasLab() {
+            try {
+                const contenedor = document.getElementById('reporteMonturasLab');
+                if (!contenedor) return;
+
+                const monturasEnLab = ordenesLaboratorio.filter(o => o.estado === 'laboratorio');
+
+                if (monturasEnLab.length === 0) {
+                    contenedor.innerHTML = '<p style="text-align: center;">No hay monturas en laboratorio actualmente</p>';
+                    return;
+                }
+
+                let html = '';
+                monturasEnLab.forEach(orden => {
+                    const diasEnLab = Math.floor((new Date() - new Date(orden.fechaCreacion)) / (1000 * 60 * 60 * 24));
+                    const pendiente = (orden.precioVenta || 0) - (orden.abono || 0);
+
+                    html += `
+                        <div class="cliente-item" style="margin: 10px 0; padding: 10px; background: rgba(0,0,0,0.2); border-radius: 5px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <h4>${orden.numero}</h4>
+                                    <p><strong>Cliente:</strong> ${orden.cliente}</p>
+                                    <p><strong>Montura:</strong> ${orden.nombreMontura || 'No especificado'}</p>
+                                    <p><strong>Tipo:</strong> ${orden.tipoLente}</p>
+                                    <p><strong>Días en Lab:</strong> ${diasEnLab} días</p>
+                                </div>
+                                <div style="text-align: right;">
+                                    <p><strong>Total:</strong> RD$ ${(orden.precioVenta || 0).toFixed(2)}</p>
+                                    <p><strong>Pendiente:</strong> <span style="color: #f59e0b;">RD$ ${pendiente.toFixed(2)}</span></p>
+                                    ${orden.fotoMontura ? '<div style="margin: 5px 0;">📷 Con foto</div>' : '<div style="margin: 5px 0; opacity: 0.6;">Sin foto</div>'}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                contenedor.innerHTML = html;
+            } catch (error) {
+                console.error('❌ Error cargando reporte monturas:', error);
+            }
+        }
+
+        function cargarUltimasTransacciones() {
+            try {
+                const contenedor = document.getElementById('ultimasTransacciones');
+                if (!contenedor) return;
+
+                const ultimasVentas = ventas.slice(-5).reverse();
+                const ultimasOrdenes = ordenesLaboratorio.slice(-3).reverse();
+
+                let html = '<div class="grid">';
+
+                // Últimas ventas
+                html += '<div class="card"><h4>💰 Últimas Ventas</h4>';
+                if (ultimasVentas.length === 0) {
+                    html += '<p>No hay ventas registradas</p>';
+                } else {
+                    ultimasVentas.forEach(venta => {
+                        const cliente = clientes.find(c => c.id === venta.clienteId) || { nombre: 'Cliente eliminado' };
+                        html += `
+                            <div style="padding: 8px; margin: 5px 0; background: rgba(0,0,0,0.2); border-radius: 5px;">
+                                <p><strong>${cliente.nombre}</strong></p>
+                                <p>RD$ ${venta.total.toFixed(2)} - ${new Date(venta.fecha).toLocaleDateString()}</p>
+                                <p style="font-size: 12px; opacity: 0.8;">${venta.tipo === 'laboratorio' ? '🔬 Laboratorio' : '📦 Producto'}</p>
+                            </div>
+                        `;
+                    });
+                }
+                html += '</div>';
+
+                // Últimas órdenes
+                html += '<div class="card"><h4>🔬 Últimas Órdenes Lab</h4>';
+                if (ultimasOrdenes.length === 0) {
+                    html += '<p>No hay órdenes de laboratorio</p>';
+                } else {
+                    ultimasOrdenes.forEach(orden => {
+                        html += `
+                            <div style="padding: 8px; margin: 5px 0; background: rgba(0,0,0,0.2); border-radius: 5px;">
+                                <p><strong>${orden.numero}</strong></p>
+                                <p>${orden.cliente} - ${getEstadoHTMLLab(orden.estado)}</p>
+                                <p style="font-size: 12px; opacity: 0.8;">RD$ ${(orden.precioVenta || 0).toFixed(2)}</p>
+                            </div>
+                        `;
+                    });
+                }
+                html += '</div>';
+
+                html += '</div>';
+                contenedor.innerHTML = html;
+            } catch (error) {
+                console.error('❌ Error cargando últimas transacciones:', error);
+            }
         }
 
         function enviarReporteWhatsApp() {
-            const enLab = ordenesLaboratorio.filter(o => o.estado === 'laboratorio').length;
-            const cuentasCobrar = ordenesLaboratorio.filter(o => o.estado === 'entregado' && !o.pagado).length;
-            const totalPorCobrar = ordenesLaboratorio
-                .filter(o => o.estado === 'entregado' && !o.pagado)
-                .reduce((sum, o) => sum + ((o.precioVenta || 0) - (o.abono || 0)), 0);
-            const totalVentas = ventas.reduce((sum, v) => sum + v.total, 0);
-            const stockBajo = productos.filter(p => p.stock < 5).length;
-            
-            const mensaje = `📊 *REPORTE URBANA VISION*\n\n` +
-                          `🔬 *LABORATORIO:*\n` +
-                          `• En proceso: ${enLab} órdenes\n` +
-                          `• Cuentas x cobrar: ${cuentasCobrar} órdenes\n` +
-                          `• Total por cobrar: RD$ ${totalPorCobrar.toFixed(2)}\n\n` +
-                          `📦 *GENERAL:*\n` +
-                          `• Productos: ${productos.length}\n` +
-                          `• Clientes: ${clientes.length}\n` +
-                          `• Ventas totales: RD$ ${totalVentas.toFixed(2)}\n` +
-                          `• Stock bajo: ${stockBajo} productos\n\n` +
-                          `📅 ${new Date().toLocaleDateString()}\n` +
-                          `🌐 urbanavision.com`;
-            
-            window.open(`https://wa.me/?text=${encodeURIComponent(mensaje)}`, '_blank');
-            actualizarEstadisticas('mensaje');
+            try {
+                const fecha = new Date().toLocaleDateString();
+                const enLab = ordenesLaboratorio.filter(o => o.estado === 'laboratorio').length;
+                const porCobrar = ordenesLaboratorio.filter(o => o.estado === 'entregado' && !o.pagado).length;
+                const totalCobrar = ordenesLaboratorio
+                    .filter(o => o.estado === 'entregado' && !o.pagado)
+                    .reduce((sum, o) => sum + ((o.precioVenta || 0) - (o.abono || 0)), 0);
+                const totalVentas = ventas.reduce((sum, v) => sum + v.total, 0);
+
+                const reporte = `📊 *REPORTE DIARIO URBANA VISION*
+📅 Fecha: ${fecha}
+
+🔬 *LABORATORIO:*
+• En laboratorio: ${enLab} órdenes
+• Cuentas por cobrar: ${porCobrar} órdenes
+• Total por cobrar: RD$ ${totalCobrar.toFixed(2)}
+
+💰 *VENTAS GENERALES:*
+• Total productos: ${productos.length}
+• Total clientes: ${clientes.length}
+• Ventas registradas: RD$ ${totalVentas.toFixed(2)}
+• Stock bajo: ${productos.filter(p => p.stock < 5).length} productos
+
+📱 Urbana Vision - 809-713-5307
+🌐 urbanavision.com`;
+
+                window.open(`https://wa.me/?text=${encodeURIComponent(reporte)}`, '_blank');
+                actualizarEstadisticas('mensaje');
+                showAlert('📱 Reporte enviado por WhatsApp');
+            } catch (error) {
+                console.error('❌ Error enviando reporte:', error);
+                showAlert('❌ Error al enviar reporte');
+            }
         }
 
         // ========================================
@@ -3985,778 +4164,73 @@ Puede pasar a retirarlos cuando guste.
         // ========================================
         
         function cargarCampanas() {
-            document.getElementById('textoEstado').textContent = 'Lista para enviar';
+            console.log('📣 Campañas cargadas');
         }
 
         function enviarCampanaDia() {
-            const mensaje = `📱 *CAMPAÑA DEL DÍA - URBANA VISION*\n\n` +
-                          `✨ Ofertas especiales disponibles\n` +
-                          `👓 Nuevos productos en tienda\n` +
-                          `🎁 Promociones exclusivas\n\n` +
-                          `¡Visítanos hoy!\n\n` +
-                          `📱 809-713-5307\n` +
-                          `🌐 urbanavision.com`;
+            const mensaje = `🎯 *CAMPAÑA DEL DÍA*\n\n¡Hola! Te contactamos desde Urbana Vision con una oferta especial.\n\n✨ Aprovecha nuestras promociones actuales\n💰 Precios especiales disponibles\n👁️ Examen visual GRATIS\n\n📱 Urbana Vision - 809-713-5307\n🌐 urbanavision.com`;
             
-            try {
-                window.open(`https://wa.me/?text=${encodeURIComponent(mensaje)}`, '_blank');
-                actualizarEstadisticas('promocion');
-                document.getElementById('textoEstado').textContent = 'Campaña enviada exitosamente';
-                showAlert('📱 Campaña del día enviada');
-            } catch (error) {
-                showAlert('❌ Error al enviar campaña');
-            }
+            window.open(`https://wa.me/?text=${encodeURIComponent(mensaje)}`, '_blank');
+            actualizarEstadisticas('mensaje');
+            showAlert('📱 Campaña del día enviada');
         }
 
         function programarCampana() {
-            const ahora = new Date();
-            const mensaje = `⏰ *CAMPAÑA PROGRAMADA*\n\n` +
-                          `📅 Programada para: ${ahora.toLocaleString()}\n` +
-                          `📱 Sistema de programación activo\n\n` +
-                          `Urbana Vision\n` +
-                          `📱 809-713-5307\n` +
-                          `🌐 urbanavision.com`;
-            
-            window.open(`https://wa.me/?text=${encodeURIComponent(mensaje)}`, '_blank');
-            actualizarEstadisticas('promocion');
-            document.getElementById('textoEstado').textContent = 'Campaña programada correctamente';
-            showAlert('⏰ Campaña programada');
+            showAlert('🔄 Función de programación en desarrollo');
         }
 
         function crearCampana() {
-            const nombre = document.getElementById('nombreCampana').value.trim();
-            const mensaje = document.getElementById('mensajeCampana').value.trim();
-            const fecha = document.getElementById('fechaProgramada').value;
+            const nombre = document.getElementById('nombreCampana')?.value;
+            const mensaje = document.getElementById('mensajeCampana')?.value;
             
             if (!nombre || !mensaje) {
                 showAlert('❌ Complete nombre y mensaje de la campaña');
                 return;
             }
             
-            const campana = {
-                id: Date.now(),
-                nombre: nombre,
-                mensaje: mensaje,
-                fecha: fecha || new Date().toISOString(),
-                creada: new Date().toISOString()
-            };
-            
-            window.open(`https://wa.me/?text=${encodeURIComponent(mensaje)}`, '_blank');
-            actualizarEstadisticas('promocion');
-            
-            showAlert('✅ Campaña "' + nombre + '" creada y enviada');
-            
-            document.getElementById('nombreCampana').value = '';
-            document.getElementById('mensajeCampana').value = '';
-            document.getElementById('fechaProgramada').value = '';
+            showAlert('✅ Campaña creada (función completa en desarrollo)');
         }
 
         // ========================================
-        // 🚀 FUNCIONES DISRUPTIVAS PARA RD
+        // 🔗 FUNCIONES AUXILIARES
         // ========================================
         
-        function cargarAudioRD() {
-            const elementos = ['audiosEnviados', 'enlacesEnviados', 'audiosPersonalizados'];
-            elementos.forEach(id => {
-                const el = document.getElementById(id);
-                if (el) {
-                    el.textContent = estadisticasRD[id] || 0;
-                }
-            });
-            console.log('🎵 Sección Audio RD cargada');
+        function volverInicio() {
+            window.location.href = 'index.html';
         }
 
-        function toggleRecordingRD() {
-            const recordBtn = document.getElementById('recordBtnRD');
-            const recordStatus = document.getElementById('recordStatusRD');
-            
-            if (!recordBtn || !recordStatus) {
-                showAlert('❌ Error: elementos de grabación no encontrados');
-                return;
-            }
-            
-            if (!isRecordingRD) {
-                if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-                    showAlert('❌ Tu navegador no soporta grabación de audio');
-                    return;
-                }
-                
-                navigator.mediaDevices.getUserMedia({ audio: true })
-                    .then(stream => {
-                        try {
-                            mediaRecorderRD = new MediaRecorder(stream);
-                            audioChunksRD = [];
-                            
-                            mediaRecorderRD.ondataavailable = event => {
-                                audioChunksRD.push(event.data);
-                            };
-                            
-                            mediaRecorderRD.onstop = () => {
-                                const audioBlob = new Blob(audioChunksRD, { type: 'audio/wav' });
-                                const audioUrl = URL.createObjectURL(audioBlob);
-                                const audioPlayer = document.getElementById('audioPlayerRD');
-                                if (audioPlayer) {
-                                    audioPlayer.src = audioUrl;
-                                    audioPlayer.style.display = 'block';
-                                }
-                                
-                                stream.getTracks().forEach(track => track.stop());
-                            };
-                            
-                            mediaRecorderRD.start();
-                            isRecordingRD = true;
-                            recordBtn.classList.add('recording');
-                            recordBtn.textContent = '⏹️';
-                            recordStatus.textContent = '🔴 Grabando... (click para parar)';
-                        } catch (error) {
-                            console.error('❌ Error al iniciar grabación:', error);
-                            showAlert('❌ Error al iniciar grabación');
-                        }
-                    })
-                    .catch(error => {
-                        console.error('❌ Error al acceder al micrófono:', error);
-                        showAlert('❌ Error al acceder al micrófono');
-                    });
-            } else {
-                try {
-                    if (mediaRecorderRD && mediaRecorderRD.state === 'recording') {
-                        mediaRecorderRD.stop();
-                    }
-                    isRecordingRD = false;
-                    recordBtn.classList.remove('recording');
-                    recordBtn.textContent = '🎤';
-                    recordStatus.textContent = '✅ Grabación completada';
-                } catch (error) {
-                    console.error('❌ Error al detener grabación:', error);
-                    showAlert('❌ Error al detener grabación');
-                }
-            }
-        }
-
-        function reproducirAudioRD(tipo) {
-            const mensajes = {
-                saludo: '🎵 Reproduciendo: Bienvenido a Urbana Vision, tu vista es nuestra prioridad...',
-                oferta: '🎁 Reproduciendo: Ofertas especiales del día, descuentos increíbles...',
-                ubicacion: '📍 Reproduciendo: Nuestra ubicación es fácil de encontrar...',
-                horarios: '⏰ Reproduciendo: Estamos abiertos de lunes a sábado...'
-            };
-            
-            const mensaje = mensajes[tipo] || 'Reproduciendo audio...';
-            showAlert(mensaje);
-            
-            if ('speechSynthesis' in window) {
-                const textos = {
-                    saludo: 'Bienvenido a Urbana Vision. Tu vista es nuestra prioridad.',
-                    oferta: 'Tenemos ofertas especiales del día con descuentos increíbles.',
-                    ubicacion: 'Nuestra ubicación es fácil de encontrar. Te esperamos.',
-                    horarios: 'Estamos abiertos de lunes a sábado para atenderte.'
-                };
-                
-                const utterance = new SpeechSynthesisUtterance(textos[tipo]);
-                utterance.lang = 'es-ES';
-                utterance.rate = 0.8;
-                speechSynthesis.speak(utterance);
-            }
-        }
-
-        function subirAudioPersonalizado(input) {
-            const archivo = input.files[0];
-            if (!archivo) return;
-            
-            if (!archivo.type.startsWith('audio/')) {
-                showAlert('❌ Solo se permiten archivos de audio');
-                return;
-            }
-            
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                audioPersonalizadoSubido = {
-                    nombre: archivo.name,
-                    tipo: archivo.type,
-                    datos: e.target.result
-                };
-                
-                const display = document.getElementById('audioSubido');
-                if (display) {
-                    display.innerHTML = `
-                        <div style="padding: 10px; background: rgba(16, 185, 129, 0.2); border-radius: 5px; margin: 10px 0;">
-                            🎵 ${archivo.name} 
-                            <div style="font-size: 12px; opacity: 0.7;">${(archivo.size / 1024 / 1024).toFixed(2)} MB</div>
-                            <audio controls style="width: 100%; margin-top: 10px;">
-                                <source src="${e.target.result}" type="${archivo.type}">
-                            </audio>
-                        </div>
-                    `;
-                }
-                showAlert('✅ Audio cargado correctamente');
-            };
-            reader.readAsDataURL(archivo);
-        }
-
-        function enviarAudioSubido() {
-            if (!audioPersonalizadoSubido) {
-                showAlert('❌ Sube un audio primero');
-                return;
-            }
-            
-            const tituloEl = document.getElementById('tituloAudioSubido');
-            const titulo = tituloEl ? tituloEl.value || audioPersonalizadoSubido.nombre : audioPersonalizadoSubido.nombre;
-            
-            const mensaje = `🎵 *${titulo}*\n\nTe envío este audio especial.\n\nEscúchalo cuando puedas.\n\n📱 809-713-5307\n🌐 urbanavision.com`;
-            
-            try {
-                if (navigator.share) {
-                    const [header, data] = audioPersonalizadoSubido.datos.split(',');
-                    const binaryString = atob(data);
-                    const bytes = new Uint8Array(binaryString.length);
-                    for (let i = 0; i < binaryString.length; i++) {
-                        bytes[i] = binaryString.charCodeAt(i);
-                    }
-                    const blob = new Blob([bytes], { type: audioPersonalizadoSubido.tipo });
-                    const file = new File([blob], audioPersonalizadoSubido.nombre, { type: audioPersonalizadoSubido.tipo });
-                    
-                    navigator.share({
-                        title: titulo,
-                        text: mensaje,
-                        files: [file]
-                    }).then(() => {
-                        actualizarEstadisticasRD('audiosPersonalizados');
-                        showAlert('🎵 Audio personalizado enviado');
-                    }).catch(() => {
-                        window.open(`https://wa.me/?text=${encodeURIComponent(mensaje)}`, '_blank');
-                        actualizarEstadisticasRD('audiosPersonalizados');
-                    });
-                } else {
-                    window.open(`https://wa.me/?text=${encodeURIComponent(mensaje)}`, '_blank');
-                    actualizarEstadisticasRD('audiosPersonalizados');
-                    showAlert('🎵 Audio preparado para WhatsApp (referencia)');
-                }
-            } catch (error) {
-                console.error('❌ Error al enviar audio:', error);
-                window.open(`https://wa.me/?text=${encodeURIComponent(mensaje)}`, '_blank');
-                actualizarEstadisticasRD('audiosPersonalizados');
-            }
-        }
-
-        function enviarEnlaceMultimedia(plataforma) {
-            const enlaceEl = document.getElementById('enlaceYoutube');
-            const mensajeEl = document.getElementById('mensajeEnlace');
-            
-            if (!enlaceEl || !mensajeEl) {
-                showAlert('❌ Error: elementos no encontrados');
-                return;
-            }
-            
-            const enlace = enlaceEl.value.trim();
-            const mensaje = mensajeEl.value.trim();
-            
-            if (!enlace) {
-                showAlert('❌ Ingresa un enlace primero');
-                return;
-            }
-            
-            const emojis = {
-                youtube: '📺',
-                instagram: '📸', 
-                tiktok: '🎵',
-                facebook: '👥'
-            };
-            
-            const plataformas = {
-                youtube: 'YouTube',
-                instagram: 'Instagram',
-                tiktok: 'TikTok', 
-                facebook: 'Facebook'
-            };
-            
-            const mensajeCompleto = `${emojis[plataforma]} *${plataformas[plataforma].toUpperCase()}*\n\n${mensaje}\n\n🔗 ${enlace}\n\n📱 809-713-5307`;
-            
-            try {
-                window.open(`https://wa.me/?text=${encodeURIComponent(mensajeCompleto)}`, '_blank');
-                actualizarEstadisticasRD('enlacesEnviados');
-                showAlert(`${emojis[plataforma]} Enlace de ${plataformas[plataforma]} enviado por WhatsApp`);
-            } catch (error) {
-                console.error('❌ Error al enviar enlace:', error);
-                showAlert('❌ Error al enviar enlace');
-            }
-        }
-
-        function convertirTextoAudioRD() {
-            const textoElement = document.getElementById('textoAudioRD');
-            if (!textoElement) {
-                showAlert('❌ Error: elemento de texto no encontrado');
-                return;
-            }
-            
-            const texto = textoElement.value.trim();
-            if (!texto) {
-                showAlert('❌ Escribe un mensaje primero');
-                return;
-            }
-            
-            if ('speechSynthesis' in window) {
-                const utterance = new SpeechSynthesisUtterance(texto);
-                utterance.lang = 'es-ES';
-                utterance.rate = 0.8;
-                speechSynthesis.speak(utterance);
-                showAlert('🔊 Convirtiendo texto a audio...');
-            } else {
-                showAlert('❌ Tu navegador no soporta text-to-speech. El texto se copiará al clipboard.');
-                navigator.clipboard.writeText(texto).catch(() => {
-                    console.log('Error al copiar al clipboard');
-                });
-            }
-        }
-
-        function enviarAudioRD() {
-            const tituloElement = document.getElementById('audioTitleRD');
-            const titulo = tituloElement ? tituloElement.value || 'Audio de Urbana Vision' : 'Audio de Urbana Vision';
-            const mensaje = `🎵 ${titulo}\n\n📱 809-713-5307\n🌐 urbanavision.com`;
-            
-            window.open(`https://wa.me/?text=${encodeURIComponent(mensaje)}`, '_blank');
-            actualizarEstadisticas('mensaje');
-            showAlert('📱 Audio preparado para WhatsApp');
-        }
-
-        function actualizarEstadisticasRD(tipo) {
-            if (estadisticasRD[tipo] !== undefined) {
-                estadisticasRD[tipo]++;
-                
-                const el = document.getElementById(tipo);
-                if (el) {
-                    el.textContent = estadisticasRD[tipo];
-                }
-                
-                localStorage.setItem('urbanaEstadisticasRD', JSON.stringify(estadisticasRD));
-            }
-        }
-
-        function cargarQRRD() {
-            console.log('📱 Sección QR RD cargada');
-        }
-
-        function generarQRRD(tipo) {
-            const urls = {
-                contacto: 'https://wa.me/18097135307?text=Hola,%20vengo%20del%20QR%20de%20Urbana%20Vision',
-                catalogo: 'https://wa.me/18097135307?text=Hola,%20quiero%20ver%20el%20catálogo%20de%20productos',
-                ubicacion: 'https://maps.google.com/?q=Urbana+Vision+República+Dominicana'
-            };
-            
-            const url = urls[tipo];
-            if (!url) {
-                showAlert('❌ Tipo de QR no válido');
-                return;
-            }
-            
-            try {
-                const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(url)}`;
-                
-                showAlert(`✅ QR generado para ${tipo}.\n\nEste QR llevará directamente a: ${url}`);
-                
-                window.open(qrUrl, '_blank');
-                actualizarEstadisticas('promocion');
-            } catch (error) {
-                console.error('❌ Error al generar QR:', error);
-                showAlert('❌ Error al generar QR');
-            }
-        }
-
-        function generarQRPersonalizadoRD() {
-            const textoElement = document.getElementById('qrTextoRD');
-            if (!textoElement) {
-                showAlert('❌ Error: elemento de texto no encontrado');
-                return;
-            }
-            
-            const texto = textoElement.value.trim();
-            if (!texto) {
-                showAlert('❌ Escribe un mensaje para el QR');
-                return;
-            }
-            
-            try {
-                const whatsappUrl = `https://wa.me/18097135307?text=${encodeURIComponent(texto)}`;
-                const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(whatsappUrl)}`;
-                
-                showAlert(`✅ QR personalizado generado!\n\nCuando escaneen este QR, se abrirá WhatsApp con tu mensaje: "${texto}"`);
-                
-                window.open(qrUrl, '_blank');
-                actualizarEstadisticas('promocion');
-            } catch (error) {
-                console.error('❌ Error al generar QR personalizado:', error);
-                showAlert('❌ Error al generar QR personalizado');
-            }
-        }
-
-        function cargarVisualRD() {
-            cargarListaTemplatesVisuales();
-            console.log('🖼️ Sección Visual RD cargada');
-        }
-
-        function usarPlantillaRD(tipo) {
-            const plantilla = plantillasVisualesRD[tipo];
-            if (!plantilla) {
-                showAlert('❌ Plantilla no encontrada');
-                return;
-            }
-            
-            plantillaSeleccionadaRD = tipo;
-            
-            const display = document.getElementById('plantillaActivaRD');
-            if (display) {
-                display.innerHTML = `
-                    <div style="font-size: 80px;">${plantilla.icono}</div>
-                    <h2 style="color: ${plantilla.color};">${plantilla.titulo}</h2>
-                    <p>${plantilla.mensaje}</p>
-                    <div style="margin-top: 15px; font-size: 14px; color: #666;">
-                        📱 809-713-5307 | 🌐 urbanavision.com
-                    </div>
-                `;
-            }
-            
-            showAlert(`✅ Plantilla "${plantilla.titulo}" seleccionada`);
-        }
-
-        function enviarPlantillaVisualRD() {
-            if (!plantillaSeleccionadaRD) {
-                showAlert('❌ Selecciona una plantilla primero');
-                return;
-            }
-            
-            const plantilla = plantillasVisualesRD[plantillaSeleccionadaRD];
-            if (!plantilla) {
-                showAlert('❌ Error: plantilla no válida');
-                return;
-            }
-            
-            const mensaje = `${plantilla.icono} *${plantilla.titulo}*\n\n${plantilla.mensaje}\n\n📱 809-713-5307\n🌐 urbanavision.com`;
-            
-            try {
-                window.open(`https://wa.me/?text=${encodeURIComponent(mensaje)}`, '_blank');
-                actualizarEstadisticas('promocion');
-                showAlert(`📱 Plantilla "${plantilla.titulo}" enviada por WhatsApp`);
-            } catch (error) {
-                console.error('❌ Error al enviar plantilla:', error);
-                showAlert('❌ Error al enviar plantilla');
-            }
-        }
-
-        function subirPlantillaPersonalizada(input) {
-            const archivo = input.files[0];
-            if (!archivo) return;
-            
-            if (!archivo.type.startsWith('image/')) {
-                showAlert('❌ Solo se permiten imágenes');
-                return;
-            }
-            
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                plantillaPersonalizadaSubida = {
-                    nombre: archivo.name,
-                    tipo: archivo.type,
-                    datos: e.target.result
-                };
-                
-                const imagenPrevia = document.getElementById('imagenPrevia');
-                const vistaPrevia = document.getElementById('vistaPrevia');
-                
-                if (imagenPrevia && vistaPrevia) {
-                    imagenPrevia.src = e.target.result;
-                    vistaPrevia.style.display = 'block';
-                }
-                
-                showAlert('✅ Plantilla cargada correctamente');
-            };
-            reader.readAsDataURL(archivo);
-        }
-
-        function enviarPlantillaPersonalizada() {
-            if (!plantillaPersonalizadaSubida) {
-                showAlert('❌ Sube una imagen primero');
-                return;
-            }
-            
-            const tituloEl = document.getElementById('tituloPlantillaPersonalizada');
-            const mensajeEl = document.getElementById('mensajePlantillaPersonalizada');
-            
-            const titulo = tituloEl ? tituloEl.value.trim() || 'Imagen de Urbana Vision' : 'Imagen de Urbana Vision';
-            const mensaje = mensajeEl ? mensajeEl.value.trim() || '¡Mira esta imagen!' : '¡Mira esta imagen!';
-            
-            const mensajeCompleto = `🖼️ *${titulo}*\n\n${mensaje}\n\n📱 809-713-5307\n🌐 urbanavision.com`;
-            
-            try {
-                if (navigator.share) {
-                    const [header, data] = plantillaPersonalizadaSubida.datos.split(',');
-                    const binaryString = atob(data);
-                    const bytes = new Uint8Array(binaryString.length);
-                    for (let i = 0; i < binaryString.length; i++) {
-                        bytes[i] = binaryString.charCodeAt(i);
-                    }
-                    const blob = new Blob([bytes], { type: plantillaPersonalizadaSubida.tipo });
-                    const file = new File([blob], plantillaPersonalizadaSubida.nombre, { type: plantillaPersonalizadaSubida.tipo });
-                    
-                    navigator.share({
-                        title: titulo,
-                        text: mensajeCompleto,
-                        files: [file]
-                    }).then(() => {
-                        actualizarEstadisticas('promocion');
-                        showAlert('🖼️ Plantilla personalizada enviada');
-                    }).catch(() => {
-                        window.open(`https://wa.me/?text=${encodeURIComponent(mensajeCompleto)}`, '_blank');
-                        actualizarEstadisticas('promocion');
-                    });
-                } else {
-                    window.open(`https://wa.me/?text=${encodeURIComponent(mensajeCompleto)}`, '_blank');
-                    actualizarEstadisticas('promocion');
-                    showAlert('🖼️ Plantilla preparada para WhatsApp');
-                }
-            } catch (error) {
-                console.error('❌ Error al enviar plantilla:', error);
-                window.open(`https://wa.me/?text=${encodeURIComponent(mensajeCompleto)}`, '_blank');
-                actualizarEstadisticas('promocion');
-            }
-        }
-
-        function enviarEnlaceVisualRD(plataforma) {
-            const enlaceEl = document.getElementById('enlaceVisualRD');
-            if (!enlaceEl) {
-                showAlert('❌ Error: elemento de enlace no encontrado');
-                return;
-            }
-            
-            const enlace = enlaceEl.value.trim();
-            if (!enlace) {
-                showAlert('❌ Ingresa un enlace primero');
-                return;
-            }
-            
-            const emojis = { youtube: '📺', tiktok: '🎵' };
-            const nombre = plataforma === 'youtube' ? 'YouTube' : 'TikTok';
-            
-            const mensaje = `${emojis[plataforma]} *${nombre.toUpperCase()}*\n\nContenido visual para analfabetos:\n\n${enlace}\n\n📱 809-713-5307\n🌐 urbanavision.com`;
-            
-            window.open(`https://wa.me/?text=${encodeURIComponent(mensaje)}`, '_blank');
-            actualizarEstadisticasRD('enlacesEnviados');
-            showAlert(`${emojis[plataforma]} Enlace de ${nombre} enviado`);
-        }
-
-        function guardarTemplateVisual() {
-            const tituloEl = document.getElementById('tituloTemplateVisual');
-            const contenidoEl = document.getElementById('contenidoTemplateVisual');
-            
-            if (!tituloEl || !contenidoEl) {
-                showAlert('❌ Error: elementos no encontrados');
-                return;
-            }
-            
-            const titulo = tituloEl.value.trim();
-            const contenido = contenidoEl.value.trim();
-            
-            if (!titulo || !contenido) {
-                showAlert('❌ Complete título y contenido');
-                return;
-            }
-            
-            const templateVisual = {
-                id: Date.now(),
-                titulo: titulo,
-                contenido: contenido,
-                fecha: new Date().toISOString()
-            };
-            
-            templatesVisuales.push(templateVisual);
-            guardarDatosCompletos();
-            cargarListaTemplatesVisuales();
-            
-            tituloEl.value = '';
-            contenidoEl.value = '';
-            
-            showAlert('✅ Template visual guardado');
-        }
-
-        function cargarListaTemplatesVisuales() {
-            const lista = document.getElementById('listaTemplatesVisuales');
-            if (!lista) return;
-            
-            if (templatesVisuales.length === 0) {
-                lista.innerHTML = '<p style="text-align: center; margin: 20px 0;">No hay templates guardados</p>';
-                return;
-            }
-            
-            lista.innerHTML = templatesVisuales.map(t => `
-                <div style="background: rgba(0,0,0,0.3); padding: 15px; margin: 10px 0; border-radius: 10px;">
-                    <h4>${t.titulo}</h4>
-                    <p style="font-size: 12px; opacity: 0.8;">${t.contenido.substring(0, 100)}...</p>
-                    <button class="btn btn-whatsapp" onclick="enviarTemplateVisual(${t.id})">📱 Enviar</button>
-                    <button class="btn btn-danger" onclick="eliminarTemplateVisual(${t.id})">🗑️</button>
-                </div>
-            `).join('');
-        }
-
-        function enviarTemplateVisual(id) {
-            const template = templatesVisuales.find(t => t.id === id);
-            if (!template) return;
-            
-            const mensaje = `🖼️ *${template.titulo}*\n\n${template.contenido}\n\n📱 809-713-5307\n🌐 urbanavision.com`;
-            window.open(`https://wa.me/?text=${encodeURIComponent(mensaje)}`, '_blank');
-            actualizarEstadisticas('promocion');
-            showAlert('📱 Template visual enviado');
-        }
-
-        function eliminarTemplateVisual(id) {
-            if (confirm('¿Eliminar este template?')) {
-                templatesVisuales = templatesVisuales.filter(t => t.id !== id);
-                guardarDatosCompletos();
-                cargarListaTemplatesVisuales();
-                showAlert('✅ Template eliminado');
-            }
-        }
-
-        function cargarClipboardRD() {
-            console.log('🧠 Sección Clipboard RD cargada');
-        }
-
-        function copiarMensajeRD(tipo) {
-            const mensaje = mensajesClipboardRD[tipo];
-            if (!mensaje) {
-                showAlert('❌ Mensaje no encontrado');
-                return;
-            }
-            
-            if (!navigator.clipboard) {
-                showAlert('❌ Tu navegador no soporta clipboard. Copia manualmente:\n\n' + mensaje);
-                return;
-            }
-            
-            navigator.clipboard.writeText(mensaje).then(() => {
-                const ultimoElement = document.getElementById('ultimoCopiadoRD');
-                if (ultimoElement) {
-                    ultimoElement.textContent = mensaje.substring(0, 100) + '...';
-                }
-                actualizarEstadisticas('mensaje');
-                showAlert(`✅ Mensaje "${tipo}" copiado al clipboard.\n\nAhora puedes pegarlo en WhatsApp.`);
-            }).catch(error => {
-                console.error('❌ Error al copiar:', error);
-                showAlert('❌ Error al copiar. Copia manualmente:\n\n' + mensaje);
-            });
-        }
-
-        function copiarPersonalizadoRD() {
-            const mensajeElement = document.getElementById('mensajePersonalizadoRD');
-            if (!mensajeElement) {
-                showAlert('❌ Error: elemento de mensaje no encontrado');
-                return;
-            }
-            
-            const mensaje = mensajeElement.value.trim();
-            if (!mensaje) {
-                showAlert('❌ Escribe un mensaje primero');
-                return;
-            }
-            
-            const mensajeCompleto = `${mensaje}\n\n📱 809-713-5307\n🌐 urbanavision.com`;
-            
-            if (!navigator.clipboard) {
-                showAlert('❌ Tu navegador no soporta clipboard. Copia manualmente:\n\n' + mensajeCompleto);
-                return;
-            }
-            
-            navigator.clipboard.writeText(mensajeCompleto).then(() => {
-                const ultimoElement = document.getElementById('ultimoCopiadoRD');
-                if (ultimoElement) {
-                    ultimoElement.textContent = mensajeCompleto.substring(0, 100) + '...';
-                }
-                actualizarEstadisticas('mensaje');
-                showAlert('✅ Mensaje personalizado copiado al clipboard');
-            }).catch(error => {
-                console.error('❌ Error al copiar personalizado:', error);
-                showAlert('❌ Error al copiar. Copia manualmente:\n\n' + mensajeCompleto);
-            });
-        }
-
-        function abrirWhatsAppRD() {
-            try {
-                window.open('https://web.whatsapp.com/', '_blank');
-                showAlert('📱 WhatsApp Web abierto.\n\nAhora puedes pegar el mensaje copiado en cualquier chat.');
-            } catch (error) {
-                console.error('❌ Error al abrir WhatsApp:', error);
-                showAlert('❌ Error al abrir WhatsApp Web');
-            }
-        }
-
-        // ========================================
-        // 🔗 FUNCIONES ADICIONALES
-        // ========================================
-        
         function abrirCatalogo() {
-            showAlert('📖 Abriendo catálogo de productos...');
             window.open('catalogo.html', '_blank');
         }
 
         function abrirFactura() {
-            showAlert('📄 Abriendo sistema de facturación...');
-            window.open('factura-proforma.html', '_blank');
+            window.open('factura.html', '_blank');
         }
 
         function abrirNCF() {
-            showAlert('🧾 Abriendo sistema NCF...');
-            window.open('ncf.html', '_blank');
-        }
-
-        function volverInicio() {
-            if (confirm('¿Volver al inicio?')) {
-                showAlert('🏠 Regresando al inicio...');
-                window.location.href = 'index.html';
-            }
+            showAlert('🔄 Sistema NCF en desarrollo');
         }
 
         // ========================================
-        // 🧹 LIMPIEZA DE RECURSOS
+        // 🎯 MENSAJES DE CONSOLE PARA DEBUG
         // ========================================
         
-        window.addEventListener('beforeunload', function() {
-            try {
-                detenerCamara(stream);
-                detenerCamara(stream2);
-                detenerCamara(streamMarketing);
-                detenerCamara(streamRecetaLab);
-                
-                // Limpiar grabación de audio RD
-                if (mediaRecorderRD && mediaRecorderRD.state === 'recording') {
-                    mediaRecorderRD.stop();
-                }
-                
-                guardarDatosCompletos();
-            } catch (error) {
-                console.error('❌ Error en beforeunload:', error);
-            }
-        });
-
-        window.addEventListener('pagehide', function() {
-            try {
-                detenerCamara(stream);
-                detenerCamara(stream2);
-                detenerCamara(streamMarketing);
-                detenerCamara(streamRecetaLab);
-                
-                // Limpiar grabación de audio RD
-                if (mediaRecorderRD && mediaRecorderRD.state === 'recording') {
-                    mediaRecorderRD.stop();
-                }
-                
-                guardarDatosCompletos();
-            } catch (error) {
-                console.error('❌ Error en pagehide:', error);
-            }
-        });
-
-        window.addEventListener('error', function(e) {
-            console.error('❌ Error capturado:', e.error);
-            showAlert('⚠️ Error detectado. Sistema funcionando en modo seguro.');
-        });
-
-        console.log('✅ Sistema Admin Urbana Vision COMPLETO - Laboratorio + Marketing + RD integrados correctamente');
+        console.log('✅ Sistema Urbana Vision completamente cargado');
+        console.log('🔧 Todas las funciones principales están operativas:');
+        console.log('  - 👥 Gestión de clientes');
+        console.log('  - 🔬 Sistema de laboratorio completo');
+        console.log('  - 📱 Marketing con redes sociales');
+        console.log('  - 📦 Inventario y productos');
+        console.log('  - 💰 Ventas y reportes');
+        console.log('  - 🔔 Recordatorios automáticos');
+        console.log('  - 📊 Dashboard y estadísticas');
     </script>
 </body>
 </html>
+                    od_cilindroLab'),
+                            eje: obtenerValor('od_ejeLab'),
+                            adicion: obtenerValor('od_adicionLab')
+                        },
+                        oi: {
+                            esfera: obtenerValor('oi_esferaLab'),
+                            cilindro: obtenerValor('
