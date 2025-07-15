@@ -51,6 +51,7 @@
             margin: 20px 0;
             border-radius: 10px;
             transition: all 0.3s ease;
+            cursor: pointer;
         }
 
         .news-item:hover {
@@ -181,6 +182,27 @@
             flex-wrap: wrap;
         }
 
+        .share-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .share-btn {
+            padding: 8px 15px;
+            font-size: 14px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: white;
+        }
+
+        .share-btn:hover {
+            transform: scale(1.05);
+        }
+
         @media (max-width: 768px) {
             .social-share {
                 flex-direction: column;
@@ -217,35 +239,47 @@
         <div class="news-section">
             <h2>📈 Noticias de Salud Visual</h2>
             
-            <div class="news-item urgent-news">
+            <div class="news-item urgent-news" onclick="compartirNoticia('urgente')">
                 <div class="news-date">🔴 URGENTE - Hoy</div>
                 <div class="news-title">Alerta: Aumento de Problemas Visuales por Pantallas</div>
                 <div class="news-content">
                     Los oftalmólogos reportan un aumento del 40% en problemas de vista cansada y sequedad ocular debido al uso excesivo de dispositivos digitales. Se recomienda la regla 20-20-20: cada 20 minutos, mirar algo a 20 pies de distancia por 20 segundos.
                 </div>
+                <div class="share-buttons">
+                    <button class="share-btn btn-whatsapp" onclick="event.stopPropagation(); compartirNoticia('urgente')">📱 Compartir</button>
+                </div>
             </div>
 
-            <div class="news-item">
+            <div class="news-item" onclick="compartirNoticia('progresivos')">
                 <div class="news-date">📅 13 de Julio, 2025</div>
                 <div class="news-title">Nueva Tecnología en Lentes Progresivos</div>
                 <div class="news-content">
                     Los últimos avances en lentes progresivos ofrecen campos de visión más amplios y transiciones más suaves entre las diferentes graduaciones. Ideal para personas mayores de 40 años que necesitan corrección para lejos y cerca.
                 </div>
+                <div class="share-buttons">
+                    <button class="share-btn btn-whatsapp" onclick="event.stopPropagation(); compartirNoticia('progresivos')">📱 Compartir</button>
+                </div>
             </div>
 
-            <div class="news-item">
+            <div class="news-item" onclick="compartirNoticia('examenes')">
                 <div class="news-date">📅 12 de Julio, 2025</div>
                 <div class="news-title">Importancia de los Exámenes Visuales Anuales</div>
                 <div class="news-content">
                     Los especialistas recomiendan exámenes visuales anuales para detectar temprano problemas como glaucoma, cataratas y degeneración macular. La detección temprana puede prevenir la pérdida permanente de la visión.
                 </div>
+                <div class="share-buttons">
+                    <button class="share-btn btn-whatsapp" onclick="event.stopPropagation(); compartirNoticia('examenes')">📱 Compartir</button>
+                </div>
             </div>
 
-            <div class="news-item">
+            <div class="news-item" onclick="compartirNoticia('tendencias')">
                 <div class="news-date">📅 11 de Julio, 2025</div>
                 <div class="news-title">Tendencias en Monturas 2025</div>
                 <div class="news-content">
                     Las monturas oversized y los colores tierra dominan las tendencias de este año. Los materiales sostenibles y las formas geométricas también están ganando popularidad entre los usuarios más jóvenes.
+                </div>
+                <div class="share-buttons">
+                    <button class="share-btn btn-whatsapp" onclick="event.stopPropagation(); compartirNoticia('tendencias')">📱 Compartir</button>
                 </div>
             </div>
         </div>
@@ -253,6 +287,9 @@
         <div class="health-tip">
             <h4>💡 Consejo de Salud Visual del Día</h4>
             <p><strong>Protección UV:</strong> Siempre use lentes con protección UV al salir al sol, incluso en días nublados. Los rayos UV pueden causar cataratas y otros problemas oculares a largo plazo. ¡Sus ojos se lo agradecerán!</p>
+            <div class="share-buttons">
+                <button class="share-btn btn-primary" onclick="compartirConsejo()">📱 Compartir Consejo</button>
+            </div>
         </div>
 
         <div class="weather-widget">
@@ -264,27 +301,36 @@
         <div class="news-section">
             <h2>🏥 Noticias URBANA VISION</h2>
             
-            <div class="news-item">
+            <div class="news-item" onclick="compartirNoticia('equipo')">
                 <div class="news-date">📅 Hoy</div>
                 <div class="news-title">Nuevo Equipo de Examen Digital Disponible</div>
                 <div class="news-content">
                     Hemos incorporado tecnología de última generación para exámenes más precisos y rápidos. Nuestro nuevo autorefractómetro digital proporciona mediciones exactas en segundos.
                 </div>
+                <div class="share-buttons">
+                    <button class="share-btn btn-whatsapp" onclick="event.stopPropagation(); compartirNoticia('equipo')">📱 Compartir</button>
+                </div>
             </div>
 
-            <div class="news-item">
+            <div class="news-item" onclick="compartirNoticia('coleccion')">
                 <div class="news-date">📅 Esta Semana</div>
                 <div class="news-title">Llegada de Nueva Colección de Monturas</div>
                 <div class="news-content">
                     Recibimos más de 50 modelos nuevos de monturas de las mejores marcas internacionales. Desde diseños clásicos hasta las últimas tendencias de moda.
                 </div>
+                <div class="share-buttons">
+                    <button class="share-btn btn-whatsapp" onclick="event.stopPropagation(); compartirNoticia('coleccion')">📱 Compartir</button>
+                </div>
             </div>
 
-            <div class="news-item">
+            <div class="news-item" onclick="compartirNoticia('campana')">
                 <div class="news-date">📅 Mes de Julio</div>
                 <div class="news-title">Campaña de Exámenes Visuales Gratuitos</div>
                 <div class="news-content">
                     Durante todo el mes de julio, ofrecemos exámenes visuales gratuitos para estudiantes y personas mayores de 60 años. Una oportunidad única de cuidar su salud visual.
+                </div>
+                <div class="share-buttons">
+                    <button class="share-btn btn-whatsapp" onclick="event.stopPropagation(); compartirNoticia('campana')">📱 Compartir</button>
                 </div>
             </div>
         </div>
@@ -294,8 +340,8 @@
             <p style="text-align: center; margin-bottom: 20px;">Mantente informado sobre salud visual y nuestras promociones</p>
             
             <div class="social-share">
-                <button class="btn btn-whatsapp" onclick="compartirNoticias()">
-                    📱 Compartir por WhatsApp
+                <button class="btn btn-whatsapp" onclick="compartirInfoFlashCompleto()">
+                    📱 Compartir InfoFlash Completo
                 </button>
                 <button class="btn btn-primary" onclick="suscribirseNoticias()">
                     🔔 Recibir Noticias
@@ -310,6 +356,12 @@
             <button class="btn btn-secondary" onclick="volverInicio()">
                 🏠 Volver al Inicio
             </button>
+            <div style="margin-top: 15px; font-size: 14px; opacity: 0.8;">
+                🔗 <strong>Enlace de InfoFlash:</strong><br>
+                <span id="enlaceInfoFlash" style="background: rgba(0,0,0,0.3); padding: 5px 10px; border-radius: 5px; font-family: monospace;">
+                    https://urbanavision.com/info-flash.html
+                </span>
+            </div>
         </div>
     </div>
 
@@ -318,6 +370,9 @@
     </div>
 
     <script>
+        // URL base del InfoFlash
+        const urlInfoFlash = 'https://urbanavision.com/info-flash.html';
+        
         // Actualizar fecha y hora
         function actualizarFechaHora() {
             const ahora = new Date();
@@ -332,67 +387,174 @@
                 ahora.toLocaleDateString('es-ES', opciones);
             document.getElementById('currentTime').textContent = 
                 ahora.toLocaleTimeString('es-ES');
+            
+            // Mostrar enlace
+            document.getElementById('enlaceInfoFlash').textContent = urlInfoFlash;
         }
 
         function consultarPromocion() {
-            const mensaje = `🎁 *CONSULTA PROMOCIÓN ESPECIAL*\n\n` +
-                          `¡Hola! Vi en InfoFlash la promoción del mes y me interesa:\n\n` +
-                          `✨ 30% de descuento en monturas seleccionadas\n` +
-                          `👁️ Examen visual GRATIS\n\n` +
-                          `¿Podrían darme más detalles sobre:\n` +
-                          `• ¿Qué monturas están incluidas?\n` +
-                          `• ¿Cómo puedo agendar el examen?\n` +
-                          `• ¿Cuándo vence la promoción?\n\n` +
-                          `📱 URBANA VISION\n` +
-                          `☎️ 809-713-5307\n` +
-                          `🌐 urbanavision.com`;
+            const mensaje = `🎁 *CONSULTA PROMOCIÓN ESPECIAL*
+
+¡Hola! Vi en InfoFlash la promoción del mes y me interesa:
+
+✨ 30% de descuento en monturas seleccionadas
+👁️ Examen visual GRATIS
+
+¿Podrían darme más detalles sobre:
+• ¿Qué monturas están incluidas?
+• ¿Cómo puedo agendar el examen?
+• ¿Cuándo vence la promoción?
+
+📰 Leí la info en: ${urlInfoFlash}
+
+📱 URBANA VISION
+☎️ 809-713-5307
+🌐 urbanavision.com`;
             
             const url = `https://wa.me/18097135307?text=${encodeURIComponent(mensaje)}`;
             window.open(url, '_blank');
         }
 
-        function compartirNoticias() {
-            const mensaje = `📰 *INFOFLASH - URBANA VISION*\n\n` +
-                          `¡Mantente informado sobre salud visual!\n\n` +
-                          `🔴 ALERTA: Aumento de problemas visuales por pantallas\n` +
-                          `💡 Regla 20-20-20 para cuidar tus ojos\n` +
-                          `🎁 Promoción especial del mes: 30% descuento + examen gratis\n\n` +
-                          `📱 Lee más noticias en nuestro InfoFlash\n` +
-                          `☎️ 809-713-5307\n` +
-                          `🌐 urbanavision.com\n\n` +
-                          `✨ Cuidamos tu salud visual`;
+        function compartirNoticia(tipo) {
+            const noticias = {
+                'urgente': {
+                    titulo: 'ALERTA: Aumento de Problemas Visuales por Pantallas',
+                    resumen: 'Aumento del 40% en problemas de vista cansada por pantallas. Regla 20-20-20: cada 20 minutos, mirar algo a 20 pies por 20 segundos.'
+                },
+                'progresivos': {
+                    titulo: 'Nueva Tecnología en Lentes Progresivos',
+                    resumen: 'Últimos avances en lentes progresivos con campos de visión más amplios y transiciones más suaves.'
+                },
+                'examenes': {
+                    titulo: 'Importancia de los Exámenes Visuales Anuales',
+                    resumen: 'Exámenes anuales para detectar temprano glaucoma, cataratas y degeneración macular.'
+                },
+                'tendencias': {
+                    titulo: 'Tendencias en Monturas 2025',
+                    resumen: 'Monturas oversized y colores tierra dominan las tendencias. Materiales sostenibles en auge.'
+                },
+                'equipo': {
+                    titulo: 'Nuevo Equipo de Examen Digital en URBANA VISION',
+                    resumen: 'Tecnología de última generación para exámenes más precisos y rápidos.'
+                },
+                'coleccion': {
+                    titulo: 'Nueva Colección de Monturas en URBANA VISION',
+                    resumen: 'Más de 50 modelos nuevos de las mejores marcas internacionales.'
+                },
+                'campana': {
+                    titulo: 'Exámenes Visuales Gratuitos en Julio',
+                    resumen: 'Exámenes gratis para estudiantes y personas mayores de 60 años todo el mes.'
+                }
+            };
+
+            const noticia = noticias[tipo];
+            if (!noticia) return;
+
+            const mensaje = `📰 *INFOFLASH - URBANA VISION*
+
+🔥 ${noticia.titulo}
+
+📋 ${noticia.resumen}
+
+📖 Lee la noticia completa en InfoFlash:
+🔗 ${urlInfoFlash}
+
+📱 URBANA VISION
+☎️ 809-713-5307
+🌐 urbanavision.com
+
+✨ Cuidamos tu salud visual`;
+            
+            const url = `https://wa.me/?text=${encodeURIComponent(mensaje)}`;
+            window.open(url, '_blank');
+        }
+
+        function compartirConsejo() {
+            const mensaje = `💡 *CONSEJO DE SALUD VISUAL*
+
+🕶️ PROTECCIÓN UV
+Siempre use lentes con protección UV al salir al sol, incluso en días nublados. Los rayos UV pueden causar cataratas y otros problemas oculares a largo plazo.
+
+👁️ ¡Sus ojos se lo agradecerán!
+
+📖 Más consejos en InfoFlash:
+🔗 ${urlInfoFlash}
+
+📱 URBANA VISION
+☎️ 809-713-5307
+🌐 urbanavision.com`;
+            
+            const url = `https://wa.me/?text=${encodeURIComponent(mensaje)}`;
+            window.open(url, '_blank');
+        }
+
+        function compartirInfoFlashCompleto() {
+            const mensaje = `📰 *INFOFLASH - URBANA VISION*
+
+¡Mantente informado sobre salud visual!
+
+📈 NOTICIAS DE HOY:
+🔴 ALERTA: Problemas visuales por pantallas
+💡 Regla 20-20-20 para cuidar tus ojos
+👓 Nueva tecnología en lentes progresivos
+📅 Importancia de exámenes anuales
+
+🏥 NOTICIAS URBANA VISION:
+✨ Nuevo equipo de examen digital
+🛍️ Nueva colección de monturas
+🎁 Exámenes gratuitos en julio
+
+🔗 Lee todas las noticias completas:
+${urlInfoFlash}
+
+📱 URBANA VISION
+☎️ 809-713-5307
+🌐 urbanavision.com
+
+✨ Cuidamos tu salud visual`;
             
             const url = `https://wa.me/?text=${encodeURIComponent(mensaje)}`;
             window.open(url, '_blank');
         }
 
         function suscribirseNoticias() {
-            const mensaje = `🔔 *SUSCRIPCIÓN A NOTICIAS*\n\n` +
-                          `¡Hola! Me interesa recibir las noticias de InfoFlash sobre salud visual.\n\n` +
-                          `Por favor, suscríbanme para recibir:\n` +
-                          `📰 Noticias de salud visual\n` +
-                          `🎁 Promociones especiales\n` +
-                          `💡 Consejos de cuidado ocular\n` +
-                          `📅 Recordatorios de exámenes\n\n` +
-                          `📱 URBANA VISION\n` +
-                          `☎️ 809-713-5307\n` +
-                          `🌐 urbanavision.com`;
+            const mensaje = `🔔 *SUSCRIPCIÓN A NOTICIAS*
+
+¡Hola! Me interesa recibir las noticias de InfoFlash sobre salud visual.
+
+Por favor, suscríbanme para recibir:
+📰 Noticias de salud visual
+🎁 Promociones especiales
+💡 Consejos de cuidado ocular
+📅 Recordatorios de exámenes
+
+🔗 InfoFlash: ${urlInfoFlash}
+
+📱 URBANA VISION
+☎️ 809-713-5307
+🌐 urbanavision.com`;
             
             const url = `https://wa.me/18097135307?text=${encodeURIComponent(mensaje)}`;
             window.open(url, '_blank');
         }
 
         function agendarCita() {
-            const mensaje = `📅 *SOLICITUD DE CITA*\n\n` +
-                          `¡Hola! He leído las noticias en InfoFlash sobre la importancia de los exámenes anuales.\n\n` +
-                          `Me gustaría agendar una cita para:\n` +
-                          `👁️ Examen visual completo\n` +
-                          `🔍 Revisión de salud ocular\n` +
-                          `💬 Consulta sobre opciones de corrección\n\n` +
-                          `¿Qué disponibilidad tienen esta semana?\n\n` +
-                          `📱 URBANA VISION\n` +
-                          `☎️ 809-713-5307\n` +
-                          `🌐 urbanavision.com`;
+            const mensaje = `📅 *SOLICITUD DE CITA*
+
+¡Hola! He leído las noticias en InfoFlash sobre la importancia de los exámenes anuales.
+
+Me gustaría agendar una cita para:
+👁️ Examen visual completo
+🔍 Revisión de salud ocular
+💬 Consulta sobre opciones de corrección
+
+¿Qué disponibilidad tienen esta semana?
+
+📰 Leí la info en: ${urlInfoFlash}
+
+📱 URBANA VISION
+☎️ 809-713-5307
+🌐 urbanavision.com`;
             
             const url = `https://wa.me/18097135307?text=${encodeURIComponent(mensaje)}`;
             window.open(url, '_blank');
@@ -406,7 +568,8 @@
         actualizarFechaHora();
         setInterval(actualizarFechaHora, 60000); // Actualizar cada minuto
 
-        console.log('✅ InfoFlash URBANA VISION cargado correctamente');
+        console.log('✅ InfoFlash URBANA VISION con enlaces cargado correctamente');
+        console.log('🔗 URL InfoFlash:', urlInfoFlash);
     </script>
 </body>
 </html>
