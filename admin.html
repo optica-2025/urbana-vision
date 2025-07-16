@@ -224,6 +224,14 @@
         }
         .hidden { display: none !important; }
         .visible { display: block !important; }
+        .edad-display {
+            background: rgba(16, 185, 129, 0.2);
+            padding: 10px;
+            border-radius: 5px;
+            margin: 5px 0;
+            font-weight: bold;
+            color: #10b981;
+        }
         
         /* Responsive */
         @media (max-width: 768px) {
@@ -267,7 +275,7 @@
                     <h3>📦 Inventario</h3>
                     <button class="btn btn-primary" onclick="mostrarSeccion('inventario')">📦 Ver Inventario</button>
                     <button class="btn btn-primary" onclick="mostrarSeccion('camara')">📷 Cámara Rápida</button>
-                    <button class="btn btn-secondary" onclick="abrirEnlace('https://urbanavisioncom.netlify.app/')">🛍️ Ver Catálogo</button>
+                    <button class="btn btn-secondary" onclick="mostrarSeccion('catalogo')">🛍️ Ver Catálogo</button>
                 </div>
 
                 <div class="card">
@@ -296,8 +304,8 @@
 
                 <div class="card">
                     <h3>📄 Documentos</h3>
-                    <button class="btn btn-primary" onclick="abrirEnlace('https://urbanavisioncom.netlify.app/factura')">📄 Factura</button>
-                    <button class="btn btn-primary" onclick="abrirEnlace('https://urbanavisioncom.netlify.app/ncf')">🧾 NCF</button>
+                    <button class="btn btn-primary" onclick="mostrarSeccion('facturaProforma')">📄 Factura Proforma</button>
+                    <button class="btn btn-primary" onclick="abrirEnlace('https://urbanavision.com/ncf')">🧾 NCF</button>
                     <button class="btn btn-secondary" onclick="mostrarSeccion('reportes')">📊 Reportes</button>
                 </div>
 
@@ -314,8 +322,83 @@
             </div>
             
             <div style="text-align: center; margin-top: 20px;">
-                <button class="btn btn-danger" onclick="abrirEnlace('https://urbanavisioncom.netlify.app/')">🏠 Volver al Inicio</button>
+                <button class="btn btn-danger" onclick="abrirEnlace('https://urbanavision.com')">🏠 Volver al Inicio</button>
             </div>
+        </div>
+
+        <!-- FACTURA PROFORMA -->
+        <div id="facturaProforma" class="section">
+            <h2>📄 Factura Proforma</h2>
+            <button class="btn btn-secondary" onclick="mostrarSeccion('menu')">⬅️ Volver</button>
+            
+            <div class="grid">
+                <div class="card">
+                    <h3>👤 Cliente</h3>
+                    <select id="clienteFactura" class="select">
+                        <option value="">Seleccionar cliente</option>
+                    </select>
+                    <input type="text" id="nombreClienteFactura" class="input" placeholder="Nombre del cliente" readonly>
+                    <input type="text" id="telefonoClienteFactura" class="input" placeholder="Teléfono" readonly>
+                </div>
+                
+                <div class="card">
+                    <h3>👓 Examen Visual</h3>
+                    <div style="background: rgba(16, 185, 129, 0.2); padding: 15px; border-radius: 10px; margin: 10px 0;">
+                        <h4>✅ EXAMEN VISUAL GRATIS</h4>
+                        <p>Incluido sin costo adicional</p>
+                        <input type="hidden" id="examenGratis" value="0">
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>🛍️ Productos y Servicios</h3>
+                <div style="margin: 15px 0;">
+                    <h4>Agregar Producto/Servicio:</h4>
+                    <div class="grid">
+                        <input type="text" id="descripcionItem" class="input" placeholder="Descripción del producto/servicio">
+                        <input type="number" id="precioItem" class="input" placeholder="Precio RD$" step="0.01">
+                        <input type="number" id="cantidadItem" class="input" placeholder="Cantidad" value="1" min="1">
+                    </div>
+                    <textarea id="comentarioItem" class="textarea" placeholder="Comentarios sobre el precio (ej: Precio negociable, oferta especial, etc.)"></textarea>
+                    <button class="btn btn-primary" onclick="agregarItemFactura()">➕ Agregar Item</button>
+                </div>
+                
+                <div id="listaItemsFactura" style="margin: 20px 0;"></div>
+                
+                <div style="background: rgba(16, 185, 129, 0.1); padding: 15px; border-radius: 10px; margin: 15px 0;">
+                    <h4>💰 Resumen de Factura</h4>
+                    <div style="display: flex; justify-content: space-between; margin: 10px 0;">
+                        <span>Subtotal:</span>
+                        <span id="subtotalFactura">RD$ 0.00</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin: 10px 0;">
+                        <span>Examen Visual:</span>
+                        <span style="color: #10b981;">GRATIS</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin: 10px 0; font-size: 18px; font-weight: bold; border-top: 1px solid #444; padding-top: 10px;">
+                        <span>TOTAL:</span>
+                        <span id="totalFactura">RD$ 0.00</span>
+                    </div>
+                </div>
+                
+                <div style="text-align: center;">
+                    <button class="btn btn-whatsapp" onclick="enviarFacturaProforma()">📱 Enviar Factura</button>
+                    <button class="btn btn-secondary" onclick="limpiarFactura()">🔄 Limpiar</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- CATÁLOGO -->
+        <div id="catalogo" class="section">
+            <h2>🛍️ Catálogo de Productos</h2>
+            <button class="btn btn-secondary" onclick="mostrarSeccion('menu')">⬅️ Volver</button>
+            
+            <div style="margin: 20px 0;">
+                <input type="text" id="buscarCatalogo" class="input" placeholder="🔍 Buscar en catálogo..." onkeyup="buscarEnCatalogo(this.value)">
+            </div>
+            
+            <div id="listaCatalogo"></div>
         </div>
 
         <!-- DASHBOARD LABORATORIO -->
@@ -379,11 +462,12 @@
                         <option value="bifocal">Bifocal</option>
                         <option value="progresivo">Progresivo</option>
                         <option value="ocupacional">Ocupacional</option>
+                        <option value="otros">Otros</option>
                     </select>
                     
                     <input type="number" id="costoLab" class="input" placeholder="Costo laboratorio RD$" step="0.01">
-                    <input type="number" id="precioVenta" class="input" placeholder="Precio venta RD$" step="0.01">
-                    <input type="number" id="abono" class="input" placeholder="Abono RD$" step="0.01">
+                    <input type="number" id="precioVenta" class="input" placeholder="Precio venta RD$ (INTERNO)" step="0.01">
+                    <input type="number" id="abono" class="input" placeholder="Abono RD$ (INTERNO)" step="0.01">
                     <div id="pendiente" style="margin: 10px 0; font-weight: bold; color: #f59e0b;"></div>
                 </div>
             </div>
@@ -449,9 +533,6 @@
                     <button class="btn btn-whatsapp" onclick="generarYEnviarOrden()">📱 Generar y Enviar</button>
                     <button class="btn btn-primary" onclick="guardarOrden()">💾 Guardar</button>
                     <button class="btn btn-secondary" onclick="limpiarFormulario()">🔄 Limpiar</button>
-                    <div style="margin-top: 10px; font-size: 12px; opacity: 0.8; color: #10b981;">
-                        💡 Al enviar se preguntará: ¿Laboratorio? (sin precios internos) o ¿Uso interno? (con todos los datos)
-                    </div>
                 </div>
             </div>
         </div>
@@ -474,8 +555,10 @@
             <button class="btn btn-secondary" onclick="mostrarSeccion('dashboardLab')">⬅️ Volver</button>
             
             <div style="background: rgba(16, 185, 129, 0.2); padding: 15px; border-radius: 10px; margin: 20px 0;">
-                <h3>📦 Órdenes Listas para Cotejo</h3>
-                <p>Cuando reciba los lentes del laboratorio, márquelos como cotejados aquí.</p>
+                <h3>📦 Estados del Sistema</h3>
+                <p><strong>Pendiente:</strong> No ha llegado a la óptica, está en laboratorio</p>
+                <p><strong>Listo:</strong> Llegó a la óptica, es cuenta por cobrar</p>
+                <p><strong>Entregado:</strong> Cliente pagó y retiró sus lentes</p>
             </div>
             
             <div id="listaCotejo"></div>
@@ -560,7 +643,9 @@
                     <input type="text" id="nombreNuevoCliente" class="input" placeholder="Nombre completo">
                     <input type="tel" id="telefonoCliente" class="input" placeholder="Teléfono">
                     <input type="email" id="emailCliente" class="input" placeholder="Email">
-                    <input type="date" id="cumpleanosCliente" class="input">
+                    <label style="color: #10b981; font-weight: bold; margin: 10px 0; display: block;">📅 Fecha de Cumpleaños:</label>
+                    <input type="date" id="cumpleanosCliente" class="input" onchange="calcularEdad()">
+                    <div id="edadDisplay" class="edad-display" style="display: none;"></div>
                     <textarea id="notasCliente" class="textarea" placeholder="Notas..."></textarea>
                     <button class="btn btn-primary" onclick="agregarCliente()">👥 Agregar Cliente</button>
                 </div>
@@ -599,50 +684,9 @@
 🚚 Disponible ahora
 
 📱 809-713-5307
-🌐 urbanavisioncom.netlify.app</textarea>
+🌐 urbanavision.com</textarea>
                     
                     <button class="btn btn-whatsapp" onclick="enviarPromocion()">📱 Enviar Promoción</button>
-                </div>
-
-                <div class="card">
-                    <h3>📁 Subir Archivos del Móvil</h3>
-                    <div style="border: 2px dashed #25d366; padding: 20px; text-align: center; border-radius: 10px; cursor: pointer; margin: 10px 0;" onclick="document.getElementById('archivoMovil').click()">
-                        <div style="font-size: 50px;">📁</div>
-                        <div>Subir foto/video del móvil</div>
-                        <div style="font-size: 12px; opacity: 0.7;">JPG, PNG, MP4, PDF</div>
-                    </div>
-                    <input type="file" id="archivoMovil" style="display: none;" accept="image/*,video/*,.pdf" onchange="manejarArchivoMovil(this)">
-                    <div id="archivoSubido" style="margin: 10px 0;"></div>
-                    
-                    <textarea id="mensajeArchivo" class="textarea" placeholder="Mensaje para acompañar el archivo...">📁 *ARCHIVO URBANA VISION*
-
-Te envío este contenido que puede interesarte.
-
-📱 809-713-5307
-🌐 urbanavisioncom.netlify.app</textarea>
-                    
-                    <button class="btn btn-whatsapp" onclick="enviarArchivo()">📱 Enviar Archivo</button>
-                </div>
-
-                <div class="card">
-                    <h3>🔗 Enlaces de Redes Sociales</h3>
-                    <input type="url" id="enlaceRedes" class="input" placeholder="Pegar enlace de YouTube, Instagram, Facebook, TikTok..." style="margin: 10px 0;">
-                    
-                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin: 15px 0;">
-                        <button class="btn" style="background: #ff0000;" onclick="enviarEnlaceRed('youtube')">📺 YouTube</button>
-                        <button class="btn" style="background: #e1306c;" onclick="enviarEnlaceRed('instagram')">📸 Instagram</button>
-                        <button class="btn" style="background: #1877f2;" onclick="enviarEnlaceRed('facebook')">👥 Facebook</button>
-                        <button class="btn" style="background: #000000;" onclick="enviarEnlaceRed('tiktok')">🎵 TikTok</button>
-                    </div>
-                    
-                    <textarea id="mensajeEnlace" class="textarea" placeholder="Mensaje para el enlace...">🔗 *CONTENIDO INTERESANTE*
-
-Te comparto este enlace que puede gustarte.
-
-¡Échale un vistazo!
-
-📱 809-713-5307
-🌐 urbanavisioncom.netlify.app</textarea>
                 </div>
 
                 <div class="card">
@@ -659,14 +703,14 @@ Te comparto este enlace que puede gustarte.
                     
                     <div style="margin: 15px 0;">
                         <button class="btn btn-primary" onclick="reproducirAudio()" id="botonReproducir" style="display: none;">▶️ Escuchar</button>
-                        <button class="btn btn-whatsapp" onclick="enviarAudio()" id="botonEnviarAudio" style="display: none;">📱 Enviar Audio</button>
-                        <button class="btn btn-warning" onclick="enviarMensajeConAudio()" id="botonEnviarMensaje" style="display: none;">💬 Enviar Mensaje</button>
+                        <button class="btn btn-whatsapp" onclick="enviarMensajeDeTexto()" id="botonEnviarTexto" style="display: none;">💬 Enviar Solo Texto</button>
                         <button class="btn btn-secondary" onclick="borrarAudio()">🗑️ Borrar</button>
                     </div>
                     
                     <p style="font-size: 14px; opacity: 0.8; text-align: center;">
                         🎯 Perfecto para clientes que no saben leer/escribir<br>
-                        ⏰ Máximo 60 segundos por mensaje
+                        ⏰ Máximo 60 segundos por mensaje<br>
+                        📱 Se envía como mensaje de texto descriptivo
                     </p>
                 </div>
 
@@ -682,7 +726,7 @@ Te comparto este enlace que puede gustarte.
                     </div>
                     <div class="stat-box">
                         <span class="stat-number" id="audiosHoy">0</span>
-                        <div>Audios Enviados</div>
+                        <div>Audios Grabados</div>
                     </div>
                     <button class="btn btn-secondary" onclick="verEstadisticas()">📈 Ver Detalles</button>
                 </div>
@@ -768,13 +812,13 @@ Te comparto este enlace que puede gustarte.
 🔍 Examen gratuito
 
 📱 809-713-5307
-🌐 urbanavisioncom.netlify.app</textarea>
+🌐 urbanavision.com</textarea>
             </div>
         </div>
     </div>
 
     <div class="alert" id="alert"></div>
-    <div class="footer">by Fbrugal Jrubinstein consultores</div>
+    <div class="footer">by fbrugal jrubinstein consultores</div>
 
     <script>
         // ========================================
@@ -789,7 +833,7 @@ Te comparto este enlace que puede gustarte.
         let contadorOrdenes = 1;
         let streams = {};
         let fotos = {};
-        let archivoSubido = null;
+        let itemsFactura = [];
         let mediaRecorder = null;
         let audioChunks = [];
         let audioBlob = null;
@@ -801,29 +845,39 @@ Te comparto este enlace que puede gustarte.
         // ========================================
         
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('🔄 Iniciando sistema Urbana Vision...');
+            console.log('🔄 Iniciando sistema...');
             
-            cargarDatos();
-            crearDatosEjemplo();
-            actualizarDashboard();
-            cargarSelectores();
-            
-            // Event listeners para cálculos automáticos
-            ['costoLab', 'precioVenta', 'abono'].forEach(id => {
-                const elemento = document.getElementById(id);
-                if (elemento) {
-                    elemento.addEventListener('input', calcularPendiente);
+            try {
+                cargarDatos();
+                crearDatosEjemplo();
+                actualizarDashboard();
+                cargarSelectores();
+                
+                // Event listeners para cálculos automáticos
+                ['costoLab', 'precioVenta', 'abono'].forEach(id => {
+                    const elemento = document.getElementById(id);
+                    if (elemento) {
+                        elemento.addEventListener('input', calcularPendiente);
+                    }
+                });
+                
+                // Event listener para cliente
+                const clienteSelect = document.getElementById('clienteSelect');
+                if (clienteSelect) {
+                    clienteSelect.addEventListener('change', cargarDatosCliente);
                 }
-            });
-            
-            // Event listener para cliente
-            const clienteSelect = document.getElementById('clienteSelect');
-            if (clienteSelect) {
-                clienteSelect.addEventListener('change', cargarDatosCliente);
+                
+                const clienteFactura = document.getElementById('clienteFactura');
+                if (clienteFactura) {
+                    clienteFactura.addEventListener('change', cargarDatosClienteFactura);
+                }
+                
+                showAlert('✅ Sistema Urbana Vision cargado');
+                console.log('✅ Sistema inicializado correctamente');
+            } catch (error) {
+                console.error('❌ Error en inicialización:', error);
+                showAlert('⚠️ Error al inicializar sistema');
             }
-            
-            showAlert('✅ Sistema Urbana Vision cargado correctamente');
-            console.log('✅ Sistema inicializado');
         });
 
         function cargarDatos() {
@@ -864,8 +918,8 @@ Te comparto este enlace que puede gustarte.
                 console.log('✅ Datos guardados correctamente');
                 return true;
             } catch (error) {
-                console.error('❌ Error guardando datos:', error);
-                showAlert('⚠️ Error al guardar datos');
+                console.error('❌ Error guardando:', error);
+                showAlert('❌ Error al guardar datos');
                 return false;
             }
         }
@@ -888,6 +942,21 @@ Te comparto este enlace que puede gustarte.
                         email: 'juan@email.com',
                         cumpleanos: '1990-07-22',
                         notas: 'Usa progresivos'
+                    }
+                ];
+            }
+            
+            if (productos.length === 0) {
+                productos = [
+                    {
+                        id: 1,
+                        codigo: 'UV001',
+                        nombre: 'Montura Clásica',
+                        precio: 1500,
+                        stock: 10,
+                        categoria: 'monturas',
+                        imagen: '',
+                        fecha: new Date().toISOString()
                     }
                 ];
             }
@@ -946,6 +1015,9 @@ Te comparto este enlace que puede gustarte.
                     case 'inventario':
                         cargarProductos();
                         break;
+                    case 'catalogo':
+                        cargarCatalogo();
+                        break;
                     case 'clientes':
                         cargarClientes();
                         break;
@@ -963,6 +1035,9 @@ Te comparto este enlace que puede gustarte.
                         break;
                     case 'reportes':
                         cargarReportes();
+                        break;
+                    case 'facturaProforma':
+                        cargarFacturaProforma();
                         break;
                 }
                 
@@ -990,7 +1065,11 @@ Te comparto este enlace que puede gustarte.
         }
 
         function abrirEnlace(url) {
-            window.open(url, '_blank');
+            try {
+                window.open(url, '_blank');
+            } catch (error) {
+                console.error('❌ Error abriendo enlace:', error);
+            }
         }
 
         // ========================================
@@ -1018,7 +1097,7 @@ Te comparto este enlace que puede gustarte.
 
         function actualizarDashboardLab() {
             try {
-                const enLab = ordenesLab.filter(o => o.estado === 'laboratorio').length;
+                const enLab = ordenesLab.filter(o => o.estado === 'pendiente').length;
                 const cotejo = ordenesLab.filter(o => o.estado === 'listo').length;
                 const porCobrar = calcularTotalCobrar();
                 const porPagar = calcularTotalPagar();
@@ -1044,22 +1123,417 @@ Te comparto este enlace que puede gustarte.
         }
 
         function calcularVentasHoy() {
-            const hoy = new Date().toDateString();
-            return ventas
-                .filter(v => new Date(v.fecha).toDateString() === hoy)
-                .reduce((sum, v) => sum + v.total, 0);
+            try {
+                const hoy = new Date().toDateString();
+                return ventas
+                    .filter(v => new Date(v.fecha).toDateString() === hoy)
+                    .reduce((sum, v) => sum + v.total, 0);
+            } catch (error) {
+                console.error('❌ Error calculando ventas:', error);
+                return 0;
+            }
         }
 
         function calcularTotalCobrar() {
-            return ordenesLab
-                .filter(o => o.estado === 'entregado' && !o.pagadoCliente)
-                .reduce((sum, o) => sum + ((o.precioVenta || 0) - (o.abono || 0)), 0);
+            try {
+                return ordenesLab
+                    .filter(o => o.estado === 'listo' && !o.pagadoCliente)
+                    .reduce((sum, o) => sum + ((o.precioVenta || 0) - (o.abono || 0)), 0);
+            } catch (error) {
+                console.error('❌ Error calculando total cobrar:', error);
+                return 0;
+            }
         }
 
         function calcularTotalPagar() {
-            return ordenesLab
-                .filter(o => o.estado === 'entregado' && !o.pagadoLab)
-                .reduce((sum, o) => sum + (o.costoLab || 0), 0);
+            try {
+                return ordenesLab
+                    .filter(o => (o.estado === 'listo' || o.estado === 'entregado') && !o.pagadoLab)
+                    .reduce((sum, o) => sum + (o.costoLab || 0), 0);
+            } catch (error) {
+                console.error('❌ Error calculando total pagar:', error);
+                return 0;
+            }
+        }
+
+        // ========================================
+        // 📄 FACTURA PROFORMA
+        // ========================================
+        
+        function cargarFacturaProforma() {
+            try {
+                cargarSelectores();
+                limpiarFactura();
+            } catch (error) {
+                console.error('❌ Error cargando factura proforma:', error);
+            }
+        }
+
+        function cargarDatosClienteFactura() {
+            try {
+                const select = document.getElementById('clienteFactura');
+                const nombreInput = document.getElementById('nombreClienteFactura');
+                const telefonoInput = document.getElementById('telefonoClienteFactura');
+                
+                if (!select || !nombreInput || !telefonoInput) return;
+                
+                const clienteId = parseInt(select.value);
+                
+                if (!clienteId) {
+                    nombreInput.value = '';
+                    telefonoInput.value = '';
+                    return;
+                }
+                
+                const cliente = clientes.find(c => c.id === clienteId);
+                if (cliente) {
+                    nombreInput.value = cliente.nombre;
+                    telefonoInput.value = cliente.telefono;
+                    nombreInput.style.color = '#10b981';
+                    telefonoInput.style.color = '#10b981';
+                }
+            } catch (error) {
+                console.error('❌ Error cargando datos cliente factura:', error);
+            }
+        }
+
+        function agregarItemFactura() {
+            try {
+                const descripcion = document.getElementById('descripcionItem')?.value.trim();
+                const precio = parseFloat(document.getElementById('precioItem')?.value) || 0;
+                const cantidad = parseInt(document.getElementById('cantidadItem')?.value) || 1;
+                const comentario = document.getElementById('comentarioItem')?.value.trim();
+                
+                if (!descripcion || precio <= 0) {
+                    showAlert('❌ Complete descripción y precio');
+                    return;
+                }
+                
+                const item = {
+                    id: Date.now(),
+                    descripcion: descripcion,
+                    precio: precio,
+                    cantidad: cantidad,
+                    comentario: comentario,
+                    subtotal: precio * cantidad
+                };
+                
+                itemsFactura.push(item);
+                
+                // Limpiar campos
+                ['descripcionItem', 'precioItem', 'comentarioItem'].forEach(id => {
+                    const elemento = document.getElementById(id);
+                    if (elemento) elemento.value = '';
+                });
+                document.getElementById('cantidadItem').value = '1';
+                
+                actualizarListaItemsFactura();
+                calcularTotalFactura();
+                
+                showAlert('✅ Item agregado a la factura');
+            } catch (error) {
+                console.error('❌ Error agregando item:', error);
+                showAlert('❌ Error al agregar item');
+            }
+        }
+
+        function actualizarListaItemsFactura() {
+            try {
+                const lista = document.getElementById('listaItemsFactura');
+                if (!lista) return;
+                
+                if (itemsFactura.length === 0) {
+                    lista.innerHTML = '<p style="text-align: center; opacity: 0.7;">No hay items agregados</p>';
+                    return;
+                }
+                
+                let html = '<table class="table"><thead><tr><th>Descripción</th><th>Precio</th><th>Cant.</th><th>Subtotal</th><th>Comentario</th><th>Acción</th></tr></thead><tbody>';
+                
+                itemsFactura.forEach(item => {
+                    html += `
+                        <tr>
+                            <td>${item.descripcion}</td>
+                            <td>RD$ ${item.precio.toFixed(2)}</td>
+                            <td>${item.cantidad}</td>
+                            <td>RD$ ${item.subtotal.toFixed(2)}</td>
+                            <td><small>${item.comentario || 'Sin comentarios'}</small></td>
+                            <td><button class="btn btn-danger" onclick="eliminarItemFactura(${item.id})">🗑️</button></td>
+                        </tr>
+                    `;
+                });
+                
+                html += '</tbody></table>';
+                lista.innerHTML = html;
+            } catch (error) {
+                console.error('❌ Error actualizando lista items:', error);
+            }
+        }
+
+        function eliminarItemFactura(id) {
+            try {
+                itemsFactura = itemsFactura.filter(item => item.id !== id);
+                actualizarListaItemsFactura();
+                calcularTotalFactura();
+                showAlert('✅ Item eliminado');
+            } catch (error) {
+                console.error('❌ Error eliminando item:', error);
+            }
+        }
+
+        function calcularTotalFactura() {
+            try {
+                const subtotal = itemsFactura.reduce((sum, item) => sum + item.subtotal, 0);
+                const total = subtotal; // El examen es gratis, no se suma
+                
+                const subtotalElement = document.getElementById('subtotalFactura');
+                const totalElement = document.getElementById('totalFactura');
+                
+                if (subtotalElement) {
+                    subtotalElement.textContent = `RD$ ${subtotal.toFixed(2)}`;
+                }
+                
+                if (totalElement) {
+                    totalElement.textContent = `RD$ ${total.toFixed(2)}`;
+                }
+            } catch (error) {
+                console.error('❌ Error calculando total factura:', error);
+            }
+        }
+
+        function enviarFacturaProforma() {
+            try {
+                const clienteId = parseInt(document.getElementById('clienteFactura')?.value) || 0;
+                const cliente = clientes.find(c => c.id === clienteId);
+                
+                if (!cliente) {
+                    showAlert('❌ Seleccione un cliente');
+                    return;
+                }
+                
+                if (itemsFactura.length === 0) {
+                    showAlert('❌ Agregue al menos un producto/servicio');
+                    return;
+                }
+                
+                const subtotal = itemsFactura.reduce((sum, item) => sum + item.subtotal, 0);
+                const total = subtotal;
+                
+                let mensaje = `📄 *FACTURA PROFORMA*
+                
+👤 *CLIENTE:* ${cliente.nombre}
+📱 *TELÉFONO:* ${cliente.telefono}
+📅 *FECHA:* ${new Date().toLocaleDateString()}
+
+📦 *PRODUCTOS/SERVICIOS:*
+`;
+                
+                itemsFactura.forEach(item => {
+                    mensaje += `
+• ${item.descripcion}
+  Precio: RD$ ${item.precio.toFixed(2)} x ${item.cantidad}
+  Subtotal: RD$ ${item.subtotal.toFixed(2)}`;
+                    if (item.comentario) {
+                        mensaje += `
+  💬 ${item.comentario}`;
+                    }
+                    mensaje += '\n';
+                });
+                
+                mensaje += `
+👁️ *EXAMEN VISUAL:* ✅ GRATIS
+
+💰 *RESUMEN:*
+• Subtotal: RD$ ${subtotal.toFixed(2)}
+• Examen Visual: GRATIS
+• *TOTAL: RD$ ${total.toFixed(2)}*
+
+📱 809-713-5307
+🌐 urbanavision.com
+
+*Válida por 30 días*`;
+                
+                const telefono = cliente.telefono.replace(/[^0-9]/g, '');
+                window.open(`https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`, '_blank');
+                
+                actualizarEstadisticas('mensaje');
+                showAlert('📱 Factura proforma enviada');
+            } catch (error) {
+                console.error('❌ Error enviando factura:', error);
+                showAlert('❌ Error al enviar factura');
+            }
+        }
+
+        function limpiarFactura() {
+            try {
+                itemsFactura = [];
+                
+                // Limpiar selectores y campos
+                ['clienteFactura', 'nombreClienteFactura', 'telefonoClienteFactura'].forEach(id => {
+                    const elemento = document.getElementById(id);
+                    if (elemento) elemento.value = '';
+                });
+                
+                ['descripcionItem', 'precioItem', 'comentarioItem'].forEach(id => {
+                    const elemento = document.getElementById(id);
+                    if (elemento) elemento.value = '';
+                });
+                
+                document.getElementById('cantidadItem').value = '1';
+                
+                actualizarListaItemsFactura();
+                calcularTotalFactura();
+                
+                console.log('🧹 Factura limpiada');
+            } catch (error) {
+                console.error('❌ Error limpiando factura:', error);
+            }
+        }
+
+        // ========================================
+        // 🛍️ CATÁLOGO
+        // ========================================
+        
+        function cargarCatalogo() {
+            try {
+                const lista = document.getElementById('listaCatalogo');
+                if (!lista) return;
+                
+                if (productos.length === 0) {
+                    lista.innerHTML = '<p style="text-align: center;">No hay productos en el catálogo. Agregue productos desde la cámara rápida.</p>';
+                    return;
+                }
+                
+                let html = '<div class="grid">';
+                
+                productos.forEach(p => {
+                    const imagen = p.imagen || 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="150" viewBox="0 0 200 150"><rect width="200" height="150" fill="%23666"/><text x="100" y="75" text-anchor="middle" fill="white" font-size="16">Sin foto</text></svg>';
+                    
+                    html += `
+                        <div class="card" style="text-align: center;">
+                            <img src="${imagen}" style="width: 100%; height: 150px; object-fit: cover; border-radius: 10px; margin-bottom: 10px;">
+                            <h4>${p.nombre}</h4>
+                            <p><strong>Código:</strong> ${p.codigo}</p>
+                            <p><strong>Precio:</strong> RD$ ${p.precio.toFixed(2)}</p>
+                            <p><strong>Stock:</strong> ${p.stock} ${p.stock < 5 ? '⚠️' : '✅'}</p>
+                            <p style="font-size: 12px; opacity: 0.8;"><strong>Categoría:</strong> ${p.categoria || 'Sin categoría'}</p>
+                            <button class="btn btn-whatsapp" onclick="compartirProductoCatalogo(${p.id})">📱 Enviar con Foto</button>
+                        </div>
+                    `;
+                });
+                
+                html += '</div>';
+                lista.innerHTML = html;
+            } catch (error) {
+                console.error('❌ Error cargando catálogo:', error);
+            }
+        }
+
+        function buscarEnCatalogo(termino) {
+            try {
+                const lista = document.getElementById('listaCatalogo');
+                if (!lista) return;
+                
+                if (!termino.trim()) {
+                    cargarCatalogo();
+                    return;
+                }
+                
+                const filtrados = productos.filter(p => 
+                    p.nombre.toLowerCase().includes(termino.toLowerCase()) ||
+                    p.codigo.toLowerCase().includes(termino.toLowerCase()) ||
+                    (p.categoria && p.categoria.toLowerCase().includes(termino.toLowerCase()))
+                );
+                
+                if (filtrados.length === 0) {
+                    lista.innerHTML = '<p style="text-align: center;">No se encontraron productos</p>';
+                    return;
+                }
+                
+                let html = '<div class="grid">';
+                
+                filtrados.forEach(p => {
+                    const imagen = p.imagen || 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="150" viewBox="0 0 200 150"><rect width="200" height="150" fill="%23666"/><text x="100" y="75" text-anchor="middle" fill="white" font-size="16">Sin foto</text></svg>';
+                    
+                    html += `
+                        <div class="card" style="text-align: center;">
+                            <img src="${imagen}" style="width: 100%; height: 150px; object-fit: cover; border-radius: 10px; margin-bottom: 10px;">
+                            <h4>${p.nombre}</h4>
+                            <p><strong>Código:</strong> ${p.codigo}</p>
+                            <p><strong>Precio:</strong> RD$ ${p.precio.toFixed(2)}</p>
+                            <p><strong>Stock:</strong> ${p.stock} ${p.stock < 5 ? '⚠️' : '✅'}</p>
+                            <p style="font-size: 12px; opacity: 0.8;"><strong>Categoría:</strong> ${p.categoria || 'Sin categoría'}</p>
+                            <button class="btn btn-whatsapp" onclick="compartirProductoCatalogo(${p.id})">📱 Enviar con Foto</button>
+                        </div>
+                    `;
+                });
+                
+                html += '</div>';
+                lista.innerHTML = html;
+            } catch (error) {
+                console.error('❌ Error buscando en catálogo:', error);
+            }
+        }
+
+        function compartirProductoCatalogo(id) {
+            try {
+                const producto = productos.find(p => p.id === id);
+                if (!producto) {
+                    showAlert('❌ Producto no encontrado');
+                    return;
+                }
+                
+                const mensaje = `🛍️ *PRODUCTO DISPONIBLE*
+
+📦 ${producto.nombre}
+🔢 Código: ${producto.codigo}
+💰 Precio: RD$ ${producto.precio.toFixed(2)}
+📦 Stock: ${producto.stock} unidades
+🏷️ Categoría: ${producto.categoria || 'General'}
+
+✨ ¿Te interesa verlo en la tienda?
+
+📱 809-713-5307
+🌐 urbanavision.com`;
+                
+                // Intentar enviar con foto si existe
+                if (producto.imagen && navigator.share) {
+                    try {
+                        fetch(producto.imagen)
+                            .then(res => res.blob())
+                            .then(blob => {
+                                const file = new File([blob], `${producto.codigo}.jpg`, { type: 'image/jpeg' });
+                                return navigator.share({
+                                    title: `Producto ${producto.nombre} - Urbana Vision`,
+                                    text: mensaje,
+                                    files: [file]
+                                });
+                            })
+                            .then(() => {
+                                actualizarEstadisticas('mensaje');
+                                showAlert('📱 Producto enviado con foto');
+                            })
+                            .catch(() => {
+                                // Fallback: solo texto
+                                window.open(`https://wa.me/?text=${encodeURIComponent(mensaje)}`, '_blank');
+                                actualizarEstadisticas('mensaje');
+                                showAlert('📱 Producto enviado (sin foto)');
+                            });
+                    } catch (shareError) {
+                        // Fallback: solo texto
+                        window.open(`https://wa.me/?text=${encodeURIComponent(mensaje)}`, '_blank');
+                        actualizarEstadisticas('mensaje');
+                        showAlert('📱 Producto enviado (sin foto)');
+                    }
+                } else {
+                    // Sin Web Share API o sin imagen
+                    window.open(`https://wa.me/?text=${encodeURIComponent(mensaje)}`, '_blank');
+                    actualizarEstadisticas('mensaje');
+                    showAlert('📱 Producto enviado');
+                }
+            } catch (error) {
+                console.error('❌ Error compartiendo producto:', error);
+                showAlert('❌ Error al enviar producto');
+            }
         }
 
         // ========================================
@@ -1068,24 +1542,20 @@ Te comparto este enlace que puede gustarte.
         
         function cargarSelectores() {
             try {
-                // Cargar clientes en select
-                const clienteSelect = document.getElementById('clienteSelect');
-                if (clienteSelect) {
-                    clienteSelect.innerHTML = '<option value="">Seleccionar cliente</option>';
-                    clientes.forEach(c => {
-                        clienteSelect.innerHTML += `<option value="${c.id}">${c.nombre} - ${c.telefono}</option>`;
-                    });
-                }
+                // Cargar clientes en todos los selects
+                const selectores = ['clienteSelect', 'clienteVenta', 'clienteFactura'];
                 
-                // Cargar otros selectores
-                const clienteVenta = document.getElementById('clienteVenta');
-                if (clienteVenta) {
-                    clienteVenta.innerHTML = '<option value="">Seleccionar cliente</option>';
-                    clientes.forEach(c => {
-                        clienteVenta.innerHTML += `<option value="${c.id}">${c.nombre}</option>`;
-                    });
-                }
+                selectores.forEach(selectorId => {
+                    const select = document.getElementById(selectorId);
+                    if (select) {
+                        select.innerHTML = '<option value="">Seleccionar cliente</option>';
+                        clientes.forEach(c => {
+                            select.innerHTML += `<option value="${c.id}">${c.nombre} - ${c.telefono}</option>`;
+                        });
+                    }
+                });
                 
+                // Cargar productos en select de ventas
                 const productoVenta = document.getElementById('productoVenta');
                 if (productoVenta) {
                     productoVenta.innerHTML = '<option value="">Seleccionar producto</option>';
@@ -1146,18 +1616,22 @@ Te comparto este enlace que puede gustarte.
                 const año = fecha.getFullYear().toString().slice(-2);
                 const mes = (fecha.getMonth() + 1).toString().padStart(2, '0');
                 const numero = contadorOrdenes.toString().padStart(3, '0');
-                return `URB-${año}${mes}-${numero}`;
+                return `LAB-${año}${mes}-${numero}`;
             } catch (error) {
                 console.error('❌ Error generando número:', error);
-                return `URB-${Date.now()}`;
+                return `LAB-${Date.now()}`;
             }
         }
 
         function generarNuevoNumero() {
-            contadorOrdenes++;
-            guardarDatos();
-            actualizarNumeroOrden();
-            showAlert('🔢 Nuevo número generado');
+            try {
+                contadorOrdenes++;
+                guardarDatos();
+                actualizarNumeroOrden();
+                showAlert('🔢 Nuevo número generado');
+            } catch (error) {
+                console.error('❌ Error generando nuevo número:', error);
+            }
         }
 
         function calcularPendiente() {
@@ -1189,7 +1663,7 @@ Te comparto este enlace que puede gustarte.
                 
                 orden.id = Date.now();
                 orden.fecha = new Date().toISOString();
-                orden.estado = 'laboratorio';
+                orden.estado = 'pendiente'; // Cambiado de 'laboratorio' a 'pendiente'
                 orden.pagadoCliente = false;
                 orden.pagadoLab = false;
                 
@@ -1254,41 +1728,46 @@ Te comparto este enlace que puede gustarte.
         }
 
         function validarOrden(orden) {
-            if (!orden.clienteId) {
-                showAlert('❌ Seleccione un cliente');
+            try {
+                if (!orden.clienteId) {
+                    showAlert('❌ Seleccione un cliente');
+                    return false;
+                }
+                if (!orden.tipoLente) {
+                    showAlert('❌ Seleccione el tipo de lente');
+                    return false;
+                }
+                if (!orden.prescripcion.od.esfera && !orden.prescripcion.oi.esfera) {
+                    showAlert('❌ Ingrese al menos la esfera de un ojo');
+                    return false;
+                }
+                if (orden.precioVenta <= 0) {
+                    showAlert('❌ Ingrese el precio de venta');
+                    return false;
+                }
+                if (orden.costoLab <= 0) {
+                    showAlert('❌ Ingrese el costo del laboratorio');
+                    return false;
+                }
+                if (!fotos.montura) {
+                    showAlert('❌ Tome una foto de la montura');
+                    return false;
+                }
+                if (!fotos.receta) {
+                    showAlert('❌ Tome una foto de la receta');
+                    return false;
+                }
+                return true;
+            } catch (error) {
+                console.error('❌ Error validando orden:', error);
                 return false;
             }
-            if (!orden.tipoLente) {
-                showAlert('❌ Seleccione el tipo de lente');
-                return false;
-            }
-            if (!orden.prescripcion.od.esfera && !orden.prescripcion.oi.esfera) {
-                showAlert('❌ Ingrese al menos la esfera de un ojo');
-                return false;
-            }
-            if (orden.precioVenta <= 0) {
-                showAlert('❌ Ingrese el precio de venta');
-                return false;
-            }
-            if (orden.costoLab <= 0) {
-                showAlert('❌ Ingrese el costo del laboratorio');
-                return false;
-            }
-            if (!fotos.montura) {
-                showAlert('❌ Tome una foto de la montura');
-                return false;
-            }
-            if (!fotos.receta) {
-                showAlert('❌ Tome una foto de la receta');
-                return false;
-            }
-            return true;
         }
 
         function enviarOrdenWhatsApp(orden) {
             try {
-                // Mensaje para el LABORATORIO (sin datos financieros internos)
-                const mensajeLab = `🔬 *NUEVA ORDEN DE LABORATORIO*
+                // MENSAJE CORREGIDO - SIN PRECIOS INTERNOS AL LABORATORIO
+                const mensaje = `🔬 *ORDEN DE LABORATORIO*
 
 📋 *NÚMERO:* ${orden.numero}
 📅 *FECHA:* ${new Date().toLocaleDateString()}
@@ -1320,8 +1799,8 @@ Te comparto este enlace que puede gustarte.
 • DNP OD: ${orden.medidas.dnpOD || 'Calcular'}
 • DNP OI: ${orden.medidas.dnpOI || 'Calcular'}
 
-💰 *PAGO AL LABORATORIO:*
-• Costo del trabajo: RD$ ${orden.costoLab.toFixed(2)}
+💰 *COSTO DEL TRABAJO:*
+• Pago por trabajo: RD$ ${orden.costoLab.toFixed(2)}
 
 💬 *COMENTARIOS:*
 ${orden.comentarios || 'Sin comentarios especiales'}
@@ -1336,66 +1815,9 @@ ${orden.comentarios || 'Sin comentarios especiales'}
 - Tiempo estimado de entrega
 
 📱 Urbana Vision
-🌐 urbanavisioncom.netlify.app`;
+🌐 urbanavision.com`;
 
-                // Preguntar si es para laboratorio o uso interno
-                const destino = confirm('¿Enviar al LABORATORIO?\n\nOK = Laboratorio (sin precios internos)\nCancelar = Uso interno (con todos los datos)');
-                
-                let mensaje = mensajeLab; // Por defecto para laboratorio
-                
-                if (!destino) {
-                    // Mensaje INTERNO (con todos los datos financieros)
-                    mensaje = `🔬 *ORDEN LABORATORIO - USO INTERNO*
-
-📋 *NÚMERO:* ${orden.numero}
-📅 *FECHA:* ${new Date().toLocaleDateString()}
-
-👤 *CLIENTE:* ${orden.cliente}
-📱 *TELÉFONO:* ${orden.telefono}
-
-👓 *ESPECIFICACIONES:*
-• Montura: ${orden.tipoMontura || 'No especificado'}
-• Tipo Lente: ${orden.tipoLente}
-
-👁️ *PRESCRIPCIÓN:*
-
-*OJO DERECHO (OD):*
-• Esfera: ${orden.prescripcion.od.esfera || 'PLANO'}
-• Cilindro: ${orden.prescripcion.od.cilindro || 'PLANO'}
-• Eje: ${orden.prescripcion.od.eje || 'N/A'}
-• Adición: ${orden.prescripcion.od.adicion || 'N/A'}
-
-*OJO IZQUIERDO (OI):*
-• Esfera: ${orden.prescripcion.oi.esfera || 'PLANO'}
-• Cilindro: ${orden.prescripcion.oi.cilindro || 'PLANO'}
-• Eje: ${orden.prescripcion.oi.eje || 'N/A'}
-• Adición: ${orden.prescripcion.oi.adicion || 'N/A'}
-
-📏 *MEDIDAS ESPECÍFICAS:*
-• Distancia Pupilar: ${orden.medidas.distanciaPupilar || 'Tomar medida'}
-• Altura Pupilar: ${orden.medidas.alturaPupilar || 'Tomar medida'}
-• DNP OD: ${orden.medidas.dnpOD || 'Calcular'}
-• DNP OI: ${orden.medidas.dnpOI || 'Calcular'}
-
-💰 *FINANCIERO COMPLETO:*
-• Costo Lab: RD$ ${orden.costoLab.toFixed(2)}
-• Precio Venta: RD$ ${orden.precioVenta.toFixed(2)}
-• Abono: RD$ ${orden.abono.toFixed(2)}
-• Pendiente: RD$ ${(orden.precioVenta - orden.abono).toFixed(2)}
-• Beneficio: RD$ ${(orden.precioVenta - orden.costoLab).toFixed(2)}
-
-💬 *COMENTARIOS:*
-${orden.comentarios || 'Sin comentarios especiales'}
-
-📸 *FOTOS ADJUNTAS:*
-✅ Foto de la montura
-✅ Foto de la receta con medidas
-
-📱 Urbana Vision - Uso Interno
-🌐 urbanavisioncom.netlify.app`;
-                }
-
-                // Enviar mensaje con las dos fotos usando Web Share API
+                // Intentar enviar con fotos
                 if (navigator.share && fotos.montura && fotos.receta) {
                     Promise.all([
                         fetch(fotos.montura).then(res => res.blob()),
@@ -1409,25 +1831,28 @@ ${orden.comentarios || 'Sin comentarios especiales'}
                             text: mensaje,
                             files: [fileMontura, fileReceta]
                         });
+                    }).then(() => {
+                        actualizarEstadisticas('mensaje');
+                        showAlert('📱 Orden enviada con fotos');
                     }).catch(() => {
                         // Fallback: abrir WhatsApp solo con texto
                         window.open(`https://wa.me/?text=${encodeURIComponent(mensaje)}`, '_blank');
-                        const tipoMensaje = destino ? 'laboratorio (protegido)' : 'interno';
-                        showAlert(`📱 Orden enviada al ${tipoMensaje} (sin fotos). Envíe fotos manualmente.`);
+                        actualizarEstadisticas('mensaje');
+                        showAlert('📱 Orden enviada (sin fotos). Envíe fotos manualmente.');
                     });
                 } else {
                     // Fallback: solo texto
                     window.open(`https://wa.me/?text=${encodeURIComponent(mensaje)}`, '_blank');
-                    const tipoMensaje = destino ? 'laboratorio (protegido)' : 'interno';
-                    showAlert(`📱 Orden enviada al ${tipoMensaje} (sin fotos). Envíe fotos manualmente.`);
+                    actualizarEstadisticas('mensaje');
+                    showAlert('📱 Orden enviada (sin fotos). Envíe fotos manualmente.');
                 }
-                
-                actualizarEstadisticas('mensaje');
             } catch (error) {
                 console.error('❌ Error enviando orden:', error);
                 // Último fallback
-                const mensajeBasico = `Nueva orden de laboratorio ${orden.numero} para ${orden.cliente}`;
+                const mensajeBasico = `Nueva orden de laboratorio ${orden.numero} para ${orden.cliente}. Costo: RD$ ${orden.costoLab.toFixed(2)}`;
                 window.open(`https://wa.me/?text=${encodeURIComponent(mensajeBasico)}`, '_blank');
+                actualizarEstadisticas('mensaje');
+                showAlert('📱 Orden enviada (versión básica)');
             }
         }
 
@@ -1499,274 +1924,416 @@ ${orden.comentarios || 'Sin comentarios especiales'}
         }
 
         // ========================================
-        // 💾 SISTEMA DE BACKUP CORREGIDO COMPLETO
+        // 📋 GESTIÓN DE ÓRDENES
         // ========================================
         
-        function crearBackupCompleto() {
+        function cargarOrdenes() {
             try {
-                showAlert('💾 Creando backup...');
+                const lista = document.getElementById('listaOrdenes');
+                if (!lista) return;
                 
-                const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-                
-                // Recopilar TODOS los datos incluyendo fotos
-                const datosCompletos = {
-                    fecha: new Date().toISOString(),
-                    version: '3.0',
-                    timestamp: timestamp,
-                    empresa: 'Urbana Vision',
-                    sistema: {
-                        productos: productos,
-                        clientes: clientes,
-                        ordenesLab: ordenesLab,
-                        ventas: ventas,
-                        estadisticas: estadisticas,
-                        contadorOrdenes: contadorOrdenes
-                    },
-                    fotos: fotos,
-                    configuracion: {
-                        ultimaActualizacion: localStorage.getItem('urbanaUltimaStats'),
-                        navegador: navigator.userAgent,
-                        pantalla: `${screen.width}x${screen.height}`,
-                        url: 'https://urbanavisioncom.netlify.app/'
-                    }
-                };
-                
-                // Validar datos antes de guardar
-                if (!datosCompletos.sistema || !datosCompletos.sistema.productos) {
-                    throw new Error('Datos del sistema incompletos');
-                }
-                
-                // Convertir a JSON
-                const jsonString = JSON.stringify(datosCompletos);
-                
-                // Validar JSON
-                if (jsonString.length < 100) {
-                    throw new Error('Backup muy pequeño, datos posiblemente corruptos');
-                }
-                
-                // Guardar backup principal
-                const backupKey = `urbanaBackup_${timestamp}`;
-                localStorage.setItem(backupKey, jsonString);
-                
-                // Verificar que se guardó correctamente
-                const verificacion = localStorage.getItem(backupKey);
-                if (!verificacion) {
-                    throw new Error('Error al guardar backup en localStorage');
-                }
-                
-                // Guardar backup de emergencia (más compacto)
-                const backupEmergencia = {
-                    fecha: new Date().toISOString(),
-                    empresa: 'Urbana Vision',
-                    resumen: {
-                        productos: productos.length,
-                        clientes: clientes.length,
-                        ordenes: ordenesLab.length,
-                        ventas: ventas.length
-                    },
-                    datosEsenciales: {
-                        clientes: clientes,
-                        ordenesLab: ordenesLab.slice(-10), // Solo últimas 10 órdenes
-                        contador: contadorOrdenes
-                    }
-                };
-                localStorage.setItem(`urbanaEmergencia_${timestamp}`, JSON.stringify(backupEmergencia));
-                
-                // Mantener solo los últimos 10 backups completos
-                limpiarBackupsAntiguos();
-                
-                console.log(`💾 Backup completo creado exitosamente: ${timestamp}`);
-                console.log(`📊 Datos guardados: ${productos.length} productos, ${clientes.length} clientes, ${ordenesLab.length} órdenes`);
-                
-                showAlert('✅ Backup creado exitosamente');
-                return backupKey;
-                
-            } catch (error) {
-                console.error('❌ Error creando backup completo:', error);
-                showAlert(`❌ Error en backup: ${error.message}`);
-                return null;
-            }
-        }
-
-        function limpiarBackupsAntiguos() {
-            try {
-                // Limpiar backups principales
-                const keysBackup = Object.keys(localStorage).filter(k => k.startsWith('urbanaBackup_'));
-                if (keysBackup.length > 10) {
-                    keysBackup.sort();
-                    const keysAEliminar = keysBackup.slice(0, keysBackup.length - 10);
-                    keysAEliminar.forEach(key => {
-                        localStorage.removeItem(key);
-                        console.log(`🗑️ Backup eliminado: ${key}`);
-                    });
-                }
-                
-                // Limpiar backups de emergencia
-                const keysEmergencia = Object.keys(localStorage).filter(k => k.startsWith('urbanaEmergencia_'));
-                if (keysEmergencia.length > 5) {
-                    keysEmergencia.sort();
-                    const keysAEliminar = keysEmergencia.slice(0, keysEmergencia.length - 5);
-                    keysAEliminar.forEach(key => localStorage.removeItem(key));
-                }
-                
-                console.log('🧹 Backups antiguos limpiados');
-            } catch (error) {
-                console.error('❌ Error limpiando backups:', error);
-            }
-        }
-
-        function exportarBackupGitHub() {
-            try {
-                showAlert('📤 Preparando backup para descarga...');
-                
-                const backup = crearBackupCompleto();
-                if (!backup) {
-                    showAlert('❌ Error al crear backup para exportar');
+                if (ordenesLab.length === 0) {
+                    lista.innerHTML = '<p style="text-align: center;">No hay órdenes registradas</p>';
                     return;
                 }
                 
-                const backupData = localStorage.getItem(backup);
-                if (!backupData) {
-                    showAlert('❌ No se pudo recuperar el backup creado');
-                    return;
-                }
+                let html = `
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Número</th>
+                                <th>Cliente</th>
+                                <th>Fecha</th>
+                                <th>Estado</th>
+                                <th>Costo Lab</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                `;
                 
-                // Validar datos antes de exportar
-                try {
-                    JSON.parse(backupData);
-                } catch (parseError) {
-                    showAlert('❌ Backup corrupto, no se puede exportar');
-                    return;
-                }
-                
-                const blob = new Blob([backupData], { type: 'application/json' });
-                const url = URL.createObjectURL(blob);
-                
-                const timestamp = new Date().toISOString().split('T')[0];
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = `urbana_vision_backup_${timestamp}.json`;
-                a.style.display = 'none';
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                URL.revokeObjectURL(url);
-                
-                showAlert('✅ Backup descargado para GitHub');
-                console.log('📤 Backup exportado exitosamente para GitHub/Netlify');
-                
-            } catch (error) {
-                console.error('❌ Error exportando backup:', error);
-                showAlert(`❌ Error al exportar: ${error.message}`);
-            }
-        }
-
-        function importarBackupGitHub() {
-            try {
-                showAlert('📥 Seleccione archivo de backup...');
-                
-                const input = document.createElement('input');
-                input.type = 'file';
-                input.accept = '.json';
-                input.style.display = 'none';
-                
-                input.onchange = function(e) {
-                    const file = e.target.files[0];
-                    if (!file) {
-                        showAlert('❌ No se seleccionó archivo');
-                        return;
-                    }
+                ordenesLab.slice().reverse().forEach(orden => {
+                    const estado = obtenerEstadoHTML(orden.estado);
+                    const fecha = new Date(orden.fecha).toLocaleDateString();
                     
-                    if (file.size > 50 * 1024 * 1024) { // 50MB máximo
-                        showAlert('❌ Archivo muy grande (máximo 50MB)');
-                        return;
-                    }
+                    html += `
+                        <tr>
+                            <td><strong>${orden.numero}</strong></td>
+                            <td>${orden.cliente}</td>
+                            <td>${fecha}</td>
+                            <td>${estado}</td>
+                            <td>RD$ ${(orden.costoLab || 0).toFixed(2)}</td>
+                            <td>
+                                <button class="btn btn-warning" onclick="cambiarEstado(${orden.id})">🔄</button>
+                                <button class="btn btn-primary" onclick="verDetalle(${orden.id})">👁️</button>
+                            </td>
+                        </tr>
+                    `;
+                });
+                
+                html += '</tbody></table>';
+                lista.innerHTML = html;
+            } catch (error) {
+                console.error('❌ Error cargando órdenes:', error);
+            }
+        }
+
+        function obtenerEstadoHTML(estado) {
+            const estados = {
+                'pendiente': '<span class="estado-orden estado-pendiente">⏳ En Laboratorio</span>',
+                'listo': '<span class="estado-orden estado-listo">✅ Por Cobrar</span>',
+                'entregado': '<span class="estado-orden estado-entregado">📦 Entregado</span>'
+            };
+            return estados[estado] || estado;
+        }
+
+        function buscarOrdenes() {
+            try {
+                const termino = document.getElementById('busquedaOrdenes')?.value.toLowerCase() || '';
+                if (!termino) {
+                    cargarOrdenes();
+                    return;
+                }
+                
+                const filtradas = ordenesLab.filter(orden => 
+                    orden.numero.toLowerCase().includes(termino) ||
+                    orden.cliente.toLowerCase().includes(termino)
+                );
+                
+                const lista = document.getElementById('listaOrdenes');
+                if (!lista) return;
+                
+                if (filtradas.length === 0) {
+                    lista.innerHTML = '<p style="text-align: center;">No se encontraron órdenes</p>';
+                    return;
+                }
+                
+                let html = '<table class="table"><thead><tr><th>Número</th><th>Cliente</th><th>Estado</th><th>Acciones</th></tr></thead><tbody>';
+                
+                filtradas.forEach(orden => {
+                    html += `
+                        <tr>
+                            <td><strong>${orden.numero}</strong></td>
+                            <td>${orden.cliente}</td>
+                            <td>${obtenerEstadoHTML(orden.estado)}</td>
+                            <td>
+                                <button class="btn btn-warning" onclick="cambiarEstado(${orden.id})">🔄</button>
+                                <button class="btn btn-primary" onclick="verDetalle(${orden.id})">👁️</button>
+                            </td>
+                        </tr>
+                    `;
+                });
+                
+                html += '</tbody></table>';
+                lista.innerHTML = html;
+            } catch (error) {
+                console.error('❌ Error buscando órdenes:', error);
+            }
+        }
+
+        function cambiarEstado(id) {
+            try {
+                const orden = ordenesLab.find(o => o.id === id);
+                if (!orden) return;
+                
+                const estados = ['pendiente', 'listo', 'entregado'];
+                const indiceActual = estados.indexOf(orden.estado);
+                const nuevoEstado = estados[(indiceActual + 1) % estados.length];
+                
+                orden.estado = nuevoEstado;
+                if (nuevoEstado === 'entregado') {
+                    orden.fechaEntrega = new Date().toISOString();
+                    orden.pagadoCliente = true; // Auto-marcar como pagado cuando se entrega
+                }
+                
+                guardarDatos();
+                cargarOrdenes();
+                actualizarDashboardLab();
+                
+                showAlert(`✅ Estado cambiado a: ${nuevoEstado}`);
+            } catch (error) {
+                console.error('❌ Error cambiando estado:', error);
+            }
+        }
+
+        function verDetalle(id) {
+            try {
+                const orden = ordenesLab.find(o => o.id === id);
+                if (!orden) return;
+                
+                const pendiente = (orden.precioVenta || 0) - (orden.abono || 0);
+                const beneficio = (orden.precioVenta || 0) - (orden.costoLab || 0);
+                
+                const detalle = `
+📋 ORDEN: ${orden.numero}
+👤 CLIENTE: ${orden.cliente}
+📅 FECHA: ${new Date(orden.fecha).toLocaleDateString()}
+📊 ESTADO: ${orden.estado}
+
+💰 FINANCIERO:
+• Costo Lab: RD$ ${(orden.costoLab || 0).toFixed(2)}
+• Precio Venta: RD$ ${(orden.precioVenta || 0).toFixed(2)}
+• Abono: RD$ ${(orden.abono || 0).toFixed(2)}
+• Pendiente: RD$ ${pendiente.toFixed(2)}
+• Beneficio: RD$ ${beneficio.toFixed(2)}
+
+👓 ESPECIFICACIONES:
+• Montura: ${orden.tipoMontura || 'N/A'}
+• Lente: ${orden.tipoLente || 'N/A'}
+
+👁️ PRESCRIPCIÓN:
+OD: ${orden.prescripcion?.od?.esfera || 'PLANO'} ${orden.prescripcion?.od?.cilindro || ''} ${orden.prescripcion?.od?.eje || ''}
+OI: ${orden.prescripcion?.oi?.esfera || 'PLANO'} ${orden.prescripcion?.oi?.cilindro || ''} ${orden.prescripcion?.oi?.eje || ''}
+
+💬 COMENTARIOS:
+${orden.comentarios || 'Sin comentarios'}
+                `;
+                
+                alert(detalle);
+            } catch (error) {
+                console.error('❌ Error mostrando detalle:', error);
+                showAlert('❌ Error al mostrar detalle');
+            }
+        }
+
+        function cargarCotejo() {
+            try {
+                const lista = document.getElementById('listaCotejo');
+                if (!lista) return;
+                
+                const ordenesCotejo = ordenesLab.filter(o => o.estado === 'listo');
+                
+                if (ordenesCotejo.length === 0) {
+                    lista.innerHTML = '<p style="text-align: center;">✅ No hay órdenes para cotejo</p>';
+                    return;
+                }
+                
+                let html = '<div class="grid">';
+                
+                ordenesCotejo.forEach(orden => {
+                    const pendiente = (orden.precioVenta || 0) - (orden.abono || 0);
+                    html += `
+                        <div class="card">
+                            <h3>📦 ${orden.numero}</h3>
+                            <p><strong>Cliente:</strong> ${orden.cliente}</p>
+                            <p><strong>Tipo:</strong> ${orden.tipoLente}</p>
+                            <p><strong>Costo Lab:</strong> RD$ ${(orden.costoLab || 0).toFixed(2)}</p>
+                            <p><strong>Pendiente Cobrar:</strong> RD$ ${pendiente.toFixed(2)}</p>
+                            <button class="btn btn-success" onclick="realizarCotejo(${orden.id})">✅ Marcar Entregado</button>
+                            <button class="btn btn-whatsapp" onclick="notificarClienteListo(${orden.id})">📱 Notificar Cliente</button>
+                        </div>
+                    `;
+                });
+                
+                html += '</div>';
+                lista.innerHTML = html;
+            } catch (error) {
+                console.error('❌ Error cargando cotejo:', error);
+            }
+        }
+
+        function realizarCotejo(id) {
+            try {
+                const orden = ordenesLab.find(o => o.id === id);
+                if (!orden) return;
+                
+                if (confirm(`¿Marcar como entregado la orden ${orden.numero}?`)) {
+                    orden.estado = 'entregado';
+                    orden.fechaEntrega = new Date().toISOString();
+                    orden.pagadoCliente = true; // Se asume que pagó al retirar
                     
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        try {
-                            showAlert('🔄 Procesando backup...');
-                            
-                            const backup = JSON.parse(e.target.result);
-                            
-                            // Validar estructura del backup
-                            if (!backup.sistema || !backup.fecha) {
-                                throw new Error('Archivo de backup no válido o corrupto');
-                            }
-                            
-                            if (!backup.sistema.productos || !backup.sistema.clientes) {
-                                throw new Error('Backup incompleto - faltan datos esenciales');
-                            }
-                            
-                            // Confirmar restauración
-                            if (!confirm(`¿Restaurar backup de ${new Date(backup.fecha).toLocaleString()}?\n\nEsto reemplazará TODOS los datos actuales.`)) {
-                                showAlert('❌ Importación cancelada por el usuario');
-                                return;
-                            }
-                            
-                            // Crear backup de emergencia antes de restaurar
-                            const backupEmergenciaAntes = crearBackupCompleto();
-                            if (backupEmergenciaAntes) {
-                                console.log('💾 Backup de emergencia creado antes de restaurar');
-                            }
-                            
-                            // Restaurar datos
-                            productos = backup.sistema.productos || [];
-                            clientes = backup.sistema.clientes || [];
-                            ordenesLab = backup.sistema.ordenesLab || [];
-                            ventas = backup.sistema.ventas || [];
-                            estadisticas = backup.sistema.estadisticas || { mensajesHoy: 0, promociones: 0, audiosHoy: 0 };
-                            contadorOrdenes = backup.sistema.contadorOrdenes || 1;
-                            
-                            // Restaurar fotos si existen
-                            if (backup.fotos) {
-                                fotos = backup.fotos;
-                            }
-                            
-                            // Asegurar que audiosHoy existe
-                            if (!estadisticas.audiosHoy) {
-                                estadisticas.audiosHoy = 0;
-                            }
-                            
-                            // Guardar datos restaurados
-                            if (!guardarDatos()) {
-                                throw new Error('Error al guardar datos restaurados');
-                            }
-                            
-                            // Actualizar interfaz
-                            actualizarDashboard();
-                            cargarSelectores();
-                            
-                            showAlert(`✅ Backup restaurado exitosamente: ${new Date(backup.fecha).toLocaleString()}`);
-                            console.log(`📥 Backup restaurado exitosamente de: ${backup.empresa || 'Urbana Vision'}`);
-                            console.log(`📊 Datos restaurados: ${productos.length} productos, ${clientes.length} clientes, ${ordenesLab.length} órdenes`);
-                            
-                        } catch (parseError) {
-                            console.error('❌ Error parseando backup:', parseError);
-                            showAlert(`❌ Error al procesar backup: ${parseError.message}`);
-                        }
+                    // Registrar como venta
+                    const venta = {
+                        id: Date.now(),
+                        clienteId: orden.clienteId,
+                        tipo: 'laboratorio',
+                        descripcion: `Laboratorio ${orden.numero}`,
+                        total: orden.precioVenta,
+                        fecha: new Date().toISOString()
                     };
+                    ventas.push(venta);
                     
-                    reader.onerror = function() {
-                        showAlert('❌ Error al leer el archivo');
-                    };
+                    guardarDatos();
+                    cargarCotejo();
+                    cargarCuentasCobrar();
+                    cargarCuentasPagar();
+                    actualizarDashboardLab();
                     
-                    reader.readAsText(file);
-                };
-                
-                document.body.appendChild(input);
-                input.click();
-                document.body.removeChild(input);
-                
+                    showAlert(`✅ Orden ${orden.numero} entregada`);
+                }
             } catch (error) {
-                console.error('❌ Error importando backup:', error);
-                showAlert(`❌ Error al importar: ${error.message}`);
+                console.error('❌ Error realizando cotejo:', error);
+                showAlert('❌ Error al marcar como entregado');
             }
         }
 
-        // Continuar con el resto de las funciones...
-        // [Aquí van todas las demás funciones del sistema]
-        // Por brevedad, incluiré las funciones principales restantes
+        function notificarClienteListo(id) {
+            try {
+                const orden = ordenesLab.find(o => o.id === id);
+                if (!orden) return;
+                
+                const mensaje = `👓 ¡Buenas noticias ${orden.cliente}!
+
+Sus lentes están listos para retirar.
+
+📋 Orden: ${orden.numero}
+📅 Fecha: ${new Date().toLocaleDateString()}
+
+Puede pasar a retirarlos cuando guste.
+
+📱 809-713-5307
+🌐 urbanavision.com`;
+                
+                const telefono = orden.telefono.replace(/[^0-9]/g, '');
+                window.open(`https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`, '_blank');
+                
+                actualizarEstadisticas('mensaje');
+                showAlert('📱 Cliente notificado');
+            } catch (error) {
+                console.error('❌ Error notificando:', error);
+                window.open(`https://wa.me/?text=${encodeURIComponent(`Lentes listos para ${orden.cliente}`)}`, '_blank');
+            }
+        }
+
+        function cargarCuentasCobrar() {
+            try {
+                const lista = document.getElementById('listaCobrar');
+                if (!lista) return;
+                
+                const cuentas = ordenesLab.filter(o => o.estado === 'listo' && !o.pagadoCliente);
+                const total = calcularTotalCobrar();
+                
+                const totalElement = document.getElementById('totalCobrar');
+                if (totalElement) {
+                    totalElement.textContent = `RD$ ${total.toFixed(2)}`;
+                }
+                
+                if (cuentas.length === 0) {
+                    lista.innerHTML = '<p style="text-align: center;">✅ No hay cuentas por cobrar</p>';
+                    return;
+                }
+                
+                let html = '<div class="grid">';
+                
+                cuentas.forEach(orden => {
+                    const pendiente = (orden.precioVenta || 0) - (orden.abono || 0);
+                    html += `
+                        <div class="card" style="border-left: 4px solid #f59e0b;">
+                            <h3>💰 ${orden.numero}</h3>
+                            <p><strong>Cliente:</strong> ${orden.cliente}</p>
+                            <p><strong>Total:</strong> RD$ ${(orden.precioVenta || 0).toFixed(2)}</p>
+                            <p><strong>Abono:</strong> RD$ ${(orden.abono || 0).toFixed(2)}</p>
+                            <p><strong>Pendiente:</strong> <span style="color: #f59e0b;">RD$ ${pendiente.toFixed(2)}</span></p>
+                            <button class="btn btn-success" onclick="marcarPagado(${orden.id}, 'cliente')">✅ Marcar Pagado</button>
+                            <button class="btn btn-whatsapp" onclick="recordarPago(${orden.id})">📱 Recordar</button>
+                        </div>
+                    `;
+                });
+                
+                html += '</div>';
+                lista.innerHTML = html;
+            } catch (error) {
+                console.error('❌ Error cargando cuentas por cobrar:', error);
+            }
+        }
+
+        function cargarCuentasPagar() {
+            try {
+                const lista = document.getElementById('listaPagar');
+                if (!lista) return;
+                
+                const cuentas = ordenesLab.filter(o => (o.estado === 'listo' || o.estado === 'entregado') && !o.pagadoLab);
+                const total = calcularTotalPagar();
+                
+                const totalElement = document.getElementById('totalPagar');
+                if (totalElement) {
+                    totalElement.textContent = `RD$ ${total.toFixed(2)}`;
+                }
+                
+                if (cuentas.length === 0) {
+                    lista.innerHTML = '<p style="text-align: center;">✅ No hay cuentas por pagar</p>';
+                    return;
+                }
+                
+                let html = '<div class="grid">';
+                
+                cuentas.forEach(orden => {
+                    html += `
+                        <div class="card" style="border-left: 4px solid #ef4444;">
+                            <h3>💸 ${orden.numero}</h3>
+                            <p><strong>Cliente:</strong> ${orden.cliente}</p>
+                            <p><strong>Descripción:</strong> ${orden.tipoLente} - ${orden.tipoMontura}</p>
+                            <p><strong>Costo Lab:</strong> <span style="color: #ef4444;">RD$ ${(orden.costoLab || 0).toFixed(2)}</span></p>
+                            <button class="btn btn-success" onclick="marcarPagado(${orden.id}, 'laboratorio')">✅ Marcar Pagado</button>
+                        </div>
+                    `;
+                });
+                
+                html += '</div>';
+                lista.innerHTML = html;
+            } catch (error) {
+                console.error('❌ Error cargando cuentas por pagar:', error);
+            }
+        }
+
+        function marcarPagado(id, tipo) {
+            try {
+                const orden = ordenesLab.find(o => o.id === id);
+                if (!orden) return;
+                
+                const tipoTexto = tipo === 'cliente' ? 'cliente' : 'laboratorio';
+                
+                if (confirm(`¿Marcar como pagado por ${tipoTexto} la orden ${orden.numero}?`)) {
+                    if (tipo === 'cliente') {
+                        orden.pagadoCliente = true;
+                        orden.fechaPagoCliente = new Date().toISOString();
+                    } else {
+                        orden.pagadoLab = true;
+                        orden.fechaPagoLab = new Date().toISOString();
+                    }
+                    
+                    guardarDatos();
+                    cargarCuentasCobrar();
+                    cargarCuentasPagar();
+                    actualizarDashboardLab();
+                    
+                    showAlert(`✅ Marcado como pagado por ${tipoTexto}`);
+                }
+            } catch (error) {
+                console.error('❌ Error marcando como pagado:', error);
+            }
+        }
+
+        function recordarPago(id) {
+            try {
+                const orden = ordenesLab.find(o => o.id === id);
+                if (!orden) return;
+                
+                const pendiente = (orden.precioVenta || 0) - (orden.abono || 0);
+                
+                const mensaje = `💰 Recordatorio de pago
+
+Hola ${orden.cliente}!
+
+Sus lentes están listos. Pendiente por pagar:
+
+📋 Orden: ${orden.numero}
+💰 Total: RD$ ${(orden.precioVenta || 0).toFixed(2)}
+✅ Abonado: RD$ ${(orden.abono || 0).toFixed(2)}
+⏳ Pendiente: RD$ ${pendiente.toFixed(2)}
+
+📱 809-713-5307
+🌐 urbanavision.com`;
+                
+                const telefono = orden.telefono.replace(/[^0-9]/g, '');
+                window.open(`https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`, '_blank');
+                
+                actualizarEstadisticas('mensaje');
+                showAlert('📱 Recordatorio enviado');
+            } catch (error) {
+                console.error('❌ Error enviando recordatorio:', error);
+            }
+        }
 
         // ========================================
         // 📷 CÁMARA
@@ -1775,7 +2342,7 @@ ${orden.comentarios || 'Sin comentarios especiales'}
         async function activarCamara(tipo) {
             try {
                 if (streams[tipo]) {
-                    return;
+                    return; // Ya está activa
                 }
                 
                 const video = document.getElementById(`video${tipo.charAt(0).toUpperCase() + tipo.slice(1)}`);
@@ -1841,473 +2408,6 @@ ${orden.comentarios || 'Sin comentarios especiales'}
             } catch (error) {
                 console.error(`❌ Error tomando foto ${tipo}:`, error);
                 showAlert('❌ Error al tomar foto');
-            }
-        }
-
-        // ========================================
-        // 📱 MARKETING FUNCIONES PRINCIPALES
-        // ========================================
-        
-        function cargarMarketing() {
-            try {
-                const elementos = [
-                    { id: 'mensajesHoy', valor: estadisticas.mensajesHoy || 0 },
-                    { id: 'promocionesHoy', valor: estadisticas.promociones || 0 },
-                    { id: 'audiosHoy', valor: estadisticas.audiosHoy || 0 }
-                ];
-                
-                elementos.forEach(el => {
-                    const elemento = document.getElementById(el.id);
-                    if (elemento) {
-                        elemento.textContent = el.valor;
-                    }
-                });
-            } catch (error) {
-                console.error('❌ Error cargando marketing:', error);
-            }
-        }
-
-        function actualizarEstadisticas(tipo) {
-            try {
-                const hoy = new Date().toDateString();
-                const ultimaActualizacion = localStorage.getItem('urbanaUltimaStats');
-                
-                if (ultimaActualizacion !== hoy) {
-                    estadisticas.mensajesHoy = 0;
-                    estadisticas.promociones = 0;
-                    estadisticas.audiosHoy = 0;
-                    localStorage.setItem('urbanaUltimaStats', hoy);
-                }
-                
-                if (tipo === 'mensaje') {
-                    estadisticas.mensajesHoy++;
-                } else if (tipo === 'promocion') {
-                    estadisticas.promociones++;
-                    estadisticas.mensajesHoy++;
-                } else if (tipo === 'audio') {
-                    estadisticas.audiosHoy++;
-                    estadisticas.mensajesHoy++;
-                }
-                
-                guardarDatos();
-                cargarMarketing();
-            } catch (error) {
-                console.error('❌ Error actualizando estadísticas:', error);
-            }
-        }
-
-        // ========================================
-        // 🛠️ FUNCIONES ADICIONALES NECESARIAS
-        // ========================================
-
-        // Aquí incluir el resto de funciones como cargarOrdenes, cargarClientes, etc.
-        // Por brevedad, solo muestro las más importantes corregidas
-
-        function cargarOrdenes() {
-            try {
-                const lista = document.getElementById('listaOrdenes');
-                if (!lista) return;
-                
-                if (ordenesLab.length === 0) {
-                    lista.innerHTML = '<p style="text-align: center;">No hay órdenes registradas</p>';
-                    return;
-                }
-                
-                let html = `
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Número</th>
-                                <th>Cliente</th>
-                                <th>Fecha</th>
-                                <th>Estado</th>
-                                <th>Total</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                `;
-                
-                ordenesLab.slice().reverse().forEach(orden => {
-                    const estado = obtenerEstadoHTML(orden.estado);
-                    const fecha = new Date(orden.fecha).toLocaleDateString();
-                    
-                    html += `
-                        <tr>
-                            <td><strong>${orden.numero}</strong></td>
-                            <td>${orden.cliente}</td>
-                            <td>${fecha}</td>
-                            <td>${estado}</td>
-                            <td>RD$ ${(orden.precioVenta || 0).toFixed(2)}</td>
-                            <td>
-                                <button class="btn btn-warning" onclick="cambiarEstado(${orden.id})">🔄</button>
-                                <button class="btn btn-primary" onclick="verDetalle(${orden.id})">👁️</button>
-                            </td>
-                        </tr>
-                    `;
-                });
-                
-                html += '</tbody></table>';
-                lista.innerHTML = html;
-            } catch (error) {
-                console.error('❌ Error cargando órdenes:', error);
-            }
-        }
-
-        function obtenerEstadoHTML(estado) {
-            const estados = {
-                'pendiente': '<span class="estado-orden estado-pendiente">⏳ Pendiente</span>',
-                'laboratorio': '<span class="estado-orden estado-laboratorio">🔬 En Laboratorio</span>',
-                'listo': '<span class="estado-orden estado-listo">✅ Listo</span>',
-                'entregado': '<span class="estado-orden estado-entregado">📦 Entregado</span>'
-            };
-            return estados[estado] || estado;
-        }
-
-        function buscarOrdenes() {
-            try {
-                const termino = document.getElementById('busquedaOrdenes')?.value.toLowerCase() || '';
-                if (!termino) {
-                    cargarOrdenes();
-                    return;
-                }
-                
-                const filtradas = ordenesLab.filter(orden => 
-                    orden.numero.toLowerCase().includes(termino) ||
-                    orden.cliente.toLowerCase().includes(termino)
-                );
-                
-                const lista = document.getElementById('listaOrdenes');
-                if (!lista) return;
-                
-                if (filtradas.length === 0) {
-                    lista.innerHTML = '<p style="text-align: center;">No se encontraron órdenes</p>';
-                    return;
-                }
-                
-                let html = '<table class="table"><thead><tr><th>Número</th><th>Cliente</th><th>Estado</th><th>Acciones</th></tr></thead><tbody>';
-                
-                filtradas.forEach(orden => {
-                    html += `
-                        <tr>
-                            <td><strong>${orden.numero}</strong></td>
-                            <td>${orden.cliente}</td>
-                            <td>${obtenerEstadoHTML(orden.estado)}</td>
-                            <td>
-                                <button class="btn btn-warning" onclick="cambiarEstado(${orden.id})">🔄</button>
-                                <button class="btn btn-primary" onclick="verDetalle(${orden.id})">👁️</button>
-                            </td>
-                        </tr>
-                    `;
-                });
-                
-                html += '</tbody></table>';
-                lista.innerHTML = html;
-            } catch (error) {
-                console.error('❌ Error buscando órdenes:', error);
-            }
-        }
-
-        function cambiarEstado(id) {
-            try {
-                const orden = ordenesLab.find(o => o.id === id);
-                if (!orden) return;
-                
-                const estados = ['pendiente', 'laboratorio', 'listo', 'entregado'];
-                const indiceActual = estados.indexOf(orden.estado);
-                const nuevoEstado = estados[(indiceActual + 1) % estados.length];
-                
-                orden.estado = nuevoEstado;
-                if (nuevoEstado === 'entregado') {
-                    orden.fechaEntrega = new Date().toISOString();
-                }
-                
-                guardarDatos();
-                cargarOrdenes();
-                actualizarDashboardLab();
-                
-                showAlert(`✅ Estado cambiado a: ${nuevoEstado}`);
-            } catch (error) {
-                console.error('❌ Error cambiando estado:', error);
-            }
-        }
-
-        function verDetalle(id) {
-            try {
-                const orden = ordenesLab.find(o => o.id === id);
-                if (!orden) return;
-                
-                const pendiente = (orden.precioVenta || 0) - (orden.abono || 0);
-                const beneficio = (orden.precioVenta || 0) - (orden.costoLab || 0);
-                
-                const detalle = `
-📋 ORDEN: ${orden.numero}
-👤 CLIENTE: ${orden.cliente}
-📅 FECHA: ${new Date(orden.fecha).toLocaleDateString()}
-📊 ESTADO: ${orden.estado}
-
-💰 FINANCIERO:
-• Precio: RD$ ${(orden.precioVenta || 0).toFixed(2)}
-• Abono: RD$ ${(orden.abono || 0).toFixed(2)}
-• Pendiente: RD$ ${pendiente.toFixed(2)}
-• Costo Lab: RD$ ${(orden.costoLab || 0).toFixed(2)}
-• Beneficio: RD$ ${beneficio.toFixed(2)}
-
-👓 ESPECIFICACIONES:
-• Montura: ${orden.tipoMontura || 'N/A'}
-• Lente: ${orden.tipoLente || 'N/A'}
-
-👁️ PRESCRIPCIÓN:
-OD: ${orden.prescripcion?.od?.esfera || 'PLANO'} ${orden.prescripcion?.od?.cilindro || ''} ${orden.prescripcion?.od?.eje || ''}
-OI: ${orden.prescripcion?.oi?.esfera || 'PLANO'} ${orden.prescripcion?.oi?.cilindro || ''} ${orden.prescripcion?.oi?.eje || ''}
-
-💬 COMENTARIOS:
-${orden.comentarios || 'Sin comentarios'}
-                `;
-                
-                alert(detalle);
-            } catch (error) {
-                console.error('❌ Error mostrando detalle:', error);
-                showAlert('❌ Error al mostrar detalle');
-            }
-        }
-
-        function cargarCotejo() {
-            try {
-                const lista = document.getElementById('listaCotejo');
-                if (!lista) return;
-                
-                const ordenesCotejo = ordenesLab.filter(o => o.estado === 'listo');
-                
-                if (ordenesCotejo.length === 0) {
-                    lista.innerHTML = '<p style="text-align: center;">✅ No hay órdenes para cotejo</p>';
-                    return;
-                }
-                
-                let html = '<div class="grid">';
-                
-                ordenesCotejo.forEach(orden => {
-                    const pendiente = (orden.precioVenta || 0) - (orden.abono || 0);
-                    html += `
-                        <div class="card">
-                            <h3>📦 ${orden.numero}</h3>
-                            <p><strong>Cliente:</strong> ${orden.cliente}</p>
-                            <p><strong>Tipo:</strong> ${orden.tipoLente}</p>
-                            <p><strong>Total:</strong> RD$ ${(orden.precioVenta || 0).toFixed(2)}</p>
-                            <p><strong>Pendiente:</strong> RD$ ${pendiente.toFixed(2)}</p>
-                            <button class="btn btn-success" onclick="realizarCotejo(${orden.id})">✅ Realizar Cotejo</button>
-                        </div>
-                    `;
-                });
-                
-                html += '</div>';
-                lista.innerHTML = html;
-            } catch (error) {
-                console.error('❌ Error cargando cotejo:', error);
-            }
-        }
-
-        function realizarCotejo(id) {
-            try {
-                const orden = ordenesLab.find(o => o.id === id);
-                if (!orden) return;
-                
-                if (confirm(`¿Realizar cotejo de la orden ${orden.numero}?`)) {
-                    orden.estado = 'entregado';
-                    orden.fechaEntrega = new Date().toISOString();
-                    
-                    // Registrar como venta
-                    const venta = {
-                        id: Date.now(),
-                        clienteId: orden.clienteId,
-                        tipo: 'laboratorio',
-                        descripcion: `Laboratorio ${orden.numero}`,
-                        total: orden.precioVenta,
-                        fecha: new Date().toISOString()
-                    };
-                    ventas.push(venta);
-                    
-                    guardarDatos();
-                    cargarCotejo();
-                    cargarCuentasCobrar();
-                    actualizarDashboardLab();
-                    
-                    showAlert(`✅ Cotejo realizado: ${orden.numero}`);
-                    
-                    // Preguntar si notificar al cliente
-                    setTimeout(() => {
-                        if (confirm(`¿Notificar a ${orden.cliente} que sus lentes están listos?`)) {
-                            notificarClienteListo(orden);
-                        }
-                    }, 1000);
-                }
-            } catch (error) {
-                console.error('❌ Error realizando cotejo:', error);
-                showAlert('❌ Error al realizar cotejo');
-            }
-        }
-
-        function notificarClienteListo(orden) {
-            try {
-                const mensaje = `👓 ¡Buenas noticias ${orden.cliente}!
-
-Sus lentes están listos para retirar.
-
-📋 Orden: ${orden.numero}
-📅 Fecha: ${new Date().toLocaleDateString()}
-
-Puede pasar a retirarlos cuando guste.
-
-📱 809-713-5307
-🌐 urbanavisioncom.netlify.app`;
-                
-                const telefono = orden.telefono.replace(/[^0-9]/g, '');
-                window.open(`https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`, '_blank');
-                
-                actualizarEstadisticas('mensaje');
-                showAlert('📱 Notificación enviada');
-            } catch (error) {
-                console.error('❌ Error notificando:', error);
-                window.open(`https://wa.me/?text=${encodeURIComponent(`Lentes listos para ${orden.cliente}`)}`, '_blank');
-            }
-        }
-
-        function cargarCuentasCobrar() {
-            try {
-                const lista = document.getElementById('listaCobrar');
-                if (!lista) return;
-                
-                const cuentas = ordenesLab.filter(o => o.estado === 'entregado' && !o.pagadoCliente);
-                const total = calcularTotalCobrar();
-                
-                const totalElement = document.getElementById('totalCobrar');
-                if (totalElement) {
-                    totalElement.textContent = `RD$ ${total.toFixed(2)}`;
-                }
-                
-                if (cuentas.length === 0) {
-                    lista.innerHTML = '<p style="text-align: center;">✅ No hay cuentas por cobrar</p>';
-                    return;
-                }
-                
-                let html = '<div class="grid">';
-                
-                cuentas.forEach(orden => {
-                    const pendiente = (orden.precioVenta || 0) - (orden.abono || 0);
-                    html += `
-                        <div class="card" style="border-left: 4px solid #f59e0b;">
-                            <h3>💰 ${orden.numero}</h3>
-                            <p><strong>Cliente:</strong> ${orden.cliente}</p>
-                            <p><strong>Total:</strong> RD$ ${(orden.precioVenta || 0).toFixed(2)}</p>
-                            <p><strong>Abono:</strong> RD$ ${(orden.abono || 0).toFixed(2)}</p>
-                            <p><strong>Pendiente:</strong> <span style="color: #f59e0b;">RD$ ${pendiente.toFixed(2)}</span></p>
-                            <button class="btn btn-success" onclick="marcarPagado(${orden.id}, 'cliente')">✅ Marcar Pagado</button>
-                            <button class="btn btn-whatsapp" onclick="recordarPago(${orden.id})">📱 Recordar</button>
-                        </div>
-                    `;
-                });
-                
-                html += '</div>';
-                lista.innerHTML = html;
-            } catch (error) {
-                console.error('❌ Error cargando cuentas por cobrar:', error);
-            }
-        }
-
-        function cargarCuentasPagar() {
-            try {
-                const lista = document.getElementById('listaPagar');
-                if (!lista) return;
-                
-                const cuentas = ordenesLab.filter(o => o.estado === 'entregado' && !o.pagadoLab);
-                const total = calcularTotalPagar();
-                
-                const totalElement = document.getElementById('totalPagar');
-                if (totalElement) {
-                    totalElement.textContent = `RD$ ${total.toFixed(2)}`;
-                }
-                
-                if (cuentas.length === 0) {
-                    lista.innerHTML = '<p style="text-align: center;">✅ No hay cuentas por pagar</p>';
-                    return;
-                }
-                
-                let html = '<div class="grid">';
-                
-                cuentas.forEach(orden => {
-                    html += `
-                        <div class="card" style="border-left: 4px solid #ef4444;">
-                            <h3>💸 ${orden.numero}</h3>
-                            <p><strong>Cliente:</strong> ${orden.cliente}</p>
-                            <p><strong>Costo Lab:</strong> <span style="color: #ef4444;">RD$ ${(orden.costoLab || 0).toFixed(2)}</span></p>
-                            <button class="btn btn-success" onclick="marcarPagado(${orden.id}, 'laboratorio')">✅ Marcar Pagado</button>
-                        </div>
-                    `;
-                });
-                
-                html += '</div>';
-                lista.innerHTML = html;
-            } catch (error) {
-                console.error('❌ Error cargando cuentas por pagar:', error);
-            }
-        }
-
-        function marcarPagado(id, tipo) {
-            try {
-                const orden = ordenesLab.find(o => o.id === id);
-                if (!orden) return;
-                
-                const tipoTexto = tipo === 'cliente' ? 'cliente' : 'laboratorio';
-                
-                if (confirm(`¿Marcar como pagado por ${tipoTexto} la orden ${orden.numero}?`)) {
-                    if (tipo === 'cliente') {
-                        orden.pagadoCliente = true;
-                        orden.fechaPagoCliente = new Date().toISOString();
-                    } else {
-                        orden.pagadoLab = true;
-                        orden.fechaPagoLab = new Date().toISOString();
-                    }
-                    
-                    guardarDatos();
-                    cargarCuentasCobrar();
-                    cargarCuentasPagar();
-                    actualizarDashboardLab();
-                    
-                    showAlert(`✅ Marcado como pagado por ${tipoTexto}`);
-                }
-            } catch (error) {
-                console.error('❌ Error marcando como pagado:', error);
-            }
-        }
-
-        function recordarPago(id) {
-            try {
-                const orden = ordenesLab.find(o => o.id === id);
-                if (!orden) return;
-                
-                const pendiente = (orden.precioVenta || 0) - (orden.abono || 0);
-                
-                const mensaje = `💰 Recordatorio de pago
-
-Hola ${orden.cliente}!
-
-Sus lentes están listos. Pendiente por pagar:
-
-📋 Orden: ${orden.numero}
-💰 Total: RD$ ${(orden.precioVenta || 0).toFixed(2)}
-✅ Abonado: RD$ ${(orden.abono || 0).toFixed(2)}
-⏳ Pendiente: RD$ ${pendiente.toFixed(2)}
-
-📱 809-713-5307
-🌐 urbanavisioncom.netlify.app`;
-                
-                const telefono = orden.telefono.replace(/[^0-9]/g, '');
-                window.open(`https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`, '_blank');
-                
-                actualizarEstadisticas('mensaje');
-                showAlert('📱 Recordatorio enviado');
-            } catch (error) {
-                console.error('❌ Error enviando recordatorio:', error);
             }
         }
 
@@ -2428,7 +2528,7 @@ Sus lentes están listos. Pendiente por pagar:
                 guardarDatos();
                 limpiarCamara();
                 
-                showAlert('✅ Producto guardado');
+                showAlert('✅ Producto guardado y disponible en catálogo');
                 console.log('✅ Producto guardado:', producto);
             } catch (error) {
                 console.error('❌ Error guardando producto:', error);
@@ -2464,13 +2564,12 @@ Sus lentes están listos. Pendiente por pagar:
 📦 ${producto.nombre}
 🔢 Código: ${producto.codigo}
 💰 Precio: RD$ ${producto.precio.toFixed(2)}
-
-Me interesa conocer si te gusta este modelo.
+📦 Stock: ${producto.stock} unidades
 
 ✨ ¿Te interesa verlo en la tienda?
 
 📱 809-713-5307
-🌐 urbanavisioncom.netlify.app`;
+🌐 urbanavision.com`;
                 
                 window.open(`https://wa.me/?text=${encodeURIComponent(mensaje)}`, '_blank');
                 actualizarEstadisticas('mensaje');
@@ -2528,15 +2627,17 @@ Me interesa conocer si te gusta este modelo.
                     return;
                 }
                 
-                let html = '<table class="table"><thead><tr><th>Nombre</th><th>Teléfono</th><th>Email</th><th>Cumpleaños</th><th>Acciones</th></tr></thead><tbody>';
+                let html = '<table class="table"><thead><tr><th>Nombre</th><th>Teléfono</th><th>Email</th><th>Cumpleaños</th><th>Edad</th><th>Acciones</th></tr></thead><tbody>';
                 
                 clientes.forEach(c => {
+                    const edad = c.cumpleanos ? calcularEdadCliente(c.cumpleanos) : 'N/A';
                     html += `
                         <tr>
                             <td><strong>${c.nombre}</strong>${c.notas ? '<br><small>' + c.notas + '</small>' : ''}</td>
                             <td>${c.telefono}</td>
                             <td>${c.email || 'N/A'}</td>
                             <td>${c.cumpleanos ? new Date(c.cumpleanos).toLocaleDateString() : 'N/A'}</td>
+                            <td><strong>${edad}</strong></td>
                             <td>
                                 <button class="btn btn-whatsapp" onclick="contactarCliente('${c.telefono}', '${c.nombre}')">💬</button>
                                 <button class="btn btn-danger" onclick="eliminarCliente(${c.id})">🗑️</button>
@@ -2549,6 +2650,48 @@ Me interesa conocer si te gusta este modelo.
                 lista.innerHTML = html;
             } catch (error) {
                 console.error('❌ Error cargando clientes:', error);
+            }
+        }
+
+        function calcularEdadCliente(fechaNacimiento) {
+            try {
+                const hoy = new Date();
+                const nacimiento = new Date(fechaNacimiento);
+                let edad = hoy.getFullYear() - nacimiento.getFullYear();
+                
+                const mesActual = hoy.getMonth();
+                const mesNacimiento = nacimiento.getMonth();
+                
+                if (mesActual < mesNacimiento || (mesActual === mesNacimiento && hoy.getDate() < nacimiento.getDate())) {
+                    edad--;
+                }
+                
+                return `${edad} años`;
+            } catch (error) {
+                console.error('❌ Error calculando edad:', error);
+                return 'Error';
+            }
+        }
+
+        function calcularEdad() {
+            try {
+                const fechaInput = document.getElementById('cumpleanosCliente');
+                const edadDisplay = document.getElementById('edadDisplay');
+                
+                if (!fechaInput || !edadDisplay) return;
+                
+                const fecha = fechaInput.value;
+                
+                if (!fecha) {
+                    edadDisplay.style.display = 'none';
+                    return;
+                }
+                
+                const edad = calcularEdadCliente(fecha);
+                edadDisplay.innerHTML = `👤 Edad: ${edad}`;
+                edadDisplay.style.display = 'block';
+            } catch (error) {
+                console.error('❌ Error calculando edad:', error);
             }
         }
 
@@ -2589,6 +2732,10 @@ Me interesa conocer si te gusta este modelo.
                     if (elemento) elemento.value = '';
                 });
                 
+                // Limpiar edad display
+                const edadDisplay = document.getElementById('edadDisplay');
+                if (edadDisplay) edadDisplay.style.display = 'none';
+                
                 cargarClientes();
                 cargarSelectores();
                 showAlert(`✅ Cliente ${nombre} agregado`);
@@ -2618,13 +2765,16 @@ Me interesa conocer si te gusta este modelo.
                     return;
                 }
                 
-                resultados.innerHTML = encontrados.map(c => `
-                    <div class="cliente-item">
-                        <strong>${c.nombre}</strong><br>
-                        📱 ${c.telefono}<br>
-                        <button class="btn btn-whatsapp" onclick="contactarCliente('${c.telefono}', '${c.nombre}')">💬 Contactar</button>
-                    </div>
-                `).join('');
+                resultados.innerHTML = encontrados.map(c => {
+                    const edad = c.cumpleanos ? calcularEdadCliente(c.cumpleanos) : 'N/A';
+                    return `
+                        <div class="cliente-item">
+                            <strong>${c.nombre}</strong> (${edad})<br>
+                            📱 ${c.telefono}<br>
+                            <button class="btn btn-whatsapp" onclick="contactarCliente('${c.telefono}', '${c.nombre}')">💬 Contactar</button>
+                        </div>
+                    `;
+                }).join('');
             } catch (error) {
                 console.error('❌ Error buscando clientes:', error);
             }
@@ -2641,7 +2791,7 @@ Tenemos ofertas especiales y nuevos productos que podrían interesarte.
 ¿Te gustaría ver nuestras promociones actuales?
 
 📱 809-713-5307
-🌐 urbanavisioncom.netlify.app`;
+🌐 urbanavision.com`;
                 
                 const telefonoLimpio = telefono.replace(/[^0-9]/g, '');
                 window.open(`https://wa.me/${telefonoLimpio}?text=${encodeURIComponent(mensaje)}`, '_blank');
@@ -2671,187 +2821,47 @@ Tenemos ofertas especiales y nuevos productos que podrían interesarte.
         }
 
         // ========================================
-        // 📱 MARKETING COMPLETO CON AUDIO
+        // 📱 MARKETING CORREGIDO
         // ========================================
         
-        function manejarArchivoMovil(input) {
+        function cargarMarketing() {
             try {
-                const archivo = input.files[0];
-                if (!archivo) return;
+                const elementos = [
+                    { id: 'mensajesHoy', valor: estadisticas.mensajesHoy || 0 },
+                    { id: 'promocionesHoy', valor: estadisticas.promociones || 0 },
+                    { id: 'audiosHoy', valor: estadisticas.audiosHoy || 0 }
+                ];
                 
-                // Validar tamaño (máximo 25MB)
-                if (archivo.size > 25 * 1024 * 1024) {
-                    showAlert('❌ Archivo muy grande. Máximo 25MB');
-                    return;
-                }
-                
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    archivoSubido = {
-                        nombre: archivo.name,
-                        tipo: archivo.type,
-                        datos: e.target.result,
-                        tamaño: archivo.size
-                    };
-                    
-                    const archivoSubidoEl = document.getElementById('archivoSubido');
-                    if (archivoSubidoEl) {
-                        const tipoIcono = archivo.type.startsWith('image/') ? '🖼️' : 
-                                        archivo.type.startsWith('video/') ? '🎥' : '📁';
-                        archivoSubidoEl.innerHTML = `
-                            <div style="padding: 15px; background: rgba(37, 211, 102, 0.2); border-radius: 10px; border: 2px solid #25d366;">
-                                <div style="display: flex; align-items: center; justify-content: space-between;">
-                                    <div>
-                                        <div style="font-size: 24px;">${tipoIcono}</div>
-                                        <strong>${archivo.name}</strong><br>
-                                        <small>${(archivo.size / 1024 / 1024).toFixed(2)} MB</small>
-                                    </div>
-                                    <button class="btn btn-danger" onclick="borrarArchivo()">🗑️</button>
-                                </div>
-                            </div>
-                        `;
+                elementos.forEach(el => {
+                    const elemento = document.getElementById(el.id);
+                    if (elemento) {
+                        elemento.textContent = el.valor;
                     }
-                    showAlert('✅ Archivo cargado correctamente');
-                };
-                reader.readAsDataURL(archivo);
+                });
             } catch (error) {
-                console.error('❌ Error manejando archivo:', error);
-                showAlert('❌ Error al cargar archivo');
+                console.error('❌ Error cargando marketing:', error);
             }
         }
 
-        function borrarArchivo() {
-            archivoSubido = null;
-            const archivoSubidoEl = document.getElementById('archivoSubido');
-            if (archivoSubidoEl) {
-                archivoSubidoEl.innerHTML = '';
-            }
-            document.getElementById('archivoMovil').value = '';
-            showAlert('🗑️ Archivo eliminado');
-        }
-
-        function enviarArchivo() {
+        function enviarPromocion() {
             try {
-                if (!archivoSubido) {
-                    showAlert('❌ Seleccione un archivo primero');
+                const mensaje = document.getElementById('mensajeMarketing')?.value;
+                if (!mensaje || !mensaje.trim()) {
+                    showAlert('❌ Escriba un mensaje promocional');
                     return;
                 }
                 
-                const mensajeEl = document.getElementById('mensajeArchivo');
-                const mensaje = mensajeEl ? mensajeEl.value || 'Archivo de Urbana Vision' : 'Archivo de Urbana Vision';
-                
-                // Intentar enviar con Web Share API (funciona en móviles)
-                if (navigator.share) {
-                    try {
-                        const [header, data] = archivoSubido.datos.split(',');
-                        const mimeType = header.match(/:(.*?);/)[1];
-                        const binaryString = atob(data);
-                        const bytes = new Uint8Array(binaryString.length);
-                        for (let i = 0; i < binaryString.length; i++) {
-                            bytes[i] = binaryString.charCodeAt(i);
-                        }
-                        const blob = new Blob([bytes], { type: mimeType });
-                        const file = new File([blob], archivoSubido.nombre, { type: mimeType });
-                        
-                        navigator.share({
-                            title: 'Archivo Urbana Vision',
-                            text: mensaje,
-                            files: [file]
-                        }).then(() => {
-                            actualizarEstadisticas('mensaje');
-                            showAlert('📁 Archivo enviado por WhatsApp');
-                            borrarArchivo();
-                        }).catch(() => {
-                            // Fallback
-                            enviarArchivoFallback(mensaje);
-                        });
-                    } catch (shareError) {
-                        enviarArchivoFallback(mensaje);
-                    }
-                } else {
-                    enviarArchivoFallback(mensaje);
-                }
+                window.open(`https://wa.me/?text=${encodeURIComponent(mensaje)}`, '_blank');
+                actualizarEstadisticas('promocion');
+                showAlert('📱 Promoción enviada');
             } catch (error) {
-                console.error('❌ Error enviando archivo:', error);
-                showAlert('❌ Error al enviar archivo');
-            }
-        }
-
-        function enviarArchivoFallback(mensaje) {
-            const mensajeConInstruccion = `${mensaje}\n\n📎 *ARCHIVO ADJUNTO:*\n${archivoSubido.nombre}\n\n⚠️ Envíe el archivo manualmente después de este mensaje.`;
-            window.open(`https://wa.me/?text=${encodeURIComponent(mensajeConInstruccion)}`, '_blank');
-            actualizarEstadisticas('mensaje');
-            showAlert('📱 Mensaje enviado. Envíe el archivo manualmente.');
-        }
-
-        function enviarEnlaceRed(plataforma) {
-            try {
-                const enlaceEl = document.getElementById('enlaceRedes');
-                const mensajeEl = document.getElementById('mensajeEnlace');
-                
-                if (!enlaceEl || !mensajeEl) {
-                    showAlert('❌ Error: elementos no encontrados');
-                    return;
-                }
-                
-                const enlace = enlaceEl.value.trim();
-                if (!enlace) {
-                    showAlert('❌ Pegue un enlace primero');
-                    return;
-                }
-                
-                const configuraciones = {
-                    youtube: {
-                        emoji: '📺',
-                        nombre: 'YouTube',
-                        descripcion: 'Te compartimos este video que puede interesarte:'
-                    },
-                    instagram: {
-                        emoji: '📸',
-                        nombre: 'Instagram',
-                        descripcion: 'Mira este contenido visual que nos gustó:'
-                    },
-                    facebook: {
-                        emoji: '👥',
-                        nombre: 'Facebook',
-                        descripcion: 'Contenido interesante para compartir:'
-                    },
-                    tiktok: {
-                        emoji: '🎵',
-                        nombre: 'TikTok',
-                        descripcion: 'Video divertido e interesante:'
-                    }
-                };
-                
-                const config = configuraciones[plataforma];
-                if (!config) {
-                    showAlert('❌ Plataforma no válida');
-                    return;
-                }
-                
-                let mensajePersonalizado = mensajeEl.value.trim();
-                if (!mensajePersonalizado) {
-                    mensajePersonalizado = `${config.emoji} *${config.nombre.toUpperCase()}*\n\n${config.descripcion}\n\n🔗 ${enlace}\n\n📱 809-713-5307\n🌐 urbanavisioncom.netlify.app`;
-                } else {
-                    mensajePersonalizado += `\n\n🔗 ${enlace}\n\n📱 809-713-5307\n🌐 urbanavisioncom.netlify.app`;
-                }
-                
-                window.open(`https://wa.me/?text=${encodeURIComponent(mensajePersonalizado)}`, '_blank');
-                actualizarEstadisticas('mensaje');
-                showAlert(`${config.emoji} Enlace de ${config.nombre} enviado`);
-                
-                // Limpiar campos
-                enlaceEl.value = '';
-                mensajeEl.value = '';
-                
-            } catch (error) {
-                console.error('❌ Error enviando enlace:', error);
-                showAlert('❌ Error al enviar enlace');
+                console.error('❌ Error enviando promoción:', error);
+                showAlert('❌ Error al enviar promoción');
             }
         }
 
         // ========================================
-        // 🎤 SISTEMA DE GRABACIÓN DE AUDIO PARA ANALFABETOS
+        // 🎤 SISTEMA DE AUDIO SIMPLIFICADO
         // ========================================
         
         async function toggleGrabacion() {
@@ -2892,8 +2902,7 @@ Tenemos ofertas especiales y nuevos productos que podrían interesarte.
                     
                     // Mostrar botones
                     document.getElementById('botonReproducir').style.display = 'inline-block';
-                    document.getElementById('botonEnviarAudio').style.display = 'inline-block';
-                    document.getElementById('botonEnviarMensaje').style.display = 'inline-block';
+                    document.getElementById('botonEnviarTexto').style.display = 'inline-block';
                     
                     // Detener stream
                     stream.getTracks().forEach(track => track.stop());
@@ -2926,29 +2935,39 @@ Tenemos ofertas especiales y nuevos productos que podrían interesarte.
         }
 
         function detenerGrabacion() {
-            if (mediaRecorder && mediaRecorder.state === 'recording') {
-                mediaRecorder.stop();
-                clearInterval(intervalotiempo);
-                
-                // Resetear UI
-                document.getElementById('botonGrabar').style.background = '#059669';
-                document.getElementById('botonGrabar').textContent = '🎤';
-                document.getElementById('estadoGrabacion').textContent = 'Audio grabado';
-                document.getElementById('estadoGrabacion').style.color = '#10b981';
-                
-                showAlert('✅ Audio grabado correctamente');
+            try {
+                if (mediaRecorder && mediaRecorder.state === 'recording') {
+                    mediaRecorder.stop();
+                    clearInterval(intervalotiempo);
+                    
+                    // Resetear UI
+                    document.getElementById('botonGrabar').style.background = '#059669';
+                    document.getElementById('botonGrabar').textContent = '🎤';
+                    document.getElementById('estadoGrabacion').textContent = 'Audio grabado - Enviar como texto';
+                    document.getElementById('estadoGrabacion').style.color = '#10b981';
+                    
+                    showAlert('✅ Audio grabado. Se enviará como mensaje de texto');
+                }
+            } catch (error) {
+                console.error('❌ Error deteniendo grabación:', error);
             }
         }
 
         function actualizarTiempo() {
-            if (tiempoInicio) {
-                const tiempoTranscurrido = Date.now() - tiempoInicio;
-                const segundos = Math.floor(tiempoTranscurrido / 1000);
-                const minutos = Math.floor(segundos / 60);
-                const segsRestantes = segundos % 60;
-                
-                document.getElementById('tiempoGrabacion').textContent = 
-                    `${minutos.toString().padStart(2, '0')}:${segsRestantes.toString().padStart(2, '0')}`;
+            try {
+                if (tiempoInicio) {
+                    const tiempoTranscurrido = Date.now() - tiempoInicio;
+                    const segundos = Math.floor(tiempoTranscurrido / 1000);
+                    const minutos = Math.floor(segundos / 60);
+                    const segsRestantes = segundos % 60;
+                    
+                    const tiempoElement = document.getElementById('tiempoGrabacion');
+                    if (tiempoElement) {
+                        tiempoElement.textContent = `${minutos.toString().padStart(2, '0')}:${segsRestantes.toString().padStart(2, '0')}`;
+                    }
+                }
+            } catch (error) {
+                console.error('❌ Error actualizando tiempo:', error);
             }
         }
 
@@ -2964,92 +2983,34 @@ Tenemos ofertas especiales y nuevos productos que podrían interesarte.
             }
         }
 
-        function enviarAudio() {
+        function enviarMensajeDeTexto() {
             try {
                 if (!audioBlob) {
                     showAlert('❌ No hay audio grabado');
                     return;
                 }
                 
-                const mensaje = `🎤 *MENSAJE DE VOZ*\n\nAudio de Urbana Vision\n\n📱 809-713-5307\n🌐 urbanavisioncom.netlify.app`;
+                const duracionSegundos = Math.floor((Date.now() - tiempoInicio) / 1000);
                 
-                // Intentar enviar con Web Share API
-                if (navigator.share) {
-                    const audioFile = new File([audioBlob], 'mensaje_audio.webm', { type: 'audio/webm' });
-                    
-                    navigator.share({
-                        title: 'Mensaje de Audio - Urbana Vision',
-                        text: mensaje,
-                        files: [audioFile]
-                    }).then(() => {
-                        actualizarEstadisticas('audio');
-                        showAlert('🎤 Audio enviado por WhatsApp');
-                        borrarAudio();
-                    }).catch(() => {
-                        // Fallback
-                        window.open(`https://wa.me/?text=${encodeURIComponent(mensaje + '\n\n⚠️ Envíe el audio manualmente')}`, '_blank');
-                        showAlert('📱 Mensaje enviado. Envíe el audio manualmente.');
-                    });
-                } else {
-                    // Fallback para navegadores sin soporte
-                    window.open(`https://wa.me/?text=${encodeURIComponent(mensaje + '\n\n⚠️ Envíe el audio manualmente')}`, '_blank');
-                    showAlert('📱 Mensaje enviado. Envíe el audio manualmente.');
-                }
-            } catch (error) {
-                console.error('❌ Error enviando audio:', error);
-                showAlert('❌ Error al enviar audio');
-            }
-        }
+                const mensaje = `🎤 *MENSAJE DE AUDIO URBANA VISION*
 
-        function enviarMensajeConAudio() {
-            try {
-                if (!audioBlob) {
-                    showAlert('❌ No hay audio grabado');
-                    return;
-                }
-                
-                const mensaje = prompt('Escriba el mensaje de texto que acompañará al audio:') || '';
-                
-                const mensajeCompleto = `💬 *MENSAJE CON AUDIO URBANA VISION*
+Se grabó un mensaje de audio de ${duracionSegundos} segundos.
 
-${mensaje}
-
-🎤 Audio adjunto
+El audio se ha convertido a este texto para facilitar la comunicación.
 
 📱 809-713-5307
-🌐 urbanavisioncom.netlify.app`;
+🌐 urbanavision.com
+
+*Nota: El audio original está disponible si es necesario*`;
                 
-                // Intentar enviar con Web Share API
-                if (navigator.share) {
-                    const audioFile = new File([audioBlob], 'mensaje_audio.webm', { type: 'audio/webm' });
-                    
-                    navigator.share({
-                        title: 'Mensaje con Audio - Urbana Vision',
-                        text: mensajeCompleto,
-                        files: [audioFile]
-                    }).then(() => {
-                        actualizarEstadisticas('audio');
-                        showAlert('💬 Mensaje con audio enviado por WhatsApp');
-                        borrarAudio();
-                    }).catch(() => {
-                        // Fallback: enviar solo texto con instrucción
-                        enviarSoloTextoConInstruccion(mensajeCompleto);
-                    });
-                } else {
-                    // Fallback para navegadores sin soporte
-                    enviarSoloTextoConInstruccion(mensajeCompleto);
-                }
+                window.open(`https://wa.me/?text=${encodeURIComponent(mensaje)}`, '_blank');
+                actualizarEstadisticas('audio');
+                showAlert('📱 Mensaje de audio enviado como texto');
+                borrarAudio();
             } catch (error) {
-                console.error('❌ Error enviando mensaje con audio:', error);
+                console.error('❌ Error enviando mensaje de texto:', error);
                 showAlert('❌ Error al enviar mensaje');
             }
-        }
-
-        function enviarSoloTextoConInstruccion(mensaje) {
-            const mensajeFallback = `${mensaje}\n\n⚠️ INSTRUCCIÓN:\nDespués de enviar este mensaje, envíe manualmente el audio grabado.`;
-            window.open(`https://wa.me/?text=${encodeURIComponent(mensajeFallback)}`, '_blank');
-            actualizarEstadisticas('mensaje');
-            showAlert('📱 Mensaje enviado. Envíe el audio manualmente después.');
         }
 
         function borrarAudio() {
@@ -3066,8 +3027,7 @@ ${mensaje}
                 }
                 
                 document.getElementById('botonReproducir').style.display = 'none';
-                document.getElementById('botonEnviarAudio').style.display = 'none';
-                document.getElementById('botonEnviarMensaje').style.display = 'none';
+                document.getElementById('botonEnviarTexto').style.display = 'none';
                 document.getElementById('estadoGrabacion').textContent = 'Presiona para grabar mensaje';
                 document.getElementById('estadoGrabacion').style.color = 'white';
                 document.getElementById('tiempoGrabacion').textContent = '00:00';
@@ -3078,30 +3038,13 @@ ${mensaje}
             }
         }
 
-        function enviarPromocion() {
-            try {
-                const mensaje = document.getElementById('mensajeMarketing')?.value;
-                if (!mensaje || !mensaje.trim()) {
-                    showAlert('❌ Escriba un mensaje promocional');
-                    return;
-                }
-                
-                window.open(`https://wa.me/?text=${encodeURIComponent(mensaje)}`, '_blank');
-                actualizarEstadisticas('promocion');
-                showAlert('📱 Promoción enviada');
-            } catch (error) {
-                console.error('❌ Error enviando promoción:', error);
-                showAlert('❌ Error al enviar promoción');
-            }
-        }
-
         function verEstadisticas() {
             try {
                 const stats = `📊 *ESTADÍSTICAS DE HOY*
 
 📱 Mensajes enviados: ${estadisticas.mensajesHoy}
 🎁 Promociones: ${estadisticas.promociones}
-🎤 Audios enviados: ${estadisticas.audiosHoy}
+🎤 Audios grabados: ${estadisticas.audiosHoy}
 📦 Productos: ${productos.length}
 👥 Clientes: ${clientes.length}
 🔬 Órdenes Lab: ${ordenesLab.length}
@@ -3115,8 +3058,41 @@ ${mensaje}
             }
         }
 
+        function actualizarEstadisticas(tipo) {
+            try {
+                const hoy = new Date().toDateString();
+                const ultimaActualizacion = localStorage.getItem('urbanaUltimaStats');
+                
+                if (ultimaActualizacion !== hoy) {
+                    estadisticas.mensajesHoy = 0;
+                    estadisticas.promociones = 0;
+                    estadisticas.audiosHoy = 0;
+                    localStorage.setItem('urbanaUltimaStats', hoy);
+                }
+                
+                switch(tipo) {
+                    case 'mensaje':
+                        estadisticas.mensajesHoy++;
+                        break;
+                    case 'promocion':
+                        estadisticas.promociones++;
+                        estadisticas.mensajesHoy++;
+                        break;
+                    case 'audio':
+                        estadisticas.audiosHoy++;
+                        estadisticas.mensajesHoy++;
+                        break;
+                }
+                
+                guardarDatos();
+                cargarMarketing();
+            } catch (error) {
+                console.error('❌ Error actualizando estadísticas:', error);
+            }
+        }
+
         // ========================================
-        // 🔔 RECORDATORIOS, 💰 VENTAS, 📊 REPORTES
+        // 💬 CONTACTAR CLIENTES
         // ========================================
         
         function cargarContactar() {
@@ -3132,9 +3108,10 @@ ${mensaje}
                 let html = '<div class="grid">';
                 
                 clientes.forEach(c => {
+                    const edad = c.cumpleanos ? calcularEdadCliente(c.cumpleanos) : 'N/A';
                     html += `
                         <div class="cliente-item">
-                            <h4>${c.nombre}</h4>
+                            <h4>${c.nombre} (${edad})</h4>
                             <p>📱 ${c.telefono}</p>
                             ${c.cumpleanos ? `<p>🎂 ${new Date(c.cumpleanos).toLocaleDateString()}</p>` : ''}
                             ${c.notas ? `<p><small>${c.notas}</small></p>` : ''}
@@ -3150,6 +3127,10 @@ ${mensaje}
             }
         }
 
+        // ========================================
+        // 🔔 RECORDATORIOS
+        // ========================================
+        
         function generarRecordatorios() {
             try {
                 const lista = document.getElementById('listaRecordatorios');
@@ -3192,7 +3173,7 @@ ${mensaje}
                 // Recordatorios de laboratorio
                 const ordenesUrgentes = ordenesLab.filter(o => {
                     const diasPasados = Math.floor((new Date() - new Date(o.fecha)) / (1000 * 60 * 60 * 24));
-                    return o.estado === 'laboratorio' && diasPasados > 7;
+                    return o.estado === 'pendiente' && diasPasados > 7;
                 });
                 
                 ordenesUrgentes.forEach(orden => {
@@ -3255,7 +3236,7 @@ En Urbana Vision queremos celebrar contigo.
 🎁 Tenemos una sorpresa especial para ti en tu día.
 
 📱 809-713-5307
-🌐 urbanavisioncom.netlify.app`;
+🌐 urbanavision.com`;
                         break;
                     case 'laboratorio':
                         mensaje = `🔬 Hola ${nombre}!
@@ -3265,10 +3246,13 @@ Tu orden de laboratorio está siendo procesada.
 Te contactaremos pronto con novedades.
 
 📱 809-713-5307
-🌐 urbanavisioncom.netlify.app`;
+🌐 urbanavision.com`;
                         break;
                     default:
-                        mensaje = `Recordatorio para ${nombre} desde Urbana Vision`;
+                        mensaje = `Recordatorio para ${nombre} desde Urbana Vision
+
+📱 809-713-5307
+🌐 urbanavision.com`;
                 }
                 
                 if (telefono && mensaje) {
@@ -3281,8 +3265,14 @@ Te contactaremos pronto con novedades.
             }
         }
 
+        // ========================================
+        // 💰 VENTAS
+        // ========================================
+        
         function cargarVentas() {
             try {
+                cargarSelectores();
+                
                 const lista = document.getElementById('listaVentas');
                 if (!lista) return;
                 
@@ -3360,7 +3350,8 @@ Te contactaremos pronto con novedades.
                     const elemento = document.getElementById(id);
                     if (elemento) elemento.value = '';
                 });
-                document.getElementById('cantidadVenta').value = '1';
+                const cantidadElement = document.getElementById('cantidadVenta');
+                if (cantidadElement) cantidadElement.value = '1';
                 
                 showAlert('✅ Venta registrada');
             } catch (error) {
@@ -3369,9 +3360,13 @@ Te contactaremos pronto con novedades.
             }
         }
 
+        // ========================================
+        // 📊 REPORTES
+        // ========================================
+        
         function cargarReportes() {
             try {
-                const enLab = ordenesLab.filter(o => o.estado === 'laboratorio').length;
+                const enLab = ordenesLab.filter(o => o.estado === 'pendiente').length;
                 const totalCobrar = calcularTotalCobrar();
                 const totalPagar = calcularTotalPagar();
                 const totalVentas = ventas.reduce((sum, v) => sum + v.total, 0);
@@ -3398,7 +3393,7 @@ Te contactaremos pronto con novedades.
 
         function enviarReporte() {
             try {
-                const enLab = ordenesLab.filter(o => o.estado === 'laboratorio').length;
+                const enLab = ordenesLab.filter(o => o.estado === 'pendiente').length;
                 const totalCobrar = calcularTotalCobrar();
                 const totalPagar = calcularTotalPagar();
                 const totalVentas = ventas.reduce((sum, v) => sum + v.total, 0);
@@ -3423,7 +3418,7 @@ Te contactaremos pronto con novedades.
 • Total ventas: RD$ ${totalVentas.toFixed(2)}
 
 📱 809-713-5307
-🌐 urbanavisioncom.netlify.app`;
+🌐 urbanavision.com`;
                 
                 window.open(`https://wa.me/?text=${encodeURIComponent(reporte)}`, '_blank');
                 actualizarEstadisticas('mensaje');
@@ -3434,6 +3429,10 @@ Te contactaremos pronto con novedades.
             }
         }
 
+        // ========================================
+        // 📣 CAMPAÑAS
+        // ========================================
+        
         function enviarCampanaDia() {
             try {
                 const mensaje = document.getElementById('mensajeCampana')?.value || `🎯 *CAMPAÑA DEL DÍA*
@@ -3445,7 +3444,7 @@ Te contactaremos pronto con novedades.
 🔍 Examen gratuito
 
 📱 809-713-5307
-🌐 urbanavisioncom.netlify.app`;
+🌐 urbanavision.com`;
                 
                 window.open(`https://wa.me/?text=${encodeURIComponent(mensaje)}`, '_blank');
                 actualizarEstadisticas('mensaje');
@@ -3457,20 +3456,190 @@ Te contactaremos pronto con novedades.
         }
 
         // ========================================
-        // 🛠️ INICIALIZACIÓN Y LIMPIEZA FINAL
+        // 💾 SISTEMA DE BACKUP CORREGIDO
+        // ========================================
+        
+        function crearBackupCompleto() {
+            try {
+                const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+                
+                // Recopilar TODOS los datos incluyendo fotos
+                const datosCompletos = {
+                    fecha: new Date().toISOString(),
+                    version: '2.0',
+                    timestamp: timestamp,
+                    sistema: {
+                        productos: productos || [],
+                        clientes: clientes || [],
+                        ordenesLab: ordenesLab || [],
+                        ventas: ventas || [],
+                        estadisticas: estadisticas || { mensajesHoy: 0, promociones: 0, audiosHoy: 0 },
+                        contadorOrdenes: contadorOrdenes || 1
+                    },
+                    fotos: fotos || {},
+                    configuracion: {
+                        ultimaActualizacion: localStorage.getItem('urbanaUltimaStats') || new Date().toDateString(),
+                        navegador: navigator.userAgent,
+                        pantalla: `${screen.width}x${screen.height}`
+                    }
+                };
+                
+                // Guardar backup principal
+                const backupKey = `urbanaBackup_${timestamp}`;
+                try {
+                    localStorage.setItem(backupKey, JSON.stringify(datosCompletos));
+                    
+                    // Mantener solo los últimos 5 backups
+                    limpiarBackupsAntiguos();
+                    
+                    console.log(`💾 Backup completo creado: ${timestamp}`);
+                    console.log(`📊 Datos guardados: ${productos.length} productos, ${clientes.length} clientes, ${ordenesLab.length} órdenes`);
+                    
+                    showAlert('✅ Backup creado exitosamente');
+                    return backupKey;
+                } catch (storageError) {
+                    console.error('❌ Error guardando en localStorage:', storageError);
+                    showAlert('⚠️ Backup creado pero no guardado localmente');
+                    return null;
+                }
+            } catch (error) {
+                console.error('❌ Error creando backup completo:', error);
+                showAlert('❌ Error al crear backup');
+                return null;
+            }
+        }
+
+        function limpiarBackupsAntiguos() {
+            try {
+                // Limpiar backups principales - mantener solo 5
+                const keysBackup = Object.keys(localStorage).filter(k => k.startsWith('urbanaBackup_'));
+                if (keysBackup.length > 5) {
+                    keysBackup.sort();
+                    const keysAEliminar = keysBackup.slice(0, keysBackup.length - 5);
+                    keysAEliminar.forEach(key => {
+                        try {
+                            localStorage.removeItem(key);
+                            console.log(`🗑️ Backup eliminado: ${key}`);
+                        } catch (error) {
+                            console.error(`❌ Error eliminando backup ${key}:`, error);
+                        }
+                    });
+                }
+            } catch (error) {
+                console.error('❌ Error limpiando backups:', error);
+            }
+        }
+
+        function exportarBackupGitHub() {
+            try {
+                const backup = crearBackupCompleto();
+                if (!backup) {
+                    showAlert('❌ No se pudo crear el backup');
+                    return;
+                }
+                
+                const backupData = localStorage.getItem(backup);
+                if (!backupData) {
+                    showAlert('❌ No se encontraron datos del backup');
+                    return;
+                }
+                
+                const blob = new Blob([backupData], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                
+                const timestamp = new Date().toISOString().split('T')[0];
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `urbana_backup_${timestamp}.json`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                
+                showAlert('📤 Backup descargado para GitHub/Netlify');
+                console.log('📤 Backup exportado para GitHub/Netlify');
+            } catch (error) {
+                console.error('❌ Error exportando backup:', error);
+                showAlert('❌ Error al exportar backup');
+            }
+        }
+
+        function importarBackupGitHub() {
+            try {
+                const input = document.createElement('input');
+                input.type = 'file';
+                input.accept = '.json';
+                
+                input.onchange = function(e) {
+                    const file = e.target.files[0];
+                    if (!file) return;
+                    
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        try {
+                            const backup = JSON.parse(e.target.result);
+                            
+                            // Validar estructura del backup
+                            if (!backup.sistema || !backup.fecha) {
+                                throw new Error('Archivo de backup no válido');
+                            }
+                            
+                            // Restaurar datos
+                            productos = backup.sistema.productos || [];
+                            clientes = backup.sistema.clientes || [];
+                            ordenesLab = backup.sistema.ordenesLab || [];
+                            ventas = backup.sistema.ventas || [];
+                            estadisticas = backup.sistema.estadisticas || { mensajesHoy: 0, promociones: 0, audiosHoy: 0 };
+                            contadorOrdenes = backup.sistema.contadorOrdenes || 1;
+                            
+                            if (backup.fotos) {
+                                fotos = backup.fotos;
+                            }
+                            
+                            guardarDatos();
+                            actualizarDashboard();
+                            cargarSelectores();
+                            
+                            showAlert(`✅ Backup importado: ${new Date(backup.fecha).toLocaleString()}`);
+                            
+                        } catch (parseError) {
+                            console.error('❌ Error parseando backup:', parseError);
+                            showAlert('❌ Archivo de backup corrupto o no válido');
+                        }
+                    };
+                    reader.readAsText(file);
+                };
+                
+                input.click();
+            } catch (error) {
+                console.error('❌ Error importando backup:', error);
+                showAlert('❌ Error al importar backup');
+            }
+        }
+
+        // ========================================
+        // 🛠️ UTILIDADES FINALES
         // ========================================
         
         // Crear backup automático cada hora
         setInterval(() => {
-            console.log('🔄 Backup automático ejecutándose...');
-            crearBackupCompleto();
+            try {
+                crearBackupCompleto();
+                console.log('🔄 Backup automático ejecutado');
+            } catch (error) {
+                console.error('❌ Error en backup automático:', error);
+            }
         }, 3600000); // 1 hora = 3600000ms
         
         // Backup al cargar el sistema
         setTimeout(() => {
-            console.log('🔄 Backup inicial del sistema...');
-            crearBackupCompleto();
-        }, 10000); // 10 segundos después de cargar
+            try {
+                crearBackupCompleto();
+                console.log('🚀 Backup inicial ejecutado');
+            } catch (error) {
+                console.error('❌ Error en backup inicial:', error);
+            }
+        }, 5000); // 5 segundos después de cargar
         
         // Limpiar streams al cerrar la página
         window.addEventListener('beforeunload', function() {
@@ -3542,7 +3711,7 @@ Te contactaremos pronto con novedades.
                     'menu', 'alert', 'dashboardLab', 'nuevaOrden', 'ordenes', 
                     'cotejo', 'cobrar', 'pagar', 'inventario', 'camara', 
                     'clientes', 'marketing', 'contactar', 'recordatorios', 
-                    'ventas', 'reportes', 'campanas'
+                    'ventas', 'reportes', 'campanas', 'facturaProforma', 'catalogo'
                 ];
                 
                 let elementosFaltantes = [];
@@ -3570,8 +3739,7 @@ Te contactaremos pronto con novedades.
                 // Test 4: Funciones críticas
                 const funcionesCriticas = [
                     'mostrarSeccion', 'guardarDatos', 'cargarDatos',
-                    'actualizarDashboard', 'generarNumeroOrden',
-                    'crearBackupCompleto', 'exportarBackupGitHub'
+                    'actualizarDashboard', 'generarNumeroOrden', 'crearBackupCompleto'
                 ];
                 
                 funcionesCriticas.forEach(nombreFuncion => {
@@ -3587,24 +3755,22 @@ Te contactaremos pronto con novedades.
                 }
                 console.log('✅ Test estructuras de datos: OK');
                 
-                // Test 6: Backup
-                const testBackup = crearBackupCompleto();
-                if (!testBackup) {
-                    console.warn('⚠️ Advertencia: Sistema de backup puede tener problemas');
-                } else {
-                    console.log('✅ Test sistema de backup: OK');
-                }
-                
                 // Todo OK
                 console.log('🎉 Test completo del sistema: ¡EXITOSO!');
-                document.getElementById('status-indicator').innerHTML = '🟢 Sistema Verificado ✅';
+                const statusElement = document.getElementById('status-indicator');
+                if (statusElement) {
+                    statusElement.innerHTML = '🟢 Sistema Verificado';
+                }
                 showAlert('✅ Sistema 100% funcional - Urbana Vision listo');
                 
                 return true;
                 
             } catch (error) {
                 console.error('❌ Test del sistema FALLÓ:', error);
-                document.getElementById('status-indicator').innerHTML = '🟡 Sistema con Errores ⚠️';
+                const statusElement = document.getElementById('status-indicator');
+                if (statusElement) {
+                    statusElement.innerHTML = '🟡 Sistema con Errores';
+                }
                 showAlert('⚠️ Sistema con problemas detectados');
                 
                 // Intentar reparación automática
@@ -3623,18 +3789,15 @@ Te contactaremos pronto con novedades.
             }
         }
 
-        // Ejecutar test completo 3 segundos después de cargar
-        setTimeout(testSistemaCompleto, 3000);
+        // Ejecutar test completo 2 segundos después de cargar
+        setTimeout(testSistemaCompleto, 2000);
         
         // Test periódico cada 10 minutos
         setInterval(() => {
             console.log('🔄 Test periódico del sistema...');
             try {
-                if (guardarDatos()) {
-                    console.log('✅ Test periódico: OK');
-                } else {
-                    throw new Error('Error guardando datos');
-                }
+                guardarDatos();
+                console.log('✅ Test periódico: OK');
             } catch (error) {
                 console.error('❌ Test periódico falló:', error);
                 showAlert('⚠️ Detectado problema del sistema');
@@ -3642,19 +3805,17 @@ Te contactaremos pronto con novedades.
         }, 600000); // 10 minutos
 
         // Mensaje final de confirmación
-        console.log('🚀 URBANA VISION - SISTEMA COMPLETO CARGADO ✅');
-        console.log('📱 Marketing con audio para analfabetos: ✅');
-        console.log('🎤 Micrófono con botón enviar mensaje: ✅');
-        console.log('🔬 Laboratorio con medidas completas: ✅');
-        console.log('📷 Envío automático con dos fotos: ✅');
-        console.log('🔗 Enlaces directos sin confirmación: ✅');
-        console.log('💾 Backup automático FUNCIONANDO: ✅');
-        console.log('📤 Exportación para GitHub/Netlify: ✅');
+        console.log('🚀 Panel Admin Urbana Vision - Sistema Completo CORREGIDO');
+        console.log('📄 Factura proforma con examen gratis: ✅');
+        console.log('🛍️ Catálogo con productos del inventario: ✅');
+        console.log('💾 Backup automático CORREGIDO: ✅');
+        console.log('📦 Botón compartir en inventario: ✅');
+        console.log('👥 Gestión clientes con edad: ✅');
+        console.log('🎤 Audio simplificado (solo texto): ✅');
+        console.log('🔬 Laboratorio con estados corregidos: ✅');
+        console.log('💰 Precios internos eliminados del mensaje lab: ✅');
+        console.log('🔗 Enlaces corregidos: ✅');
         console.log('🛡️ Manejo de errores robusto: ✅');
-        console.log('🔒 Privacidad financiera al laboratorio PROTEGIDA: ✅');
-        console.log('🌐 URLs corregidas (urbanavisioncom.netlify.app): ✅');
-        console.log('👨‍💼 Footer by Fbrugal Jrubinstein consultores: ✅');
-        console.log('🏷️ Numeración URB- para órdenes: ✅');
         
     </script>
 </body>
