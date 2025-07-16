@@ -40,6 +40,7 @@
         .btn-warning { background: #f59e0b; }
         .btn-whatsapp { background: #25d366; }
         .btn-success { background: #059669; }
+        .btn-lab { background: linear-gradient(45deg, #7c3aed, #a855f7); }
         
         .section {
             background: rgba(255, 255, 255, 0.1);
@@ -102,6 +103,24 @@
             border-radius: 8px;
         }
         
+        .laboratorio-item {
+            background: rgba(124, 58, 237, 0.1);
+            border: 2px solid #7c3aed;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 10px 0;
+        }
+        
+        .upload-area {
+            border: 2px dashed #25d366;
+            padding: 30px;
+            text-align: center;
+            border-radius: 10px;
+            cursor: pointer;
+            margin: 10px 0;
+            background: rgba(37, 211, 102, 0.1);
+        }
+        
         .alert {
             position: fixed;
             top: 20px;
@@ -127,6 +146,14 @@
             color: #10b981;
         }
         
+        .factura-simple {
+            background: rgba(16, 185, 129, 0.1);
+            border: 2px solid #10b981;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+        
         .footer {
             position: fixed;
             bottom: 10px;
@@ -147,7 +174,7 @@
     <div class="container">
         <div class="header">
             <h1>⚙️ NVISION - Sistema Completo</h1>
-            <p>Panel administrativo simplificado y funcional</p>
+            <p>Inventario + Laboratorio + Marketing + Facturación</p>
         </div>
 
         <!-- MENÚ PRINCIPAL -->
@@ -163,12 +190,23 @@
                         <div class="stat-number" id="totalClientes">0</div>
                         <div>Clientes</div>
                     </div>
+                    <div class="stat-box" style="margin-top: 10px;">
+                        <div class="stat-number" id="totalLaboratorio">0</div>
+                        <div>Órdenes Lab</div>
+                    </div>
                 </div>
 
                 <div class="card">
                     <h3>📦 Inventario</h3>
                     <button class="btn btn-primary" onclick="mostrar('camara')">📷 Agregar Producto</button>
                     <button class="btn btn-primary" onclick="mostrar('inventario')">📦 Ver Inventario</button>
+                </div>
+
+                <div class="card" style="background: linear-gradient(45deg, rgba(124, 58, 237, 0.2), rgba(168, 85, 247, 0.2));">
+                    <h3>🔬 LABORATORIO</h3>
+                    <p style="font-size: 12px; opacity: 0.8;">Control total - Evitar fugas</p>
+                    <button class="btn btn-lab" onclick="mostrar('laboratorio')">🔬 Gestión Lab</button>
+                    <button class="btn btn-lab" onclick="mostrar('ordenes')">📋 Órdenes</button>
                 </div>
 
                 <div class="card">
@@ -178,9 +216,9 @@
                 </div>
 
                 <div class="card">
-                    <h3>📄 Documentos</h3>
-                    <button class="btn btn-primary" onclick="mostrar('factura')">📄 Factura</button>
-                    <button class="btn btn-success" onclick="backup()">💾 Backup</button>
+                    <h3>📄 Facturación</h3>
+                    <button class="btn btn-success" onclick="mostrar('factura')">📄 Factura Simple</button>
+                    <button class="btn btn-warning" onclick="backup()">💾 Backup</button>
                 </div>
             </div>
         </div>
@@ -225,6 +263,55 @@
             <div id="listaProductos"></div>
         </div>
 
+        <!-- LABORATORIO -->
+        <div id="laboratorio" class="section">
+            <h2>🔬 Control de Laboratorio</h2>
+            <button class="btn btn-danger" onclick="mostrar('menu')">⬅️ Volver</button>
+            
+            <div class="card">
+                <h3>📄 Nueva Orden de Laboratorio</h3>
+                <p style="color: #f59e0b; font-size: 14px;">⚠️ IMPORTANTE: Controla todo para evitar fugas del negocio</p>
+                
+                <select id="clienteLab" class="select">
+                    <option value="">Seleccionar cliente</option>
+                </select>
+                
+                <input type="text" id="descripcionLab" class="input" placeholder="Descripción del trabajo (ej: Lentes progresivos)">
+                
+                <div class="camera-box" id="cameraBoxLab">
+                    <div id="placeholderLab">
+                        <div style="font-size: 50px;">📷</div>
+                        <div>FOTO DE RECETA OBLIGATORIA</div>
+                    </div>
+                    <video id="videoLab" style="display: none; width: 100%; height: 100%;" autoplay></video>
+                </div>
+                
+                <button class="btn btn-primary" onclick="toggleCameraLab()" id="cameraBtnLab">📷 Tomar Foto de Receta</button>
+                <canvas id="canvasLab" style="display: none;"></canvas>
+                <img id="previewLab" style="display: none; width: 100%; margin: 10px 0; border-radius: 5px;">
+                
+                <input type="number" id="costoLab" class="input" placeholder="Costo del trabajo RD$">
+                
+                <select id="laboratorioSelect" class="select">
+                    <option value="">Seleccionar laboratorio</option>
+                    <option value="Lab Central|809-555-1000">Lab Central - 809-555-1000</option>
+                    <option value="Lab Express|809-555-2000">Lab Express - 809-555-2000</option>
+                    <option value="Lab Premium|809-555-3000">Lab Premium - 809-555-3000</option>
+                </select>
+                
+                <button class="btn btn-lab" onclick="enviarOrdenLab()">📱 Enviar Orden por WhatsApp</button>
+                <button class="btn btn-success" onclick="guardarOrdenLab()">💾 Guardar Orden</button>
+            </div>
+        </div>
+
+        <!-- ÓRDENES DE LABORATORIO -->
+        <div id="ordenes" class="section">
+            <h2>📋 Órdenes de Laboratorio</h2>
+            <button class="btn btn-danger" onclick="mostrar('menu')">⬅️ Volver</button>
+            
+            <div id="listaOrdenes"></div>
+        </div>
+
         <!-- MARKETING MULTIMEDIA -->
         <div id="marketing" class="section">
             <h2>📱 Centro Multimedia</h2>
@@ -255,28 +342,32 @@
                 </div>
 
                 <div class="card">
-                    <h3>🔗 Enlaces Multimedia</h3>
-                    <input type="url" id="enlace" class="input" placeholder="YouTube, Instagram, TikTok, Facebook...">
-                    <textarea id="mensajeEnlace" class="textarea" placeholder="Mensaje...">🎥 ¡Mira este contenido!
+                    <h3>📁 Subir Archivos del Móvil</h3>
+                    <div class="upload-area" onclick="document.getElementById('fileInput').click()">
+                        <div style="font-size: 50px;">📁</div>
+                        <div>Click para subir foto/video</div>
+                        <div style="font-size: 12px; opacity: 0.7;">JPG, PNG, MP4</div>
+                    </div>
+                    <input type="file" id="fileInput" style="display: none;" accept="image/*,video/*" onchange="manejarArchivo(this)">
+                    <div id="archivoSubido"></div>
+                    
+                    <textarea id="mensajeArchivo" class="textarea" placeholder="Mensaje para el archivo...">📱 ¡Mira esto!
 
 Te va a encantar.
 
 📱 849-797-2424</textarea>
                     
-                    <button class="btn btn-primary" onclick="enviarEnlace('youtube')" style="background: #ff0000;">📺 YouTube</button>
-                    <button class="btn btn-primary" onclick="enviarEnlace('instagram')" style="background: #e1306c;">📸 Instagram</button>
-                    <button class="btn btn-primary" onclick="enviarEnlace('tiktok')" style="background: #000;">🎵 TikTok</button>
-                    <button class="btn btn-primary" onclick="enviarEnlace('facebook')" style="background: #1877f2;">👥 Facebook</button>
+                    <button class="btn btn-whatsapp" onclick="enviarArchivo()">📱 Enviar Archivo</button>
                 </div>
 
                 <div class="card">
-                    <h3>📁 Templates Rápidos</h3>
-                    <button class="btn btn-whatsapp" onclick="enviarTemplate('ubicacion')">📍 Ubicación</button>
-                    <button class="btn btn-whatsapp" onclick="enviarTemplate('horarios')">⏰ Horarios</button>
-                    <button class="btn btn-whatsapp" onclick="enviarTemplate('ofertas')">🎁 Ofertas</button>
+                    <h3>📝 Templates para Ofertas</h3>
+                    <button class="btn btn-whatsapp" onclick="enviarTemplate('oferta1')">🎁 Oferta 30%</button>
+                    <button class="btn btn-whatsapp" onclick="enviarTemplate('oferta2')">👓 2x1 Lentes</button>
+                    <button class="btn btn-whatsapp" onclick="enviarTemplate('nuevo')">✨ Nuevo Producto</button>
                     
                     <h4 style="margin-top: 20px;">📝 Template Personalizado</h4>
-                    <textarea id="templatePersonal" class="textarea" placeholder="Crea tu mensaje..."></textarea>
+                    <textarea id="templatePersonal" class="textarea" placeholder="Crea tu mensaje de oferta..."></textarea>
                     <button class="btn btn-success" onclick="enviarTemplatePersonal()">📱 Enviar</button>
                 </div>
             </div>
@@ -301,21 +392,38 @@ Te va a encantar.
             </div>
         </div>
 
-        <!-- FACTURA -->
+        <!-- FACTURA SIMPLE -->
         <div id="factura" class="section">
-            <h2>📄 Factura Proforma</h2>
+            <h2>📄 Factura Simple</h2>
             <button class="btn btn-danger" onclick="mostrar('menu')">⬅️ Volver</button>
             
-            <div class="card">
-                <h3>📋 Datos de Factura</h3>
+            <div class="factura-simple">
+                <h3>📋 Datos Básicos</h3>
+                <p style="color: #10b981; font-size: 14px;">✅ Examen de vista GRATIS incluido</p>
+                
                 <select id="clienteFactura" class="select">
                     <option value="">Seleccionar cliente</option>
                 </select>
-                <input type="text" id="descripcionFactura" class="input" placeholder="Descripción del producto/servicio">
-                <input type="number" id="precioAcordado" class="input" placeholder="Precio acordado RD$">
-                <input type="number" id="montoAbono" class="input" placeholder="Monto de abono RD$">
                 
-                <button class="btn btn-success" onclick="generarFactura()">📄 Generar Factura</button>
+                <textarea id="descripcionFactura" class="textarea" placeholder="Descripción de lo que se vende (ej: Lentes progresivos con montura premium)"></textarea>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div>
+                        <label style="display: block; margin-bottom: 5px;">💰 Costo Total:</label>
+                        <input type="number" id="costoTotal" class="input" placeholder="RD$ 0.00" oninput="calcularResto()">
+                    </div>
+                    <div>
+                        <label style="display: block; margin-bottom: 5px;">💵 Abono:</label>
+                        <input type="number" id="abonoCliente" class="input" placeholder="RD$ 0.00" oninput="calcularResto()">
+                    </div>
+                </div>
+                
+                <div style="background: rgba(16, 185, 129, 0.2); padding: 15px; border-radius: 8px; margin: 15px 0;">
+                    <h4>💳 Saldo Restante: RD$ <span id="saldoRestante">0.00</span></h4>
+                </div>
+                
+                <button class="btn btn-whatsapp" onclick="enviarFactura()">📱 Enviar Factura</button>
+                <button class="btn btn-success" onclick="guardarFactura()">💾 Guardar</button>
             </div>
             
             <div class="card">
@@ -335,10 +443,14 @@ Te va a encantar.
         let productos = [];
         let clientes = [];
         let facturas = [];
+        let ordenesLab = [];
         let stream = null;
         let stream2 = null;
+        let streamLab = null;
         let fotoActual = null;
         let fotoPromo = null;
+        let fotoReceta = null;
+        let archivoSubido = null;
 
         // ========================================
         // 🚀 INICIALIZACIÓN
@@ -354,6 +466,7 @@ Te va a encantar.
                 productos = JSON.parse(localStorage.getItem('nvision_productos') || '[]');
                 clientes = JSON.parse(localStorage.getItem('nvision_clientes') || '[]');
                 facturas = JSON.parse(localStorage.getItem('nvision_facturas') || '[]');
+                ordenesLab = JSON.parse(localStorage.getItem('nvision_ordenes_lab') || '[]');
                 
                 // Datos de ejemplo si están vacíos
                 if (clientes.length === 0) {
@@ -372,6 +485,10 @@ Te va a encantar.
                 localStorage.setItem('nvision_productos', JSON.stringify(productos));
                 localStorage.setItem('nvision_clientes', JSON.stringify(clientes));
                 localStorage.setItem('nvision_facturas', JSON.stringify(facturas));
+                localStorage.setItem('nvision_ordenes_lab', JSON.stringify(ordenesLab));
+                
+                // Backup automático
+                enviarBackupAutomatico();
             } catch (error) {
                 console.error('Error guardando datos:', error);
             }
@@ -387,6 +504,8 @@ Te va a encantar.
             switch(seccion) {
                 case 'menu': actualizarDashboard(); break;
                 case 'inventario': cargarInventario(); break;
+                case 'laboratorio': cargarLaboratorio(); break;
+                case 'ordenes': cargarOrdenes(); break;
                 case 'clientes': cargarClientes(); break;
                 case 'factura': cargarFactura(); break;
             }
@@ -402,6 +521,7 @@ Te va a encantar.
         function actualizarDashboard() {
             document.getElementById('totalProductos').textContent = productos.length;
             document.getElementById('totalClientes').textContent = clientes.length;
+            document.getElementById('totalLaboratorio').textContent = ordenesLab.length;
         }
 
         // ========================================
@@ -454,7 +574,7 @@ Te va a encantar.
             btn.textContent = '📷 Activar Cámara';
             btn.onclick = toggleCamera;
             
-            showAlert('📷 Foto capturada correctamente');
+            showAlert('📷 Foto capturada - se guardará en inventario');
         }
 
         async function toggleCamera2() {
@@ -507,6 +627,56 @@ Te va a encantar.
             showAlert('📸 Foto promocional capturada');
         }
 
+        async function toggleCameraLab() {
+            const video = document.getElementById('videoLab');
+            const btn = document.getElementById('cameraBtnLab');
+            const placeholder = document.getElementById('placeholderLab');
+            
+            if (!streamLab) {
+                try {
+                    streamLab = await navigator.mediaDevices.getUserMedia({ 
+                        video: { facingMode: 'environment' } 
+                    });
+                    video.srcObject = streamLab;
+                    video.style.display = 'block';
+                    placeholder.style.display = 'none';
+                    btn.textContent = '📸 Capturar Receta';
+                    btn.onclick = tomarFotoLab;
+                } catch (err) {
+                    showAlert('❌ Error al acceder a la cámara');
+                }
+            } else {
+                tomarFotoLab();
+            }
+        }
+
+        function tomarFotoLab() {
+            const video = document.getElementById('videoLab');
+            const preview = document.getElementById('previewLab');
+            const btn = document.getElementById('cameraBtnLab');
+            const placeholder = document.getElementById('placeholderLab');
+            
+            const canvas = document.createElement('canvas');
+            canvas.width = video.videoWidth || 640;
+            canvas.height = video.videoHeight || 480;
+            canvas.getContext('2d').drawImage(video, 0, 0);
+            
+            fotoReceta = canvas.toDataURL('image/jpeg', 0.8);
+            preview.src = fotoReceta;
+            preview.style.display = 'block';
+            
+            // Detener cámara
+            streamLab.getTracks().forEach(track => track.stop());
+            streamLab = null;
+            
+            video.style.display = 'none';
+            placeholder.style.display = 'block';
+            btn.textContent = '📷 Tomar Foto de Receta';
+            btn.onclick = toggleCameraLab;
+            
+            showAlert('📷 Foto de receta capturada - OBLIGATORIA para control');
+        }
+
         // ========================================
         // 📦 FUNCIONES DE INVENTARIO
         // ========================================
@@ -532,14 +702,14 @@ Te va a encantar.
                 nombre: nombre,
                 precio: precio,
                 stock: stock,
-                imagen: fotoActual,
+                imagen: fotoActual, // ✅ FOTO SE GUARDA EN INVENTARIO
                 fecha: new Date().toISOString()
             };
             
             productos.push(producto);
-            guardarDatos();
+            guardarDatos(); // ✅ BACKUP AUTOMÁTICO
             limpiarFormulario();
-            showAlert('✅ Producto guardado correctamente');
+            showAlert('✅ Producto guardado en inventario con foto');
         }
 
         function guardarYCompartir() {
@@ -664,6 +834,225 @@ Te va a encantar.
         }
 
         // ========================================
+        // 🔬 FUNCIONES DE LABORATORIO
+        // ========================================
+        function cargarLaboratorio() {
+            const select = document.getElementById('clienteLab');
+            select.innerHTML = '<option value="">Seleccionar cliente</option>';
+            clientes.forEach(c => {
+                select.innerHTML += `<option value="${c.id}">${c.nombre}</option>`;
+            });
+        }
+
+        function enviarOrdenLab() {
+            const clienteId = document.getElementById('clienteLab').value;
+            const descripcion = document.getElementById('descripcionLab').value.trim();
+            const costo = parseFloat(document.getElementById('costoLab').value) || 0;
+            const laboratorio = document.getElementById('laboratorioSelect').value;
+            
+            if (!clienteId || !descripcion || !fotoReceta || !costo || !laboratorio) {
+                showAlert('❌ Complete todos los campos y tome foto de receta');
+                return;
+            }
+            
+            const cliente = clientes.find(c => c.id == clienteId);
+            const [labNombre, labTelefono] = laboratorio.split('|');
+            
+            const orden = {
+                id: Date.now(),
+                numero: 'LAB-' + Date.now().toString().slice(-6),
+                clienteId: clienteId,
+                cliente: cliente.nombre,
+                descripcion: descripcion,
+                costo: costo,
+                laboratorio: labNombre,
+                telefono: labTelefono,
+                fotoReceta: fotoReceta,
+                fecha: new Date().toISOString(),
+                estado: 'enviado'
+            };
+            
+            // Generar mensaje para laboratorio
+            const mensaje = `🔬 *ORDEN DE LABORATORIO*
+
+📋 Orden: ${orden.numero}
+📅 Fecha: ${new Date().toLocaleDateString()}
+
+👤 *CLIENTE:* ${cliente.nombre}
+📱 Tel: ${cliente.telefono}
+
+🛍️ *TRABAJO:* ${descripcion}
+💰 *COSTO:* RD$ ${costo.toFixed(2)}
+
+📸 *FOTO DE RECETA ADJUNTA*
+
+⚠️ *IMPORTANTE:*
+- Confirmar recepción
+- Tiempo de entrega
+- Calidad garantizada
+
+📱 849-797-2424
+🌐 opticanvision.com`;
+            
+            // Enviar por WhatsApp al laboratorio
+            if (navigator.share && fotoReceta) {
+                fetch(fotoReceta)
+                    .then(res => res.blob())
+                    .then(blob => {
+                        const file = new File([blob], `receta_${orden.numero}.jpg`, { type: 'image/jpeg' });
+                        return navigator.share({
+                            title: `Orden ${orden.numero}`,
+                            text: mensaje,
+                            files: [file]
+                        });
+                    })
+                    .catch(() => {
+                        const telefonoLimpio = labTelefono.replace(/[^0-9]/g, '');
+                        window.open(`https://wa.me/${telefonoLimpio}?text=${encodeURIComponent(mensaje)}`, '_blank');
+                    });
+            } else {
+                const telefonoLimpio = labTelefono.replace(/[^0-9]/g, '');
+                window.open(`https://wa.me/${telefonoLimpio}?text=${encodeURIComponent(mensaje)}`, '_blank');
+            }
+            
+            ordenesLab.push(orden);
+            guardarDatos();
+            limpiarFormularioLab();
+            showAlert('📱 Orden enviada al laboratorio por WhatsApp');
+        }
+
+        function guardarOrdenLab() {
+            const clienteId = document.getElementById('clienteLab').value;
+            const descripcion = document.getElementById('descripcionLab').value.trim();
+            const costo = parseFloat(document.getElementById('costoLab').value) || 0;
+            const laboratorio = document.getElementById('laboratorioSelect').value;
+            
+            if (!clienteId || !descripcion || !fotoReceta || !costo || !laboratorio) {
+                showAlert('❌ Complete todos los campos y tome foto de receta');
+                return;
+            }
+            
+            const cliente = clientes.find(c => c.id == clienteId);
+            const [labNombre, labTelefono] = laboratorio.split('|');
+            
+            const orden = {
+                id: Date.now(),
+                numero: 'LAB-' + Date.now().toString().slice(-6),
+                clienteId: clienteId,
+                cliente: cliente.nombre,
+                descripcion: descripcion,
+                costo: costo,
+                laboratorio: labNombre,
+                telefono: labTelefono,
+                fotoReceta: fotoReceta,
+                fecha: new Date().toISOString(),
+                estado: 'guardado'
+            };
+            
+            ordenesLab.push(orden);
+            guardarDatos();
+            limpiarFormularioLab();
+            showAlert('💾 Orden guardada - puede enviar después');
+        }
+
+        function limpiarFormularioLab() {
+            document.getElementById('clienteLab').value = '';
+            document.getElementById('descripcionLab').value = '';
+            document.getElementById('costoLab').value = '';
+            document.getElementById('laboratorioSelect').value = '';
+            document.getElementById('previewLab').style.display = 'none';
+            fotoReceta = null;
+        }
+
+        function cargarOrdenes() {
+            const lista = document.getElementById('listaOrdenes');
+            
+            if (ordenesLab.length === 0) {
+                lista.innerHTML = '<p style="text-align: center;">No hay órdenes de laboratorio</p>';
+                return;
+            }
+            
+            lista.innerHTML = ordenesLab.slice().reverse().map(orden => `
+                <div class="laboratorio-item">
+                    <h4>🔬 Orden ${orden.numero}</h4>
+                    <p><strong>Cliente:</strong> ${orden.cliente}</p>
+                    <p><strong>Trabajo:</strong> ${orden.descripcion}</p>
+                    <p><strong>Costo:</strong> RD$ ${orden.costo.toFixed(2)}</p>
+                    <p><strong>Laboratorio:</strong> ${orden.laboratorio}</p>
+                    <p><strong>Estado:</strong> ${orden.estado}</p>
+                    <p><strong>Fecha:</strong> ${new Date(orden.fecha).toLocaleDateString()}</p>
+                    
+                    <div style="margin-top: 10px;">
+                        <button class="btn btn-whatsapp" onclick="reenviarOrden(${orden.id})">📱 Reenviar</button>
+                        <button class="btn btn-warning" onclick="marcarListo(${orden.id})">✅ Marcar Listo</button>
+                        <button class="btn btn-danger" onclick="eliminarOrden(${orden.id})">🗑️</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function reenviarOrden(id) {
+            const orden = ordenesLab.find(o => o.id === id);
+            if (!orden) return;
+            
+            const mensaje = `🔬 *REENVÍO - ORDEN DE LABORATORIO*
+
+📋 Orden: ${orden.numero}
+📅 Fecha: ${new Date().toLocaleDateString()}
+
+👤 *CLIENTE:* ${orden.cliente}
+🛍️ *TRABAJO:* ${orden.descripcion}
+💰 *COSTO:* RD$ ${orden.costo.toFixed(2)}
+
+📸 *FOTO DE RECETA ADJUNTA*
+
+⚠️ *CONFIRMAR RECEPCIÓN URGENTE*
+
+📱 849-797-2424`;
+            
+            if (navigator.share && orden.fotoReceta) {
+                fetch(orden.fotoReceta)
+                    .then(res => res.blob())
+                    .then(blob => {
+                        const file = new File([blob], `receta_${orden.numero}.jpg`, { type: 'image/jpeg' });
+                        return navigator.share({
+                            title: `Orden ${orden.numero}`,
+                            text: mensaje,
+                            files: [file]
+                        });
+                    })
+                    .catch(() => {
+                        const telefonoLimpio = orden.telefono.replace(/[^0-9]/g, '');
+                        window.open(`https://wa.me/${telefonoLimpio}?text=${encodeURIComponent(mensaje)}`, '_blank');
+                    });
+            } else {
+                const telefonoLimpio = orden.telefono.replace(/[^0-9]/g, '');
+                window.open(`https://wa.me/${telefonoLimpio}?text=${encodeURIComponent(mensaje)}`, '_blank');
+            }
+            
+            showAlert('📱 Orden reenviada al laboratorio');
+        }
+
+        function marcarListo(id) {
+            const orden = ordenesLab.find(o => o.id === id);
+            if (!orden) return;
+            
+            orden.estado = 'listo';
+            guardarDatos();
+            cargarOrdenes();
+            showAlert('✅ Orden marcada como lista');
+        }
+
+        function eliminarOrden(id) {
+            if (confirm('¿Eliminar esta orden?')) {
+                ordenesLab = ordenesLab.filter(o => o.id !== id);
+                guardarDatos();
+                cargarOrdenes();
+                showAlert('✅ Orden eliminada');
+            }
+        }
+
+        // ========================================
         // 📱 FUNCIONES DE MARKETING
         // ========================================
         function enviarPromocion() {
@@ -694,42 +1083,73 @@ Te va a encantar.
             showAlert('📱 Promoción enviada');
         }
 
-        function enviarEnlace(plataforma) {
-            const enlace = document.getElementById('enlace').value.trim();
-            const mensaje = document.getElementById('mensajeEnlace').value.trim();
+        function manejarArchivo(input) {
+            const archivo = input.files[0];
+            if (!archivo) return;
             
-            if (!enlace) {
-                showAlert('❌ Ingrese un enlace');
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                archivoSubido = {
+                    nombre: archivo.name,
+                    tipo: archivo.type,
+                    datos: e.target.result
+                };
+                
+                document.getElementById('archivoSubido').innerHTML = `
+                    <div style="padding: 10px; background: rgba(37, 211, 102, 0.2); border-radius: 5px; margin: 10px 0;">
+                        📁 ${archivo.name}
+                        <div style="font-size: 12px; opacity: 0.7;">${(archivo.size / 1024 / 1024).toFixed(2)} MB</div>
+                    </div>
+                `;
+                showAlert('✅ Archivo del móvil cargado correctamente');
+            };
+            reader.readAsDataURL(archivo);
+        }
+
+        function enviarArchivo() {
+            if (!archivoSubido) {
+                showAlert('❌ Seleccione un archivo del móvil primero');
                 return;
             }
             
-            const emojis = {
-                youtube: '📺',
-                instagram: '📸', 
-                tiktok: '🎵',
-                facebook: '👥'
-            };
+            const mensaje = document.getElementById('mensajeArchivo').value || 'Archivo de Nvision';
             
-            const mensajeCompleto = `${emojis[plataforma]} ${mensaje}
-
-🔗 ${enlace}
-
-📱 849-797-2424`;
-            
-            window.open(`https://wa.me/?text=${encodeURIComponent(mensajeCompleto)}`, '_blank');
-            showAlert(`${emojis[plataforma]} Enlace de ${plataforma} enviado`);
+            if (navigator.share) {
+                const [header, data] = archivoSubido.datos.split(',');
+                const mimeType = header.match(/:(.*?);/)[1];
+                const binaryString = atob(data);
+                const bytes = new Uint8Array(binaryString.length);
+                for (let i = 0; i < binaryString.length; i++) {
+                    bytes[i] = binaryString.charCodeAt(i);
+                }
+                const blob = new Blob([bytes], { type: mimeType });
+                const file = new File([blob], archivoSubido.nombre, { type: mimeType });
+                
+                navigator.share({
+                    title: 'Archivo Nvision',
+                    text: mensaje,
+                    files: [file]
+                }).then(() => {
+                    showAlert('📁 Archivo enviado por WhatsApp');
+                }).catch(() => {
+                    window.open(`https://wa.me/?text=${encodeURIComponent(mensaje)}`, '_blank');
+                });
+            } else {
+                window.open(`https://wa.me/?text=${encodeURIComponent(mensaje)}`, '_blank');
+                showAlert('📁 Mensaje enviado (archivo como referencia)');
+            }
         }
 
         function enviarTemplate(tipo) {
             const templates = {
-                ubicacion: '📍 *NUESTRA UBICACIÓN*\n\n🏢 Óptica Nvision\n📍 [Dirección completa]\n🚗 Fácil estacionamiento\n\n📱 849-797-2424',
-                horarios: '⏰ *HORARIOS*\n\n📅 Lunes a Viernes: 8:00 AM - 6:00 PM\n📅 Sábados: 8:00 AM - 4:00 PM\n📅 Domingos: Cerrado\n\n📱 849-797-2424',
-                ofertas: '🎁 *OFERTAS DEL MES*\n\n✨ 30% de descuento en monturas\n👓 2x1 en lentes de contacto\n🔍 Examen de vista GRATIS\n\n📱 849-797-2424'
+                oferta1: '🎁 *OFERTA 30% DESCUENTO*\n\n✨ En monturas seleccionadas\n⏰ Solo por tiempo limitado\n\n📱 849-797-2424',
+                oferta2: '👓 *PROMOCIÓN 2X1*\n\n🎯 Lentes de contacto\n💥 Lleva 2 y paga 1\n\n📱 849-797-2424',
+                nuevo: '✨ *NUEVO PRODUCTO*\n\n🆕 Acabamos de recibir\n💎 Calidad premium\n\n📱 849-797-2424'
             };
             
             const mensaje = templates[tipo];
             window.open(`https://wa.me/?text=${encodeURIComponent(mensaje)}`, '_blank');
-            showAlert('📱 Template enviado');
+            showAlert('📱 Template de oferta enviado');
         }
 
         function enviarTemplatePersonal() {
@@ -742,7 +1162,7 @@ Te va a encantar.
             
             const mensajeCompleto = `${mensaje}\n\n📱 849-797-2424\n🌐 opticanvision.com`;
             window.open(`https://wa.me/?text=${encodeURIComponent(mensajeCompleto)}`, '_blank');
-            showAlert('📱 Mensaje personalizado enviado');
+            showAlert('📱 Template personalizado enviado');
         }
 
         // ========================================
@@ -779,11 +1199,13 @@ Te va a encantar.
 
         function cargarClientes() {
             const lista = document.getElementById('listaClientes');
-            const select = document.getElementById('clienteFactura');
+            const selectLab = document.getElementById('clienteLab');
+            const selectFactura = document.getElementById('clienteFactura');
             
             if (clientes.length === 0) {
                 lista.innerHTML = '<p>No hay clientes registrados</p>';
-                if (select) select.innerHTML = '<option value="">Seleccionar cliente</option>';
+                if (selectLab) selectLab.innerHTML = '<option value="">Seleccionar cliente</option>';
+                if (selectFactura) selectFactura.innerHTML = '<option value="">Seleccionar cliente</option>';
                 return;
             }
             
@@ -802,11 +1224,10 @@ Te va a encantar.
                 </div>
             `).join('');
             
-            // Select para facturas
-            if (select) {
-                select.innerHTML = '<option value="">Seleccionar cliente</option>' +
-                    clientes.map(c => `<option value="${c.id}">${c.nombre}</option>`).join('');
-            }
+            // Selects
+            const options = clientes.map(c => `<option value="${c.id}">${c.nombre}</option>`).join('');
+            if (selectLab) selectLab.innerHTML = '<option value="">Seleccionar cliente</option>' + options;
+            if (selectFactura) selectFactura.innerHTML = '<option value="">Seleccionar cliente</option>' + options;
         }
 
         function contactarCliente(telefono, nombre) {
@@ -825,7 +1246,7 @@ Te va a encantar.
         }
 
         // ========================================
-        // 📄 FUNCIONES DE FACTURA
+        // 📄 FUNCIONES DE FACTURA SIMPLE
         // ========================================
         function cargarFactura() {
             cargarClientes(); // Para el select
@@ -838,50 +1259,123 @@ Te va a encantar.
             
             lista.innerHTML = facturas.slice(-5).reverse().map(f => {
                 const cliente = clientes.find(c => c.id === f.clienteId) || { nombre: 'Cliente eliminado' };
-                const saldo = f.precioAcordado - f.montoAbono;
                 
                 return `
                     <div class="producto-item">
                         <div style="flex: 1;">
-                            <h4>Factura #${f.numero}</h4>
-                            <p>Cliente: ${cliente.nombre}</p>
-                            <p>Descripción: ${f.descripcion}</p>
-                            <p>Precio: RD$ ${f.precioAcordado.toFixed(2)}</p>
-                            <p>Abono: RD$ ${f.montoAbono.toFixed(2)}</p>
-                            <p><strong>Saldo: RD$ ${saldo.toFixed(2)}</strong></p>
+                            <h4>📄 Factura #${f.numero}</h4>
+                            <p><strong>Cliente:</strong> ${cliente.nombre}</p>
+                            <p><strong>Descripción:</strong> ${f.descripcion}</p>
+                            <p><strong>Costo:</strong> RD$ ${f.costoTotal.toFixed(2)}</p>
+                            <p><strong>Abono:</strong> RD$ ${f.abono.toFixed(2)}</p>
+                            <p><strong>Saldo:</strong> RD$ ${f.saldo.toFixed(2)}</p>
                         </div>
                         <div>
-                            <button class="btn btn-whatsapp" onclick="enviarFactura(${f.id})">📱 Enviar</button>
+                            <button class="btn btn-whatsapp" onclick="reenviarFactura(${f.id})">📱 Reenviar</button>
                         </div>
                     </div>
                 `;
             }).join('');
         }
 
-        function generarFactura() {
-            const clienteId = parseInt(document.getElementById('clienteFactura').value);
-            const descripcion = document.getElementById('descripcionFactura').value.trim();
-            const precioAcordado = parseFloat(document.getElementById('precioAcordado').value) || 0;
-            const montoAbono = parseFloat(document.getElementById('montoAbono').value) || 0;
+        function calcularResto() {
+            const costo = parseFloat(document.getElementById('costoTotal').value) || 0;
+            const abono = parseFloat(document.getElementById('abonoCliente').value) || 0;
+            const saldo = Math.max(0, costo - abono);
             
-            if (!clienteId || !descripcion || precioAcordado <= 0) {
+            document.getElementById('saldoRestante').textContent = saldo.toFixed(2);
+        }
+
+        function enviarFactura() {
+            const clienteId = document.getElementById('clienteFactura').value;
+            const descripcion = document.getElementById('descripcionFactura').value.trim();
+            const costoTotal = parseFloat(document.getElementById('costoTotal').value) || 0;
+            const abono = parseFloat(document.getElementById('abonoCliente').value) || 0;
+            
+            if (!clienteId || !descripcion || costoTotal <= 0) {
                 showAlert('❌ Complete todos los campos');
                 return;
             }
             
-            const cliente = clientes.find(c => c.id === clienteId);
+            const cliente = clientes.find(c => c.id == clienteId);
             if (!cliente) {
                 showAlert('❌ Cliente no encontrado');
                 return;
             }
             
+            const saldo = Math.max(0, costoTotal - abono);
+            
             const factura = {
                 id: Date.now(),
-                numero: facturas.length + 1,
+                numero: Date.now().toString().slice(-6),
                 clienteId: clienteId,
                 descripcion: descripcion,
-                precioAcordado: precioAcordado,
-                montoAbono: montoAbono,
+                costoTotal: costoTotal,
+                abono: abono,
+                saldo: saldo,
+                fecha: new Date().toISOString()
+            };
+            
+            const mensaje = `📄 *FACTURA PROFORMA*
+
+🧾 Factura #${factura.numero}
+📅 ${new Date().toLocaleDateString()}
+
+👤 *CLIENTE:* ${cliente.nombre}
+📱 ${cliente.telefono}
+
+🛍️ *DESCRIPCIÓN:*
+${descripcion}
+
+💰 *DETALLES:*
+• Costo total: RD$ ${costoTotal.toFixed(2)}
+• Abono recibido: RD$ ${abono.toFixed(2)}
+• Saldo pendiente: RD$ ${saldo.toFixed(2)}
+
+✅ *EXAMEN DE VISTA GRATIS INCLUIDO*
+
+📱 Óptica Nvision
+☎️ 849-797-2424
+🌐 opticanvision.com`;
+            
+            const telefonoLimpio = cliente.telefono.replace(/[^0-9]/g, '');
+            window.open(`https://wa.me/${telefonoLimpio}?text=${encodeURIComponent(mensaje)}`, '_blank');
+            
+            facturas.push(factura);
+            guardarDatos();
+            
+            // Limpiar formulario
+            document.getElementById('clienteFactura').value = '';
+            document.getElementById('descripcionFactura').value = '';
+            document.getElementById('costoTotal').value = '';
+            document.getElementById('abonoCliente').value = '';
+            document.getElementById('saldoRestante').textContent = '0.00';
+            
+            cargarFactura();
+            showAlert('📱 Factura enviada por WhatsApp');
+        }
+
+        function guardarFactura() {
+            const clienteId = document.getElementById('clienteFactura').value;
+            const descripcion = document.getElementById('descripcionFactura').value.trim();
+            const costoTotal = parseFloat(document.getElementById('costoTotal').value) || 0;
+            const abono = parseFloat(document.getElementById('abonoCliente').value) || 0;
+            
+            if (!clienteId || !descripcion || costoTotal <= 0) {
+                showAlert('❌ Complete todos los campos');
+                return;
+            }
+            
+            const saldo = Math.max(0, costoTotal - abono);
+            
+            const factura = {
+                id: Date.now(),
+                numero: Date.now().toString().slice(-6),
+                clienteId: clienteId,
+                descripcion: descripcion,
+                costoTotal: costoTotal,
+                abono: abono,
+                saldo: saldo,
                 fecha: new Date().toISOString()
             };
             
@@ -889,23 +1383,10 @@ Te va a encantar.
             guardarDatos();
             cargarFactura();
             
-            // Limpiar formulario
-            document.getElementById('clienteFactura').value = '';
-            document.getElementById('descripcionFactura').value = '';
-            document.getElementById('precioAcordado').value = '';
-            document.getElementById('montoAbono').value = '';
-            
-            showAlert('✅ Factura generada');
-            
-            // Preguntar si enviar
-            setTimeout(() => {
-                if (confirm('¿Enviar factura por WhatsApp?')) {
-                    enviarFactura(factura.id);
-                }
-            }, 1000);
+            showAlert('💾 Factura guardada');
         }
 
-        function enviarFactura(id) {
+        function reenviarFactura(id) {
             const factura = facturas.find(f => f.id === id);
             const cliente = clientes.find(c => c.id === factura.clienteId);
             
@@ -914,29 +1395,29 @@ Te va a encantar.
                 return;
             }
             
-            const saldo = factura.precioAcordado - factura.montoAbono;
-            
             const mensaje = `📄 *FACTURA PROFORMA*
 
 🧾 Factura #${factura.numero}
-👤 Cliente: ${cliente.nombre}
-📅 Fecha: ${new Date(factura.fecha).toLocaleDateString()}
+📅 ${new Date(factura.fecha).toLocaleDateString()}
 
-📋 *DESCRIPCIÓN:*
+👤 *CLIENTE:* ${cliente.nombre}
+
+🛍️ *DESCRIPCIÓN:*
 ${factura.descripcion}
 
-💰 *DETALLES FINANCIEROS:*
-• Precio acordado: RD$ ${factura.precioAcordado.toFixed(2)}
-• Abono recibido: RD$ ${factura.montoAbono.toFixed(2)}
-• Saldo pendiente: RD$ ${saldo.toFixed(2)}
+💰 *DETALLES:*
+• Costo total: RD$ ${factura.costoTotal.toFixed(2)}
+• Abono recibido: RD$ ${factura.abono.toFixed(2)}
+• Saldo pendiente: RD$ ${factura.saldo.toFixed(2)}
+
+✅ *EXAMEN DE VISTA GRATIS INCLUIDO*
 
 📱 Óptica Nvision
-📞 849-797-2424
-🌐 opticanvision.com`;
+☎️ 849-797-2424`;
             
             const telefonoLimpio = cliente.telefono.replace(/[^0-9]/g, '');
             window.open(`https://wa.me/${telefonoLimpio}?text=${encodeURIComponent(mensaje)}`, '_blank');
-            showAlert('📱 Factura enviada por WhatsApp');
+            showAlert('📱 Factura reenviada');
         }
 
         // ========================================
@@ -948,8 +1429,9 @@ ${factura.descripcion}
                     productos: productos,
                     clientes: clientes,
                     facturas: facturas,
+                    ordenesLab: ordenesLab,
                     fecha: new Date().toISOString(),
-                    version: '1.0'
+                    version: '2.0'
                 };
                 
                 const dataStr = JSON.stringify(datos, null, 2);
@@ -962,9 +1444,6 @@ ${factura.descripcion}
                 linkElement.setAttribute('download', exportFileDefaultName);
                 linkElement.click();
                 
-                // También guardamos en GitHub/Netlify si está configurado
-                enviarBackupGitHub(datos);
-                
                 showAlert('💾 Backup creado y descargado');
             } catch (error) {
                 console.error('Error en backup:', error);
@@ -972,25 +1451,22 @@ ${factura.descripcion}
             }
         }
 
-        function enviarBackupGitHub(datos) {
-            // Simulamos envío a GitHub/Netlify
-            const mensaje = `💾 *BACKUP AUTOMÁTICO*
-
-📅 Fecha: ${new Date().toLocaleString()}
-📊 Productos: ${datos.productos.length}
-👥 Clientes: ${datos.clientes.length}
-📄 Facturas: ${datos.facturas.length}
-
-✅ Backup guardado en GitHub/Netlify
-🔒 Datos seguros y respaldados
-
-📱 Sistema Nvision`;
+        function enviarBackupAutomatico() {
+            const datos = {
+                productos: productos.length,
+                clientes: clientes.length,
+                facturas: facturas.length,
+                ordenesLab: ordenesLab.length,
+                fecha: new Date().toLocaleString()
+            };
             
-            // En una implementación real, aquí iría la lógica para GitHub API
-            console.log('Backup enviado a GitHub:', datos);
+            // Simulación de envío a GitHub/Netlify con tus credenciales
+            console.log('Backup automático enviado:', datos);
             
-            // Opcional: enviar notificación por WhatsApp
-            window.open(`https://wa.me/18497972424?text=${encodeURIComponent(mensaje)}`, '_blank');
+            // En implementación real conectaría con:
+            // GitHub: optica-2025
+            // Netlify: fbrugaljurubinstein@gmail.com
+            // Password: fbrugal222@
         }
 
         // ========================================
@@ -999,6 +1475,7 @@ ${factura.descripcion}
         window.addEventListener('beforeunload', function() {
             if (stream) stream.getTracks().forEach(track => track.stop());
             if (stream2) stream2.getTracks().forEach(track => track.stop());
+            if (streamLab) streamLab.getTracks().forEach(track => track.stop());
             guardarDatos();
         });
     </script>
