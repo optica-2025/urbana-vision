@@ -221,7 +221,8 @@
                 <div class="card">
                     <h3>💰 Reportes del Negocio</h3>
                     <button class="btn btn-warning" onclick="mostrar('reportes')">📊 Ver Reportes</button>
-                    <button class="btn btn-success" onclick="mostrar('cuentas')">💵 Cuentas x Cobrar</button>
+                    <button class="btn btn-success" onclick="mostrar('facturacion')">📄 Facturación</button>
+                    <button class="btn btn-primary" onclick="mostrar('cuentas')">💵 Cuentas x Cobrar</button>
                     <button class="btn btn-danger" onclick="mostrar('deudas')">📋 Cuentas x Pagar</button>
                 </div>
 
@@ -288,7 +289,40 @@
                 
                 <div class="card">
                     <h3>⚙️ PASO 3: Datos Técnicos Obligatorios</h3>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    
+                    <h4 style="color: #7c3aed; margin: 15px 0;">👁️ GRADUACIÓN OJO DERECHO (OD)</h4>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px;">
+                        <div>
+                            <label>Esfera:</label>
+                            <input type="text" id="esferaOD" class="input" placeholder="-2.50">
+                        </div>
+                        <div>
+                            <label>Cilindro:</label>
+                            <input type="text" id="cilindroOD" class="input" placeholder="-1.00">
+                        </div>
+                        <div>
+                            <label>Eje:</label>
+                            <input type="number" id="ejeOD" class="input" placeholder="90">
+                        </div>
+                    </div>
+                    
+                    <h4 style="color: #7c3aed; margin: 15px 0;">👁️ GRADUACIÓN OJO IZQUIERDO (OI)</h4>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px;">
+                        <div>
+                            <label>Esfera:</label>
+                            <input type="text" id="esferaOI" class="input" placeholder="-2.25">
+                        </div>
+                        <div>
+                            <label>Cilindro:</label>
+                            <input type="text" id="cilindroOI" class="input" placeholder="-0.75">
+                        </div>
+                        <div>
+                            <label>Eje:</label>
+                            <input type="number" id="ejeOI" class="input" placeholder="85">
+                        </div>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px;">
                         <div>
                             <label>📏 DP (Distancia Pupilar):</label>
                             <input type="number" id="distanciaPupilar" class="input" placeholder="62" min="50" max="80">
@@ -299,11 +333,12 @@
                         </div>
                     </div>
                     
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 10px;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 10px;">
                         <div>
                             <label>🔍 Tipo de Lente:</label>
                             <select id="tipoLente" class="select">
                                 <option value="">Seleccionar tipo</option>
+                                <option value="Monofocal">Monofocal</option>
                                 <option value="Bifocal">Bifocal</option>
                                 <option value="Progresivo">Progresivo</option>
                                 <option value="Otros">Otros</option>
@@ -314,8 +349,14 @@
                             <select id="materialLente" class="select">
                                 <option value="">Seleccionar material</option>
                                 <option value="Policarbonato">Policarbonato</option>
+                                <option value="CR-39">CR-39</option>
+                                <option value="High Index">High Index</option>
                                 <option value="Otros">Otros</option>
                             </select>
+                        </div>
+                        <div>
+                            <label>➕ ADD (solo progresivos):</label>
+                            <input type="text" id="addLente" class="input" placeholder="+2.00">
                         </div>
                     </div>
                     
@@ -571,6 +612,90 @@ Te va a encantar.
                 <button class="btn btn-success" onclick="pagarLaboratorio()">💳 Registrar Pago</button>
             </div>
         </div>
+
+        <!-- ========================================
+             📄 MÓDULO FACTURACIÓN CON NCF
+             ======================================== -->
+        <div id="facturacion" class="section">
+            <h2>📄 Sistema de Facturación</h2>
+            <button class="btn btn-danger" onclick="mostrar('menu')">⬅️ Volver</button>
+            
+            <div class="card">
+                <h3>📋 Nueva Factura/Proforma</h3>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div>
+                        <label>👤 Cliente:</label>
+                        <select id="clienteFactura" class="select">
+                            <option value="">Seleccionar cliente</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>🔢 Tipo Comprobante:</label>
+                        <select id="tipoComprobante" class="select" onchange="generarNCF()">
+                            <option value="">Seleccionar tipo</option>
+                            <option value="B01">B01 - Factura Crédito Fiscal</option>
+                            <option value="B02">B02 - Factura Consumidor Final</option>
+                            <option value="B14">B14 - Factura Régimen Especial</option>
+                            <option value="B15">B15 - Factura Gubernamental</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 10px;">
+                    <div>
+                        <label>📄 NCF (Número Comprobante Fiscal):</label>
+                        <input type="text" id="ncfFactura" class="input" placeholder="Se genera automáticamente" readonly style="background: #f5f5f5;">
+                    </div>
+                    <div>
+                        <label>📅 Fecha:</label>
+                        <input type="date" id="fechaFactura" class="input">
+                    </div>
+                </div>
+                
+                <div style="margin-top: 15px;">
+                    <label>📝 Descripción del Producto/Servicio:</label>
+                    <textarea id="descripcionFactura" class="textarea" placeholder="Ej: Lentes progresivos con montura titanio, examen de vista incluido..."></textarea>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin-top: 15px;">
+                    <div>
+                        <label>💰 Subtotal:</label>
+                        <input type="number" id="subtotalFactura" class="input" placeholder="0.00" oninput="calcularTotales()">
+                    </div>
+                    <div>
+                        <label>📊 ITBIS (18%):</label>
+                        <input type="number" id="itbisFactura" class="input" placeholder="0.00" readonly style="background: #f5f5f5;">
+                    </div>
+                    <div>
+                        <label>💵 TOTAL:</label>
+                        <input type="number" id="totalFactura" class="input" placeholder="0.00" readonly style="background: #f5f5f5; font-weight: bold;">
+                    </div>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px;">
+                    <div>
+                        <label>💳 Abono Inicial:</label>
+                        <input type="number" id="abonoFactura" class="input" placeholder="0.00" oninput="calcularSaldo()">
+                    </div>
+                    <div>
+                        <label>📋 Saldo Pendiente:</label>
+                        <input type="number" id="saldoFactura" class="input" placeholder="0.00" readonly style="background: #fff3cd; font-weight: bold;">
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 25px;">
+                    <button class="btn btn-success" onclick="generarFactura()" style="font-size: 16px; padding: 15px 30px;">📄 Generar Factura</button>
+                    <button class="btn btn-whatsapp" onclick="enviarFacturaPorWhatsApp()">📱 Enviar por WhatsApp</button>
+                    <button class="btn btn-warning" onclick="imprimirFactura()">🖨️ Imprimir</button>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>📋 Facturas Recientes</h3>
+                <div id="listaFacturasRecientes"></div>
+            </div>
+        </div>
     </div>
 
     <div class="alert" id="alert"></div>
@@ -588,8 +713,17 @@ Te va a encantar.
         let ordenesLab = [];
         let noticias = [];
         let ventas = [];
+        let facturas = [];
         let cuentasPorCobrar = [];
         let cuentasPorPagar = [];
+        
+        // Contadores para NCF
+        let contadorNCF = {
+            'B01': 1,
+            'B02': 1, 
+            'B14': 1,
+            'B15': 1
+        };
         
         // Archivo subido desde móvil
         let archivoMovilSubido = null;
@@ -635,14 +769,16 @@ Te va a encantar.
                 ordenesLab = JSON.parse(localStorage.getItem('urbana_ordenes_lab') || '[]');
                 noticias = JSON.parse(localStorage.getItem('urbana_noticias') || '[]');
                 ventas = JSON.parse(localStorage.getItem('urbana_ventas') || '[]');
+                facturas = JSON.parse(localStorage.getItem('urbana_facturas') || '[]');
                 cuentasPorCobrar = JSON.parse(localStorage.getItem('urbana_cuentas_cobrar') || '[]');
                 cuentasPorPagar = JSON.parse(localStorage.getItem('urbana_cuentas_pagar') || '[]');
+                contadorNCF = JSON.parse(localStorage.getItem('urbana_contador_ncf') || '{"B01": 1, "B02": 1, "B14": 1, "B15": 1}');
                 
                 // Datos de ejemplo si están vacíos
                 if (clientes.length === 0) {
                     clientes = [
-                        { id: 1, nombre: 'María González', telefono: '809-555-0001' },
-                        { id: 2, nombre: 'Juan Pérez', telefono: '809-555-0002' }
+                        { id: 1, nombre: 'María González', telefono: '809-555-0001', cedula: '001-1234567-8' },
+                        { id: 2, nombre: 'Juan Pérez', telefono: '809-555-0002', cedula: '001-2345678-9' }
                     ];
                 }
             } catch (error) {
@@ -657,8 +793,10 @@ Te va a encantar.
                 localStorage.setItem('urbana_ordenes_lab', JSON.stringify(ordenesLab));
                 localStorage.setItem('urbana_noticias', JSON.stringify(noticias));
                 localStorage.setItem('urbana_ventas', JSON.stringify(ventas));
+                localStorage.setItem('urbana_facturas', JSON.stringify(facturas));
                 localStorage.setItem('urbana_cuentas_cobrar', JSON.stringify(cuentasPorCobrar));
                 localStorage.setItem('urbana_cuentas_pagar', JSON.stringify(cuentasPorPagar));
+                localStorage.setItem('urbana_contador_ncf', JSON.stringify(contadorNCF));
                 
                 // Backup automático
                 enviarBackupAutomatico();
@@ -681,6 +819,7 @@ Te va a encantar.
                 case 'clientes': cargarClientes(); break;
                 case 'noticias': cargarNoticias(); break;
                 case 'reportes': cargarReportes(); break;
+                case 'facturacion': cargarFacturacion(); break;
                 case 'cuentas': cargarCuentasPorCobrar(); break;
                 case 'deudas': cargarCuentasPorPagar(); break;
             }
@@ -916,13 +1055,23 @@ Te va a encantar.
         // 🔬 FUNCIONES DE LABORATORIO (SEPARADAS)
         // ========================================
         function enviarOrdenLaboratorio() {
+            // Obtener graduación completa
+            const esferaOD = document.getElementById('esferaOD').value;
+            const cilindroOD = document.getElementById('cilindroOD').value;
+            const ejeOD = document.getElementById('ejeOD').value;
+            const esferaOI = document.getElementById('esferaOI').value;
+            const cilindroOI = document.getElementById('cilindroOI').value;
+            const ejeOI = document.getElementById('ejeOI').value;
+            const add = document.getElementById('addLente').value;
+            
+            // Otros datos
             const dp = document.getElementById('distanciaPupilar').value;
             const altura = document.getElementById('alturaLente').value;
             const tipo = document.getElementById('tipoLente').value;
             const material = document.getElementById('materialLente').value;
             const costo = document.getElementById('costoLab').value;
             
-            // Validaciones
+            // Validaciones CRÍTICAS
             if (!fotoReceta) {
                 showAlert('❌ Tome foto de la receta (PASO 1)');
                 return;
@@ -931,32 +1080,61 @@ Te va a encantar.
                 showAlert('❌ Tome foto de la montura (PASO 2)');
                 return;
             }
+            if (!esferaOD || !esferaOI) {
+                showAlert('❌ Complete la graduación OD y OI (esfera obligatoria)');
+                return;
+            }
             if (!dp || !altura || !tipo || !material || !costo) {
-                showAlert('❌ Complete todos los datos técnicos (PASO 3)');
+                showAlert('❌ Complete todos los datos técnicos');
                 return;
             }
             
-            // Crear orden SIN datos de cliente
+            // Crear orden CON graduación completa
             const orden = {
                 id: Date.now(),
                 numero: 'UV-' + Date.now().toString().slice(-6),
+                graduacion: {
+                    od: {
+                        esfera: esferaOD,
+                        cilindro: cilindroOD || '',
+                        eje: ejeOD || ''
+                    },
+                    oi: {
+                        esfera: esferaOI,
+                        cilindro: cilindroOI || '',
+                        eje: ejeOI || ''
+                    },
+                    add: add || ''
+                },
                 dp: dp,
                 altura: altura,
                 tipo: tipo,
                 material: material,
                 costo: parseFloat(costo),
-                laboratorio: 'Laboratorio Principal', // Puedes hacer esto seleccionable
+                laboratorio: 'Laboratorio Principal',
                 fotoReceta: fotoReceta,
                 fotoMontura: fotoMontura,
                 fecha: new Date().toISOString(),
                 estado: 'enviado'
             };
             
-            // Mensaje para laboratorio (SIN datos de cliente ni financieros de venta)
+            // Mensaje COMPLETO para laboratorio
             const mensaje = `🔬 ORDEN LABORATORIO URBANA VISION
 
 📋 Orden: ${orden.numero}
 📅 ${new Date().toLocaleDateString()}
+
+👁️ GRADUACIÓN OJO DERECHO (OD):
+• Esfera: ${esferaOD}
+• Cilindro: ${cilindroOD || 'N/A'}
+• Eje: ${ejeOD || 'N/A'}°
+
+👁️ GRADUACIÓN OJO IZQUIERDO (OI):  
+• Esfera: ${esferaOI}
+• Cilindro: ${cilindroOI || 'N/A'}
+• Eje: ${ejeOI || 'N/A'}°
+
+${add ? `➕ ADD: ${add}` : ''}
 
 📏 DATOS TÉCNICOS:
 • DP: ${dp} mm
@@ -967,14 +1145,13 @@ Te va a encantar.
 💰 COSTO LAB: RD$ ${costo}
 
 📸 FOTOS ADJUNTAS:
-• Receta médica
+• Receta médica completa
 • Montura seleccionada
 
 🏢 Urbana Vision
 📱 809-713-5307
-🌐 urbanavision.com
 
-⚠️ Confirmar recepción por favor`;
+⚠️ CONFIRMAR RECEPCIÓN Y TIEMPO DE ENTREGA`;
             
             // Enviar por WhatsApp
             window.open(`https://wa.me/18097135307?text=${encodeURIComponent(mensaje)}`, '_blank');
@@ -984,7 +1161,7 @@ Te va a encantar.
             guardarDatos();
             limpiarFormularioLab();
             
-            showAlert('📱 Orden enviada al laboratorio por WhatsApp');
+            showAlert('📱 Orden COMPLETA enviada al laboratorio');
         }
 
         function guardarOrdenLab() {
@@ -1023,12 +1200,23 @@ Te va a encantar.
         }
 
         function limpiarFormularioLab() {
+            // Limpiar graduación
+            document.getElementById('esferaOD').value = '';
+            document.getElementById('cilindroOD').value = '';
+            document.getElementById('ejeOD').value = '';
+            document.getElementById('esferaOI').value = '';
+            document.getElementById('cilindroOI').value = '';
+            document.getElementById('ejeOI').value = '';
+            document.getElementById('addLente').value = '';
+            
+            // Limpiar otros datos
             document.getElementById('distanciaPupilar').value = '';
             document.getElementById('alturaLente').value = '';
             document.getElementById('tipoLente').value = '';
             document.getElementById('materialLente').value = '';
             document.getElementById('costoLab').value = '';
             
+            // Limpiar fotos
             document.getElementById('previewReceta').style.display = 'none';
             document.getElementById('previewMontura').style.display = 'none';
             
@@ -1410,7 +1598,227 @@ Te va a encantar.
         }
 
         // ========================================
-        // 📊 FUNCIONES DE REPORTES COMPLETOS
+        // 📄 SISTEMA DE FACTURACIÓN CON NCF
+        // ========================================
+        function cargarFacturacion() {
+            // Cargar fecha actual
+            document.getElementById('fechaFactura').value = new Date().toISOString().split('T')[0];
+            
+            // Cargar clientes en select
+            const select = document.getElementById('clienteFactura');
+            select.innerHTML = '<option value="">Seleccionar cliente</option>';
+            clientes.forEach(cliente => {
+                select.innerHTML += `<option value="${cliente.id}">${cliente.nombre}</option>`;
+            });
+            
+            // Cargar facturas recientes
+            cargarFacturasRecientes();
+        }
+
+        function generarNCF() {
+            const tipo = document.getElementById('tipoComprobante').value;
+            if (!tipo) {
+                document.getElementById('ncfFactura').value = '';
+                return;
+            }
+            
+            const secuencia = contadorNCF[tipo].toString().padStart(8, '0');
+            const ncf = `${tipo}${secuencia}`;
+            document.getElementById('ncfFactura').value = ncf;
+        }
+
+        function calcularTotales() {
+            const subtotal = parseFloat(document.getElementById('subtotalFactura').value) || 0;
+            const itbis = subtotal * 0.18; // 18% ITBIS
+            const total = subtotal + itbis;
+            
+            document.getElementById('itbisFactura').value = itbis.toFixed(2);
+            document.getElementById('totalFactura').value = total.toFixed(2);
+            
+            calcularSaldo();
+        }
+
+        function calcularSaldo() {
+            const total = parseFloat(document.getElementById('totalFactura').value) || 0;
+            const abono = parseFloat(document.getElementById('abonoFactura').value) || 0;
+            const saldo = Math.max(0, total - abono);
+            
+            document.getElementById('saldoFactura').value = saldo.toFixed(2);
+        }
+
+        function generarFactura() {
+            const clienteId = document.getElementById('clienteFactura').value;
+            const tipoComprobante = document.getElementById('tipoComprobante').value;
+            const ncf = document.getElementById('ncfFactura').value;
+            const fecha = document.getElementById('fechaFactura').value;
+            const descripcion = document.getElementById('descripcionFactura').value;
+            const subtotal = parseFloat(document.getElementById('subtotalFactura').value) || 0;
+            const itbis = parseFloat(document.getElementById('itbisFactura').value) || 0;
+            const total = parseFloat(document.getElementById('totalFactura').value) || 0;
+            const abono = parseFloat(document.getElementById('abonoFactura').value) || 0;
+            const saldo = parseFloat(document.getElementById('saldoFactura').value) || 0;
+            
+            // Validaciones
+            if (!clienteId || !tipoComprobante || !descripcion || total <= 0) {
+                showAlert('❌ Complete todos los campos obligatorios');
+                return;
+            }
+            
+            const cliente = clientes.find(c => c.id == clienteId);
+            if (!cliente) {
+                showAlert('❌ Cliente no encontrado');
+                return;
+            }
+            
+            // Crear factura
+            const factura = {
+                id: Date.now(),
+                numero: Date.now().toString().slice(-6),
+                clienteId: clienteId,
+                cliente: cliente.nombre,
+                cedula: cliente.cedula || '',
+                tipoComprobante: tipoComprobante,
+                ncf: ncf,
+                fecha: fecha,
+                descripcion: descripcion,
+                subtotal: subtotal,
+                itbis: itbis,
+                total: total,
+                abono: abono,
+                saldo: saldo,
+                estado: saldo > 0 ? 'pendiente' : 'pagada',
+                fechaCreacion: new Date().toISOString()
+            };
+            
+            // Guardar factura
+            facturas.push(factura);
+            
+            // Incrementar contador NCF
+            contadorNCF[tipoComprobante]++;
+            
+            // Crear venta (alimenta reportes)
+            const venta = {
+                id: Date.now(),
+                facturaId: factura.id,
+                cliente: cliente.nombre,
+                descripcion: descripcion,
+                total: total,
+                abono: abono,
+                saldo: saldo,
+                fecha: new Date().toISOString()
+            };
+            ventas.push(venta);
+            
+            // Si hay saldo, crear cuenta por cobrar
+            if (saldo > 0) {
+                const cuentaCobrar = {
+                    id: Date.now(),
+                    facturaId: factura.id,
+                    cliente: cliente.nombre,
+                    descripcion: descripcion,
+                    montoOriginal: total,
+                    saldo: saldo,
+                    fecha: new Date().toISOString()
+                };
+                cuentasPorCobrar.push(cuentaCobrar);
+            }
+            
+            guardarDatos();
+            cargarFacturasRecientes();
+            
+            // Limpiar formulario
+            limpiarFormularioFactura();
+            
+            showAlert(`✅ Factura ${ncf} generada exitosamente`);
+        }
+
+        function limpiarFormularioFactura() {
+            document.getElementById('clienteFactura').value = '';
+            document.getElementById('tipoComprobante').value = '';
+            document.getElementById('ncfFactura').value = '';
+            document.getElementById('descripcionFactura').value = '';
+            document.getElementById('subtotalFactura').value = '';
+            document.getElementById('itbisFactura').value = '';
+            document.getElementById('totalFactura').value = '';
+            document.getElementById('abonoFactura').value = '';
+            document.getElementById('saldoFactura').value = '';
+        }
+
+        function cargarFacturasRecientes() {
+            const lista = document.getElementById('listaFacturasRecientes');
+            const facturasRecientes = facturas.slice(-10).reverse();
+            
+            if (facturasRecientes.length === 0) {
+                lista.innerHTML = '<p style="text-align: center;">No hay facturas registradas</p>';
+                return;
+            }
+            
+            lista.innerHTML = facturasRecientes.map(factura => `
+                <div class="producto-item">
+                    <div style="flex: 1;">
+                        <h4>📄 Factura ${factura.ncf}</h4>
+                        <p><strong>Cliente:</strong> ${factura.cliente}</p>
+                        <p><strong>Total:</strong> RD$ ${factura.total.toFixed(2)} | <strong>Saldo:</strong> RD$ ${factura.saldo.toFixed(2)}</p>
+                        <p><strong>Estado:</strong> ${factura.estado} | <strong>Fecha:</strong> ${new Date(factura.fecha).toLocaleDateString()}</p>
+                    </div>
+                    <div>
+                        <button class="btn btn-whatsapp" onclick="reenviarFactura(${factura.id})">📱 Enviar</button>
+                        <button class="btn btn-warning" onclick="imprimirFacturaId(${factura.id})">🖨️ Imprimir</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function enviarFacturaPorWhatsApp() {
+            // Esta función se puede usar después de generar la factura
+            showAlert('💡 Primero genere la factura, luego use "Enviar" en la lista');
+        }
+
+        function reenviarFactura(facturaId) {
+            const factura = facturas.find(f => f.id === facturaId);
+            if (!factura) return;
+            
+            const cliente = clientes.find(c => c.id === factura.clienteId);
+            
+            const mensaje = `📄 FACTURA URBANA VISION
+
+🧾 NCF: ${factura.ncf}
+📅 Fecha: ${new Date(factura.fecha).toLocaleDateString()}
+
+👤 Cliente: ${factura.cliente}
+${factura.cedula ? `🆔 Cédula: ${factura.cedula}` : ''}
+
+📝 Descripción:
+${factura.descripcion}
+
+💰 DETALLES FINANCIEROS:
+• Subtotal: RD$ ${factura.subtotal.toFixed(2)}
+• ITBIS (18%): RD$ ${factura.itbis.toFixed(2)}
+• TOTAL: RD$ ${factura.total.toFixed(2)}
+• Abono: RD$ ${factura.abono.toFixed(2)}
+• Saldo: RD$ ${factura.saldo.toFixed(2)}
+
+🏢 Urbana Vision
+📱 809-713-5307
+🌐 urbanavision.com
+
+Gracias por su confianza!`;
+            
+            const telefonoLimpio = cliente ? cliente.telefono.replace(/[^0-9]/g, '') : '18097135307';
+            window.open(`https://wa.me/1${telefonoLimpio}?text=${encodeURIComponent(mensaje)}`, '_blank');
+            showAlert('📱 Factura enviada por WhatsApp');
+        }
+
+        function imprimirFactura() {
+            showAlert('🖨️ Función de impresión próximamente');
+        }
+
+        function imprimirFacturaId(facturaId) {
+            showAlert('🖨️ Función de impresión próximamente');
+        }
+
+        // ========================================
+        // 📊 FUNCIONES DE REPORTES ACTUALIZADAS
         // ========================================
         function cargarReportes() {
             // Calcular totales
