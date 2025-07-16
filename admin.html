@@ -288,6 +288,19 @@
                 </div>
                 
                 <div class="card">
+                    <h3>👤 Cliente que Compra (para cuentas por cobrar)</h3>
+                    <input type="text" id="clienteLaboratorio" class="input" placeholder="Nombre del cliente (se guardará automáticamente)" list="clientesDatalistLab">
+                    <datalist id="clientesDatalistLab">
+                        <!-- Se llena automáticamente -->
+                    </datalist>
+                    <input type="number" id="precioVentaLab" class="input" placeholder="Precio de venta al cliente RD$">
+                    <input type="text" id="laboratorioNombre" class="input" placeholder="Nombre del laboratorio" list="laboratoriosDatalistLab">
+                    <datalist id="laboratoriosDatalistLab">
+                        <!-- Se llena automáticamente -->
+                    </datalist>
+                </div>
+                
+                <div class="card">
                     <h3>⚙️ PASO 3: Datos Técnicos Obligatorios</h3>
                     
                     <h4 style="color: #7c3aed; margin: 15px 0;">👁️ GRADUACIÓN OJO DERECHO (OD)</h4>
@@ -380,6 +393,11 @@
         <div id="ordenes" class="section">
             <h2>📋 Órdenes de Laboratorio Pendientes</h2>
             <button class="btn btn-danger" onclick="mostrar('menu')">⬅️ Volver</button>
+            
+            <div class="card">
+                <h3>🔬 Cotejo de Órdenes Completadas</h3>
+                <p style="color: #7c3aed; font-size: 14px;">Cuando el laboratorio entregue las órdenes, márcalas como "Entregadas" y se convertirán en cuentas por cobrar</p>
+            </div>
             
             <div id="listaOrdenesLab"></div>
         </div>
@@ -586,9 +604,16 @@ Te va a encantar.
             <div class="card">
                 <h3>💰 Registrar Abono</h3>
                 <select id="clienteAbono" class="select">
-                    <option value="">Seleccionar cliente</option>
+                    <option value="">Seleccionar cliente existente</option>
                 </select>
+                
+                <div style="margin: 15px 0; padding: 10px; background: rgba(16, 185, 129, 0.1); border-radius: 8px;">
+                    <label style="font-weight: bold;">O escriba nombre de cliente nuevo (se guardará automáticamente):</label>
+                    <input type="text" id="clienteManualAbono" class="input" placeholder="Nombre del cliente que viene a abonar">
+                </div>
+                
                 <input type="number" id="montoAbono" class="input" placeholder="Monto del abono RD$">
+                <input type="text" id="conceptoAbono" class="input" placeholder="Concepto del abono (ej: Abono lentes progresivos)">
                 <button class="btn btn-success" onclick="registrarAbono()">💰 Registrar Abono</button>
             </div>
         </div>
@@ -605,9 +630,10 @@ Te va a encantar.
             
             <div class="card">
                 <h3>💳 Pagar a Laboratorio</h3>
-                <select id="laboratoriosPago" class="select">
-                    <option value="">Seleccionar laboratorio</option>
-                </select>
+                <input type="text" id="laboratorioManualPago" class="input" placeholder="Nombre del laboratorio" list="laboratoriosDatalist">
+                <datalist id="laboratoriosDatalist">
+                    <!-- Se llena automáticamente con laboratorios usados -->
+                </datalist>
                 <input type="number" id="montoPago" class="input" placeholder="Monto del pago RD$">
                 <button class="btn btn-success" onclick="pagarLaboratorio()">💳 Registrar Pago</button>
             </div>
@@ -626,9 +652,10 @@ Te va a encantar.
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
                     <div>
                         <label>👤 Cliente:</label>
-                        <select id="clienteFactura" class="select">
-                            <option value="">Seleccionar cliente</option>
-                        </select>
+                        <input type="text" id="clienteManualFactura" class="input" placeholder="Escriba nombre del cliente (se guardará automáticamente)" list="clientesDatalist">
+                        <datalist id="clientesDatalist">
+                            <!-- Se llena automáticamente -->
+                        </datalist>
                     </div>
                     <div>
                         <label>🔢 Tipo Comprobante:</label>
@@ -755,11 +782,15 @@ Te va a encantar.
             actualizarDashboard();
             iniciarBackupAutomatico();
             
+            // Actualizar datalists al cargar
+            actualizarDatalistClientes();
+            actualizarDatalistLaboratorios();
+            
             // Auto-actualizar noticias cada 10 minutos
             cargarNoticias();
             setInterval(cargarNoticias, 10 * 60 * 1000);
             
-            showAlert('✅ Sistema Urbana Vision iniciado - Noticias auto-actualizadas');
+            showAlert('✅ Sistema Urbana Vision iniciado - Entrada rápida activada');
         });
 
         function cargarDatos() {
@@ -1052,7 +1083,62 @@ Te va a encantar.
         }
 
         // ========================================
-        // 🔬 FUNCIONES DE LABORATORIO (SEPARADAS)
+        // 👥 FUNCIONES DE AUTO-GUARDADO DE CLIENTES
+        // ========================================
+        function autoGuardarCliente(nombre, telefono = '') {
+            // Verificar si el cliente ya existe
+            const clienteExistente = clientes.find(c => c.nombre.toLowerCase() === nombre.toLowerCase());
+            if (clienteExistente) {
+                return clienteExistente.id;
+            }
+            
+            // Crear nuevo cliente
+            const nuevoCliente = {
+                id: Date.now(),
+                nombre: nombre.trim(),
+                telefono: telefono.trim(),
+                cedula: '',
+                fecha: new Date().toISOString(),
+                autoCreado: true
+            };
+            
+            clientes.push(nuevoCliente);
+            guardarDatos();
+            actualizarDatalistClientes();
+            
+            showAlert(`👥 Cliente "${nombre}" guardado automáticamente`);
+            return nuevoCliente.id;
+        }
+
+        function actualizarDatalistClientes() {
+            // Actualizar todos los datalist de clientes
+            const datalists = ['clientesDatalist', 'clientesDatalistLab'];
+            datalists.forEach(datalistId => {
+                const datalist = document.getElementById(datalistId);
+                if (datalist) {
+                    datalist.innerHTML = clientes.map(c => `<option value="${c.nombre}"></option>`).join('');
+                }
+            });
+        }
+
+        function actualizarDatalistLaboratorios() {
+            // Obtener laboratorios únicos de órdenes y pagos
+            const laboratoriosUsados = [...new Set([
+                ...ordenesLab.map(o => o.laboratorio).filter(Boolean),
+                ...cuentasPorPagar.map(p => p.laboratorio).filter(Boolean)
+            ])];
+            
+            const datalists = ['laboratoriosDatalist', 'laboratoriosDatalistLab'];
+            datalists.forEach(datalistId => {
+                const datalist = document.getElementById(datalistId);
+                if (datalist) {
+                    datalist.innerHTML = laboratoriosUsados.map(lab => `<option value="${lab}"></option>`).join('');
+                }
+            });
+        }
+
+        // ========================================
+        // 🔬 FUNCIONES DE LABORATORIO ACTUALIZADAS
         // ========================================
         function enviarOrdenLaboratorio() {
             // Obtener graduación completa
@@ -1064,7 +1150,12 @@ Te va a encantar.
             const ejeOI = document.getElementById('ejeOI').value;
             const add = document.getElementById('addLente').value;
             
-            // Otros datos
+            // Datos del cliente y venta
+            const clienteNombre = document.getElementById('clienteLaboratorio').value.trim();
+            const precioVenta = parseFloat(document.getElementById('precioVentaLab').value) || 0;
+            const laboratorioNombre = document.getElementById('laboratorioNombre').value.trim();
+            
+            // Otros datos técnicos
             const dp = document.getElementById('distanciaPupilar').value;
             const altura = document.getElementById('alturaLente').value;
             const tipo = document.getElementById('tipoLente').value;
@@ -1080,6 +1171,14 @@ Te va a encantar.
                 showAlert('❌ Tome foto de la montura (PASO 2)');
                 return;
             }
+            if (!clienteNombre) {
+                showAlert('❌ Ingrese nombre del cliente');
+                return;
+            }
+            if (!laboratorioNombre) {
+                showAlert('❌ Ingrese nombre del laboratorio');
+                return;
+            }
             if (!esferaOD || !esferaOI) {
                 showAlert('❌ Complete la graduación OD y OI (esfera obligatoria)');
                 return;
@@ -1088,11 +1187,22 @@ Te va a encantar.
                 showAlert('❌ Complete todos los datos técnicos');
                 return;
             }
+            if (precioVenta <= 0) {
+                showAlert('❌ Ingrese precio de venta al cliente');
+                return;
+            }
+            
+            // Auto-guardar cliente si no existe
+            const clienteId = autoGuardarCliente(clienteNombre);
             
             // Crear orden CON graduación completa
             const orden = {
                 id: Date.now(),
                 numero: 'UV-' + Date.now().toString().slice(-6),
+                clienteId: clienteId,
+                clienteNombre: clienteNombre,
+                precioVenta: precioVenta,
+                laboratorio: laboratorioNombre,
                 graduacion: {
                     od: {
                         esfera: esferaOD,
@@ -1111,7 +1221,6 @@ Te va a encantar.
                 tipo: tipo,
                 material: material,
                 costo: parseFloat(costo),
-                laboratorio: 'Laboratorio Principal',
                 fotoReceta: fotoReceta,
                 fotoMontura: fotoMontura,
                 fecha: new Date().toISOString(),
@@ -1123,6 +1232,9 @@ Te va a encantar.
 
 📋 Orden: ${orden.numero}
 📅 ${new Date().toLocaleDateString()}
+🏭 Para: ${laboratorioNombre}
+
+👤 CLIENTE: ${clienteNombre}
 
 👁️ GRADUACIÓN OJO DERECHO (OD):
 • Esfera: ${esferaOD}
@@ -1159,6 +1271,7 @@ ${add ? `➕ ADD: ${add}` : ''}
             // Guardar orden
             ordenesLab.push(orden);
             guardarDatos();
+            actualizarDatalistLaboratorios();
             limpiarFormularioLab();
             
             showAlert('📱 Orden COMPLETA enviada al laboratorio');
@@ -1209,6 +1322,11 @@ ${add ? `➕ ADD: ${add}` : ''}
             document.getElementById('ejeOI').value = '';
             document.getElementById('addLente').value = '';
             
+            // Limpiar datos del cliente y venta
+            document.getElementById('clienteLaboratorio').value = '';
+            document.getElementById('precioVentaLab').value = '';
+            document.getElementById('laboratorioNombre').value = '';
+            
             // Limpiar otros datos
             document.getElementById('distanciaPupilar').value = '';
             document.getElementById('alturaLente').value = '';
@@ -1225,6 +1343,9 @@ ${add ? `➕ ADD: ${add}` : ''}
         }
 
         function cargarOrdenesLab() {
+            actualizarDatalistClientes();
+            actualizarDatalistLaboratorios();
+            
             const lista = document.getElementById('listaOrdenesLab');
             
             if (ordenesLab.length === 0) {
@@ -1236,18 +1357,68 @@ ${add ? `➕ ADD: ${add}` : ''}
                 <div class="orden-item">
                     <div style="flex: 1;">
                         <h4>🔬 Orden ${orden.numero}</h4>
-                        <p><strong>DP:</strong> ${orden.dp}mm | <strong>Altura:</strong> ${orden.altura}mm</p>
-                        <p><strong>Tipo:</strong> ${orden.tipo} | <strong>Material:</strong> ${orden.material}</p>
-                        <p><strong>Costo Lab:</strong> RD$ ${orden.costo.toFixed(2)}</p>
+                        <p><strong>Cliente:</strong> ${orden.clienteNombre || 'No especificado'}</p>
+                        <p><strong>Laboratorio:</strong> ${orden.laboratorio}</p>
+                        <p><strong>Graduación OD:</strong> ${orden.graduacion?.od?.esfera || ''} ${orden.graduacion?.od?.cilindro || ''} ${orden.graduacion?.od?.eje ? 'x' + orden.graduacion.od.eje + '°' : ''}</p>
+                        <p><strong>Graduación OI:</strong> ${orden.graduacion?.oi?.esfera || ''} ${orden.graduacion?.oi?.cilindro || ''} ${orden.graduacion?.oi?.eje ? 'x' + orden.graduacion.oi.eje + '°' : ''}</p>
+                        <p><strong>DP:</strong> ${orden.dp}mm | <strong>Tipo:</strong> ${orden.tipo}</p>
+                        <p><strong>Costo Lab:</strong> RD$ ${orden.costo.toFixed(2)} | <strong>Precio Venta:</strong> RD$ ${(orden.precioVenta || 0).toFixed(2)}</p>
                         <p><strong>Estado:</strong> ${orden.estado} | <strong>Fecha:</strong> ${new Date(orden.fecha).toLocaleDateString()}</p>
                     </div>
                     <div>
                         <button class="btn btn-lab" onclick="reenviarOrden(${orden.id})">📱 Reenviar</button>
-                        <button class="btn btn-success" onclick="marcarListo(${orden.id})">✅ Listo</button>
+                        ${orden.estado === 'enviado' ? 
+                            `<button class="btn btn-success" onclick="marcarEntregado(${orden.id})">📦 Marcar Entregado</button>` : 
+                            `<button class="btn btn-warning" onclick="entregarCliente(${orden.id})">💰 Entregar a Cliente</button>`
+                        }
                         <button class="btn btn-danger" onclick="eliminarOrden(${orden.id})">🗑️</button>
                     </div>
                 </div>
             `).join('');
+        }
+
+        function marcarEntregado(id) {
+            const orden = ordenesLab.find(o => o.id === id);
+            if (!orden) return;
+            
+            orden.estado = 'entregado';
+            orden.fechaEntrega = new Date().toISOString();
+            
+            guardarDatos();
+            cargarOrdenesLab();
+            showAlert('📦 Orden marcada como entregada por el laboratorio');
+        }
+
+        function entregarCliente(id) {
+            const orden = ordenesLab.find(o => o.id === id);
+            if (!orden) return;
+            
+            if (!orden.clienteNombre || !orden.precioVenta) {
+                showAlert('❌ Esta orden no tiene cliente o precio de venta especificado');
+                return;
+            }
+            
+            // Crear cuenta por cobrar automáticamente
+            const cuentaCobrar = {
+                id: Date.now(),
+                ordenId: orden.id,
+                cliente: orden.clienteNombre,
+                descripcion: `Lentes ${orden.tipo} - Orden ${orden.numero}`,
+                montoOriginal: orden.precioVenta,
+                saldo: orden.precioVenta,
+                fecha: new Date().toISOString()
+            };
+            
+            cuentasPorCobrar.push(cuentaCobrar);
+            
+            // Marcar orden como entregada al cliente
+            orden.estado = 'entregado_cliente';
+            orden.fechaEntregaCliente = new Date().toISOString();
+            
+            guardarDatos();
+            cargarOrdenesLab();
+            
+            showAlert(`💰 Orden entregada a ${orden.clienteNombre}. Cuenta por cobrar creada por RD$ ${orden.precioVenta.toFixed(2)}`);
         }
 
         function reenviarOrden(id) {
@@ -1256,6 +1427,8 @@ ${add ? `➕ ADD: ${add}` : ''}
             
             const mensaje = `🔬 REENVÍO ORDEN ${orden.numero}
 
+👤 Cliente: ${orden.clienteNombre || 'No especificado'}
+🏭 Laboratorio: ${orden.laboratorio}
 📏 DP: ${orden.dp}mm | Altura: ${orden.altura}mm
 🔍 ${orden.tipo} - ${orden.material}
 💰 Costo: RD$ ${orden.costo}
@@ -1268,13 +1441,8 @@ ${add ? `➕ ADD: ${add}` : ''}
         }
 
         function marcarListo(id) {
-            const orden = ordenesLab.find(o => o.id === id);
-            if (orden) {
-                orden.estado = 'listo';
-                guardarDatos();
-                cargarOrdenesLab();
-                showAlert('✅ Orden marcada como lista');
-            }
+            // Función mantenida para compatibilidad
+            marcarEntregado(id);
         }
 
         function eliminarOrden(id) {
@@ -1604,12 +1772,8 @@ ${add ? `➕ ADD: ${add}` : ''}
             // Cargar fecha actual
             document.getElementById('fechaFactura').value = new Date().toISOString().split('T')[0];
             
-            // Cargar clientes en select
-            const select = document.getElementById('clienteFactura');
-            select.innerHTML = '<option value="">Seleccionar cliente</option>';
-            clientes.forEach(cliente => {
-                select.innerHTML += `<option value="${cliente.id}">${cliente.nombre}</option>`;
-            });
+            // Actualizar datalist de clientes
+            actualizarDatalistClientes();
             
             // Cargar facturas recientes
             cargarFacturasRecientes();
@@ -1647,7 +1811,7 @@ ${add ? `➕ ADD: ${add}` : ''}
         }
 
         function generarFactura() {
-            const clienteId = document.getElementById('clienteFactura').value;
+            const clienteNombre = document.getElementById('clienteManualFactura').value.trim();
             const tipoComprobante = document.getElementById('tipoComprobante').value;
             const ncf = document.getElementById('ncfFactura').value;
             const fecha = document.getElementById('fechaFactura').value;
@@ -1659,24 +1823,20 @@ ${add ? `➕ ADD: ${add}` : ''}
             const saldo = parseFloat(document.getElementById('saldoFactura').value) || 0;
             
             // Validaciones
-            if (!clienteId || !tipoComprobante || !descripcion || total <= 0) {
+            if (!clienteNombre || !tipoComprobante || !descripcion || total <= 0) {
                 showAlert('❌ Complete todos los campos obligatorios');
                 return;
             }
             
-            const cliente = clientes.find(c => c.id == clienteId);
-            if (!cliente) {
-                showAlert('❌ Cliente no encontrado');
-                return;
-            }
+            // Auto-guardar cliente si no existe
+            const clienteId = autoGuardarCliente(clienteNombre);
             
             // Crear factura
             const factura = {
                 id: Date.now(),
                 numero: Date.now().toString().slice(-6),
                 clienteId: clienteId,
-                cliente: cliente.nombre,
-                cedula: cliente.cedula || '',
+                cliente: clienteNombre,
                 tipoComprobante: tipoComprobante,
                 ncf: ncf,
                 fecha: fecha,
@@ -1700,7 +1860,7 @@ ${add ? `➕ ADD: ${add}` : ''}
             const venta = {
                 id: Date.now(),
                 facturaId: factura.id,
-                cliente: cliente.nombre,
+                cliente: clienteNombre,
                 descripcion: descripcion,
                 total: total,
                 abono: abono,
@@ -1714,7 +1874,7 @@ ${add ? `➕ ADD: ${add}` : ''}
                 const cuentaCobrar = {
                     id: Date.now(),
                     facturaId: factura.id,
-                    cliente: cliente.nombre,
+                    cliente: clienteNombre,
                     descripcion: descripcion,
                     montoOriginal: total,
                     saldo: saldo,
@@ -1725,15 +1885,16 @@ ${add ? `➕ ADD: ${add}` : ''}
             
             guardarDatos();
             cargarFacturasRecientes();
+            actualizarDatalistClientes();
             
             // Limpiar formulario
             limpiarFormularioFactura();
             
-            showAlert(`✅ Factura ${ncf} generada exitosamente`);
+            showAlert(`✅ Factura ${ncf} generada exitosamente para ${clienteNombre}`);
         }
 
         function limpiarFormularioFactura() {
-            document.getElementById('clienteFactura').value = '';
+            document.getElementById('clienteManualFactura').value = '';
             document.getElementById('tipoComprobante').value = '';
             document.getElementById('ncfFactura').value = '';
             document.getElementById('descripcionFactura').value = '';
@@ -1821,76 +1982,43 @@ Gracias por su confianza!`;
         // 📊 FUNCIONES DE REPORTES ACTUALIZADAS
         // ========================================
         function cargarReportes() {
-            // Calcular totales
-            const totalVentas = ventas.reduce((sum, venta) => sum + venta.total, 0);
-            const totalPorCobrar = cuentasPorCobrar.reduce((sum, cuenta) => sum + cuenta.saldo, 0);
-            const totalPorPagar = cuentasPorPagar.reduce((sum, cuenta) => sum + cuenta.saldo, 0);
+            // Calcular totales de ventas (de facturas)
+            const totalVentas = facturas.reduce((sum, factura) => sum + factura.total, 0);
+            const totalPorCobrar = cuentasPorCobrar.filter(c => c.saldo > 0).reduce((sum, cuenta) => sum + cuenta.saldo, 0);
+            const totalPorPagar = ordenesLab.filter(o => o.estado === 'entregado' || o.estado === 'entregado_cliente')
+                                           .reduce((sum, orden) => sum + orden.costo, 0) - 
+                                   cuentasPorPagar.reduce((sum, pago) => sum + pago.monto, 0);
             
             const ordenesEnProceso = ordenesLab.filter(o => o.estado === 'enviado').length;
-            const ordenesListas = ordenesLab.filter(o => o.estado === 'listo').length;
+            const ordenesListas = ordenesLab.filter(o => o.estado === 'entregado').length;
             
             // Actualizar estadísticas
             document.getElementById('totalVentas').textContent = `RD$ ${totalVentas.toFixed(0)}`;
             document.getElementById('totalPorCobrar').textContent = `RD$ ${totalPorCobrar.toFixed(0)}`;
-            document.getElementById('totalPorPagar').textContent = `RD$ ${totalPorPagar.toFixed(0)}`;
+            document.getElementById('totalPorPagar').textContent = `RD$ ${Math.max(0, totalPorPagar).toFixed(0)}`;
             document.getElementById('ordenesEnProceso').textContent = ordenesEnProceso;
             document.getElementById('ordenesListas').textContent = ordenesListas;
             
-            // Mostrar ventas recientes
-            const ventasRecientes = ventas.slice(-5).reverse();
+            // Mostrar facturas recientes como ventas
+            const facturasRecientes = facturas.slice(-5).reverse();
             const container = document.getElementById('ventasRecientes');
             
-            if (ventasRecientes.length === 0) {
+            if (facturasRecientes.length === 0) {
                 container.innerHTML = '<p style="text-align: center; color: #666;">No hay ventas registradas</p>';
             } else {
-                container.innerHTML = ventasRecientes.map(venta => `
+                container.innerHTML = facturasRecientes.map(factura => `
                     <div style="background: rgba(16, 185, 129, 0.1); padding: 10px; border-radius: 8px; margin: 5px 0;">
-                        <strong>${venta.cliente}</strong><br>
-                        <small>RD$ ${venta.total.toFixed(2)} - ${new Date(venta.fecha).toLocaleDateString()}</small>
+                        <strong>${factura.cliente}</strong><br>
+                        <small>RD$ ${factura.total.toFixed(2)} - ${new Date(factura.fechaCreacion).toLocaleDateString()}</small><br>
+                        <small>NCF: ${factura.ncf} | Saldo: RD$ ${factura.saldo.toFixed(2)}</small>
                     </div>
                 `).join('');
             }
         }
 
         function nuevaVenta() {
-            const cliente = prompt('Nombre del cliente:');
-            const descripcion = prompt('Descripción de la venta:');
-            const total = parseFloat(prompt('Total de la venta:') || '0');
-            const abono = parseFloat(prompt('Abono recibido:') || '0');
-            
-            if (!cliente || !descripcion || total <= 0) {
-                showAlert('❌ Complete todos los datos de la venta');
-                return;
-            }
-            
-            const venta = {
-                id: Date.now(),
-                cliente: cliente,
-                descripcion: descripcion,
-                total: total,
-                abono: abono,
-                saldo: total - abono,
-                fecha: new Date().toISOString()
-            };
-            
-            ventas.push(venta);
-            
-            // Si hay saldo pendiente, crear cuenta por cobrar
-            if (venta.saldo > 0) {
-                const cuentaCobrar = {
-                    id: Date.now(),
-                    cliente: cliente,
-                    descripcion: descripcion,
-                    montoOriginal: total,
-                    saldo: venta.saldo,
-                    fecha: new Date().toISOString()
-                };
-                cuentasPorCobrar.push(cuentaCobrar);
-            }
-            
-            guardarDatos();
-            cargarReportes();
-            showAlert('✅ Venta registrada exitosamente');
+            showAlert('💡 Use el módulo de Facturación para registrar ventas con NCF. Las ventas se crean automáticamente.');
+            mostrar('facturacion');
         }
 
         function cargarCuentasPorCobrar() {
@@ -1928,40 +2056,91 @@ Gracias por su confianza!`;
 
         function registrarAbono() {
             const cuentaId = document.getElementById('clienteAbono').value;
+            const clienteManual = document.getElementById('clienteManualAbono').value.trim();
             const monto = parseFloat(document.getElementById('montoAbono').value) || 0;
+            const concepto = document.getElementById('conceptoAbono').value.trim();
             
-            if (!cuentaId || monto <= 0) {
-                showAlert('❌ Seleccione cliente y monto del abono');
+            if (monto <= 0) {
+                showAlert('❌ Ingrese un monto válido');
                 return;
             }
             
-            const cuenta = cuentasPorCobrar.find(c => c.id == cuentaId);
-            if (!cuenta) {
-                showAlert('❌ Cuenta no encontrada');
+            if (!concepto) {
+                showAlert('❌ Ingrese el concepto del abono');
                 return;
             }
             
-            if (monto > cuenta.saldo) {
-                showAlert('❌ El abono no puede ser mayor al saldo');
+            // Caso 1: Cliente seleccionado de la lista (cuenta existente)
+            if (cuentaId) {
+                const cuenta = cuentasPorCobrar.find(c => c.id == cuentaId);
+                if (!cuenta) {
+                    showAlert('❌ Cuenta no encontrada');
+                    return;
+                }
+                
+                if (monto > cuenta.saldo) {
+                    showAlert('❌ El abono no puede ser mayor al saldo');
+                    return;
+                }
+                
+                cuenta.saldo -= monto;
+                
+                if (cuenta.saldo <= 0) {
+                    cuenta.estado = 'pagada';
+                }
+                
+                guardarDatos();
+                cargarCuentasPorCobrar();
+                cargarReportes();
+                
+                showAlert(`✅ Abono de RD$ ${monto.toFixed(2)} registrado para ${cuenta.cliente}`);
+            }
+            // Caso 2: Cliente nuevo escribiendo manualmente
+            else if (clienteManual) {
+                // Auto-guardar cliente si no existe
+                const clienteId = autoGuardarCliente(clienteManual);
+                
+                // Crear nueva cuenta por cobrar con abono
+                const nuevaCuenta = {
+                    id: Date.now(),
+                    cliente: clienteManual,
+                    descripcion: concepto,
+                    montoOriginal: monto, // El abono se considera el monto original
+                    saldo: 0, // Ya está pagado con el abono
+                    estado: 'pagada',
+                    fecha: new Date().toISOString()
+                };
+                
+                cuentasPorCobrar.push(nuevaCuenta);
+                
+                // Crear venta automáticamente
+                const venta = {
+                    id: Date.now(),
+                    cliente: clienteManual,
+                    descripcion: concepto,
+                    total: monto,
+                    abono: monto,
+                    saldo: 0,
+                    fecha: new Date().toISOString()
+                };
+                ventas.push(venta);
+                
+                guardarDatos();
+                cargarCuentasPorCobrar();
+                cargarReportes();
+                actualizarDatalistClientes();
+                
+                showAlert(`✅ Cliente "${clienteManual}" creado y abono de RD$ ${monto.toFixed(2)} registrado`);
+            } else {
+                showAlert('❌ Seleccione un cliente o escriba nombre de cliente nuevo');
                 return;
             }
-            
-            cuenta.saldo -= monto;
-            
-            // Si queda saldo 0, marcar como pagada
-            if (cuenta.saldo <= 0) {
-                cuenta.estado = 'pagada';
-            }
-            
-            guardarDatos();
-            cargarCuentasPorCobrar();
-            cargarReportes();
             
             // Limpiar campos
             document.getElementById('clienteAbono').value = '';
+            document.getElementById('clienteManualAbono').value = '';
             document.getElementById('montoAbono').value = '';
-            
-            showAlert(`✅ Abono de RD$ ${monto.toFixed(2)} registrado`);
+            document.getElementById('conceptoAbono').value = '';
         }
 
         function cobrarCliente(cliente, saldo) {
@@ -1979,8 +2158,9 @@ Te recordamos que tienes un saldo pendiente de RD$ ${saldo.toFixed(2)}.
         }
 
         function cargarCuentasPorPagar() {
+            actualizarDatalistLaboratorios();
+            
             const lista = document.getElementById('listaCuentasPorPagar');
-            const select = document.getElementById('laboratoriosPago');
             
             // Calcular deudas por laboratorio
             const deudasLab = {};
@@ -1989,7 +2169,7 @@ Te recordamos que tienes un saldo pendiente de RD$ ${saldo.toFixed(2)}.
                 if (!deudasLab[lab]) {
                     deudasLab[lab] = { laboratorio: lab, saldo: 0, ordenes: 0 };
                 }
-                if (orden.estado === 'listo') { // Solo contar órdenes terminadas
+                if (orden.estado === 'entregado' || orden.estado === 'entregado_cliente') { // Solo contar órdenes terminadas
                     deudasLab[lab].saldo += orden.costo;
                     deudasLab[lab].ordenes++;
                 }
@@ -2003,12 +2183,6 @@ Te recordamos que tienes un saldo pendiente de RD$ ${saldo.toFixed(2)}.
             });
             
             const laboratoriosConDeuda = Object.values(deudasLab).filter(lab => lab.saldo > 0);
-            
-            // Cargar select
-            select.innerHTML = '<option value="">Seleccionar laboratorio</option>';
-            laboratoriosConDeuda.forEach(lab => {
-                select.innerHTML += `<option value="${lab.laboratorio}">${lab.laboratorio} - RD$ ${lab.saldo.toFixed(2)}</option>`;
-            });
             
             // Mostrar lista
             if (laboratoriosConDeuda.length === 0) {
@@ -2031,11 +2205,11 @@ Te recordamos que tienes un saldo pendiente de RD$ ${saldo.toFixed(2)}.
         }
 
         function pagarLaboratorio() {
-            const laboratorio = document.getElementById('laboratoriosPago').value;
+            const laboratorio = document.getElementById('laboratorioManualPago').value.trim();
             const monto = parseFloat(document.getElementById('montoPago').value) || 0;
             
             if (!laboratorio || monto <= 0) {
-                showAlert('❌ Seleccione laboratorio y monto del pago');
+                showAlert('❌ Ingrese nombre del laboratorio y monto del pago');
                 return;
             }
             
@@ -2050,12 +2224,13 @@ Te recordamos que tienes un saldo pendiente de RD$ ${saldo.toFixed(2)}.
             guardarDatos();
             cargarCuentasPorPagar();
             cargarReportes();
+            actualizarDatalistLaboratorios();
             
             // Limpiar campos
-            document.getElementById('laboratoriosPago').value = '';
+            document.getElementById('laboratorioManualPago').value = '';
             document.getElementById('montoPago').value = '';
             
-            showAlert(`✅ Pago de RD$ ${monto.toFixed(2)} registrado`);
+            showAlert(`✅ Pago de RD$ ${monto.toFixed(2)} registrado para ${laboratorio}`);
         }
 
         function contactarLaboratorio(laboratorio) {
@@ -2348,11 +2523,12 @@ Tenemos nuevas ofertas que te pueden interesar.
                 productos: productos.length,
                 clientes: clientes.length,
                 ordenesLab: ordenesLab.length,
+                facturas: facturas.length,
                 ventas: ventas.length,
                 cuentasPorCobrar: cuentasPorCobrar.length,
                 cuentasPorPagar: cuentasPorPagar.length,
                 timestamp: new Date().toISOString(),
-                sistema: 'Urbana Vision'
+                sistema: 'Urbana Vision v5.0'
             };
             
             console.log('📦 Backup automático enviado:', datos);
@@ -2369,10 +2545,12 @@ Tenemos nuevas ofertas que te pueden interesar.
                     ordenesLab: ordenesLab,
                     noticias: noticias,
                     ventas: ventas,
+                    facturas: facturas,
                     cuentasPorCobrar: cuentasPorCobrar,
                     cuentasPorPagar: cuentasPorPagar,
+                    contadorNCF: contadorNCF,
                     fecha: new Date().toISOString(),
-                    version: 'Urbana Vision 4.0'
+                    version: 'Urbana Vision 5.0 - Sistema Completo'
                 };
                 
                 const dataStr = JSON.stringify(datos, null, 2);
@@ -2385,7 +2563,7 @@ Tenemos nuevas ofertas que te pueden interesar.
                 linkElement.setAttribute('download', exportFileDefaultName);
                 linkElement.click();
                 
-                showAlert('💾 Backup manual creado y descargado');
+                showAlert('💾 Backup completo creado y descargado');
             } catch (error) {
                 console.error('Error en backup:', error);
                 showAlert('❌ Error al crear backup');
@@ -2420,18 +2598,18 @@ Tenemos nuevas ofertas que te pueden interesar.
         // ========================================
         // 🎯 INICIALIZACIÓN FINAL
         // ========================================
-        console.log('👓 URBANA VISION - Sistema Completo v4.0');
-        console.log('✅ Módulos separados radicalmente');
-        console.log('🔬 Laboratorio: 4 pasos sin datos financieros');
-        console.log('📱 Marketing: Upload móvil + Enlaces externos');
-        console.log('📰 Noticias: Auto-actualización cada 10 min');
-        console.log('📊 Reportes: Cuentas x cobrar/pagar, ventas');
-        console.log('💰 Finanzas: Control completo del negocio');
-        console.log('💾 Backup automático: GitHub/Netlify');
-        console.log('📸 Fotos automáticas: Receta + Montura');
-        console.log('🔗 Enlaces: Compartir cualquier URL');
-        console.log('📁 Archivos: Upload desde móvil (foto/video)');
-        console.log('🚫 Eliminado: IA, complejidades, cruces de módulos');
+        console.log('👓 URBANA VISION - Sistema Completo v5.0');
+        console.log('✅ ENTRADA RÁPIDA: Clientes auto-guardados');
+        console.log('📄 FACTURACIÓN: NCF automático + Clientes manuales');
+        console.log('🔬 LABORATORIO: Graduación completa + Cotejo órdenes');
+        console.log('💰 CUENTAS: Por cobrar/pagar con entrada manual');
+        console.log('📱 MARKETING: Upload móvil + Enlaces externos');
+        console.log('📰 NOTICIAS: Auto-actualización cada 10 min');
+        console.log('📊 REPORTES: Alimentados por facturas reales');
+        console.log('💾 BACKUP: Completo con todas las tablas');
+        console.log('🚀 FLUJO: Factura → Venta → Cuenta x cobrar (automático)');
+        console.log('🏭 FLUJO: Laboratorio listo → Cuenta x cobrar (cotejo)');
+        console.log('⚡ RAPIDEZ: Todo manual + auto-guardado inteligente');
     </script>
 </body>
 </html>
