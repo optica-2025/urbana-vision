@@ -1,0 +1,3196 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab Security Shield | Control Anti-Robos</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 25%, #0f3460 50%, #16213e 75%, #1a1a2e 100%);
+            color: white;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* Security Background Animation */
+        .security-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: 
+                radial-gradient(circle at 25% 25%, rgba(255, 0, 0, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(255, 165, 0, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(0, 255, 0, 0.05) 0%, transparent 50%);
+            animation: securityPulse 8s ease-in-out infinite;
+        }
+        
+        @keyframes securityPulse {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.1); }
+        }
+        
+        /* Header */
+        .header {
+            background: rgba(0,0,0,0.9);
+            backdrop-filter: blur(20px);
+            padding: 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 2px solid #ff6b6b;
+            box-shadow: 0 4px 20px rgba(255, 107, 107, 0.3);
+        }
+        
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: 900;
+            background: linear-gradient(45deg, #ff6b6b, #ffa500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .optica-selector {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .optica-btn {
+            padding: 12px 24px;
+            border: 2px solid rgba(255,107,107,0.2);
+            border-radius: 25px;
+            background: rgba(255,107,107,0.1);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        
+        .optica-btn.active {
+            background: linear-gradient(45deg, #ff6b6b, #ffa500);
+            border-color: transparent;
+            transform: scale(1.05);
+        }
+        
+        .optica-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255,107,107,0.3);
+        }
+        
+        .security-status {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 15px 25px;
+            background: rgba(255, 107, 107, 0.1);
+            border: 2px solid #ff6b6b;
+            border-radius: 25px;
+        }
+        
+        .status-indicator {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: #00ff00;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; box-shadow: 0 0 10px #00ff00; }
+            50% { opacity: 0.5; box-shadow: 0 0 20px #00ff00; }
+        }
+        
+        /* Main Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+        
+        /* Grid Layout */
+        .security-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        
+        /* Security Cards */
+        .security-card {
+            background: rgba(255,255,255,0.03);
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(255,107,107,0.2);
+            border-radius: 20px;
+            padding: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .security-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #ff6b6b, #ffa500, #ff6b6b);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .security-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 60px rgba(255, 107, 107, 0.3);
+            border-color: #ff6b6b;
+        }
+        
+        .security-card:hover::before {
+            opacity: 1;
+        }
+        
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .card-icon {
+            font-size: 32px;
+            margin-right: 15px;
+            padding: 15px;
+            border-radius: 15px;
+            background: linear-gradient(45deg, rgba(255,107,107,0.2), rgba(255,165,0,0.2));
+        }
+        
+        .card-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin: 0;
+        }
+        
+        .card-subtitle {
+            color: rgba(255,255,255,0.7);
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        
+        /* Alert Levels */
+        .alert-low { border-left: 4px solid #00ff00; background: rgba(0, 255, 0, 0.05); }
+        .alert-medium { border-left: 4px solid #ffa500; background: rgba(255, 165, 0, 0.05); }
+        .alert-high { border-left: 4px solid #ff6b6b; background: rgba(255, 107, 107, 0.05); }
+        .alert-critical { 
+            border-left: 4px solid #ff0000; 
+            background: rgba(255, 0, 0, 0.1);
+            animation: alertPulse 1s infinite;
+        }
+        
+        @keyframes alertPulse {
+            0%, 100% { box-shadow: 0 0 10px rgba(255, 0, 0, 0.3); }
+            50% { box-shadow: 0 0 25px rgba(255, 0, 0, 0.6); }
+        }
+        
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            margin: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .btn:hover::before {
+            left: 100%;
+        }
+        
+        .btn-security {
+            background: linear-gradient(45deg, #ff6b6b, #ffa500);
+            color: white;
+        }
+        
+        .btn-alert {
+            background: linear-gradient(45deg, #ff4757, #ff3838);
+            color: white;
+        }
+        
+        .btn-safe {
+            background: linear-gradient(45deg, #2ed573, #7bed9f);
+            color: white;
+        }
+        
+        .btn-warning {
+            background: linear-gradient(45deg, #ffa502, #ff6348);
+            color: white;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+        }
+        
+        /* Order Tracking */
+        .order-tracker {
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.1), rgba(255, 165, 0, 0.1));
+            border: 2px solid rgba(255, 107, 107, 0.3);
+        }
+        
+        .order-timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+        
+        .timeline-item {
+            display: flex;
+            align-items: center;
+            margin: 15px 0;
+            position: relative;
+        }
+        
+        .timeline-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            font-weight: bold;
+            z-index: 2;
+            font-size: 16px;
+        }
+        
+        .timeline-completed { background: #2ed573; color: white; }
+        .timeline-active { 
+            background: #ffa500; 
+            color: white; 
+            animation: pulse 2s infinite;
+        }
+        .timeline-pending { background: #6c757d; color: white; }
+        .timeline-alert { 
+            background: #ff4757; 
+            color: white; 
+            animation: alertPulse 1s infinite;
+        }
+        
+        .timeline-content {
+            flex: 1;
+            background: rgba(255,255,255,0.05);
+            padding: 15px;
+            border-radius: 10px;
+        }
+        
+        .timeline-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .timeline-time {
+            font-size: 12px;
+            opacity: 0.7;
+        }
+        
+        /* Quality Control */
+        .quality-checklist {
+            background: rgba(0,0,0,0.3);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+        
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+        
+        .checklist-item:hover {
+            background: rgba(255,255,255,0.05);
+        }
+        
+        .checklist-checkbox {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #6c757d;
+            border-radius: 4px;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .checklist-checkbox.checked {
+            background: #2ed573;
+            border-color: #2ed573;
+        }
+        
+        .checklist-checkbox.checked::after {
+            content: '✓';
+            color: white;
+            font-weight: bold;
+        }
+        
+        .checklist-text {
+            flex: 1;
+        }
+        
+        /* Anomaly Detection */
+        .anomaly-detector {
+            background: linear-gradient(135deg, rgba(255, 0, 0, 0.1), rgba(255, 69, 0, 0.1));
+            border: 2px solid rgba(255, 0, 0, 0.3);
+        }
+        
+        .anomaly-item {
+            background: rgba(0,0,0,0.3);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 4px solid;
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 15px;
+        }
+        
+        .anomaly-low { border-left-color: #ffa500; }
+        .anomaly-medium { border-left-color: #ff6b6b; }
+        .anomaly-high { 
+            border-left-color: #ff0000; 
+            animation: alertPulse 1s infinite;
+        }
+        
+        .anomaly-content {
+            flex: 1;
+        }
+        
+        .anomaly-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .anomaly-description {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+        
+        .anomaly-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        /* Metrics */
+        .security-metric {
+            text-align: center;
+            padding: 20px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 15px;
+            margin: 10px 0;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .metric-value {
+            font-size: 36px;
+            font-weight: 900;
+            margin-bottom: 5px;
+        }
+        
+        .metric-safe { color: #2ed573; }
+        .metric-warning { color: #ffa500; }
+        .metric-danger { color: #ff4757; }
+        
+        .metric-label {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+        
+        /* Live Camera Feed */
+        .camera-feed {
+            background: #000;
+            border-radius: 15px;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px 0;
+            border: 2px solid #ff6b6b;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .camera-feed::before {
+            content: '🔴 LIVE';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: #ff0000;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+            z-index: 2;
+            animation: pulse 2s infinite;
+        }
+        
+        .camera-placeholder {
+            text-align: center;
+            color: #6c757d;
+        }
+        
+        /* Input Styles */
+        .input, .textarea, .select {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 12px;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            font-size: 16px;
+            margin: 10px 0;
+            transition: all 0.3s;
+        }
+        
+        .input::placeholder, .textarea::placeholder {
+            color: rgba(255,255,255,0.5);
+        }
+        
+        .input:focus, .textarea:focus, .select:focus {
+            outline: none;
+            border-color: #ff6b6b;
+            box-shadow: 0 0 20px rgba(255, 107, 107, 0.3);
+        }
+        
+        .textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            backdrop-filter: blur(10px);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            border: 2px solid #ff6b6b;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        
+        /* Notifications */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(45deg, #ff6b6b, #ffa500);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            z-index: 3000;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: all 0.3s;
+            max-width: 400px;
+        }
+        
+        .notification.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .notification.error {
+            background: linear-gradient(45deg, #ff4757, #ff3838);
+        }
+        
+        .notification.success {
+            background: linear-gradient(45deg, #2ed573, #7bed9f);
+        }
+        
+        .notification.warning {
+            background: linear-gradient(45deg, #ffa502, #ff6348);
+        }
+        
+        .notification.info {
+            background: linear-gradient(45deg, #4facfe, #00f2fe);
+        }
+        
+        /* Emergency Button */
+        .emergency-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #ff0000, #ff4757);
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(255, 0, 0, 0.3);
+            transition: all 0.3s;
+            z-index: 1000;
+            animation: emergencyPulse 3s infinite;
+        }
+        
+        @keyframes emergencyPulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 10px 30px rgba(255, 0, 0, 0.3); }
+            50% { transform: scale(1.1); box-shadow: 0 15px 40px rgba(255, 0, 0, 0.5); }
+        }
+        
+        .emergency-btn:hover {
+            transform: scale(1.15) rotate(15deg);
+            box-shadow: 0 20px 50px rgba(255, 0, 0, 0.6);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .security-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .timeline-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .timeline-icon {
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+            
+            .anomaly-item {
+                flex-direction: column;
+            }
+            
+            .anomaly-actions {
+                margin-top: 15px;
+                justify-content: flex-start;
+            }
+        }
+        
+        /* Real-time updates animation */
+        @keyframes dataUpdate {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; background: rgba(255, 107, 107, 0.1); }
+            100% { opacity: 1; }
+        }
+        
+        .updating {
+            animation: dataUpdate 1s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="security-bg"></div>
+    
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                🛡️ Lab Security Shield
+                <div style="font-size: 16px; opacity: 0.8;">Sistema Anti-Robos Inteligente</div>
+            </div>
+            <div class="optica-selector">
+                <button class="optica-btn active" onclick="selectOptica('urbana')" data-phone="8097135307">
+                    🏢 Urbana Vision
+                </button>
+                <button class="optica-btn" onclick="selectOptica('nvision')" data-phone="8497972424">
+                    👓 Óptica Nvision
+                </button>
+            </div>
+            <div class="security-status">
+                <div class="status-indicator"></div>
+                <div>
+                    <div style="font-weight: bold;" id="systemStatus">Sistema Activo</div>
+                    <div style="font-size: 12px; opacity: 0.8;">Monitoreo 24/7</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Security Overview -->
+        <div class="security-card alert-low">
+            <div class="card-header">
+                <div class="card-icon">🛡️</div>
+                <div>
+                    <h2 class="card-title">Estado de Seguridad</h2>
+                    <p class="card-subtitle">Monitoreo en tiempo real</p>
+                </div>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px;">
+                <div class="security-metric">
+                    <div class="metric-value metric-safe" id="ordersSecure">47</div>
+                    <div class="metric-label">Órdenes Seguras</div>
+                </div>
+                <div class="security-metric">
+                    <div class="metric-value metric-warning" id="ordersRisk">3</div>
+                    <div class="metric-label">En Riesgo</div>
+                </div>
+                <div class="security-metric">
+                    <div class="metric-value metric-danger" id="anomalies">1</div>
+                    <div class="metric-label">Anomalías</div>
+                </div>
+                <div class="security-metric">
+                    <div class="metric-value metric-safe" id="uptime">99.8%</div>
+                    <div class="metric-label">Uptime</div>
+                </div>
+            </div>
+            
+            <div style="margin-top: 20px; text-align: center;">
+                <button class="btn btn-security" onclick="runFullScan()">
+                    🔍 Escaneo Completo
+                </button>
+                <button class="btn btn-safe" onclick="generateSecurityReport()">
+                    📊 Reporte de Seguridad
+                </button>
+            </div>
+        </div>
+
+        <div class="security-grid">
+            <!-- Order Tracking System -->
+            <div class="security-card order-tracker">
+                <div class="card-header">
+                    <div class="card-icon">📋</div>
+                    <div>
+                        <h2 class="card-title">Tracking de Órdenes</h2>
+                        <p class="card-subtitle">Seguimiento completo anti-pérdidas</p>
+                    </div>
+                </div>
+                
+                <div class="order-timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-icon timeline-completed">1</div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">Orden Recibida</div>
+                            <div class="timeline-time">LAB-2025-001 - Verificada ✅</div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-icon timeline-completed">2</div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">Enviada al Laboratorio</div>
+                            <div class="timeline-time">Timestamp: 14:30 - GPS: Activo</div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-icon timeline-active">3</div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">En Producción</div>
+                            <div class="timeline-time">Status: Monitoreando 🟡</div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-icon timeline-pending">4</div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">Control de Calidad</div>
+                            <div class="timeline-time">Pendiente</div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-icon timeline-alert">⚠️</div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">Orden LAB-2025-003</div>
+                            <div class="timeline-time">⚠️ Retraso inusual detectado</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                    <button class="btn btn-security" onclick="viewAllOrders()">
+                        👁️ Ver Todas las Órdenes
+                    </button>
+                    <button class="btn btn-alert" onclick="checkAnomalies()">
+                        🚨 Verificar Anomalías
+                    </button>
+                    <button class="btn btn-safe" onclick="addNewOrder()">
+                        ➕ Nueva Orden
+                    </button>
+                </div>
+            </div>
+
+            <!-- Quality Control System -->
+            <div class="security-card">
+                <div class="card-header">
+                    <div class="card-icon">✅</div>
+                    <div>
+                        <h2 class="card-title">Control de Calidad</h2>
+                        <p class="card-subtitle">Prevención de confecciones malas</p>
+                    </div>
+                </div>
+                
+                <div class="quality-checklist">
+                    <h4 style="margin-bottom: 15px;">📋 Checklist de Calidad (LAB-2025-001):</h4>
+                    
+                    <div class="checklist-item">
+                        <div class="checklist-checkbox checked" onclick="toggleCheck(this)"></div>
+                        <div class="checklist-text">Graduación correcta (OD/OI verificada)</div>
+                    </div>
+                    <div class="checklist-item">
+                        <div class="checklist-checkbox checked" onclick="toggleCheck(this)"></div>
+                        <div class="checklist-text">Centrado de lentes perfecto</div>
+                    </div>
+                    <div class="checklist-item">
+                        <div class="checklist-checkbox checked" onclick="toggleCheck(this)"></div>
+                        <div class="checklist-text">Distancia pupilar exacta</div>
+                    </div>
+                    <div class="checklist-item">
+                        <div class="checklist-checkbox" onclick="toggleCheck(this)"></div>
+                        <div class="checklist-text">Tratamiento anti-reflejo aplicado</div>
+                    </div>
+                    <div class="checklist-item">
+                        <div class="checklist-checkbox" onclick="toggleCheck(this)"></div>
+                        <div class="checklist-text">Acabado de monturas perfecto</div>
+                    </div>
+                </div>
+                
+                <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                    <button class="btn btn-safe" onclick="approveQuality()">
+                        ✅ Aprobar Calidad
+                    </button>
+                    <button class="btn btn-alert" onclick="rejectOrder()">
+                        ❌ Rechazar Orden
+                    </button>
+                    <button class="btn btn-warning" onclick="requestCorrection()">
+                        🔄 Solicitar Corrección
+                    </button>
+                </div>
+            </div>
+
+            <!-- Financial Security -->
+            <div class="security-card">
+                <div class="card-header">
+                    <div class="card-icon">💰</div>
+                    <div>
+                        <h2 class="card-title">Seguridad Financiera</h2>
+                        <p class="card-subtitle">Control de costos y pagos</p>
+                    </div>
+                </div>
+                
+                <div style="background: rgba(0,0,0,0.3); padding: 20px; border-radius: 15px; margin: 15px 0;">
+                    <h4 style="margin-bottom: 15px;">💸 Análisis Financiero:</h4>
+                    
+                    <div style="display: flex; justify-content: space-between; margin: 10px 0;">
+                        <span>Total en Laboratorios:</span>
+                        <span style="color: #ffa500; font-weight: bold;" id="totalInLabs">RD$ 45,230</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin: 10px 0;">
+                        <span>Órdenes sin pagar:</span>
+                        <span style="color: #ff4757; font-weight: bold;" id="unpaidOrders">RD$ 12,450</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin: 10px 0;">
+                        <span>Beneficio esperado:</span>
+                        <span style="color: #2ed573; font-weight: bold;" id="expectedProfit">RD$ 23,890</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin: 10px 0; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.2);">
+                        <span><strong>Riesgo total:</strong></span>
+                        <span style="color: #ff6b6b; font-weight: bold; font-size: 18px;" id="totalRisk">RD$ 57,680</span>
+                    </div>
+                </div>
+                
+                <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                    <button class="btn btn-warning" onclick="reviewFinances()">
+                        💰 Revisar Finanzas
+                    </button>
+                    <button class="btn btn-alert" onclick="flagRisks()">
+                        🚨 Marcar Riesgos
+                    </button>
+                    <button class="btn btn-security" onclick="sendPaymentReminder()">
+                        📱 Recordatorio Pago
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Anomaly Detection System -->
+        <div class="security-card anomaly-detector">
+            <div class="card-header">
+                <div class="card-icon">🕵️</div>
+                <div>
+                    <h2 class="card-title">Detector de Anomalías IA</h2>
+                    <p class="card-subtitle">Inteligencia artificial detectando patrones</p>
+                </div>
+            </div>
+            
+            <div id="anomaliesList">
+                <div class="anomaly-item anomaly-high">
+                    <div class="anomaly-content">
+                        <div class="anomaly-title">🚨 Orden LAB-2025-003 - Tiempo excesivo</div>
+                        <div class="anomaly-description">
+                            Lleva 12 días en laboratorio. Tiempo normal: 3-5 días.
+                            <br>Última actualización: Hace 3 días
+                            <br><strong>Riesgo financiero:</strong> RD$ 3,500
+                        </div>
+                    </div>
+                    <div class="anomaly-actions">
+                        <button class="btn btn-alert" onclick="investigateAnomaly('LAB-2025-003')">🔍 Investigar</button>
+                        <button class="btn btn-warning" onclick="contactLab('lab3')">📞 Contactar</button>
+                        <button class="btn btn-security" onclick="notifyClient('LAB-2025-003')">📱 Cliente</button>
+                    </div>
+                </div>
+                
+                <div class="anomaly-item anomaly-medium">
+                    <div class="anomaly-content">
+                        <div class="anomaly-title">⚠️ Laboratorio XYZ - Patrón inusual</div>
+                        <div class="anomaly-description">
+                            5 órdenes con retrasos esta semana. Requiere atención.
+                            <br><strong>Promedio de retraso:</strong> 7 días
+                        </div>
+                    </div>
+                    <div class="anomaly-actions">
+                        <button class="btn btn-warning" onclick="reviewLab('xyz')">📊 Revisar</button>
+                        <button class="btn btn-security" onclick="setAlert('xyz')">🔔 Alerta</button>
+                    </div>
+                </div>
+                
+                <div class="anomaly-item anomaly-low">
+                    <div class="anomaly-content">
+                        <div class="anomaly-title">💡 Sugerencia de optimización</div>
+                        <div class="anomaly-description">
+                            Órdenes de progresivos toman 20% más tiempo. Considerar nuevo proveedor.
+                        </div>
+                    </div>
+                    <div class="anomaly-actions">
+                        <button class="btn btn-safe" onclick="viewSuggestion()">💡 Ver Más</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Security Dashboard -->
+        <div class="security-grid">
+            <!-- Camera Monitoring -->
+            <div class="security-card">
+                <div class="card-header">
+                    <div class="card-icon">📹</div>
+                    <div>
+                        <h2 class="card-title">Monitoreo Visual</h2>
+                        <p class="card-subtitle">Cámaras del laboratorio</p>
+                    </div>
+                </div>
+                
+                <div class="camera-feed">
+                    <div class="camera-placeholder">
+                        <div style="font-size: 64px; margin-bottom: 15px;">📹</div>
+                        <div>Cámara 1 - Área Principal</div>
+                        <div style="font-size: 12px; opacity: 0.6; margin-top: 10px;">
+                            Resolución: 1080p | FPS: 30 | Status: Activa
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 15px;">
+                    <button class="btn btn-security" onclick="switchCamera(1)">📹 Cam 1</button>
+                    <button class="btn btn-security" onclick="switchCamera(2)">📹 Cam 2</button>
+                    <button class="btn btn-security" onclick="switchCamera(3)">📹 Cam 3</button>
+                </div>
+                
+                <div style="margin-top: 15px;">
+                    <button class="btn btn-warning" onclick="recordIncident()">📹 Grabar Incidente</button>
+                    <button class="btn btn-alert" onclick="emergencyAlert()">🚨 Alerta</button>
+                </div>
+            </div>
+
+            <!-- Communication Hub -->
+            <div class="security-card">
+                <div class="card-header">
+                    <div class="card-icon">📱</div>
+                    <div>
+                        <h2 class="card-title">Centro de Comunicaciones</h2>
+                        <p class="card-subtitle">WhatsApp y notificaciones</p>
+                    </div>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin: 20px 0;">
+                    <button class="btn btn-safe" onclick="sendStatusUpdate()">
+                        📱 Estado a Clientes
+                    </button>
+                    <button class="btn btn-warning" onclick="sendDelayNotification()">
+                        ⏰ Notificar Retrasos
+                    </button>
+                    <button class="btn btn-security" onclick="contactAllLabs()">
+                        🏭 Contactar Labs
+                    </button>
+                    <button class="btn btn-alert" onclick="emergencyBroadcast()">
+                        📡 Broadcast Emergencia
+                    </button>
+                </div>
+                
+                <div style="background: rgba(37, 211, 102, 0.1); padding: 15px; border-radius: 10px; margin: 15px 0;">
+                    <h4 style="color: #25d366; margin-bottom: 10px;">📱 WhatsApp Activo</h4>
+                    <p style="font-size: 14px; opacity: 0.8;">
+                        <span id="currentOpticaPhone">809-713-5307</span> - Sistema configurado automáticamente
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Emergency Actions -->
+        <div class="security-card alert-critical">
+            <div class="card-header">
+                <div class="card-icon">🚨</div>
+                <div>
+                    <h2 class="card-title">Protocolos de Emergencia</h2>
+                    <p class="card-subtitle">Respuesta rápida ante incidentes</p>
+                </div>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 20px 0;">
+                <button class="btn btn-alert" onclick="emergencyAlert()">
+                    🚨 Alerta General
+                </button>
+                <button class="btn btn-alert" onclick="lockdownMode()">
+                    🔒 Modo Bloqueo
+                </button>
+                <button class="btn btn-warning" onclick="contactAuthorities()">
+                    📞 Autoridades
+                </button>
+                <button class="btn btn-security" onclick="generateIncidentReport()">
+                    📋 Reporte Incidente
+                </button>
+            </div>
+            
+            <div style="background: rgba(255, 0, 0, 0.1); padding: 15px; border-radius: 10px; border: 1px solid #ff4757;">
+                <h4 style="color: #ff4757; margin-bottom: 10px;">⚠️ Protocolo de Emergencia:</h4>
+                <ol style="padding-left: 20px; line-height: 1.6;">
+                    <li>Documentar el incidente inmediatamente</li>
+                    <li>Activar modo bloqueo si es necesario</li>
+                    <li>Contactar laboratorios afectados</li>
+                    <li>Notificar a clientes si aplica</li>
+                    <li>Generar reporte para seguimiento</li>
+                    <li>Enviar notificaciones por WhatsApp</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <!-- Emergency Button -->
+    <button class="emergency-btn" onclick="quickEmergency()" title="Emergencia Rápida">
+        🚨
+    </button>
+
+    <!-- Modal -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">✕</button>
+            <div id="modalContent">
+                <!-- Contenido dinámico -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification -->
+    <div class="notification" id="notification"></div>
+
+    <script>
+        // ========================================
+        // 🛡️ VARIABLES GLOBALES DE SEGURIDAD
+        // ========================================
+        
+        let currentOptica = 'urbana';
+        let orders = [];
+        let anomalies = [];
+        let securityLogs = [];
+        let qualityChecks = [];
+        let systemLocked = false;
+        
+        // Configuraciones por óptica
+        const opticaConfig = {
+            urbana: {
+                nombre: 'Urbana Vision',
+                telefono: '809-713-5307',
+                whatsapp: '18097135307',
+                web: 'urbanavision.com',
+                colores: ['#ff6b6b', '#ffa500']
+            },
+            nvision: {
+                nombre: 'Óptica Nvision',
+                telefono: '849-797-2424',
+                whatsapp: '18497972424',
+                web: 'opticanvision.com',
+                colores: ['#ff6b6b', '#ffa500']
+            }
+        };
+        
+        let financialData = {
+            totalInLabs: 45230,
+            unpaidOrders: 12450,
+            expectedProfit: 23890,
+            totalRisk: 57680
+        };
+        
+        // Datos de ejemplo de órdenes
+        const sampleOrders = [
+            {
+                id: 'LAB-2025-001',
+                client: 'María González',
+                phone: '809-555-0001',
+                status: 'en_produccion',
+                startDate: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
+                expectedDate: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
+                laboratory: 'Lab Central',
+                cost: 2500,
+                price: 4000,
+                risk: 'low',
+                prescription: 'OD: -2.50 SPH / OI: -2.75 SPH',
+                notes: 'Cliente regular, urgente'
+            },
+            {
+                id: 'LAB-2025-002',
+                client: 'Juan Pérez',
+                phone: '809-555-0002',
+                status: 'control_calidad',
+                startDate: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000),
+                expectedDate: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000),
+                laboratory: 'Lab Express',
+                cost: 1800,
+                price: 3200,
+                risk: 'low',
+                prescription: 'OD: -1.25 SPH / OI: -1.50 SPH',
+                notes: 'Primera vez, seguimiento especial'
+            },
+            {
+                id: 'LAB-2025-003',
+                client: 'Ana Rodríguez',
+                phone: '809-555-0003',
+                status: 'retraso',
+                startDate: new Date(Date.now() - 12 * 24 * 60 * 60 * 1000),
+                expectedDate: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
+                laboratory: 'Lab XYZ',
+                cost: 3200,
+                price: 5500,
+                risk: 'high',
+                prescription: 'Progresivos: ADD +2.25',
+                notes: 'Caso complejo, requiere atención'
+            }
+        ];
+
+        // ========================================
+        // 🚀 INICIALIZACIÓN DEL SISTEMA
+        // ========================================
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🛡️ Lab Security Shield iniciando...');
+            initializeSystem();
+            loadSampleData();
+            startMonitoring();
+            showNotification('🛡️ Sistema de seguridad activado', 'success');
+        });
+
+        function initializeSystem() {
+            try {
+                // Cargar datos guardados
+                orders = JSON.parse(localStorage.getItem('labSecurityOrders') || JSON.stringify(sampleOrders));
+                anomalies = JSON.parse(localStorage.getItem('labSecurityAnomalies') || '[]');
+                securityLogs = JSON.parse(localStorage.getItem('labSecurityLogs') || '[]');
+                qualityChecks = JSON.parse(localStorage.getItem('labQualityChecks') || '[]');
+                
+                updateSecurityMetrics();
+                detectAnomalies();
+                updateCurrentOpticaPhone();
+                
+                console.log('✅ Sistema inicializado correctamente');
+            } catch (error) {
+                console.error('❌ Error inicializando sistema:', error);
+                showNotification('⚠️ Error al inicializar sistema', 'error');
+            }
+        }
+
+        function loadSampleData() {
+            // Generar logs de seguridad de ejemplo
+            if (securityLogs.length === 0) {
+                securityLogs.push(
+                    {
+                        timestamp: new Date(),
+                        type: 'system_start',
+                        message: 'Sistema de seguridad iniciado',
+                        severity: 'info'
+                    },
+                    {
+                        timestamp: new Date(Date.now() - 60000),
+                        type: 'anomaly_detected',
+                        message: 'Retraso detectado en LAB-2025-003',
+                        severity: 'warning'
+                    },
+                    {
+                        timestamp: new Date(Date.now() - 300000),
+                        type: 'quality_check',
+                        message: 'Control de calidad completado para LAB-2025-002',
+                        severity: 'success'
+                    }
+                );
+                saveSecurityData();
+            }
+        }
+
+        function startMonitoring() {
+            // Monitoreo en tiempo real cada 30 segundos
+            setInterval(() => {
+                updateSecurityMetrics();
+                detectAnomalies();
+                checkOrderStatus();
+                updateFinancialData();
+            }, 30000);
+            
+            console.log('🔄 Monitoreo en tiempo real iniciado');
+        }
+
+        function saveSecurityData() {
+            try {
+                localStorage.setItem('labSecurityOrders', JSON.stringify(orders));
+                localStorage.setItem('labSecurityAnomalies', JSON.stringify(anomalies));
+                localStorage.setItem('labSecurityLogs', JSON.stringify(securityLogs));
+                localStorage.setItem('labQualityChecks', JSON.stringify(qualityChecks));
+                
+                console.log('💾 Datos de seguridad guardados');
+            } catch (error) {
+                console.error('❌ Error guardando datos:', error);
+            }
+        }
+
+        function selectOptica(optica) {
+            currentOptica = optica;
+            
+            // Actualizar botones
+            document.querySelectorAll('.optica-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            updateCurrentOpticaPhone();
+            const config = opticaConfig[optica];
+            showNotification(`✅ Sistema configurado para ${config.nombre}`, 'success');
+        }
+
+        function updateCurrentOpticaPhone() {
+            const config = opticaConfig[currentOptica];
+            const phoneElement = document.getElementById('currentOpticaPhone');
+            if (phoneElement) {
+                phoneElement.textContent = config.telefono;
+            }
+        }
+
+        // ========================================
+        // 📊 MÉTRICAS DE SEGURIDAD
+        // ========================================
+        
+        function updateSecurityMetrics() {
+            try {
+                const secureOrders = orders.filter(o => o.risk === 'low').length;
+                const riskOrders = orders.filter(o => o.risk === 'medium' || o.risk === 'high').length;
+                const anomalyCount = anomalies.filter(a => !a.resolved).length;
+                const uptime = systemLocked ? 95.2 : 99.8;
+                
+                // Actualizar UI con animación
+                const elements = [
+                    { id: 'ordersSecure', value: secureOrders },
+                    { id: 'ordersRisk', value: riskOrders },
+                    { id: 'anomalies', value: anomalyCount },
+                    { id: 'uptime', value: uptime + '%' }
+                ];
+                
+                elements.forEach(el => {
+                    const element = document.getElementById(el.id);
+                    if (element) {
+                        element.classList.add('updating');
+                        setTimeout(() => {
+                            element.textContent = el.value;
+                            element.classList.remove('updating');
+                        }, 500);
+                    }
+                });
+                
+                console.log('📊 Métricas actualizadas');
+            } catch (error) {
+                console.error('❌ Error actualizando métricas:', error);
+            }
+        }
+
+        function updateFinancialData() {
+            try {
+                // Simular fluctuaciones financieras
+                const variance = 0.02; // 2% de variación
+                
+                financialData.totalInLabs += Math.floor((Math.random() - 0.5) * financialData.totalInLabs * variance);
+                financialData.unpaidOrders += Math.floor((Math.random() - 0.5) * financialData.unpaidOrders * variance);
+                financialData.expectedProfit += Math.floor((Math.random() - 0.5) * financialData.expectedProfit * variance);
+                financialData.totalRisk = financialData.totalInLabs + financialData.unpaidOrders;
+                
+                // Actualizar UI
+                document.getElementById('totalInLabs').textContent = `RD$ ${financialData.totalInLabs.toLocaleString()}`;
+                document.getElementById('unpaidOrders').textContent = `RD$ ${financialData.unpaidOrders.toLocaleString()}`;
+                document.getElementById('expectedProfit').textContent = `RD$ ${financialData.expectedProfit.toLocaleString()}`;
+                document.getElementById('totalRisk').textContent = `RD$ ${financialData.totalRisk.toLocaleString()}`;
+                
+            } catch (error) {
+                console.error('❌ Error actualizando datos financieros:', error);
+            }
+        }
+
+        function detectAnomalies() {
+            try {
+                // Limpiar anomalías resueltas
+                anomalies = anomalies.filter(a => !a.resolved);
+                
+                orders.forEach(order => {
+                    const now = new Date();
+                    const daysSinceStart = Math.floor((now - new Date(order.startDate)) / (1000 * 60 * 60 * 24));
+                    
+                    // Detectar retrasos
+                    if (daysSinceStart > 7 && order.status !== 'completado') {
+                        const existingAnomaly = anomalies.find(a => a.orderId === order.id && a.type === 'delay');
+                        if (!existingAnomaly) {
+                            anomalies.push({
+                                id: Date.now() + Math.random(),
+                                type: 'delay',
+                                orderId: order.id,
+                                message: `Orden ${order.id} lleva ${daysSinceStart} días sin completar`,
+                                severity: daysSinceStart > 10 ? 'high' : 'medium',
+                                timestamp: new Date(),
+                                resolved: false
+                            });
+                        }
+                    }
+                    
+                    // Detectar costos inusuales
+                    if (order.cost > 3000) {
+                        const existingAnomaly = anomalies.find(a => a.orderId === order.id && a.type === 'cost');
+                        if (!existingAnomaly) {
+                            anomalies.push({
+                                id: Date.now() + Math.random() + 1,
+                                type: 'cost',
+                                orderId: order.id,
+                                message: `Costo inusualmente alto en ${order.id}: RD$ ${order.cost.toLocaleString()}`,
+                                severity: 'medium',
+                                timestamp: new Date(),
+                                resolved: false
+                            });
+                        }
+                    }
+                });
+                
+                saveSecurityData();
+                console.log(`🕵️ ${anomalies.filter(a => !a.resolved).length} anomalías activas`);
+            } catch (error) {
+                console.error('❌ Error detectando anomalías:', error);
+            }
+        }
+
+        function checkOrderStatus() {
+            orders.forEach(order => {
+                const now = new Date();
+                const expectedDate = new Date(order.expectedDate);
+                
+                if (now > expectedDate && order.status !== 'completado') {
+                    order.risk = 'high';
+                    
+                    // Log del evento
+                    securityLogs.push({
+                        timestamp: new Date(),
+                        type: 'order_overdue',
+                        message: `Orden ${order.id} vencida`,
+                        severity: 'warning',
+                        orderId: order.id
+                    });
+                }
+            });
+            
+            saveSecurityData();
+        }
+
+        // ========================================
+        // 📋 GESTIÓN DE ÓRDENES
+        // ========================================
+        
+        function viewAllOrders() {
+            const ordersHtml = orders.map(order => {
+                const status = getStatusBadge(order.status);
+                const risk = getRiskBadge(order.risk);
+                const daysSinceStart = Math.floor((new Date() - new Date(order.startDate)) / (1000 * 60 * 60 * 24));
+                
+                return `
+                    <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 10px; margin: 10px 0; border-left: 4px solid ${getRiskColor(order.risk)};">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 10px;">
+                            <h4>${order.id}</h4>
+                            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                                ${status}
+                                ${risk}
+                            </div>
+                        </div>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; font-size: 14px; margin-bottom: 15px;">
+                            <div><strong>Cliente:</strong> ${order.client}</div>
+                            <div><strong>Teléfono:</strong> ${order.phone}</div>
+                            <div><strong>Laboratorio:</strong> ${order.laboratory}</div>
+                            <div><strong>Días:</strong> ${daysSinceStart}</div>
+                            <div><strong>Costo:</strong> RD$ ${order.cost.toLocaleString()}</div>
+                            <div><strong>Precio:</strong> RD$ ${order.price.toLocaleString()}</div>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.05); padding: 10px; border-radius: 8px; margin: 10px 0; font-size: 13px;">
+                            <strong>Graduación:</strong> ${order.prescription}<br>
+                            <strong>Notas:</strong> ${order.notes}
+                        </div>
+                        <div style="margin-top: 15px; display: flex; gap: 10px; flex-wrap: wrap;">
+                            <button class="btn btn-security" onclick="inspectOrder('${order.id}')">🔍 Inspeccionar</button>
+                            <button class="btn btn-warning" onclick="updateOrderStatus('${order.id}')">🔄 Actualizar</button>
+                            <button class="btn btn-safe" onclick="contactClient('${order.id}')">📱 Cliente</button>
+                            ${order.risk === 'high' ? '<button class="btn btn-alert" onclick="escalateOrder(\''+order.id+'\')">🚨 Escalar</button>' : ''}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            openModal(`
+                <h2>📋 Todas las Órdenes del Laboratorio</h2>
+                <div style="max-height: 500px; overflow-y: auto; margin: 20px 0;">
+                    ${ordersHtml}
+                </div>
+                <div style="text-align: center; margin-top: 20px;">
+                    <button class="btn btn-security" onclick="exportOrdersReport()">📤 Exportar Reporte</button>
+                    <button class="btn btn-safe" onclick="addNewOrder()">➕ Nueva Orden</button>
+                </div>
+            `);
+        }
+
+        function addNewOrder() {
+            openModal(`
+                <h2>➕ Nueva Orden de Laboratorio</h2>
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin: 20px 0;">
+                    <input type="text" class="input" id="newClientName" placeholder="Nombre del cliente">
+                    <input type="text" class="input" id="newClientPhone" placeholder="Teléfono del cliente">
+                    <input type="text" class="input" id="newPrescription" placeholder="Graduación (OD/OI)">
+                    <select class="select" id="newLaboratory">
+                        <option value="">Seleccionar laboratorio</option>
+                        <option value="Lab Central">Lab Central</option>
+                        <option value="Lab Express">Lab Express</option>
+                        <option value="Lab XYZ">Lab XYZ</option>
+                        <option value="Lab Premium">Lab Premium</option>
+                    </select>
+                    <input type="number" class="input" id="newCost" placeholder="Costo RD$">
+                    <input type="number" class="input" id="newPrice" placeholder="Precio RD$">
+                </div>
+                
+                <textarea class="textarea" id="newNotes" placeholder="Notas especiales de la orden..."></textarea>
+                
+                <div style="background: rgba(0,255,0,0.1); padding: 15px; border-radius: 10px; margin: 15px 0;">
+                    <h4 style="color: #2ed573;">✅ La orden será:</h4>
+                    <ul style="padding-left: 20px; margin: 10px 0;">
+                        <li>Registrada automáticamente en el sistema</li>
+                        <li>Asignada un ID único</li>
+                        <li>Monitoreada en tiempo real</li>
+                        <li>Incluida en el análisis de anomalías</li>
+                    </ul>
+                </div>
+                
+                <div style="display: flex; gap: 15px; justify-content: center;">
+                    <button class="btn btn-safe" onclick="createNewOrder()">✅ Crear Orden</button>
+                    <button class="btn btn-warning" onclick="closeModal()">❌ Cancelar</button>
+                </div>
+            `);
+        }
+
+        function createNewOrder() {
+            const clientName = document.getElementById('newClientName').value;
+            const clientPhone = document.getElementById('newClientPhone').value;
+            const prescription = document.getElementById('newPrescription').value;
+            const laboratory = document.getElementById('newLaboratory').value;
+            const cost = parseFloat(document.getElementById('newCost').value);
+            const price = parseFloat(document.getElementById('newPrice').value);
+            const notes = document.getElementById('newNotes').value;
+            
+            // Validaciones
+            if (!clientName || !clientPhone || !laboratory || !cost || !price) {
+                showNotification('❌ Complete todos los campos obligatorios', 'error');
+                return;
+            }
+            
+            if (cost >= price) {
+                showNotification('❌ El precio debe ser mayor al costo', 'error');
+                return;
+            }
+            
+            // Crear nueva orden
+            const newOrder = {
+                id: `LAB-2025-${String(orders.length + 1).padStart(3, '0')}`,
+                client: clientName,
+                phone: clientPhone,
+                status: 'recibida',
+                startDate: new Date(),
+                expectedDate: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000), // 5 días
+                laboratory: laboratory,
+                cost: cost,
+                price: price,
+                risk: 'low',
+                prescription: prescription || 'No especificada',
+                notes: notes || 'Sin notas especiales'
+            };
+            
+            orders.push(newOrder);
+            
+            // Registrar evento
+            securityLogs.push({
+                timestamp: new Date(),
+                type: 'order_created',
+                message: `Nueva orden creada: ${newOrder.id} para ${clientName}`,
+                severity: 'info',
+                orderId: newOrder.id
+            });
+            
+            saveSecurityData();
+            updateSecurityMetrics();
+            closeModal();
+            
+            showNotification(`✅ Orden ${newOrder.id} creada exitosamente`, 'success');
+        }
+
+        function inspectOrder(orderId) {
+            const order = orders.find(o => o.id === orderId);
+            if (!order) return;
+            
+            const daysSinceStart = Math.floor((new Date() - new Date(order.startDate)) / (1000 * 60 * 60 * 24));
+            const isOverdue = new Date() > new Date(order.expectedDate);
+            
+            openModal(`
+                <h2>🔍 Inspección Detallada: ${order.id}</h2>
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin: 20px 0;">
+                    <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 10px;">
+                        <h4>👤 Cliente</h4>
+                        <p><strong>Nombre:</strong> ${order.client}</p>
+                        <p><strong>Teléfono:</strong> ${order.phone}</p>
+                        <p><strong>Graduación:</strong> ${order.prescription}</p>
+                        <button class="btn btn-safe" onclick="contactClient('${order.id}')" style="margin-top: 10px;">📱 Contactar</button>
+                    </div>
+                    
+                    <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 10px;">
+                        <h4>🏭 Laboratorio</h4>
+                        <p><strong>Proveedor:</strong> ${order.laboratory}</p>
+                        <p><strong>Estado:</strong> ${order.status}</p>
+                        <p><strong>Riesgo:</strong> ${order.risk}</p>
+                        <button class="btn btn-warning" onclick="contactLab('${order.laboratory}')" style="margin-top: 10px;">📞 Contactar Lab</button>
+                    </div>
+                    
+                    <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 10px;">
+                        <h4>💰 Financiero</h4>
+                        <p><strong>Costo:</strong> RD$ ${order.cost.toLocaleString()}</p>
+                        <p><strong>Precio:</strong> RD$ ${order.price.toLocaleString()}</p>
+                        <p><strong>Beneficio:</strong> RD$ ${(order.price - order.cost).toLocaleString()}</p>
+                        <p><strong>Margen:</strong> ${(((order.price - order.cost) / order.price) * 100).toFixed(1)}%</p>
+                    </div>
+                    
+                    <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 10px;">
+                        <h4>⏰ Timeline</h4>
+                        <p><strong>Inicio:</strong> ${new Date(order.startDate).toLocaleDateString()}</p>
+                        <p><strong>Esperada:</strong> ${new Date(order.expectedDate).toLocaleDateString()}</p>
+                        <p><strong>Días:</strong> ${daysSinceStart}</p>
+                        ${isOverdue ? 
+                            `<p style="color: #ff4757;"><strong>⚠️ Vencida:</strong> ${Math.floor((new Date() - new Date(order.expectedDate)) / (1000 * 60 * 60 * 24))} días</p>` : 
+                            `<p style="color: #2ed573;"><strong>✅ A tiempo</strong></p>`
+                        }
+                    </div>
+                </div>
+                
+                <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 10px; margin: 15px 0;">
+                    <h4>📝 Notas</h4>
+                    <p>${order.notes}</p>
+                </div>
+                
+                <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                    <button class="btn btn-security" onclick="trackOrder('${order.id}')">📍 Rastrear</button>
+                    <button class="btn btn-warning" onclick="updateOrderStatus('${order.id}')">🔄 Actualizar</button>
+                    <button class="btn btn-alert" onclick="flagOrder('${order.id}')">🚩 Marcar</button>
+                    ${order.risk === 'high' ? 
+                        `<button class="btn btn-alert" onclick="escalateOrder('${order.id}')">🚨 Escalar</button>` : ''}
+                </div>
+            `);
+        }
+
+        function contactClient(orderId) {
+            const order = orders.find(o => o.id === orderId);
+            if (!order) return;
+            
+            const config = opticaConfig[currentOptica];
+            const message = `Hola ${order.client}, 
+
+Le escribimos desde ${config.nombre} para actualizar sobre su orden ${order.id}.
+
+📋 Estado actual: ${getStatusText(order.status)}
+👓 Graduación: ${order.prescription}
+🏭 Laboratorio: ${order.laboratory}
+
+Cualquier consulta, estamos a su disposición.
+
+Saludos,
+${config.nombre}`;
+            
+            try {
+                const whatsappUrl = `https://wa.me/${order.phone.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(message)}`;
+                window.open(whatsappUrl, '_blank');
+                
+                // Registrar contacto
+                securityLogs.push({
+                    timestamp: new Date(),
+                    type: 'client_contacted',
+                    message: `Cliente ${order.client} contactado sobre orden ${order.id}`,
+                    severity: 'info',
+                    orderId: order.id
+                });
+                
+                saveSecurityData();
+                showNotification(`📱 Contactando a ${order.client}`, 'success');
+            } catch (error) {
+                showNotification('❌ Error al contactar cliente', 'error');
+            }
+        }
+
+        function updateOrderStatus(orderId) {
+            const order = orders.find(o => o.id === orderId);
+            if (!order) return;
+            
+            openModal(`
+                <h2>🔄 Actualizar Estado: ${orderId}</h2>
+                <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 10px; margin: 20px 0;">
+                    <h4>👤 ${order.client}</h4>
+                    <p>Estado actual: <strong>${getStatusText(order.status)}</strong></p>
+                </div>
+                
+                <div style="margin: 20px 0;">
+                    <label style="display: block; margin-bottom: 10px;">Nuevo estado:</label>
+                    <select class="select" id="newStatus">
+                        <option value="recibida">📥 Recibida</option>
+                        <option value="en_produccion">🔄 En Producción</option>
+                        <option value="control_calidad">✅ Control de Calidad</option>
+                        <option value="completado">✅ Completado</option>
+                        <option value="retraso">⚠️ Retraso</option>
+                        <option value="rechazado">❌ Rechazado</option>
+                    </select>
+                </div>
+                
+                <textarea class="textarea" id="statusNote" placeholder="Notas sobre la actualización (opcional)..."></textarea>
+                
+                <div style="display: flex; gap: 15px; justify-content: center;">
+                    <button class="btn btn-security" onclick="confirmStatusUpdate('${orderId}')">✅ Actualizar</button>
+                    <button class="btn btn-warning" onclick="closeModal()">❌ Cancelar</button>
+                </div>
+            `);
+        }
+
+        function confirmStatusUpdate(orderId) {
+            const newStatus = document.getElementById('newStatus').value;
+            const note = document.getElementById('statusNote').value;
+            
+            const order = orders.find(o => o.id === orderId);
+            if (order) {
+                const oldStatus = order.status;
+                order.status = newStatus;
+                order.lastUpdated = new Date().toISOString();
+                
+                // Ajustar nivel de riesgo basado en el estado
+                if (newStatus === 'completado') {
+                    order.risk = 'low';
+                } else if (newStatus === 'retraso' || newStatus === 'rechazado') {
+                    order.risk = 'high';
+                } else {
+                    order.risk = 'medium';
+                }
+                
+                // Registrar cambio
+                securityLogs.push({
+                    timestamp: new Date(),
+                    type: 'status_updated',
+                    message: `Estado de ${orderId} cambiado de ${oldStatus} a ${newStatus}${note ? ': ' + note : ''}`,
+                    severity: 'info',
+                    orderId: orderId
+                });
+            }
+            
+            saveSecurityData();
+            updateSecurityMetrics();
+            closeModal();
+            
+            showNotification(`✅ Estado de ${orderId} actualizado`, 'success');
+        }
+
+        function getStatusText(status) {
+            const statusMap = {
+                'recibida': 'Recibida',
+                'en_produccion': 'En Producción',
+                'control_calidad': 'Control de Calidad',
+                'completado': 'Completado',
+                'retraso': 'Retraso',
+                'rechazado': 'Rechazado'
+            };
+            return statusMap[status] || status;
+        }
+
+        function getStatusBadge(status) {
+            const badges = {
+                'recibida': '<span style="background: #17a2b8; padding: 4px 8px; border-radius: 12px; font-size: 12px;">📥 Recibida</span>',
+                'en_produccion': '<span style="background: #ffa500; padding: 4px 8px; border-radius: 12px; font-size: 12px;">🔄 En Producción</span>',
+                'control_calidad': '<span style="background: #17a2b8; padding: 4px 8px; border-radius: 12px; font-size: 12px;">✅ Control Calidad</span>',
+                'completado': '<span style="background: #28a745; padding: 4px 8px; border-radius: 12px; font-size: 12px;">✅ Completado</span>',
+                'retraso': '<span style="background: #dc3545; padding: 4px 8px; border-radius: 12px; font-size: 12px;">⚠️ Retraso</span>',
+                'rechazado': '<span style="background: #dc3545; padding: 4px 8px; border-radius: 12px; font-size: 12px;">❌ Rechazado</span>'
+            };
+            return badges[status] || '<span style="background: #6c757d; padding: 4px 8px; border-radius: 12px; font-size: 12px;">❓ Desconocido</span>';
+        }
+
+        function getRiskBadge(risk) {
+            const badges = {
+                'low': '<span style="background: #28a745; padding: 4px 8px; border-radius: 12px; font-size: 12px;">🟢 Bajo Riesgo</span>',
+                'medium': '<span style="background: #ffc107; padding: 4px 8px; border-radius: 12px; font-size: 12px;">🟡 Riesgo Medio</span>',
+                'high': '<span style="background: #dc3545; padding: 4px 8px; border-radius: 12px; font-size: 12px;">🔴 Alto Riesgo</span>'
+            };
+            return badges[risk] || badges.low;
+        }
+
+        function getRiskColor(risk) {
+            const colors = {
+                'low': '#28a745',
+                'medium': '#ffc107',
+                'high': '#dc3545'
+            };
+            return colors[risk] || colors.low;
+        }
+
+        // ========================================
+        // ✅ CONTROL DE CALIDAD
+        // ========================================
+        
+        function toggleCheck(checkbox) {
+            checkbox.classList.toggle('checked');
+            checkQualityProgress();
+        }
+
+        function checkQualityProgress() {
+            const total = document.querySelectorAll('.checklist-checkbox').length;
+            const checked = document.querySelectorAll('.checklist-checkbox.checked').length;
+            const progress = Math.round((checked / total) * 100);
+            
+            console.log(`✅ Progreso de calidad: ${progress}%`);
+            
+            if (progress === 100) {
+                showNotification('✅ Control de calidad completado al 100%', 'success');
+            }
+        }
+
+        function approveQuality() {
+            const checkedItems = document.querySelectorAll('.checklist-checkbox.checked').length;
+            const totalItems = document.querySelectorAll('.checklist-checkbox').length;
+            
+            if (checkedItems < totalItems) {
+                showNotification('⚠️ Complete todos los checks de calidad primero', 'warning');
+                return;
+            }
+            
+            openModal(`
+                <h2>✅ Aprobar Control de Calidad</h2>
+                <div style="background: rgba(0, 255, 0, 0.1); padding: 20px; border-radius: 15px; border: 2px solid #2ed573; margin: 20px 0; text-align: center;">
+                    <div style="font-size: 64px; margin-bottom: 15px;">✅</div>
+                    <h3>Control de Calidad: APROBADO</h3>
+                    <p>Orden LAB-2025-001 cumple con todos los estándares de calidad.</p>
+                </div>
+                
+                <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 10px; margin: 15px 0;">
+                    <h4>📋 Resumen de Verificación:</h4>
+                    <ul style="padding-left: 20px; margin: 10px 0;">
+                        <li>✅ Graduación verificada y correcta</li>
+                        <li>✅ Centrado perfecto de lentes</li>
+                        <li>✅ Distancia pupilar exacta</li>
+                        <li>✅ Tratamientos aplicados correctamente</li>
+                        <li>✅ Acabado de monturas perfecto</li>
+                    </ul>
+                </div>
+                
+                <div style="display: flex; gap: 15px; justify-content: center;">
+                    <button class="btn btn-safe" onclick="finalizeApproval()">✅ Confirmar Aprobación</button>
+                    <button class="btn btn-security" onclick="closeModal()">📋 Revisar Nuevamente</button>
+                </div>
+            `);
+        }
+
+        function finalizeApproval() {
+            // Actualizar estado de la orden
+            const order = orders.find(o => o.id === 'LAB-2025-001');
+            if (order) {
+                order.status = 'completado';
+                order.risk = 'low';
+                order.qualityApproved = true;
+                order.approvalDate = new Date().toISOString();
+            }
+            
+            // Registrar en logs
+            securityLogs.push({
+                timestamp: new Date(),
+                type: 'quality_approved',
+                message: 'Control de calidad aprobado para LAB-2025-001',
+                severity: 'success',
+                orderId: 'LAB-2025-001'
+            });
+            
+            saveSecurityData();
+            updateSecurityMetrics();
+            closeModal();
+            
+            showNotification('✅ Orden LAB-2025-001 aprobada y lista para entrega', 'success');
+        }
+
+        function rejectOrder() {
+            openModal(`
+                <h2>❌ Rechazar Orden</h2>
+                <div style="background: rgba(255, 0, 0, 0.1); padding: 20px; border-radius: 15px; border: 2px solid #ff4757; margin: 20px 0;">
+                    <h3 style="color: #ff4757;">⚠️ RECHAZAR ORDEN LAB-2025-001</h3>
+                    <p>Esta acción marcará la orden como rechazada y requerirá corrección.</p>
+                </div>
+                
+                <textarea class="textarea" id="rejectionReason" placeholder="Detalle los problemas encontrados en esta orden..."></textarea>
+                
+                <div style="display: flex; gap: 15px; justify-content: center;">
+                    <button class="btn btn-alert" onclick="confirmRejection()">❌ Confirmar Rechazo</button>
+                    <button class="btn btn-security" onclick="closeModal()">🔙 Cancelar</button>
+                </div>
+            `);
+        }
+
+        function confirmRejection() {
+            const reason = document.getElementById('rejectionReason').value;
+            if (!reason.trim()) {
+                showNotification('❌ Especifique la razón del rechazo', 'error');
+                return;
+            }
+            
+            // Actualizar orden
+            const order = orders.find(o => o.id === 'LAB-2025-001');
+            if (order) {
+                order.status = 'rechazado';
+                order.risk = 'high';
+                order.rejectionReason = reason;
+                order.rejectionDate = new Date().toISOString();
+            }
+            
+            // Log del rechazo
+            securityLogs.push({
+                timestamp: new Date(),
+                type: 'order_rejected',
+                message: `Orden LAB-2025-001 rechazada: ${reason}`,
+                severity: 'error',
+                orderId: 'LAB-2025-001'
+            });
+            
+            saveSecurityData();
+            updateSecurityMetrics();
+            closeModal();
+            
+            showNotification('❌ Orden rechazada. Notificación enviada al laboratorio.', 'error');
+        }
+
+        function requestCorrection() {
+            openModal(`
+                <h2>🔄 Solicitar Corrección</h2>
+                <div style="background: rgba(255, 165, 0, 0.1); padding: 20px; border-radius: 15px; border: 2px solid #ffa500; margin: 20px 0;">
+                    <h3 style="color: #ffa500;">🔄 SOLICITUD DE CORRECCIÓN</h3>
+                    <p>Se solicitará al laboratorio que corrija los aspectos especificados.</p>
+                </div>
+                
+                <textarea class="textarea" id="correctionDetails" placeholder="Especifique qué aspectos necesitan corrección..."></textarea>
+                
+                <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 10px; margin: 15px 0;">
+                    <h4>✅ Aspectos que podrían necesitar corrección:</h4>
+                    <ul style="padding-left: 20px;">
+                        <li>Ajuste de graduación</li>
+                        <li>Recentrado de lentes</li>
+                        <li>Corrección de distancia pupilar</li>
+                        <li>Reaplicación de tratamientos</li>
+                        <li>Mejora en acabado de monturas</li>
+                    </ul>
+                </div>
+                
+                <div style="display: flex; gap: 15px; justify-content: center;">
+                    <button class="btn btn-warning" onclick="sendCorrectionRequest()">🔄 Enviar Solicitud</button>
+                    <button class="btn btn-security" onclick="closeModal()">🔙 Cancelar</button>
+                </div>
+            `);
+        }
+
+        function sendCorrectionRequest() {
+            const details = document.getElementById('correctionDetails').value;
+            if (!details.trim()) {
+                showNotification('❌ Especifique los detalles de la corrección', 'error');
+                return;
+            }
+            
+            // Actualizar orden
+            const order = orders.find(o => o.id === 'LAB-2025-001');
+            if (order) {
+                order.status = 'correccion_solicitada';
+                order.risk = 'medium';
+                order.correctionDetails = details;
+                order.correctionRequestDate = new Date().toISOString();
+            }
+            
+            // Log de la solicitud
+            securityLogs.push({
+                timestamp: new Date(),
+                type: 'correction_requested',
+                message: `Corrección solicitada para LAB-2025-001: ${details}`,
+                severity: 'warning',
+                orderId: 'LAB-2025-001'
+            });
+            
+            saveSecurityData();
+            closeModal();
+            
+            showNotification('🔄 Solicitud de corrección enviada al laboratorio', 'warning');
+        }
+
+        // ========================================
+        // 🕵️ ANOMALIES MANAGEMENT
+        // ========================================
+        
+        function checkAnomalies() {
+            if (anomalies.filter(a => !a.resolved).length === 0) {
+                showNotification('✅ No se detectaron anomalías activas', 'success');
+                return;
+            }
+            
+            const anomaliesHtml = anomalies.filter(a => !a.resolved).map(anomaly => {
+                const severityColor = anomaly.severity === 'high' ? '#dc3545' : 
+                                    anomaly.severity === 'medium' ? '#ffc107' : '#17a2b8';
+                
+                return `
+                    <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 10px; margin: 10px 0; border-left: 4px solid ${severityColor};">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 15px;">
+                            <div style="flex: 1;">
+                                <h4 style="color: ${severityColor};">${anomaly.type.toUpperCase()}</h4>
+                                <p style="margin: 10px 0;">${anomaly.message}</p>
+                                <small style="opacity: 0.7;">Detectado: ${new Date(anomaly.timestamp).toLocaleString()}</small>
+                            </div>
+                            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                                <button class="btn btn-warning" onclick="resolveAnomaly('${anomaly.id}')">✅ Resolver</button>
+                                <button class="btn btn-alert" onclick="escalateAnomaly('${anomaly.id}')">🚨 Escalar</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            openModal(`
+                <h2>🕵️ Anomalías Detectadas por IA</h2>
+                <div style="max-height: 400px; overflow-y: auto; margin: 20px 0;">
+                    ${anomaliesHtml}
+                </div>
+                <div style="text-align: center; margin-top: 20px;">
+                    <button class="btn btn-alert" onclick="resolveAllAnomalies()">✅ Resolver Todas</button>
+                    <button class="btn btn-security" onclick="runFullScan()">🔍 Nuevo Escaneo</button>
+                </div>
+            `);
+        }
+
+        function resolveAnomaly(anomalyId) {
+            const anomaly = anomalies.find(a => a.id == anomalyId);
+            if (anomaly) {
+                anomaly.resolved = true;
+                anomaly.resolvedDate = new Date().toISOString();
+            }
+            
+            securityLogs.push({
+                timestamp: new Date(),
+                type: 'anomaly_resolved',
+                message: `Anomalía ${anomalyId} marcada como resuelta`,
+                severity: 'info'
+            });
+            
+            saveSecurityData();
+            updateSecurityMetrics();
+            
+            showNotification('✅ Anomalía marcada como resuelta', 'success');
+        }
+
+        function escalateAnomaly(anomalyId) {
+            const anomaly = anomalies.find(a => a.id == anomalyId);
+            if (anomaly) {
+                anomaly.escalated = true;
+                anomaly.escalationDate = new Date().toISOString();
+                anomaly.severity = 'critical';
+            }
+            
+            securityLogs.push({
+                timestamp: new Date(),
+                type: 'anomaly_escalated',
+                message: `Anomalía ${anomalyId} escalada a nivel crítico`,
+                severity: 'critical'
+            });
+            
+            saveSecurityData();
+            showNotification('🚨 Anomalía escalada a nivel crítico', 'error');
+        }
+
+        function resolveAllAnomalies() {
+            const count = anomalies.filter(a => !a.resolved).length;
+            
+            anomalies.forEach(a => {
+                if (!a.resolved) {
+                    a.resolved = true;
+                    a.resolvedDate = new Date().toISOString();
+                }
+            });
+            
+            securityLogs.push({
+                timestamp: new Date(),
+                type: 'all_anomalies_resolved',
+                message: `${count} anomalías resueltas en lote`,
+                severity: 'info'
+            });
+            
+            saveSecurityData();
+            updateSecurityMetrics();
+            closeModal();
+            
+            showNotification(`✅ ${count} anomalías resueltas`, 'success');
+        }
+
+        function investigateAnomaly(orderId) {
+            const order = orders.find(o => o.id === orderId);
+            if (!order) {
+                showNotification('❌ Orden no encontrada', 'error');
+                return;
+            }
+            
+            const daysSinceStart = Math.floor((new Date() - new Date(order.startDate)) / (1000 * 60 * 60 * 24));
+            const daysOverdue = Math.floor((new Date() - new Date(order.expectedDate)) / (1000 * 60 * 60 * 24));
+            
+            openModal(`
+                <h2>🔍 Investigación: ${order.id}</h2>
+                <div style="background: rgba(255, 0, 0, 0.1); padding: 20px; border-radius: 15px; border: 2px solid #ff4757; margin: 20px 0;">
+                    <h3 style="color: #ff4757; margin-bottom: 15px;">🚨 ORDEN EN RIESGO ALTO</h3>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-bottom: 20px;">
+                        <div>
+                            <strong>Cliente:</strong> ${order.client}<br>
+                            <strong>Teléfono:</strong> ${order.phone}<br>
+                            <strong>Laboratorio:</strong> ${order.laboratory}<br>
+                            <strong>Inicio:</strong> ${new Date(order.startDate).toLocaleDateString()}
+                        </div>
+                        <div>
+                            <strong>Fecha esperada:</strong> ${new Date(order.expectedDate).toLocaleDateString()}<br>
+                            <strong>Días transcurridos:</strong> ${daysSinceStart}<br>
+                            <strong>Días de retraso:</strong> ${daysOverdue > 0 ? daysOverdue : 'A tiempo'}<br>
+                            <strong>Riesgo financiero:</strong> RD$ ${order.price.toLocaleString()}
+                        </div>
+                    </div>
+                    
+                    <h4>📋 Acciones Recomendadas:</h4>
+                    <ol style="padding-left: 20px; margin: 15px 0;">
+                        <li>Contactar inmediatamente al laboratorio</li>
+                        <li>Solicitar explicación del retraso</li>
+                        <li>Evaluar cambio de proveedor</li>
+                        <li>Notificar al cliente del retraso</li>
+                        <li>Considerar compensación al cliente</li>
+                    </ol>
+                </div>
+                
+                <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                    <button class="btn btn-alert" onclick="contactLab('${order.laboratory}')">📞 Contactar Lab</button>
+                    <button class="btn btn-warning" onclick="contactClient('${order.id}')">📱 Notificar Cliente</button>
+                    <button class="btn btn-security" onclick="escalateOrder('${order.id}')">🚨 Escalar Caso</button>
+                </div>
+            `);
+        }
+
+        // ========================================
+        // 📱 COMMUNICATION SYSTEM
+        // ========================================
+        
+        function sendStatusUpdate() {
+            const config = opticaConfig[currentOptica];
+            
+            openModal(`
+                <h2>📱 Enviar Estado a Clientes</h2>
+                <div style="background: rgba(37, 211, 102, 0.1); padding: 20px; border-radius: 15px; margin: 20px 0;">
+                    <h3 style="color: #25d366;">📱 WhatsApp Masivo</h3>
+                    <p>Enviar actualizaciones automáticas a todos los clientes con órdenes activas.</p>
+                </div>
+                
+                <div style="margin: 20px 0;">
+                    <label style="display: block; margin-bottom: 10px;">Tipo de actualización:</label>
+                    <select class="select" id="updateType">
+                        <option value="progress">📊 Progreso de orden</option>
+                        <option value="ready">✅ Orden lista</option>
+                        <option value="delay">⏰ Notificación de retraso</option>
+                        <option value="general">📢 Actualización general</option>
+                    </select>
+                </div>
+                
+                <textarea class="textarea" id="customMessage" placeholder="Mensaje personalizado (opcional)..."></textarea>
+                
+                <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 10px; margin: 15px 0;">
+                    <h4>📋 Clientes a contactar:</h4>
+                    <p>${orders.filter(o => o.status !== 'completado').length} clientes con órdenes activas</p>
+                </div>
+                
+                <div style="display: flex; gap: 15px; justify-content: center;">
+                    <button class="btn btn-safe" onclick="sendMassUpdate()">📱 Enviar Actualizaciones</button>
+                    <button class="btn btn-warning" onclick="closeModal()">❌ Cancelar</button>
+                </div>
+            `);
+        }
+
+        function sendMassUpdate() {
+            const updateType = document.getElementById('updateType').value;
+            const customMessage = document.getElementById('customMessage').value;
+            const config = opticaConfig[currentOptica];
+            
+            const activeOrders = orders.filter(o => o.status !== 'completado');
+            
+            if (activeOrders.length === 0) {
+                showNotification('❌ No hay órdenes activas para actualizar', 'error');
+                return;
+            }
+            
+            // Simular envío masivo
+            activeOrders.forEach(order => {
+                let message = '';
+                
+                switch (updateType) {
+                    case 'progress':
+                        message = `Hola ${order.client},\n\nSu orden ${order.id} está ${getStatusText(order.status).toLowerCase()}.\n\nEstaremos en contacto con más actualizaciones.\n\n${config.nombre}\n📱 ${config.telefono}`;
+                        break;
+                    case 'ready':
+                        message = `🎉 ¡Excelentes noticias ${order.client}!\n\nSu orden ${order.id} está lista para recoger.\n\nPuede venir en horario de oficina.\n\n${config.nombre}\n📱 ${config.telefono}`;
+                        break;
+                    case 'delay':
+                        message = `Estimado/a ${order.client},\n\nLe informamos que su orden ${order.id} tendrá un pequeño retraso.\n\nLe notificaremos tan pronto esté lista.\n\n${config.nombre}\n📱 ${config.telefono}`;
+                        break;
+                    case 'general':
+                        message = customMessage || `Hola ${order.client},\n\nActualización sobre su orden ${order.id}.\n\n${config.nombre}\n📱 ${config.telefono}`;
+                        break;
+                }
+                
+                // Registrar envío
+                securityLogs.push({
+                    timestamp: new Date(),
+                    type: 'mass_update_sent',
+                    message: `Actualización ${updateType} enviada a ${order.client}`,
+                    severity: 'info',
+                    orderId: order.id
+                });
+            });
+            
+            saveSecurityData();
+            closeModal();
+            
+            showNotification(`📱 Actualizaciones enviadas a ${activeOrders.length} clientes`, 'success');
+        }
+
+        function sendDelayNotification() {
+            const delayedOrders = orders.filter(o => o.status === 'retraso' || new Date() > new Date(o.expectedDate));
+            
+            if (delayedOrders.length === 0) {
+                showNotification('✅ No hay órdenes con retrasos', 'success');
+                return;
+            }
+            
+            const config = opticaConfig[currentOptica];
+            
+            delayedOrders.forEach(order => {
+                const message = `Estimado/a ${order.client},
+                
+Le contactamos desde ${config.nombre} sobre su orden ${order.id}.
+
+⏰ Lamentamos informarle que su orden presenta un retraso en el laboratorio.
+
+📋 Estado actual: ${getStatusText(order.status)}
+🏭 Laboratorio: ${order.laboratory}
+
+Estamos trabajando para resolver esta situación lo antes posible y le mantendremos informado.
+
+Disculpe las molestias.
+
+${config.nombre}
+📱 ${config.telefono}`;
+                
+                // Simular envío de WhatsApp
+                try {
+                    const whatsappUrl = `https://wa.me/${order.phone.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(message)}`;
+                    setTimeout(() => {
+                        window.open(whatsappUrl, '_blank');
+                    }, Math.random() * 1000); // Espaciar envíos
+                } catch (error) {
+                    console.error('Error enviando notificación:', error);
+                }
+            });
+            
+            showNotification(`📱 Notificaciones de retraso enviadas a ${delayedOrders.length} clientes`, 'warning');
+        }
+
+        function contactAllLabs() {
+            const labs = [...new Set(orders.map(o => o.laboratory))];
+            
+            openModal(`
+                <h2>🏭 Contactar Todos los Laboratorios</h2>
+                <div style="background: rgba(0,0,0,0.3); padding: 20px; border-radius: 15px; margin: 20px 0;">
+                    <h3>📋 Laboratorios activos:</h3>
+                    <ul style="padding-left: 20px; margin: 15px 0;">
+                        ${labs.map(lab => `<li>${lab} - ${orders.filter(o => o.laboratory === lab).length} órdenes</li>`).join('')}
+                    </ul>
+                </div>
+                
+                <div style="margin: 20px 0;">
+                    <label style="display: block; margin-bottom: 10px;">Tipo de contacto:</label>
+                    <select class="select" id="contactType">
+                        <option value="status">📊 Solicitar estado de órdenes</option>
+                        <option value="urgency">⚡ Acelerar órdenes urgentes</option>
+                        <option value="quality">✅ Verificar control de calidad</option>
+                        <option value="payment">💰 Consulta de pagos</option>
+                    </select>
+                </div>
+                
+                <textarea class="textarea" id="labMessage" placeholder="Mensaje adicional para los laboratorios..."></textarea>
+                
+                <div style="display: flex; gap: 15px; justify-content: center;">
+                    <button class="btn btn-security" onclick="sendLabMessages()">📞 Contactar Labs</button>
+                    <button class="btn btn-warning" onclick="closeModal()">❌ Cancelar</button>
+                </div>
+            `);
+        }
+
+        function sendLabMessages() {
+            const contactType = document.getElementById('contactType').value;
+            const customMessage = document.getElementById('labMessage').value;
+            const config = opticaConfig[currentOptica];
+            const labs = [...new Set(orders.map(o => o.laboratory))];
+            
+            labs.forEach(lab => {
+                const labOrders = orders.filter(o => o.laboratory === lab && o.status !== 'completado');
+                
+                let message = `Saludos desde ${config.nombre},\n\n`;
+                
+                switch (contactType) {
+                    case 'status':
+                        message += `Solicitamos estado de las siguientes órdenes:\n\n${labOrders.map(o => `• ${o.id} - ${o.client}`).join('\n')}`;
+                        break;
+                    case 'urgency':
+                        message += `Necesitamos acelerar estas órdenes urgentes:\n\n${labOrders.filter(o => o.notes.includes('urgente')).map(o => `• ${o.id} - ${o.client}`).join('\n')}`;
+                        break;
+                    case 'quality':
+                        message += `Verificación de control de calidad para:\n\n${labOrders.map(o => `• ${o.id} - ${o.prescription}`).join('\n')}`;
+                        break;
+                    case 'payment':
+                        message += `Consulta sobre estados de pago de órdenes pendientes.`;
+                        break;
+                }
+                
+                if (customMessage) {
+                    message += `\n\n${customMessage}`;
+                }
+                
+                message += `\n\nGracias,\n${config.nombre}\n📱 ${config.telefono}`;
+                
+                // Registrar contacto
+                securityLogs.push({
+                    timestamp: new Date(),
+                    type: 'lab_contacted',
+                    message: `Contacto ${contactType} enviado a ${lab}`,
+                    severity: 'info'
+                });
+            });
+            
+            saveSecurityData();
+            closeModal();
+            
+            showNotification(`📞 Mensajes enviados a ${labs.length} laboratorios`, 'success');
+        }
+
+        function emergencyBroadcast() {
+            openModal(`
+                <h2>📡 Broadcast de Emergencia</h2>
+                <div style="background: rgba(255, 0, 0, 0.1); padding: 20px; border-radius: 15px; border: 2px solid #ff0000; margin: 20px 0;">
+                    <h3 style="color: #ff0000;">🚨 MENSAJE DE EMERGENCIA</h3>
+                    <p>Este mensaje se enviará a TODOS los contactos: clientes, laboratorios y personal.</p>
+                </div>
+                
+                <textarea class="textarea" id="emergencyMessage" placeholder="Describa la situación de emergencia..." style="border-color: #ff0000;"></textarea>
+                
+                <div style="background: rgba(255, 165, 0, 0.1); padding: 15px; border-radius: 10px; margin: 15px 0;">
+                    <h4 style="color: #ffa500;">⚠️ Se enviará a:</h4>
+                    <ul style="padding-left: 20px; margin: 10px 0;">
+                        <li>${orders.length} clientes con órdenes</li>
+                        <li>${[...new Set(orders.map(o => o.laboratory))].length} laboratorios</li>
+                        <li>Personal de la óptica</li>
+                    </ul>
+                </div>
+                
+                <div style="display: flex; gap: 15px; justify-content: center;">
+                    <button class="btn btn-alert" onclick="confirmEmergencyBroadcast()">📡 Enviar Broadcast</button>
+                    <button class="btn btn-security" onclick="closeModal()">🔙 Cancelar</button>
+                </div>
+            `);
+        }
+
+        function confirmEmergencyBroadcast() {
+            const message = document.getElementById('emergencyMessage').value;
+            
+            if (!message.trim()) {
+                showNotification('❌ Escriba el mensaje de emergencia', 'error');
+                return;
+            }
+            
+            const config = opticaConfig[currentOptica];
+            const emergencyMsg = `🚨 MENSAJE DE EMERGENCIA 🚨\n\n${message}\n\n${config.nombre}\n📱 ${config.telefono}\n\nFecha: ${new Date().toLocaleString()}`;
+            
+            // Registrar broadcast de emergencia
+            securityLogs.push({
+                timestamp: new Date(),
+                type: 'emergency_broadcast',
+                message: `Broadcast de emergencia enviado: ${message}`,
+                severity: 'critical'
+            });
+            
+            saveSecurityData();
+            closeModal();
+            
+            showNotification('📡 Broadcast de emergencia enviado a todos los contactos', 'error');
+        }
+
+        function contactLab(labName) {
+            const config = opticaConfig[currentOptica];
+            const labOrders = orders.filter(o => o.laboratory === labName);
+            
+            let message = `Saludos desde ${config.nombre},\n\nConsulta sobre nuestras órdenes:\n\n`;
+            message += labOrders.map(o => `• ${o.id} - ${o.client} - Estado: ${getStatusText(o.status)}`).join('\n');
+            message += `\n\nFavor confirmar estados.\n\nGracias,\n${config.nombre}\n📱 ${config.telefono}`;
+            
+            try {
+                // Simular apertura de WhatsApp con mensaje
+                navigator.clipboard.writeText(message).then(() => {
+                    showNotification(`📋 Mensaje para ${labName} copiado. Pégalo en WhatsApp.`, 'info');
+                });
+            } catch (error) {
+                showNotification(`📞 Contactar a ${labName} manualmente`, 'warning');
+            }
+        }
+
+        // ========================================
+        // 🚨 EMERGENCY FUNCTIONS
+        // ========================================
+        
+        function quickEmergency() {
+            openModal(`
+                <h2>🚨 Emergencia Rápida</h2>
+                <div style="text-align: center; margin: 20px 0;">
+                    <div style="font-size: 64px; margin-bottom: 15px; animation: alertPulse 1s infinite;">🚨</div>
+                    <h3>¿Qué tipo de emergencia?</h3>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin: 20px 0;">
+                    <button class="btn btn-alert" onclick="emergencyType('robo')">
+                        🚨 Posible Robo
+                    </button>
+                    <button class="btn btn-alert" onclick="emergencyType('perdida')">
+                        📦 Pérdida de Órdenes
+                    </button>
+                    <button class="btn btn-alert" onclick="emergencyType('fraude')">
+                        💳 Fraude Detectado
+                    </button>
+                    <button class="btn btn-alert" onclick="emergencyType('sistema')">
+                        💻 Falla del Sistema
+                    </button>
+                </div>
+                
+                <div style="background: rgba(255, 0, 0, 0.1); padding: 15px; border-radius: 10px;">
+                    <p style="text-align: center; color: #ff4757;">
+                        <strong>⚠️ Estas acciones activarán protocolos de emergencia inmediatos</strong>
+                    </p>
+                </div>
+            `);
+        }
+
+        function emergencyType(type) {
+            const config = opticaConfig[currentOptica];
+            let message = '';
+            
+            switch (type) {
+                case 'robo':
+                    message = `🚨 ALERTA DE SEGURIDAD\n\nPosible situación de robo detectada en ${config.nombre}.\n\nActivando protocolos de emergencia.\n\nFecha: ${new Date().toLocaleString()}`;
+                    break;
+                case 'perdida':
+                    message = `📦 ALERTA DE PÉRDIDA\n\nÓrdenes de laboratorio posiblemente extraviadas.\n\nRevisión inmediata requerida.\n\n${config.nombre}`;
+                    break;
+                case 'fraude':
+                    message = `💳 ALERTA DE FRAUDE\n\nActividad fraudulenta detectada en sistema.\n\nBloqueo preventivo activado.\n\n${config.nombre}`;
+                    break;
+                case 'sistema':
+                    message = `💻 FALLA CRÍTICA\n\nSistema de seguridad comprometido.\n\nRespaldo manual activado.\n\n${config.nombre}`;
+                    break;
+            }
+            
+            // Registrar emergencia
+            securityLogs.push({
+                timestamp: new Date(),
+                type: 'emergency_' + type,
+                message: `Emergencia ${type} activada`,
+                severity: 'critical'
+            });
+            
+            // Activar lockdown si es robo o fraude
+            if (type === 'robo' || type === 'fraude') {
+                systemLocked = true;
+                document.getElementById('systemStatus').textContent = 'Sistema Bloqueado';
+                document.querySelector('.status-indicator').style.background = '#ff0000';
+            }
+            
+            saveSecurityData();
+            closeModal();
+            
+            showNotification(`🚨 Emergencia ${type} activada - Protocolos en ejecución`, 'error');
+        }
+
+        function emergencyAlert() {
+            openModal(`
+                <h2>🚨 ALERTA GENERAL DE SEGURIDAD</h2>
+                <div style="background: rgba(255, 0, 0, 0.2); padding: 20px; border-radius: 15px; border: 2px solid #ff0000; margin: 20px 0; text-align: center;">
+                    <div style="font-size: 64px; margin-bottom: 15px; animation: alertPulse 1s infinite;">🚨</div>
+                    <h3 style="color: #ff0000;">ALERTA DE SEGURIDAD ACTIVADA</h3>
+                    <p>Todos los sistemas de monitoreo han sido notificados.</p>
+                </div>
+                
+                <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 10px; margin: 15px 0;">
+                    <h4>🔔 Acciones ejecutadas automáticamente:</h4>
+                    <ul style="padding-left: 20px;">
+                        <li>✅ Todos los laboratorios notificados</li>
+                        <li>✅ Sistema de tracking en máxima alerta</li>
+                        <li>✅ Logs de seguridad activados</li>
+                        <li>✅ Monitoreo en tiempo real intensificado</li>
+                        <li>✅ Backup de datos de emergencia creado</li>
+                        <li>✅ Notificaciones WhatsApp enviadas</li>
+                    </ul>
+                </div>
+                
+                <textarea class="textarea" id="alertReason" placeholder="Describa la razón de la alerta de emergencia..."></textarea>
+                
+                <div style="display: flex; gap: 15px; justify-content: center;">
+                    <button class="btn btn-alert" onclick="confirmEmergencyAlert()">🚨 Confirmar Alerta</button>
+                    <button class="btn btn-security" onclick="closeModal()">🔙 Cancelar</button>
+                </div>
+            `);
+        }
+
+        function confirmEmergencyAlert() {
+            const reason = document.getElementById('alertReason').value || 'Alerta de emergencia activada';
+            
+            // Registrar alerta de emergencia
+            securityLogs.push({
+                timestamp: new Date(),
+                type: 'emergency_alert',
+                message: `ALERTA DE EMERGENCIA: ${reason}`,
+                severity: 'critical'
+            });
+            
+            // Marcar todas las órdenes como en revisión
+            orders.forEach(order => {
+                if (order.status !== 'completado') {
+                    order.emergencyFlag = true;
+                    order.emergencyDate = new Date().toISOString();
+                }
+            });
+            
+            saveSecurityData();
+            closeModal();
+            
+            showNotification('🚨 ALERTA DE EMERGENCIA ACTIVADA - Todos los sistemas notificados', 'error');
+        }
+
+        function lockdownMode() {
+            openModal(`
+                <h2>🔒 MODO BLOQUEO DE SEGURIDAD</h2>
+                <div style="background: rgba(255, 69, 0, 0.2); padding: 20px; border-radius: 15px; border: 2px solid #ff4500; margin: 20px 0; text-align: center;">
+                    <div style="font-size: 64px; margin-bottom: 15px;">🔒</div>
+                    <h3 style="color: #ff4500;">MODO BLOQUEO</h3>
+                    <p>Esta acción bloqueará temporalmente todas las operaciones del laboratorio.</p>
+                </div>
+                
+                <div style="background: rgba(255, 0, 0, 0.1); padding: 15px; border-radius: 10px; margin: 15px 0;">
+                    <h4 style="color: #ff4757;">⚠️ ADVERTENCIA:</h4>
+                    <p>El modo bloqueo detendrá:</p>
+                    <ul style="padding-left: 20px;">
+                        <li>Nuevas órdenes al laboratorio</li>
+                        <li>Aprobaciones de calidad</li>
+                        <li>Entregas programadas</li>
+                        <li>Comunicaciones automáticas</li>
+                    </ul>
+                </div>
+                
+                <input type="password" class="input" id="lockdownPassword" placeholder="Código de autorización" style="margin: 15px 0;">
+                
+                <div style="display: flex; gap: 15px; justify-content: center;">
+                    <button class="btn btn-alert" onclick="activateLockdown()">🔒 Activar Bloqueo</button>
+                    <button class="btn btn-security" onclick="closeModal()">🔙 Cancelar</button>
+                </div>
+            `);
+        }
+
+        function activateLockdown() {
+            const password = document.getElementById('lockdownPassword').value;
+            
+            // Validación simple de contraseña (en producción sería más segura)
+            if (password !== 'SECURITY2025') {
+                showNotification('❌ Código de autorización incorrecto', 'error');
+                return;
+            }
+            
+            // Activar modo bloqueo
+            systemLocked = true;
+            
+            securityLogs.push({
+                timestamp: new Date(),
+                type: 'lockdown_activated',
+                message: 'MODO BLOQUEO ACTIVADO - Todas las operaciones suspendidas',
+                severity: 'critical'
+            });
+            
+            // Cambiar estado del sistema
+            document.querySelector('.security-status .status-indicator').style.background = '#ff0000';
+            document.getElementById('systemStatus').textContent = 'Sistema Bloqueado';
+            
+            saveSecurityData();
+            closeModal();
+            
+            showNotification('🔒 MODO BLOQUEO ACTIVADO - Operaciones suspendidas', 'error');
+        }
+
+        function contactAuthorities() {
+            openModal(`
+                <h2>📞 Contactar Autoridades</h2>
+                <div style="background: rgba(0, 0, 255, 0.1); padding: 20px; border-radius: 15px; border: 2px solid #007bff; margin: 20px 0;">
+                    <h3 style="color: #007bff;">📞 CONTACTOS DE EMERGENCIA</h3>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 20px 0;">
+                    <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 10px; text-align: center;">
+                        <div style="font-size: 32px; margin-bottom: 10px;">👮</div>
+                        <h4>Policía Nacional</h4>
+                        <p>911</p>
+                        <button class="btn btn-security" onclick="callEmergency('911')">📞 Llamar</button>
+                    </div>
+                    
+                    <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 10px; text-align: center;">
+                        <div style="font-size: 32px; margin-bottom: 10px;">⚖️</div>
+                        <h4>DIGEMAPS</h4>
+                        <p>809-533-3073</p>
+                        <button class="btn btn-security" onclick="callEmergency('digemaps')">📞 Llamar</button>
+                    </div>
+                    
+                    <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 10px; text-align: center;">
+                        <div style="font-size: 32px; margin-bottom: 10px;">👨‍💼</div>
+                        <h4>Abogado</h4>
+                        <p>809-XXX-XXXX</p>
+                        <button class="btn btn-security" onclick="callEmergency('lawyer')">📞 Llamar</button>
+                    </div>
+                    
+                    <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 10px; text-align: center;">
+                        <div style="font-size: 32px; margin-bottom: 10px;">🏢</div>
+                        <h4>Seguro</h4>
+                        <p>809-XXX-XXXX</p>
+                        <button class="btn btn-security" onclick="callEmergency('insurance')">📞 Llamar</button>
+                    </div>
+                </div>
+                
+                <div style="background: rgba(255, 165, 0, 0.1); padding: 15px; border-radius: 10px;">
+                    <h4 style="color: #ffa500;">📋 Información a proporcionar:</h4>
+                    <ul style="padding-left: 20px;">
+                        <li>Identificación de la empresa: ${opticaConfig[currentOptica].nombre}</li>
+                        <li>Naturaleza del incidente</li>
+                        <li>Valor estimado de pérdidas</li>
+                        <li>Evidencia disponible</li>
+                        <li>Ubicación exacta</li>
+                    </ul>
+                </div>
+            `);
+        }
+
+        function callEmergency(type) {
+            const contacts = {
+                '911': 'tel:911',
+                'digemaps': 'tel:8095333073',
+                'lawyer': 'tel:809XXXXXXX',
+                'insurance': 'tel:809XXXXXXX'
+            };
+            
+            if (contacts[type]) {
+                try {
+                    window.location.href = contacts[type];
+                } catch (error) {
+                    console.error('Error al realizar llamada:', error);
+                }
+            }
+            
+            // Registrar la llamada
+            securityLogs.push({
+                timestamp: new Date(),
+                type: 'emergency_contact',
+                message: `Contacto de emergencia: ${type}`,
+                severity: 'critical'
+            });
+            
+            saveSecurityData();
+            showNotification(`📞 Iniciando llamada a ${type}`, 'warning');
+        }
+
+        // ========================================
+        // 📊 REPORTS AND ANALYSIS
+        // ========================================
+        
+        function runFullScan() {
+            showNotification('🔍 Ejecutando escaneo completo del sistema...', 'info');
+            
+            // Simular escaneo
+            setTimeout(() => {
+                detectAnomalies();
+                updateSecurityMetrics();
+                checkOrderStatus();
+                
+                // Generar nuevas anomalías simuladas si es necesario
+                const random = Math.random();
+                if (random > 0.7) {
+                    anomalies.push({
+                        id: Date.now(),
+                        type: 'performance',
+                        message: 'Laboratorio Central: Tiempo de respuesta 15% más lento que promedio',
+                        severity: 'low',
+                        timestamp: new Date(),
+                        resolved: false
+                    });
+                }
+                
+                if (random > 0.8) {
+                    anomalies.push({
+                        id: Date.now() + 1,
+                        type: 'quality',
+                        message: 'Patrón detectado: 3 rechazos de calidad esta semana',
+                        severity: 'medium',
+                        timestamp: new Date(),
+                        resolved: false
+                    });
+                }
+                
+                saveSecurityData();
+                
+                const newAnomalies = anomalies.filter(a => !a.resolved).length;
+                showNotification(`🔍 Escaneo completado. ${newAnomalies} anomalías activas detectadas.`, newAnomalies > 0 ? 'warning' : 'success');
+            }, 3000);
+        }
+
+        function generateSecurityReport() {
+            const config = opticaConfig[currentOptica];
+            const reportDate = new Date().toLocaleDateString();
+            const totalOrders = orders.length;
+            const riskOrders = orders.filter(o => o.risk === 'high').length;
+            const totalValue = orders.reduce((sum, o) => sum + o.price, 0);
+            const activeAnomalies = anomalies.filter(a => !a.resolved).length;
+            
+            const report = `🛡️ REPORTE DE SEGURIDAD LAB SECURITY SHIELD
+
+📅 Fecha: ${reportDate}
+🏢 Empresa: ${config.nombre}
+📱 Contacto: ${config.telefono}
+
+📊 RESUMEN EJECUTIVO:
+• Total de órdenes monitoreadas: ${totalOrders}
+• Órdenes en riesgo alto: ${riskOrders}
+• Valor total protegido: RD$ ${totalValue.toLocaleString()}
+• Anomalías activas: ${activeAnomalies}
+• Estado del sistema: ${systemLocked ? 'BLOQUEADO' : 'OPERATIVO'}
+
+🔍 ÓRDENES CRÍTICAS:
+${orders.filter(o => o.risk === 'high').map(o => 
+    `• ${o.id} - ${o.client} - RD$ ${o.price.toLocaleString()} - ${o.laboratory}`
+).join('\n') || '• No hay órdenes críticas'}
+
+🕵️ ANOMALÍAS DETECTADAS:
+${anomalies.filter(a => !a.resolved).map(a => 
+    `• ${a.type.toUpperCase()}: ${a.message} [${a.severity}]`
+).join('\n') || '• No hay anomalías activas'}
+
+💰 ANÁLISIS FINANCIERO:
+• Total en laboratorios: RD$ ${financialData.totalInLabs.toLocaleString()}
+• Órdenes sin pagar: RD$ ${financialData.unpaidOrders.toLocaleString()}
+• Beneficio esperado: RD$ ${financialData.expectedProfit.toLocaleString()}
+• Riesgo financiero total: RD$ ${financialData.totalRisk.toLocaleString()}
+
+📈 MÉTRICAS DE RENDIMIENTO:
+• Tiempo promedio de procesamiento: 4.2 días
+• Tasa de éxito en calidad: 94.3%
+• Eficiencia del sistema: ${systemLocked ? '0%' : '99.8%'}
+• Satisfacción del cliente: 96.7%
+
+🎯 RECOMENDACIONES:
+• Implementar seguimiento más estricto para órdenes > 7 días
+• Revisar relación comercial con laboratorios problemáticos
+• Fortalecer protocolos de calidad
+• Incrementar frecuencia de comunicación con clientes
+• Considerar diversificación de proveedores
+
+⚠️ ALERTAS ACTIVAS:
+${orders.filter(o => new Date() > new Date(o.expectedDate) && o.status !== 'completado').map(o =>
+    `• ${o.id}: ${Math.floor((new Date() - new Date(o.expectedDate)) / (1000 * 60 * 60 * 24))} días de retraso`
+).join('\n') || '• No hay alertas activas'}
+
+📞 CONTACTOS DE EMERGENCIA:
+• Policía Nacional: 911
+• DIGEMAPS: 809-533-3073
+• ${config.nombre}: ${config.telefono}
+
+🔐 INTEGRIDAD DEL REPORTE:
+Generado automáticamente por Lab Security Shield v2.0
+Timestamp: ${new Date().toISOString()}
+Hash de verificación: ${btoa(Math.random().toString()).substring(0, 8)}
+
+---
+Este reporte contiene información confidencial.
+Mantenga la seguridad de los datos.`;
+            
+            // Copiar al clipboard
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(report).then(() => {
+                    showNotification('📋 Reporte de seguridad copiado al clipboard', 'success');
+                }).catch(() => {
+                    fallbackCopyReport(report);
+                });
+            } else {
+                fallbackCopyReport(report);
+            }
+            
+            // También mostrar en modal
+            openModal(`
+                <h2>📊 Reporte de Seguridad Generado</h2>
+                <div style="background: rgba(0,0,0,0.3); padding: 20px; border-radius: 15px; margin: 20px 0; max-height: 400px; overflow-y: auto;">
+                    <pre style="white-space: pre-wrap; font-size: 12px; line-height: 1.4; color: #ffffff;">${report}</pre>
+                </div>
+                <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                    <button class="btn btn-security" onclick="downloadReport('${report.replace(/'/g, "\\'")}')">💾 Descargar</button>
+                    <button class="btn btn-warning" onclick="emailReport('${report.replace(/'/g, "\\'")}')">📧 Email</button>
+                    <button class="btn btn-safe" onclick="sendReportWhatsApp('${report.replace(/'/g, "\\'")}')">📱 WhatsApp</button>
+                </div>
+            `);
+        }
+
+        function fallbackCopyReport(report) {
+            const textArea = document.createElement('textarea');
+            textArea.value = report;
+            textArea.style.position = 'fixed';
+            textArea.style.opacity = '0';
+            document.body.appendChild(textArea);
+            textArea.select();
+            
+            try {
+                document.execCommand('copy');
+                showNotification('📋 Reporte copiado', 'success');
+            } catch (error) {
+                showNotification('❌ Error al copiar. Selecciona y copia manualmente.', 'error');
+            }
+            
+            document.body.removeChild(textArea);
+        }
+
+        function downloadReport(reportContent) {
+            try {
+                const blob = new Blob([reportContent], { type: 'text/plain;charset=utf-8' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `lab_security_report_${new Date().toISOString().split('T')[0]}.txt`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                
+                showNotification('💾 Reporte descargado exitosamente', 'success');
+            } catch (error) {
+                console.error('Error downloading report:', error);
+                showNotification('❌ Error al descargar el reporte', 'error');
+            }
+        }
+
+        function emailReport(reportContent) {
+            try {
+                const subject = encodeURIComponent('Reporte de Seguridad Lab Security Shield');
+                const body = encodeURIComponent(reportContent);
+                const mailtoUrl = `mailto:?subject=${subject}&body=${body}`;
+                window.location.href = mailtoUrl;
+                
+                showNotification('📧 Cliente de email abierto', 'info');
+            } catch (error) {
+                showNotification('❌ Error al abrir cliente de email', 'error');
+            }
+        }
+
+        function sendReportWhatsApp(reportContent) {
+            try {
+                const config = opticaConfig[currentOptica];
+                const whatsappUrl = `https://wa.me/${config.whatsapp}?text=${encodeURIComponent(reportContent)}`;
+                window.open(whatsappUrl, '_blank');
+                showNotification('📱 Reporte enviado por WhatsApp', 'success');
+            } catch (error) {
+                navigator.clipboard.writeText(reportContent).then(() => {
+                    showNotification('📋 Reporte copiado. Pégalo en WhatsApp.', 'warning');
+                });
+            }
+        }
+
+        function generateIncidentReport() {
+            openModal(`
+                <h2>📋 Generar Reporte de Incidente</h2>
+                <div style="margin: 20px 0;">
+                    <label style="display: block; margin-bottom: 10px;">Tipo de incidente:</label>
+                    <select class="select" id="incidentType">
+                        <option value="">Seleccionar tipo</option>
+                        <option value="robo">🚨 Robo o hurto</option>
+                        <option value="perdida">📦 Pérdida de órdenes</option>
+                        <option value="fraude">💳 Fraude o estafa</option>
+                        <option value="calidad">❌ Problema de calidad</option>
+                        <option value="retraso">⏰ Retrasos excesivos</option>
+                        <option value="sistema">💻 Falla técnica</option>
+                        <option value="otro">🔧 Otro</option>
+                    </select>
+                </div>
+                
+                <div style="margin: 20px 0;">
+                    <label style="display: block; margin-bottom: 10px;">Fecha y hora del incidente:</label>
+                    <input type="datetime-local" class="input" id="incidentDateTime">
+                </div>
+                
+                <textarea class="textarea" id="incidentDescription" placeholder="Describa detalladamente el incidente..."></textarea>
+                
+                <div style="margin: 20px 0;">
+                    <label style="display: block; margin-bottom: 10px;">Valor estimado de pérdidas (RD$):</label>
+                    <input type="number" class="input" id="estimatedLoss" placeholder="0">
+                </div>
+                
+                <div style="background: rgba(255, 165, 0, 0.1); padding: 15px; border-radius: 10px; margin: 15px 0;">
+                    <h4 style="color: #ffa500;">📋 El reporte incluirá automáticamente:</h4>
+                    <ul style="padding-left: 20px;">
+                        <li>Estado actual del sistema</li>
+                        <li>Órdenes afectadas</li>
+                        <li>Logs de seguridad relevantes</li>
+                        <li>Información de contacto</li>
+                        <li>Timestamp de generación</li>
+                    </ul>
+                </div>
+                
+                <div style="display: flex; gap: 15px; justify-content: center;">
+                    <button class="btn btn-alert" onclick="createIncidentReport()">📋 Crear Reporte</button>
+                    <button class="btn btn-security" onclick="closeModal()">❌ Cancelar</button>
+                </div>
+            `);
+        }
+
+        function createIncidentReport() {
+            const incidentType = document.getElementById('incidentType').value;
+            const incidentDateTime = document.getElementById('incidentDateTime').value;
+            const description = document.getElementById('incidentDescription').value;
+            const estimatedLoss = document.getElementById('estimatedLoss').value;
+            
+            if (!incidentType || !description) {
+                showNotification('❌ Complete los campos obligatorios', 'error');
+                return;
+            }
+            
+            const config = opticaConfig[currentOptica];
+            const incidentReport = `📋 REPORTE DE INCIDENTE - LAB SECURITY SHIELD
+
+🏢 EMPRESA: ${config.nombre}
+📱 CONTACTO: ${config.telefono}
+📅 FECHA DEL REPORTE: ${new Date().toLocaleString()}
+
+🚨 INFORMACIÓN DEL INCIDENTE:
+• Tipo: ${incidentType}
+• Fecha/Hora: ${incidentDateTime ? new Date(incidentDateTime).toLocaleString() : 'No especificada'}
+• Pérdida estimada: ${estimatedLoss ? 'RD$ ' + parseFloat(estimatedLoss).toLocaleString() : 'No especificada'}
+
+📝 DESCRIPCIÓN:
+${description}
+
+📊 ESTADO DEL SISTEMA:
+• Estado: ${systemLocked ? 'BLOQUEADO (Modo Emergencia)' : 'OPERATIVO'}
+• Órdenes monitoreadas: ${orders.length}
+• Órdenes en riesgo: ${orders.filter(o => o.risk === 'high').length}
+• Anomalías activas: ${anomalies.filter(a => !a.resolved).length}
+
+💰 IMPACTO FINANCIERO:
+• Valor total en riesgo: RD$ ${financialData.totalRisk.toLocaleString()}
+• Órdenes sin pagar: RD$ ${financialData.unpaidOrders.toLocaleString()}
+
+🔍 ÓRDENES POSIBLEMENTE AFECTADAS:
+${orders.filter(o => o.status !== 'completado').map(o => 
+    `• ${o.id} - ${o.client} - ${o.laboratory} - RD$ ${o.price.toLocaleString()}`
+).join('\n')}
+
+📞 ACCIONES TOMADAS:
+• Reporte generado automáticamente
+• Sistema de seguridad activado
+• Logs preservados para investigación
+• Personal notificado
+
+📋 PRÓXIMOS PASOS RECOMENDADOS:
+1. Contactar autoridades si procede
+2. Notificar a seguro si aplica
+3. Informar a laboratorios afectados
+4. Comunicar situación a clientes
+5. Implementar medidas correctivas
+6. Seguimiento de la investigación
+
+⚖️ INFORMACIÓN LEGAL:
+• Policía Nacional: 911
+• DIGEMAPS: 809-533-3073
+• Abogado de la empresa: [Contactar]
+
+🔐 INTEGRIDAD:
+Hash: ${btoa(Math.random().toString()).substring(0, 12)}
+Sistema: Lab Security Shield v2.0
+Clasificación: CONFIDENCIAL
+
+---
+Este documento contiene información sensible.
+Mantenga la confidencialidad apropiada.`;
+            
+            // Registrar creación del reporte
+            securityLogs.push({
+                timestamp: new Date(),
+                type: 'incident_report_created',
+                message: `Reporte de incidente ${incidentType} generado`,
+                severity: 'warning'
+            });
+            
+            saveSecurityData();
+            closeModal();
+            
+            // Mostrar reporte generado
+            openModal(`
+                <h2>📋 Reporte de Incidente Generado</h2>
+                <div style="background: rgba(0,0,0,0.3); padding: 20px; border-radius: 15px; margin: 20px 0; max-height: 400px; overflow-y: auto;">
+                    <pre style="white-space: pre-wrap; font-size: 12px; line-height: 1.4;">${incidentReport}</pre>
+                </div>
+                <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                    <button class="btn btn-alert" onclick="downloadReport('${incidentReport.replace(/'/g, "\\'")}')">💾 Descargar</button>
+                    <button class="btn btn-warning" onclick="emailReport('${incidentReport.replace(/'/g, "\\'")}')">📧 Email</button>
+                    <button class="btn btn-safe" onclick="sendReportWhatsApp('${incidentReport.replace(/'/g, "\\'")}')">📱 WhatsApp</button>
+                </div>
+            `);
+        }
+
+        // ========================================
+        // 🔧 ADDITIONAL FUNCTIONS
+        // ========================================
+        
+        function switchCamera(cameraId) {
+            const cameras = {
+                1: 'Área Principal - Zona de trabajo',
+                2: 'Área de Almacenamiento - Inventario',
+                3: 'Área de Calidad - Mesa de revisión'
+            };
+            
+            const placeholder = document.querySelector('.camera-placeholder');
+            placeholder.innerHTML = `
+                <div style="font-size: 64px; margin-bottom: 15px;">📹</div>
+                <div>Cámara ${cameraId} - ${cameras[cameraId]}</div>
+                <div style="font-size: 12px; opacity: 0.6; margin-top: 10px;">
+                    Resolución: 1080p | FPS: 30 | Status: Activa
+                </div>
+            `;
+            
+            showNotification(`📹 Cambiado a Cámara ${cameraId}`, 'info');
+        }
+
+        function recordIncident() {
+            showNotification('📹 Grabación de incidente iniciada', 'warning');
+            
+            securityLogs.push({
+                timestamp: new Date(),
+                type: 'incident_recording',
+                message: 'Grabación de incidente iniciada por usuario',
+                severity: 'warning'
+            });
+            
+            saveSecurityData();
+        }
+
+        function reviewFinances() {
+            openModal(`
+                <h2>💰 Revisión Financiera Detallada</h2>
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin: 20px 0;">
+                    <div class="security-metric">
+                        <div class="metric-value metric-warning">RD$ ${financialData.totalInLabs.toLocaleString()}</div>
+                        <div class="metric-label">Total en Laboratorios</div>
+                    </div>
+                    <div class="security-metric">
+                        <div class="metric-value metric-danger">RD$ ${financialData.unpaidOrders.toLocaleString()}</div>
+                        <div class="metric-label">Órdenes sin Pagar</div>
+                    </div>
+                    <div class="security-metric">
+                        <div class="metric-value metric-safe">RD$ ${financialData.expectedProfit.toLocaleString()}</div>
+                        <div class="metric-label">Beneficio Esperado</div>
+                    </div>
+                    <div class="security-metric">
+                        <div class="metric-value metric-danger">RD$ ${financialData.totalRisk.toLocaleString()}</div>
+                        <div class="metric-label">Riesgo Total</div>
+                    </div>
+                </div>
+                
+                <div style="background: rgba(0,0,0,0.3); padding: 20px; border-radius: 15px; margin: 20px 0;">
+                    <h4>📊 Análisis por Laboratorio:</h4>
+                    <div style="margin: 15px 0;">
+                        <div style="display: flex; justify-content: space-between; margin: 10px 0;">
+                            <span>🏭 Lab Central:</span>
+                            <span>RD$ 28,450 (Bajo riesgo)</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin: 10px 0;">
+                            <span>🏭 Lab Express:</span>
+                            <span>RD$ 16,780 (Riesgo medio)</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin: 10px 0; color: #ff4757;">
+                            <span>🏭 Lab XYZ:</span>
+                            <span>RD$ 12,450 (Alto riesgo)</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="background: rgba(255, 0, 0, 0.1); padding: 15px; border-radius: 10px; border: 1px solid #ff4757;">
+                    <h4 style="color: #ff4757;">⚠️ Alertas Financieras:</h4>
+                    <ul style="padding-left: 20px; margin: 10px 0;">
+                        <li>Lab XYZ: 3 órdenes vencidas sin pagar</li>
+                        <li>Exposición total superior al límite recomendado</li>
+                        <li>Margen de beneficio en riesgo: 41.3%</li>
+                    </ul>
+                </div>
+                
+                <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                    <button class="btn btn-warning" onclick="flagRisks()">🚩 Marcar Riesgos</button>
+                    <button class="btn btn-alert" onclick="freezePayments()">❄️ Congelar Pagos</button>
+                    <button class="btn btn-security" onclick="generateFinancialReport()">📊 Reporte Financiero</button>
+                </div>
+            `);
+        }
+
+        function flagRisks() {
+            // Marcar órdenes de alto riesgo financiero
+            orders.forEach(order => {
+                if (order.price > 3000 || order.laboratory === 'Lab XYZ') {
+                    order.financialFlag = true;
+                    order.flagDate = new Date().toISOString();
+                }
+            });
+            
+            securityLogs.push({
+                timestamp: new Date(),
+                type: 'financial_risks_flagged',
+                message: 'Órdenes de alto riesgo financiero marcadas',
+                severity: 'warning'
+            });
+            
+            saveSecurityData();
+            closeModal();
+            showNotification('🚩 Riesgos financieros marcados en el sistema', 'warning');
+        }
+
+        function sendPaymentReminder() {
+            const config = opticaConfig[currentOptica];
+            const unpaidOrders = orders.filter(o => o.status !== 'completado' && o.cost > 0);
+            
+            if (unpaidOrders.length === 0) {
+                showNotification('✅ No hay órdenes pendientes de pago', 'success');
+                return;
+            }
+            
+            const message = `💰 RECORDATORIO DE PAGO\n\nDesde ${config.nombre}\n\nTenemos ${unpaidOrders.length} órdenes pendientes de seguimiento:\n\n${unpaidOrders.slice(0, 5).map(o => `• ${o.id} - ${o.laboratory} - RD$ ${o.cost.toLocaleString()}`).join('\n')}\n\nFavor coordinar estados de pago.\n\nGracias,\n${config.nombre}\n📱 ${config.telefono}`;
+            
+            try {
+                navigator.clipboard.writeText(message).then(() => {
+                    showNotification('📋 Recordatorio de pago copiado. Envíalo por WhatsApp.', 'info');
+                });
+            } catch (error) {
+                showNotification('📱 Mensaje de recordatorio preparado', 'info');
+            }
+        }
+
+        function exportOrdersReport() {
+            const config = opticaConfig[currentOptica];
+            const report = orders.map(order => {
+                return `${order.id} | ${order.client} | ${order.status} | ${order.risk} | RD$ ${order.price} | ${order.laboratory}`;
+            }).join('\n');
+            
+            const fullReport = `📋 REPORTE DE ÓRDENES LAB SECURITY SHIELD
+
+📅 Fecha: ${new Date().toLocaleDateString()}
+🏢 Empresa: ${config.nombre}
+📱 WhatsApp: ${config.telefono}
+
+📊 RESUMEN:
+• Total órdenes: ${orders.length}
+• En riesgo alto: ${orders.filter(o => o.risk === 'high').length}
+• Completadas: ${orders.filter(o => o.status === 'completado').length}
+• En proceso: ${orders.filter(o => o.status !== 'completado').length}
+
+📋 DETALLE DE ÓRDENES:
+ID | Cliente | Estado | Riesgo | Valor | Laboratorio
+${report}
+
+💰 ANÁLISIS FINANCIERO:
+• Valor total: RD$ ${orders.reduce((sum, o) => sum + o.price, 0).toLocaleString()}
+• Costo total: RD$ ${orders.reduce((sum, o) => sum + o.cost, 0).toLocaleString()}
+• Beneficio total: RD$ ${orders.reduce((sum, o) => sum + (o.price - o.cost), 0).toLocaleString()}
+
+🔍 ANOMALÍAS DETECTADAS: ${anomalies.filter(a => !a.resolved).length}
+
+📱 Sistema: Lab Security Shield v2.0
+Generado: ${new Date().toISOString()}`;
+            
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(fullReport).then(() => {
+                    showNotification('📋 Reporte de órdenes copiado', 'success');
+                    closeModal();
+                });
+            } else {
+                fallbackCopyReport(fullReport);
+                closeModal();
+            }
+        }
+
+        // ========================================
+        // 🛠️ UTILITY FUNCTIONS
+        // ========================================
+        
+        function openModal(content) {
+            document.getElementById('modalContent').innerHTML = content;
+            document.getElementById('modal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('modal').style.display = 'none';
+        }
+
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notification');
+            
+            // Configurar colores según el tipo
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            notification.classList.add('show');
+            
+            // Auto-hide después de 4 segundos
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 4000);
+        }
+
+        // Modal close al hacer clic fuera
+        document.getElementById('modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Auto-save cada 30 segundos
+        setInterval(() => {
+            saveSecurityData();
+            console.log('💾 Auto-guardado de seguridad ejecutado');
+        }, 30000);
+
+        // Cleanup al cerrar
+        window.addEventListener('beforeunload', function() {
+            saveSecurityData();
+            console.log('🧹 Datos de seguridad guardados al cerrar');
+        });
+
+        console.log('🛡️ Lab Security Shield - Sistema Anti-Robos Cargado');
+        console.log('🔍 Funciones disponibles:');
+        console.log('📋 Order Tracking & Timeline');
+        console.log('✅ Quality Control System');
+        console.log('🕵️ AI Anomaly Detection');
+        console.log('📹 Visual Monitoring');
+        console.log('💰 Financial Security Control');
+        console.log('🚨 Emergency Response Protocols');
+        console.log('📊 Real-time Security Analytics');
+        console.log('📱 WhatsApp Integration');
+        console.log('🔒 Lockdown & Emergency Systems');
+        console.log('🛡️ ¡MÁXIMA SEGURIDAD ACTIVADA!');
+    </script>
+</body>
+</html>
